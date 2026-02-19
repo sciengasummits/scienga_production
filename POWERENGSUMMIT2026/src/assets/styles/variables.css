@@ -1,0 +1,28 @@
+:root {
+  --color-primary-start: #4A00E0;
+  /* Vibrant Deep Purple */
+  --color-primary-rgb: 74, 0, 224;
+  --color-primary-end: #8E2DE2;
+  /* Bright Violet */
+  --color-primary-gradient: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+  --color-accent: #FFD700;
+  /* Gold/Electricity */
+  --color-accent-hover: #FFC107;
+  --color-text-dark: #121212;
+  --color-text-body: #333333;
+  --color-bg-light: #f0f2f5;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --font-primary: 'Open Sans', sans-serif;
+  --font-heading: 'Barlow', sans-serif;
+
+  --shadow-card: 0 10px 20px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 15px 30px rgba(0, 78, 146, 0.2);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --transition-default: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

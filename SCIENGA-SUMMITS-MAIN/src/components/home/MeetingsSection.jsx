@@ -13,7 +13,8 @@ const meetingsData = {
             location: "AMSTERDAM, NETHERLANDS",
             date: "NOVEMBER 16-18, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+            link: "https://polymatsummit2026.sciengasummits.com/"
         },
         {
             id: 2,
@@ -22,7 +23,8 @@ const meetingsData = {
             location: "AMSTERDAM, NETHERLANDS",
             date: "NOVEMBER 16-18, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80",
+            link: "https://advancenanosummit2026.sciengasummits.com/"
         },
         {
             id: 3,
@@ -31,7 +33,8 @@ const meetingsData = {
             location: "AMSTERDAM, NETHERLANDS",
             date: "NOVEMBER 16-18, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=800&q=80",
+            link: "https://opticphotonsummit2026.sciengasummits.com/"
         },
         {
             id: 4,
@@ -40,7 +43,8 @@ const meetingsData = {
             location: "MARINA BAY, SINGAPORE",
             date: "DECEMBER 07-09, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&w=800&q=80",
+            link: "https://cropsciengsummit2026.sciengasummits.com/"
         },
         {
             id: 5,
@@ -49,7 +53,8 @@ const meetingsData = {
             location: "MARINA BAY, SINGAPORE",
             date: "DECEMBER 07-09, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80",
+            link: "https://civilenvsummit2026.sciengasummits.com/"
         },
         {
             id: 6,
@@ -71,7 +76,7 @@ const meetingsData = {
             date: "MARCH 23-25, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80",
-            link: "https://reneclimsummit2026.sciengasummits.com/"
+            link: "https://renewableclisummit2026.sciengasummits.com/"
         },
         {
             id: 8,
@@ -90,7 +95,8 @@ const meetingsData = {
             location: "MUNICH, GERMANY",
             date: "MARCH 23-25, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
+            link: "https://cleanengtechsummit2026.sciengasummits.com/"
         },
         {
             id: 10,
@@ -110,7 +116,7 @@ const meetingsData = {
             date: "APRIL 12-14, 2027",
             year: "2027",
             image: meetingLiutex,
-            link: "https://liutexvortexsummit2026.sciengasummits.com/"
+            link: "https://liutex2026.sciengasummits.com/"
         },
         {
             id: 13,
@@ -119,7 +125,8 @@ const meetingsData = {
             location: "SEOUL, SOUTH KOREA",
             date: "MAY 10-12, 2027",
             year: "2027",
-            image: meeting12
+            image: meeting12,
+            link: "https://airobotmlsummit2026.sciengasummits.com/"
         },
         {
             id: 14,
@@ -128,7 +135,8 @@ const meetingsData = {
             location: "SEOUL, SOUTH KOREA",
             date: "MAY 10-12, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+            link: "https://condensedphyssummit2026.sciengasummits.com/"
         },
         {
             id: 15,
@@ -137,7 +145,8 @@ const meetingsData = {
             location: "SEOUL, SOUTH KOREA",
             date: "MAY 10-12, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80"
+            image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80",
+            link: "https://cyberquantumsummit2026.sciengasummits.com/"
         },
         {
             id: 16,
@@ -158,7 +167,8 @@ const meetingsData = {
             location: "TOKYO, JAPAN",
             date: "APRIL 12-14, 2028",
             year: "2028",
-            image: meeting13
+            image: meeting13,
+            link: "https://fluidturbosummit2026.sciengasummits.com/"
         }
     ]
 }
