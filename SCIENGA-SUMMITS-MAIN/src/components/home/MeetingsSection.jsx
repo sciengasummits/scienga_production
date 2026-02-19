@@ -110,13 +110,13 @@ const meetingsData = {
         },
         {
             id: 11,
-            title: "LIUTEX2026",
+            title: "LIUTEXSUMMIT2026",
             description: "Global Summit on Liutex and Vortex Identification",
             location: "CANADA",
             date: "APRIL 12-14, 2027",
             year: "2027",
             image: meetingLiutex,
-            link: "https://liutex2026.sciengasummits.com/"
+            link: "https://liutexsummit2026.sciengasummits.com/"
         },
         {
             id: 13,
