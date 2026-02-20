@@ -80,10 +80,6 @@ export default function Footer() {
 
           <div style={{ marginBottom: '1.25rem' }}>
 
-            <p style={{ display: 'flex', alignItems: 'start', gap: '0.5rem', margin: '0 0 0.8rem 0', color: '#cbd5e1', fontSize: '0.85rem' }}>
-              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" style={{ marginTop: '3px', flexShrink: 0 }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <span>Capital Park, 5th Floor, Ayyappa Society, VIP Hills, Silicon Valley, Madhapur, Hyderabad, Telangana 500081</span>
-            </p>
             <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0 0 0.4rem 0', color: '#cbd5e1', fontSize: '0.85rem' }}>
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M22 6l-10 7L2 6"></path></svg>
               <span>sciengasummits@gmail.com</span>
@@ -329,11 +325,15 @@ export default function Footer() {
       }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '2rem',
+          gridTemplateColumns: 'repeat(6, 1fr)',
+          gap: '1rem',
           textAlign: 'left'
         }}>
           {[
+            {
+              country: 'India',
+              address: ['Capital Park, 5th Floor, Ayyappa Society', 'VIP Hills, Silicon Valley, Madhapur', 'Hyderabad, Telangana 500081', 'India']
+            },
             {
               country: 'Australia',
               address: ['Suite 3.01', '45 Grenfell Street', 'Adelaide SA 5000', 'Australia']

@@ -77,7 +77,7 @@ export default function HeroSection() {
           textShadow: '0 4px 6px rgba(0,0,0,0.3)',
           color: '#ffffff'
         }}>
-          Scienga Global Summits
+          Scienga  Summits
         </h1>
         <h2 style={{
           fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',

@@ -115,9 +115,11 @@ export default function AboutSection() {
               color: lightText,
               marginBottom: '2rem',
               lineHeight: '1.6',
-              textAlign: 'justify'
+              textAlign: 'justify',
+              hyphens: 'auto',
+              WebkitHyphens: 'auto'
             }}>
-              Scienga Global Summits stands at the forefront of academic excellence, uniting scholars, researchers, and professionals worldwide. Our conferences transcend conventional boundaries, stimulating interdisciplinary dialogue and groundbreaking insights. We ignite creativity and deepen understanding, shaping a more enlightened global community.
+              Scienga Global Summits stands at the forefront of academic excellence, uniting scholars, researchers, and pro&shy;fessionals worldwide. Our conferences transcend con&shy;ventional boundaries, stimulating inter&shy;disciplinary dialogue and ground&shy;breaking insights. We ignite creativity and deepen under&shy;standing, shaping a more enlightened global community.
             </p>
 
             <button

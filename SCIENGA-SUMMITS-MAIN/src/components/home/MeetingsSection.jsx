@@ -9,9 +9,9 @@ const meetingsData = {
         {
             id: 1,
             title: "POLYMATSUMMIT2026",
-            description: "Global Summit on Polymers and Composite Materials",
+            description: "Annual International Conference on Polymers and Composite Materials",
             location: "AMSTERDAM, NETHERLANDS",
-            date: "NOVEMBER 16-18, 2026",
+            date: "November 16-18, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
             link: "https://polymatsummit2026.sciengasummits.com/"
@@ -19,9 +19,9 @@ const meetingsData = {
         {
             id: 2,
             title: "ADVANCENANOSUMMIT2026",
-            description: "Global Summit on Advanced Materials and Nanotechnology",
+            description: "Annual International Conference on Advanced Materials and Nanotechnology",
             location: "AMSTERDAM, NETHERLANDS",
-            date: "NOVEMBER 16-18, 2026",
+            date: "November 16-18, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80",
             link: "https://advancenanosummit2026.sciengasummits.com/"
@@ -29,9 +29,9 @@ const meetingsData = {
         {
             id: 3,
             title: "OPTICPHOTONSUMMIT2026",
-            description: "Global Summit on Optics, Photonics and Laser Technology",
+            description: "Annual International Conference on Optics, Photonics and Laser Technology",
             location: "AMSTERDAM, NETHERLANDS",
-            date: "NOVEMBER 16-18, 2026",
+            date: "November 16-18, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=800&q=80",
             link: "https://opticphotonsummit2026.sciengasummits.com/"
@@ -39,9 +39,9 @@ const meetingsData = {
         {
             id: 4,
             title: "CROPSCIENGSUMMIT2026",
-            description: "Global Summit on Crop Science and Engineering",
+            description: "Annual International Conference on Crop Science and Engineering",
             location: "MARINA BAY, SINGAPORE",
-            date: "DECEMBER 07-09, 2026",
+            date: "December 7-9, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&w=800&q=80",
             link: "https://cropsciengsummit2026.sciengasummits.com/"
@@ -49,9 +49,9 @@ const meetingsData = {
         {
             id: 5,
             title: "CIVILENVSUMMIT2026",
-            description: "Global Summit on Civil Structural and Environmental Science",
+            description: "Annual International Conference on Civil Structural and Environmental Science",
             location: "MARINA BAY, SINGAPORE",
-            date: "DECEMBER 07-09, 2026",
+            date: "December 7-9, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80",
             link: "https://civilenvsummit2026.sciengasummits.com/"
@@ -59,9 +59,9 @@ const meetingsData = {
         {
             id: 6,
             title: "FOODAGRISUMMIT2026",
-            description: "Global Summit on Food Science Technology and Agriclulture",
+            description: "Annual International Conference on Food Science Technology and Agriclulture",
             location: "MARINA BAY, SINGAPORE",
-            date: "DECEMBER 07-09, 2026",
+            date: "December 7-9, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80",
             link: "https://foodagrisummit2026.sciengasummits.com/"
@@ -71,9 +71,9 @@ const meetingsData = {
         {
             id: 7,
             title: "RENECLIMSUMMIT2026",
-            description: "Global Summit on Renewable Energy and Climate Change",
+            description: "Annual International Conference on Renewable Energy and Climate Change",
             location: "MUNICH, GERMANY",
-            date: "MARCH 23-25, 2027",
+            date: "March 23-25, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80",
             link: "https://renewableclisummit2026.sciengasummits.com/"
@@ -81,9 +81,9 @@ const meetingsData = {
         {
             id: 8,
             title: "POWERENGSUMMIT2026",
-            description: "Global Summit on Power Energy and Electrical Engineering",
+            description: "Annual International Conference on Power Energy and Electrical Engineering",
             location: "MUNICH, GERMANY",
-            date: "MARCH 23-25, 2027",
+            date: "March 23-25, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
             link: "https://powerengsummit2026.sciengasummits.com/"
@@ -91,9 +91,9 @@ const meetingsData = {
         {
             id: 9,
             title: "CLEANENGTECHSUMMIT2026",
-            description: "Global Summit on Clean Energy and Sustainable Technologies",
+            description: "Annual International Conference on Clean Energy and Sustainable Technologies",
             location: "MUNICH, GERMANY",
-            date: "MARCH 23-25, 2027",
+            date: "March 23-25, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
             link: "https://cleanengtechsummit2026.sciengasummits.com/"
@@ -101,9 +101,9 @@ const meetingsData = {
         {
             id: 10,
             title: "ASTROSPACESUMMIT2026",
-            description: "Global Summit on Astronomy, Astrophysics and Space Science",
+            description: "Annual International Conference on Astronomy, Astrophysics and Space Science",
             location: "TOKYO, JAPAN",
-            date: "APRIL 12-14, 2027",
+            date: "April 12-14, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
             link: "https://astrospacesummit2026.sciengasummits.com/"
@@ -111,19 +111,19 @@ const meetingsData = {
         {
             id: 11,
             title: "LIUTEXSUMMIT2026",
-            description: "Global Summit on Liutex and Vortex Identification",
+            description: "Annual International Conference on Liutex and Vortex Identification",
             location: "CANADA",
-            date: "APRIL 12-14, 2027",
-            year: "2027",
+            date: "December 14-16, 2026",
+            year: "2026",
             image: meetingLiutex,
             link: "https://liutexsummit2026.sciengasummits.com/"
         },
         {
             id: 13,
             title: "AIROBOTMLSUMMIT2026",
-            description: "Global Summit on AI, Robotics, and Machine Learning",
+            description: "Annual International Conference on AI, Robotics, and Machine Learning",
             location: "SEOUL, SOUTH KOREA",
-            date: "MAY 10-12, 2027",
+            date: "May 10-12, 2027",
             year: "2027",
             image: meeting12,
             link: "https://airobotmlsummit2026.sciengasummits.com/"
@@ -131,9 +131,9 @@ const meetingsData = {
         {
             id: 14,
             title: "CONDENSEDPHYSSUMMIT2026",
-            description: "Global Summit on Condensed Matter & Applied Physics",
+            description: "Annual International Conference on Condensed Matter & Applied Physics",
             location: "SEOUL, SOUTH KOREA",
-            date: "MAY 10-12, 2027",
+            date: "May 10-12, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
             link: "https://condensedphyssummit2026.sciengasummits.com/"
@@ -141,9 +141,9 @@ const meetingsData = {
         {
             id: 15,
             title: "CYBERQUANTUMSUMMIT2026",
-            description: "Global Summit on Cybersecurity and Quantum Computing",
+            description: "Annual International Conference on Cybersecurity and Quantum Computing",
             location: "SEOUL, SOUTH KOREA",
-            date: "MAY 10-12, 2027",
+            date: "May 10-12, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80",
             link: "https://cyberquantumsummit2026.sciengasummits.com/"
@@ -151,9 +151,9 @@ const meetingsData = {
         {
             id: 16,
             title: "HEALTHMEDSUMMIT2026/GLOHEALTHSUMMIT2026",
-            description: "Global Summit on Public Health and Preventive Medicine",
+            description: "Annual International Conference on Public Health and Preventive Medicine",
             location: "LONDON, UK",
-            date: "JUNE 07-09, 2027",
+            date: "June 7-9, 2027",
             year: "2027",
             image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
             link: "https://healthmedsummit2026.sciengasummits.com/"
@@ -163,9 +163,9 @@ const meetingsData = {
         {
             id: 12,
             title: "FLUIDTURBOSUMMIT2026",
-            description: "Global Summit on Fluid Mechanics and Turbomachinery",
+            description: "Annual International Conference on Fluid Mechanics and Turbomachinery",
             location: "TOKYO, JAPAN",
-            date: "APRIL 12-14, 2028",
+            date: "April 12-14, 2028",
             year: "2028",
             image: meeting13,
             link: "https://fluidturbosummit2026.sciengasummits.com/"
