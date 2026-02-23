@@ -16,7 +16,7 @@ const Logo = ({ className = '', linkTo = '/', onClick }) => {
                 </div>
             </div>
             <div className="logo-text-container">
-                <span className="logo-text-main">LIUTEXSUMMIT2026</span>
+                <span className="logo-text-main">LIUTEX2026</span>
             </div>
         </Link>
     );

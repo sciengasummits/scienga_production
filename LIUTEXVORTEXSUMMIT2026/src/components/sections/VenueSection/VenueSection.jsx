@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import './VenueSection.css';
+import heroImg from '../../../assets/images/Hero.png';
 
 const venues = [
     {
         id: 1,
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1540575861501-7ad05823c93e?w=1920&q=80", // Large Conference Hall
+        local: heroImg
     },
     {
         id: 2,
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1512470876302-972fad2aa9dd?w=1920&q=80", // European Canal Scene
+        local: heroImg
     },
     {
         id: 3,
-        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80", // Modern Conference Forum
+        local: heroImg
     },
     {
         id: 4,
-        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
+        image: heroImg, // Original Group Photo
+        local: heroImg
     }
 ];
 
@@ -51,21 +57,37 @@ const VenueSection = () => {
     };
 
     return (
-        <section className="venue" id="venue">
+        <section className="venue" id="venue" style={{ backgroundColor: '#1e293b' }}>
             <div className="venue__slides">
                 {venues.map((venue, index) => (
                     <div
                         key={venue.id}
                         className={`venue__slide ${index === activeVenue ? 'active' : ''} ${index === activeVenue ? direction : ''}`}
-                        style={{ backgroundImage: `url(${venue.image})` }}
                     >
+                        <img
+                            src={venue.image}
+                            alt={`Venue view showing ${venue.id}`}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = venue.local || heroImg;
+                            }}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                display: 'block',
+                                position: 'relative',
+                                zIndex: 0
+                            }}
+                        />
+                        <div className="venue__overlay"></div>
                     </div>
                 ))}
             </div>
 
             <div className="venue__controls-bottom">
                 <button className="venue__arrow venue__arrow--left" onClick={goToPrev}>
-                    ‹
+                    <ChevronLeft size={24} />
                 </button>
 
                 <div className="venue__indicators">
@@ -79,7 +101,7 @@ const VenueSection = () => {
                 </div>
 
                 <button className="venue__arrow venue__arrow--right" onClick={goToNext}>
-                    ›
+                    <ChevronRight size={24} />
                 </button>
             </div>
         </section>

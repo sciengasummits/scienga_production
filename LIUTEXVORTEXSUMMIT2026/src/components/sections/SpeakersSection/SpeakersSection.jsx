@@ -11,7 +11,7 @@ const SpeakersSection = ({ showViewAll }) => {
 
     const getDisplayCategory = (category) => {
         if (category === 'Student') return 'Student Speaker';
-        if (category === 'Committee') return 'Committee Speaker';
+        if (category === 'Committee') return 'Committee';
         return category;
     };
 

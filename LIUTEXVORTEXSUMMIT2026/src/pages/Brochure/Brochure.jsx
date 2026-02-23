@@ -18,19 +18,27 @@ const Brochure = () => {
                     <div className="brochure-grid">
                         <div className="brochure-preview">
                             <div className="preview-card">
-                                <div className="preview-icon">
-                                    <FileText size={64} strokeWidth={1} />
+                                <div className="preview-header">
+                                    <div className="preview-logo-placeholder">LTVS 2026</div>
+                                    <div className="preview-badge">2026 Edition</div>
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>Global Summit on Food Science Technology and Agriculture</h3>
-                                <p>Official Digital Platform Brochure</p>
-                                <div className="preview-badge">2026 Edition</div>
+                                <div className="preview-main">
+                                    <div className="vortex-accent"></div>
+                                    <h3 className="preview-title">Annual International Conference on Liutex and Vortex Identification</h3>
+                                    <div className="preview-divider"></div>
+                                    <p className="preview-subtitle">Official Digital Platform Brochure</p>
+                                </div>
+                                <div className="preview-footer">
+                                    <p>December 14-16, 2026</p>
+                                    <p>Outram, Singapore</p>
+                                </div>
                             </div>
                         </div>
 
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Global Summit on Food Science Technology and Agriculture.
+                                Download the official conference brochure to get comprehensive information about the Annual International Conference on Liutex and Vortex Identification.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 

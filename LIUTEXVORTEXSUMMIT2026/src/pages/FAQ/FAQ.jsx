@@ -13,12 +13,12 @@ const FAQ = () => {
             category: "Registration",
             items: [
                 {
-                    question: "How can I register for the Global Summit on Food Science Technology and Agriculture?",
+                    question: "How can I register for the Annual International Conference on Liutex and Vortex Identification?",
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline."
                 },
                 {
                     question: "Is there a discount for group registrations?",
-                    answer: "Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at contact@foodagrisummit.com for more details."
+                    answer: "Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at contact@liutexvortexsummit.com for more details."
                 },
                 {
                     question: "What is included in the registration fee?",
@@ -56,7 +56,7 @@ const FAQ = () => {
             items: [
                 {
                     question: "Where is the congress taking place?",
-                    answer: "The congress will be held at Marina Bay Sands, Singapore. Detailed venue information and maps are available on the 'Venue' page."
+                    answer: "The congress will be held in  Outram, Singapore. Detailed venue information and maps are available on the 'Venue' page."
                 },
                 {
                     question: "Are there recommended hotels nearby?",

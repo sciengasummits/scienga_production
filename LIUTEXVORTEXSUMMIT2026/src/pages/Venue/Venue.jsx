@@ -2,6 +2,7 @@ import React from 'react';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
 import './Venue.css';
+import vortexImg from '../../assets/images/vortex.jpg';
 
 const Venue = () => {
     const venueFeatures = [
@@ -33,19 +34,19 @@ const Venue = () => {
 
     const nearbyAttractions = [
         {
-            name: 'Marienplatz',
-            distance: '0.5 km',
-            image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&q=80"
+            name: 'Gardens by the Bay',
+            distance: '1.5 km',
+            image: "https://images.unsplash.com/photo-1523013029803-3138b07aa06b?w=800&q=80"
         },
         {
-            name: 'English Garden',
-            distance: '3.2 km',
-            image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800&q=80"
+            name: 'Marina Bay Sands',
+            distance: '2.0 km',
+            image: "https://images.unsplash.com/photo-1549463259-83955610214a?w=800&q=80"
         },
         {
-            name: 'Nymphenburg Palace',
-            distance: '6.5 km',
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Schloss_Nymphenburg.jpg/800px-Schloss_Nymphenburg.jpg"
+            name: 'Singapore Botanic Gardens',
+            distance: '4.5 km',
+            image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80"
         }
     ];
 
@@ -87,38 +88,42 @@ const Venue = () => {
                 <div className="container">
                     <div className="about-city-content">
                         <div className="about-city-text">
-                            <h4 className="section-subtitle">Discover Munich</h4>
+                            <h4 className="section-subtitle">Discover Singapore</h4>
                             <h2 className="section-title">About the Host City</h2>
                             <p className="city-description">
-                                Munich is the capital of Bavaria and one of Germany’s most popular destinations. Known for its
-                                rich history, stunning architecture, and vibrant culture, the city seamlessly blends
-                                traditional Bavarian charm with modern innovation.
+                                Singapore is a global hub for education, innovation, and technology. Known for its
+                                stunning skyline, lush green spaces, and diverse cultural heritage, it offers a
+                                unique blend of tradition and modernity.
                             </p>
                             <p className="city-description">
-                                As a major European hub for technology and research, Munich provides world-class
-                                conference facilities and excellent infrastructure. Visitors can explore centuries-old
-                                buildings, numerous museums, and the famous English Garden, making it an ideal location
-                                for international summits.
+                                As one of the world's leading conference destinations, Singapore provides
+                                state-of-the-art facilities and world-class infrastructure. Outram, located in the
+                                historical heart of the city, offers easy access to major business districts and
+                                iconic landmarks.
                             </p>
                             <div className="city-stats">
                                 <div className="stat-box">
-                                    <h3>1.5M+</h3>
+                                    <h3>5.6M+</h3>
                                     <p>Population</p>
                                 </div>
                                 <div className="stat-box">
-                                    <h3>14°C</h3>
+                                    <h3>31°C</h3>
                                     <p>Avg. Temperature</p>
                                 </div>
                                 <div className="stat-box">
-                                    <h3>GMT+1</h3>
+                                    <h3>GMT+8</h3>
                                     <p>Time Zone</p>
                                 </div>
                             </div>
                         </div>
                         <div className="about-city-image">
                             <img
-                                src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80"
-                                alt="Munich City"
+                                src="https://images.unsplash.com/photo-1525625230556-8e8ad8aaad9d?w=800&q=80"
+                                alt="Singapore City"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = vortexImg;
+                                }}
                             />
                         </div>
                     </div>
@@ -129,7 +134,7 @@ const Venue = () => {
             <section className="nearby-attractions section-padding">
                 <div className="container">
                     <div className="text-center mb-5">
-                        <h4 className="section-subtitle">Explore Munich</h4>
+                        <h4 className="section-subtitle">Explore Singapore</h4>
                         <h2 className="section-title">Nearby Attractions</h2>
                         <p className="section-desc">
                             Make the most of your visit with these must-see destinations
@@ -140,7 +145,14 @@ const Venue = () => {
                         {nearbyAttractions.map((attraction, index) => (
                             <div className="attraction-card" key={index}>
                                 <div className="attraction-image">
-                                    <img src={attraction.image} alt={attraction.name} />
+                                    <img
+                                        src={attraction.image}
+                                        alt={attraction.name}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = vortexImg;
+                                        }}
+                                    />
                                     <div className="attraction-distance">{attraction.distance}</div>
                                 </div>
                                 <div className="attraction-info">
@@ -159,7 +171,7 @@ const Venue = () => {
                         Ready to Join Us?
                     </h2>
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-                        Secure your spot at the Global Summit on Food Science Technology and Agriculture and be part of this transformative event
+                        Secure your spot at the Annual International Conference on Liutex and Vortex Identification and be part of this transformative event
                     </p>
                     <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }}>
                         Register Now

@@ -28,7 +28,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Address</h4>
-                                <p>Munich, Germany</p>
+                                <p> Outram, Singapore</p>
                             </div>
                         </div>
 
@@ -48,7 +48,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>contact@renewableenergyconf.com</p>
+                                <p>contact@liutexvortexsummit.com</p>
                             </div>
                         </div>
 

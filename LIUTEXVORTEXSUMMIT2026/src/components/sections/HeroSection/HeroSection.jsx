@@ -14,7 +14,7 @@ const HeroSection = () => {
     });
 
     React.useEffect(() => {
-        const targetDate = new Date('March 23, 2027 09:00:00 GMT+0100').getTime();
+        const targetDate = new Date('December 14, 2026 09:00:00 GMT+0100').getTime();
 
         const interval = setInterval(() => {
             const now = new Date().getTime();
@@ -46,8 +46,8 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span> <br />
-                        LIUTEX AND VORTEX IDENTIFICATION
+                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span>
+                        LIUTEX AND VORTEX <br /> IDENTIFICATION
                     </h1>
 
                     <div className="hero__countdown-header">Days To Go</div>
@@ -71,28 +71,26 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Global Summit on Advanced Materials & Nanotechnology, where global experts unite to shape
-                        the future of material science. Discover ground-breaking technologies, connect with
-                        top researchers, and explore solutions transforming our world.
+                        International Conference on Liutex and Vortex Identification. where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.
                     </p>
                     <div className="hero__actions">
-                        <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
-                        <Button onClick={() => navigate('/register')}>Register Now</Button>
+                        <Button onClick={handleDownloadBrochure}>DOWNLOAD BROCHURE</Button>
+                        <Button onClick={() => navigate('/register')}>REGISTER NOW</Button>
                         <Button onClick={() => navigate('/abstract-submission')}>
-                            Submit Abstract
+                            SUBMIT ABSTRACT
                         </Button>
                     </div>
                 </div>
 
                 <div className="hero__info-cards">
                     <div className="info-card date-card">
-                        <h3>December</h3>
-                        <p>07-09, 2027</p>
+                        <h3> December</h3>
+                        <p>14-16, 2026,</p>
                     </div>
 
                     <div className="info-card venue-card">
                         <h3>Venue</h3>
-                        <p>Event Venue: Marina Bay, Singapore</p>
+                        <p>Event Venue: Outram, Singapore</p>
                     </div>
 
 

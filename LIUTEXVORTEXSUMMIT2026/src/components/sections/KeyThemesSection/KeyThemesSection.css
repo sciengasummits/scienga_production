@@ -1,6 +1,15 @@
 .sessions-schedule-section {
     background-color: #ffffff;
     min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.sessions-schedule-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 /* Layout Container */
