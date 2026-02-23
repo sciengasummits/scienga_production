@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Register.css';
+import { countries } from '../../data/countries';
 
 const Register = ({ isDiscounted = false }) => {
     // State for form fields
@@ -221,14 +222,17 @@ Registration Summary:
                             />
                         </div>
                         <div className="form-row">
-                            <input
-                                type="text"
+                            <select
                                 name="country"
-                                placeholder="Select Country"
                                 className="form-control"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="" disabled>Select Country</option>
+                                {countries.map(country => (
+                                    <option key={country} value={country}>{country}</option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 name="company"

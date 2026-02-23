@@ -52,7 +52,7 @@ const HeroSection = () => {
                 <div className="hero__content">
                     <h1 className="hero__title">
                         <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span>
-                        POWER ENERGY & ELECTRICAL ENGINEERING
+                        POWERENGSUMMIT2026
                     </h1>
 
                     <div className="hero__countdown-wrapper">

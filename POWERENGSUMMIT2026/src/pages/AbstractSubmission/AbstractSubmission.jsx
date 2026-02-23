@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { CalendarDays } from 'lucide-react';
 import './AbstractSubmission.css';
+import { countries } from '../../data/countries';
 
 const AbstractSubmission = () => {
     const [formData, setFormData] = useState({
@@ -118,11 +119,9 @@ const AbstractSubmission = () => {
                                         className="form-control"
                                     >
                                         <option value="" disabled>- Please choose a country -</option>
-                                        <option value="usa">United States</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="canada">Canada</option>
-                                        <option value="germany">Germany</option>
-                                        {/* Add more countries as needed */}
+                                        {countries.map(country => (
+                                            <option key={country} value={country}>{country}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
@@ -139,6 +138,7 @@ const AbstractSubmission = () => {
                                         <option value="oral">Oral Presentation</option>
                                         <option value="poster">Poster Presentation</option>
                                         <option value="workshop">Workshop</option>
+                                        <option value="Student">Student</option>
                                     </select>
                                 </div>
                                 <div className="form-group">

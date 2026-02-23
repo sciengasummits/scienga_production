@@ -164,7 +164,7 @@ export const speakers = [
         name: "Dr. Robert Wilson",
         title: "Conference Chair",
         affiliation: "Global Energy Association",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80"
     },
     {
@@ -172,7 +172,7 @@ export const speakers = [
         name: "Prof. Linda Taylor",
         title: "Technical Program Chair",
         affiliation: "Institute of Electrical Engineers",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?w=400&q=80"
     },
     {
@@ -180,7 +180,7 @@ export const speakers = [
         name: "Dr. James Carter",
         title: "Advisory Board Member",
         affiliation: "Department of Energy, USA",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80"
     },
     {
@@ -188,7 +188,7 @@ export const speakers = [
         name: "Prof. Wei Zhang",
         title: "Scientific Committee Head",
         affiliation: "Shanghai Jiao Tong University",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80"
     },
     {
@@ -196,7 +196,7 @@ export const speakers = [
         name: "Dr. Hans Muller",
         title: "Organizing Committee",
         affiliation: "Technical University of Munich",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80"
     },
     {
@@ -204,7 +204,7 @@ export const speakers = [
         name: "Prof. Anita Singh",
         title: "Regional Chair",
         affiliation: "IIT Delhi",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80"
     },
     {
@@ -212,7 +212,7 @@ export const speakers = [
         name: "Dr. Felipe Santos",
         title: "Publication Chair",
         affiliation: "University of São Paulo",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
     },
     {
@@ -220,10 +220,10 @@ export const speakers = [
         name: "Dr. Sarah O'Connor",
         title: "Finance Chair",
         affiliation: "University of Melbourne",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"
     }
-,
+    ,
     {
         id: 900,
         name: "Andrew Nelson",
@@ -869,7 +869,7 @@ export const speakers = [
         name: "Thomas Brown",
         title: "Research Fellow",
         affiliation: "Harvard University",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80"
     },
     {
@@ -877,7 +877,7 @@ export const speakers = [
         name: "Maria Khan",
         title: "Assistant Professor",
         affiliation: "University of Cambridge",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80"
     },
     {
@@ -885,7 +885,7 @@ export const speakers = [
         name: "Ahmed Perez",
         title: "Research Fellow",
         affiliation: "Imperial College London",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80"
     },
     {
@@ -893,7 +893,7 @@ export const speakers = [
         name: "James Watanabe",
         title: "Ph.D. Candidate",
         affiliation: "Princeton University",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80"
     },
     {
@@ -901,7 +901,7 @@ export const speakers = [
         name: "Ivan Santos",
         title: "Assistant Professor",
         affiliation: "Northwestern University",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80"
     },
     {
@@ -909,7 +909,7 @@ export const speakers = [
         name: "Linda Carter",
         title: "Assistant Professor",
         affiliation: "University of Washington",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80"
     },
     {
@@ -917,7 +917,7 @@ export const speakers = [
         name: "Susan Souza",
         title: "Dr.",
         affiliation: "UCLA",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"
     },
     {
@@ -925,7 +925,7 @@ export const speakers = [
         name: "Brian Smith",
         title: "Dr.",
         affiliation: "UC Berkeley",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80"
     },
     {
@@ -933,7 +933,7 @@ export const speakers = [
         name: "Amanda Adams",
         title: "Research Fellow",
         affiliation: "Duke University",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80"
     },
     {
@@ -941,7 +941,7 @@ export const speakers = [
         name: "Emily Jackson",
         title: "Director",
         affiliation: "MIT",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"
     },
     {
@@ -949,7 +949,7 @@ export const speakers = [
         name: "Ingrid Smith",
         title: "Graduate Student",
         affiliation: "National University of Singapore",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80"
     },
     {
@@ -957,7 +957,7 @@ export const speakers = [
         name: "Liu Adams",
         title: "Director",
         affiliation: "University of Edinburgh",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
     },
     {
@@ -965,7 +965,7 @@ export const speakers = [
         name: "Sakura Khan",
         title: "Professor",
         affiliation: "Imperial College London",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
     },
     {
@@ -973,7 +973,7 @@ export const speakers = [
         name: "Donald Harris",
         title: "Professor",
         affiliation: "University of Sydney",
-        category: "Committee Speaker",
+        category: "Committee",
         image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
     },
 

@@ -801,7 +801,7 @@ export const speakers = [
     },
     {
         "id": 101,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Kadhim Alabady",
         "title": "Professor",
         "affiliation": "University of Alabady",
@@ -809,7 +809,7 @@ export const speakers = [
     },
     {
         "id": 102,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Prof. Qing Ping Xie",
         "title": "Senior Researcher",
         "affiliation": "University of Xie",
@@ -817,7 +817,7 @@ export const speakers = [
     },
     {
         "id": 103,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Sarah Mitchell",
         "title": "Professor",
         "affiliation": "University of Mitchell",
@@ -825,7 +825,7 @@ export const speakers = [
     },
     {
         "id": 104,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Prof. Dr. Ahmed Hassan",
         "title": "Senior Researcher",
         "affiliation": "University of Hassan",
@@ -833,7 +833,7 @@ export const speakers = [
     },
     {
         "id": 105,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Maria Rodriguez",
         "title": "Professor",
         "affiliation": "University of Rodriguez",
@@ -841,7 +841,7 @@ export const speakers = [
     },
     {
         "id": 106,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. James Chen",
         "title": "Senior Researcher",
         "affiliation": "University of Chen",
@@ -849,7 +849,7 @@ export const speakers = [
     },
     {
         "id": 107,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Prof. Dr. Amina Patel",
         "title": "Professor",
         "affiliation": "University of Patel",
@@ -857,7 +857,7 @@ export const speakers = [
     },
     {
         "id": 108,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Michael O'Brien",
         "title": "Senior Researcher",
         "affiliation": "University of O'Brien",
@@ -865,7 +865,7 @@ export const speakers = [
     },
     {
         "id": 109,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Yuki Tanaka",
         "title": "Professor",
         "affiliation": "University of Tanaka",
@@ -873,7 +873,7 @@ export const speakers = [
     },
     {
         "id": 110,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Elena Volkov",
         "title": "Senior Researcher",
         "affiliation": "University of Volkov",
@@ -881,7 +881,7 @@ export const speakers = [
     },
     {
         "id": 111,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Prof. Dr. David Okonkwo",
         "title": "Professor",
         "affiliation": "University of Okonkwo",
@@ -889,7 +889,7 @@ export const speakers = [
     },
     {
         "id": 112,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Robert Smith",
         "title": "Senior Researcher",
         "affiliation": "University of Smith",
@@ -897,7 +897,7 @@ export const speakers = [
     },
     {
         "id": 113,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Emily Davis",
         "title": "Professor",
         "affiliation": "University of Davis",
@@ -905,7 +905,7 @@ export const speakers = [
     },
     {
         "id": 114,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. John Doe",
         "title": "Senior Researcher",
         "affiliation": "University of Doe",
@@ -913,7 +913,7 @@ export const speakers = [
     },
     {
         "id": 115,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Jane Smith",
         "title": "Professor",
         "affiliation": "University of Smith",
@@ -921,7 +921,7 @@ export const speakers = [
     },
     {
         "id": 116,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Alice Johnson",
         "title": "Senior Researcher",
         "affiliation": "University of Johnson",
@@ -929,7 +929,7 @@ export const speakers = [
     },
     {
         "id": 117,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Bob Brown",
         "title": "Professor",
         "affiliation": "University of Brown",
@@ -937,7 +937,7 @@ export const speakers = [
     },
     {
         "id": 118,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Charlie White",
         "title": "Senior Researcher",
         "affiliation": "University of White",
@@ -945,7 +945,7 @@ export const speakers = [
     },
     {
         "id": 119,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Eve Black",
         "title": "Professor",
         "affiliation": "University of Black",
@@ -953,7 +953,7 @@ export const speakers = [
     },
     {
         "id": 120,
-        "category": "Committee Members",
+        "category": "Committee",
         "name": "Dr. Frank Green",
         "title": "Senior Researcher",
         "affiliation": "University of Green",

@@ -7,7 +7,7 @@ categories = [
     ("Poster Presenter", 20),
     ("Student Speaker", 20),
     ("Delegate", 20),
-    ("Committee Speaker", 20)
+    ("Committee", 20)
 ]
 
 # Existing counts roughly:
@@ -57,7 +57,7 @@ target_counts = {
     "Poster Presenter": 20,
     "Delegate": 20,
     "Student Speaker": 20,
-    "Committee Speaker": 20
+    "Committee": 20
 }
 
 current_counts = {
@@ -66,7 +66,7 @@ current_counts = {
     "Poster Presenter": 3,
     "Delegate": 3,
     "Student Speaker": 8,
-    "Committee Speaker": 6
+    "Committee": 6
 }
 
 generated_code = "export const speakers = [\n"

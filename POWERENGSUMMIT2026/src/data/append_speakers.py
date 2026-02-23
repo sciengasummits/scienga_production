@@ -10,7 +10,7 @@ categories = [
     ("Poster Presenter", 20),
     ("Student Speaker", 20),
     ("Delegate", 20),
-    ("Committee Speaker", 20)
+    ("Committee", 20)
 ]
 
 first_names = ["James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda", "William", "Elizabeth", "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica", "Thomas", "Sarah", "Charles", "Karen", "Christopher", "Nancy", "Daniel", "Lisa", "Matthew", "Margaret", "Anthony", "Betty", "Donald", "Sandra", "Mark", "Ashley", "Paul", "Dorothy", "Steven", "Kimberly", "Andrew", "Emily", "Kenneth", "Donna", "Joshua", "Michelle", "George", "Carol", "Kevin", "Amanda", "Brian", "Melissa", "Edward", "Deborah", "Wei", "Li", "Zhang", "Liu", "Chen", "Yang", "Huang", "Zhao", "Wu", "Zhou", "Ahmed", "Mohamed", "Fatima", "Aisha", "Ali", "Hassan", "Ibrahim", "Yuki", "Hiroshi", "Sakura", "Kenji", "Akira", "Elena", "Dmitry", "Olga", "Ivan", "Maria", "Ana", "Carlos", "Jose", "Luis", "Sofia", "Isabella", "Lucas", "Mateo", "Hans", "Klaus", "Juergen", "Ursula", "Monika", "Lars", "Sven", "Ingrid", "Bjorn", "Astrid"]
@@ -41,7 +41,7 @@ target_counts = {
     "Poster Presenter": 20,
     "Delegate": 20,
     "Student Speaker": 20,
-    "Committee Speaker": 20
+    "Committee": 20
 }
 
 current_counts = {
@@ -50,7 +50,7 @@ current_counts = {
     "Poster Presenter": 3,
     "Delegate": 3,
     "Student Speaker": 8,
-    "Committee Speaker": 6
+    "Committee": 6
 }
 
 next_id = 900 # Safe starting point to avoid ID clashes with existing ones

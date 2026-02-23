@@ -12,12 +12,12 @@ const SpeakersSection = ({ showViewAll }) => {
 
     const getDisplayCategory = (category) => {
         if (category === 'Student') return 'Student Speaker';
-        if (category === 'Committee') return 'Committee Speaker';
+        if (category === 'Committee') return 'Committee';
         return category;
     };
 
     const filteredSpeakers = speakers.filter(speaker => {
-        if (activeCategory === 'Committee') return speaker.category === 'Committee Speaker';
+        if (activeCategory === 'Committee') return speaker.category === 'Committee';
         if (activeCategory === 'Speakers') return true;
         if (activeCategory === 'Posters') return speaker.category === 'Poster Presenter';
         if (activeCategory === 'Students') return speaker.category === 'Student Speaker';

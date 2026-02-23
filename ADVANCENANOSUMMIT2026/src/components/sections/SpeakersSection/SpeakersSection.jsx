@@ -11,12 +11,12 @@ const SpeakersSection = ({ showViewAll }) => {
 
     const getDisplayCategory = (category) => {
         if (category === 'Student') return 'Student Speaker';
-        if (category === 'Committee') return 'Committee Speaker';
+        if (category === 'Committee') return 'Committee';
         return category;
     };
 
     const filteredSpeakers = speakers.filter(speaker => {
-        if (activeCategory === 'Committee') return speaker.category === 'Committee Members';
+        if (activeCategory === 'Committee') return speaker.category === 'Committee';
         if (activeCategory === 'Posters') return speaker.category === 'Poster Speakers';
         if (activeCategory === 'Students') return speaker.category === 'Student Speakers';
         if (activeCategory === 'Delegates') return speaker.category === 'Delegates';
@@ -24,7 +24,7 @@ const SpeakersSection = ({ showViewAll }) => {
         // Logic for 'Speakers' category (approx 80 speakers: Keynote + Plenary + Poster + Delegates)
         // Excluding Committee and Students
         if (activeCategory === 'Speakers') {
-            return !['Committee Members', 'Student Speakers'].includes(speaker.category);
+            return !['Committee', 'Student Speakers'].includes(speaker.category);
         }
         return true;
     }).slice(0, showViewAll ? 8 : speakers.length);

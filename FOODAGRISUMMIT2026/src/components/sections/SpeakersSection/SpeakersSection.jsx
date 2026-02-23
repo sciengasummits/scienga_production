@@ -8,13 +8,11 @@ const SpeakersSection = ({ showViewAll }) => {
     const location = useLocation();
     const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
-
     const getDisplayCategory = (category) => {
         if (category === 'Student') return 'Student Speaker';
-        if (category === 'Committee') return 'Committee Speaker';
+        if (category === 'Committee') return 'Committee';
         return category;
     };
-
     const filteredSpeakers = speakers.filter(speaker => {
         if (activeCategory === 'Committee') return speaker.category === 'Committee';
         if (activeCategory === 'Speakers') return true;
