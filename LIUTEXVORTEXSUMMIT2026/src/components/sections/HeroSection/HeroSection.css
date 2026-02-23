@@ -63,6 +63,7 @@
     /* Light orange accent */
     font-size: 1.8rem;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .hero__desc {
