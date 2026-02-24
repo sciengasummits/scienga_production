@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { countries } from '../../data/countriesData';
 import './Register.css';
+
+
 
 const Register = ({ isDiscounted = false }) => {
     // State for form fields
@@ -30,16 +33,10 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    // const earlyBirdEnd = new Date('2025-10-25');
-    // const standardEnd = new Date('2026-02-16');
+    const earlyBirdEnd = new Date('2026-09-30');
+    const standardEnd = new Date('2026-11-15');
 
-    // For demo/screenshot purpose, let's assume specific dates or just logic
-    // But since the user wants it to look like the screenshot where OnSpot is active:
-    // Today is Feb 17, 2026. Standard ended Feb 16, 2026. So OnSpot is active.
-
-    let activePhase = 'onspot';
-    const earlyBirdEnd = new Date('2025-10-25');
-    const standardEnd = new Date('2026-02-16');
+    let activePhase = 'early';
 
     if (currentDate <= earlyBirdEnd) {
         activePhase = 'early';
@@ -55,6 +52,7 @@ const Register = ({ isDiscounted = false }) => {
         { id: 'delegate', label: 'Delegate Registration', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
         { id: 'poster', label: 'Poster Registration', early: applyDiscount(449), standard: applyDiscount(549), onspot: applyDiscount(649) },
         { id: 'student', label: 'Student', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
+        { id: 'virtual', label: 'Virtual (Online)', early: applyDiscount(199), standard: applyDiscount(249), onspot: applyDiscount(299) },
     ];
 
     const accommodationOptions = [
@@ -206,14 +204,17 @@ Registration Summary:
                             />
                         </div>
                         <div className="form-row">
-                            <input
-                                type="text"
+                            <select
                                 name="country"
-                                placeholder="Select Country"
                                 className="form-control"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="" disabled>Select Country</option>
+                                {countries.map((country, index) => (
+                                    <option key={index} value={country}>{country}</option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 name="company"
@@ -245,17 +246,17 @@ Registration Summary:
                                 <th className="category-header">ACADEMIC</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">October 25, 2025</span>
+                                    <span className="date">SEP 30,2026</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">February 16, 2026</span>
+                                    <span className="date">NOV 15, 2026</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">April 20, 2026</span>
+                                    <span className="date">07 DEC, 2026</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>

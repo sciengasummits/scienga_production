@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { countries } from '../../data/countriesData';
 import { ShieldCheck, RefreshCw } from 'lucide-react';
 import './OnlineRegistration.css';
+
+
 
 const OnlineRegistration = () => {
     const [formData, setFormData] = useState({
@@ -137,11 +140,9 @@ const OnlineRegistration = () => {
                                     className="reg-control"
                                 >
                                     <option value="">Select country</option>
-                                    <option value="USA">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="Switzerland">Switzerland</option>
-                                    <option value="Germany">Germany</option>
-                                    <option value="India">India</option>
+                                    {countries.map((country, index) => (
+                                        <option key={index} value={country}>{country}</option>
+                                    ))}
                                 </select>
                             </div>
 

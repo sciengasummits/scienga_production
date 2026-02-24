@@ -42,18 +42,18 @@ const lastNames = [
 ];
 
 const titles = [
-    "Professor of Medicine", "Senior Research Scientist", "Director of Clinical Trials", "Head of Department",
-    "Associate Professor", "Medical Director", "Chief Medical Officer", "Research Fellow", "Clinical Specialist",
-    "PhD Candidate", "Public Health Advisor", "Laboratory Director", "Principal Investigator", "Senior Lecturer",
-    "Consultant Physician", "Biomedical Engineer", "Geneticist", "Epidemiologist", "Neurologist", "Cardiologist"
+    "Professor of Food Science", "Senior Agricultural Scientist", "Director of Sustainable Farming", "Head of Food Technology",
+    "Associate Professor of Agronomy", "Food Safety Director", "Chief Innovation Officer", "Soil Science Research Fellow", "Agricultural Engineer",
+    "PhD Candidate in Biotechnology", "Sustainable Food Systems Advisor", "Laboratory Director", "Principal Investigator", "Senior Lecturer in Horticulture",
+    "Consultant Food Technologist", "Precision Farming Expert", "Plant Geneticist", "Food Microbiologist", "Animal Nutrition Specialist", "Aquaculture Researcher"
 ];
 
 const affiliations = [
-    "Harvard Medical School", "Johns Hopkins University", "Stanford University", "University of Oxford",
-    "Mayo Clinic", "Cleveland Clinic", "University of Cambridge", "Imperial College London", "University of Toronto",
-    "Karolinska Institute", "University of Melbourne", "National Institutes of Health", "World Health Organization",
-    "Centers for Disease Control", "Pasteur Institute", "Charité - Universitätsmedizin Berlin", "Singapore General Hospital",
-    "University of Tokyo", "Heidelberg University", "ETH Zurich"
+    "Wageningen University & Research", "UC Davis College of Agricultural and Environmental Sciences", "Cornell College of Agriculture and Life Sciences", "University of Reading",
+    "ETH Zurich - Department of Environmental Systems Science", "Nanjing Agricultural University", "The University of Tokyo - Faculty of Agriculture", "University of Queensland",
+    "International Food Policy Research Institute", "Food and Agriculture Organization (FAO)", "CGIAR Consortium", "National Institute of Food and Agriculture",
+    "INRAE France", "University of Copenhagen", "Swedish University of Agricultural Sciences", "Texas A&M AgriLife", "Singapore Institute of Food and Biotechnology Innovation",
+    "Kyoto University - Graduate School of Agriculture", "University of Illinois at Urbana-Champaign", "Massey University"
 ];
 
 const categories = ["Keynote Speakers", "Plenary Speakers", "Poster Presenter", "Student", "Delegate", "Committee"];

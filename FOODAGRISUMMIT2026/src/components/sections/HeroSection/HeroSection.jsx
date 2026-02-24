@@ -14,7 +14,7 @@ const HeroSection = () => {
     });
 
     React.useEffect(() => {
-        const targetDate = new Date('March 23, 2027 09:00:00 GMT+0100').getTime();
+        const targetDate = new Date('December 07, 2026 09:00:00 GMT+0800').getTime();
 
         const interval = setInterval(() => {
             const now = new Date().getTime();
@@ -73,8 +73,8 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Global Summit on Advanced Materials & Nanotechnology, where global experts unite to shape
-                        the future of material science. Discover ground-breaking technologies, connect with
+                        Annual International Conference on Food Science Technology and Agriculture, where global experts unite to shape
+                        the future of food science and agricultural innovation. Discover ground-breaking technologies, connect with
                         top researchers, and explore solutions transforming our world.
                     </p>
                     <div className="hero__actions">
@@ -89,7 +89,7 @@ const HeroSection = () => {
                 <div className="hero__info-cards">
                     <div className="info-card date-card">
                         <h3>December</h3>
-                        <p>07-09, 2027</p>
+                        <p>07-09, 2026</p>
                     </div>
 
                     <div className="info-card venue-card">

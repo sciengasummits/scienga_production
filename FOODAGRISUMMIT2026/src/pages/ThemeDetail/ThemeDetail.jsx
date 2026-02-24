@@ -1,55 +1,55 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Stethoscope, Heart, Brain, Activity, Microscope, Globe, ArrowLeft } from 'lucide-react';
+import { Factory, Leaf, ShieldCheck, FlaskConical, Cpu, Activity, ArrowLeft } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 
 const themesData = {
-    'primary-care': {
-        title: 'Primary Care',
-        icon: <Stethoscope size={48} />,
-        description: 'Innovations in primary healthcare delivery focusing on patient-centered care, prevention, and community health strategies.',
+    'food-processing': {
+        title: 'Food Processing & Engineering',
+        icon: <Factory size={48} />,
+        description: 'Innovations in food manufacturing, preservation techniques, and engineering solutions for efficient food production.',
         topics: [
-            'Family Medicine', 'Preventive Healthcare', 'Geriatrics', 'Chronic Disease Management', 'Telemedicine in Primary Care'
+            'Post-Harvest Technology', 'Food Packaging Innovations', 'Novel Processing Techniques', 'Automation in Food Production', 'Waste Management'
         ]
     },
-    'cardiology': {
-        title: 'Cardiology',
-        icon: <Heart size={48} />,
-        description: 'Latest research in cardiovascular medicine, including interventional cardiology, heart failure management, and preventive cardiology.',
+    'sustainable-agri': {
+        title: 'Sustainable Agriculture',
+        icon: <Leaf size={48} />,
+        description: 'Focusing on environmentally friendly farming practices, biodiversity, and long-term agricultural sustainability.',
         topics: [
-            'Interventional Cardiology', 'Heart Failure', 'Preventive Cardiology', 'Pediatric Cardiology', 'Cardiac Imaging'
+            'Organic Farming', 'Soil Health Management', 'Water Conservation', 'Agroecology', 'Climate-Resilient Crops'
         ]
     },
-    'neurology': {
-        title: 'Neurology',
-        icon: <Brain size={48} />,
-        description: 'Advancements in treating neurological disorders such as stroke, epilepsy, Alzheimer\'s, and Parkinson\'s disease.',
+    'food-safety': {
+        title: 'Food Safety & Quality Control',
+        icon: <ShieldCheck size={48} />,
+        description: 'Systems and standards ensuring the safety and quality of food from farm to fork.',
         topics: [
-            'Stroke Management', 'Epilepsy Research', 'Neurodegenerative Diseases', 'Neuroimaging', 'Pediatric Neurology'
+            'HACCP and ISO Standards', 'Traceability Systems', 'Food Microbiology', 'Toxicology', 'Global Safety Regulations'
         ]
     },
-    'public-health': {
-        title: 'Public Health',
-        icon: <Globe size={48} />,
-        description: 'Global strategies for public health challenges, epidemiology, and health policy implementation.',
+    'agri-biotech': {
+        title: 'Agricultural Biotechnology',
+        icon: <FlaskConical size={48} />,
+        description: 'Applying biological research and techniques to enhance agricultural productivity and food nutritional value.',
         topics: [
-            'Epidemiology', 'Global Health Policy', 'Infectious Disease Control', 'Health Equity', 'Occupational Health'
+            'Genetic Engineering', 'Biofortification', 'Plant Breeding Innovations', 'Microbial Inoculants', 'Molecular Farming'
         ]
     },
-    'emergency-medicine': {
-        title: 'Emergency Medicine',
+    'nutritional-science': {
+        title: 'Nutritional Science & Dietetics',
         icon: <Activity size={48} />,
-        description: 'Critical care and emergency response protocols, trauma management, and disaster medicine.',
+        description: 'The science of food nutrients, their effects on human health, and dietary strategies for wellness.',
         topics: [
-            'Trauma Care', 'Critical Care Medicine', 'Disaster Response', 'Pediatric Emergency', 'Toxicology'
+            'Functional Foods', 'Personalized Nutrition', 'Nutraceuticals', 'Dietary Assessment', 'Public Health Nutrition'
         ]
     },
-    'clinical-research': {
-        title: 'Clinical Research',
-        icon: <Microscope size={48} />,
-        description: 'Updates from cutting-edge clinical trials, research methodology, and translational medicine.',
+    'smart-farming': {
+        title: 'Smart Farming & IoT',
+        icon: <Cpu size={48} />,
+        description: 'Integrating digital technology and data analytics into farming to optimize productivity and resource use.',
         topics: [
-            'Clinical Trials Methodology', 'Translational Medicine', 'Bioethics', 'Drug Development', 'Data Analysis in Research'
+            'Precision Agriculture', 'Drones in Farming', 'IoT Sensor Networks', 'AI for Yield Prediction', 'Digital Supply Chains'
         ]
     }
 };

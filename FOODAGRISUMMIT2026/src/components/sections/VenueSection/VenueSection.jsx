@@ -4,19 +4,19 @@ import './VenueSection.css';
 const venues = [
     {
         id: 1,
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1525625239513-44a08522b1c3?w=1920&q=80"
     },
     {
         id: 2,
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1549417229-aa67d3263c09?w=1920&q=80"
     },
     {
         id: 3,
-        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1543743336-d8053247bb41?w=1920&q=80"
     },
     {
         id: 4,
-        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1518683412747-fa80ca47c340?w=1920&q=80"
     }
 ];
 

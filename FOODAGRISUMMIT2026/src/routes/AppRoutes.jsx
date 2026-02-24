@@ -4,6 +4,8 @@ import Layout from '../components/common/Layout';
 import Home from '../pages/Home/Home';
 import AbstractSubmission from '../pages/AbstractSubmission/AbstractSubmission';
 import Register from '../pages/Register/Register';
+import OnlineRegistration from '../pages/OnlineRegistration/OnlineRegistration';
+import Unsubscribe from '../pages/Unsubscribe/Unsubscribe';
 import Contact from '../pages/Contact/Contact';
 import Speakers from '../pages/Speakers/Speakers';
 import Venue from '../pages/Venue/Venue';
@@ -14,6 +16,7 @@ import FAQ from '../pages/FAQ/FAQ';
 import VisaInfo from '../pages/VisaInfo/VisaInfo';
 import Brochure from '../pages/Brochure/Brochure';
 import Program from '../pages/Program/Program';
+import DigitalBrochure from '../pages/Brochure/DigitalBrochure';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -43,10 +46,13 @@ const AppRoutes = () => {
                     <Route path="visa-info" element={<VisaInfo />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="register" element={<Register />} />
+                    <Route path="online-registration" element={<OnlineRegistration />} />
+                    <Route path="unsubscribe" element={<Unsubscribe />} />
                     <Route path="register/discount" element={<Register isDiscounted={true} />} />
                     <Route path="brochure" element={<Brochure />} />
                     <Route path="*" element={<div className="section-padding text-center"><h1>404 Not Found</h1></div>} />
                 </Route>
+                <Route path="digital-brochure" element={<DigitalBrochure />} />
             </Routes>
         </>
     );

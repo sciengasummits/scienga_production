@@ -1,9 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Brochure.css';
-import brochurePdf from '../../assets/brochure/World-General-Medicine-Congress-Your-Official-Digital-Platform.pdf';
 import { Download, FileText, CheckCircle } from 'lucide-react';
 
 const Brochure = () => {
+    const navigate = useNavigate();
     return (
         <div className="brochure-page pt-5">
             <div className="page-header">
@@ -21,7 +22,7 @@ const Brochure = () => {
                                 <div className="preview-icon">
                                     <FileText size={64} strokeWidth={1} />
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>Global Summit on Food Science Technology and Agriculture</h3>
+                                <h3 style={{ fontSize: '1.5rem' }}>ANNUAL INTERNATIONAL CONFERENCE FOOD SCIENCE TECHNOLOGY AND AGRICULTURE</h3>
                                 <p>Official Digital Platform Brochure</p>
                                 <div className="preview-badge">2026 Edition</div>
                             </div>
@@ -30,7 +31,7 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Global Summit on Food Science Technology and Agriculture.
+                                Download the official conference brochure to get comprehensive information about the ANNUAL INTERNATIONAL CONFERENCE FOOD SCIENCE TECHNOLOGY AND AGRICULTURE.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 
@@ -58,17 +59,23 @@ const Brochure = () => {
                             </ul>
 
                             <div className="brochure-actions">
-                                <a href={brochurePdf} download="World-General-Medicine-Congress-Brochure.pdf" className="download-btn">
+                                <button
+                                    onClick={() => navigate('/digital-brochure?print=true')}
+                                    className="download-btn"
+                                >
                                     <Download size={20} />
                                     Download Brochure
-                                </a>
-                                <a href={brochurePdf} target="_blank" rel="noopener noreferrer" className="view-btn">
+                                </button>
+                                <button
+                                    onClick={() => navigate('/digital-brochure')}
+                                    className="view-btn"
+                                >
                                     <FileText size={20} />
                                     View Online
-                                </a>
+                                </button>
                             </div>
-                            <p className="download-note mt-3">
-                                * File size: 2.5 MB • Format: PDF • Updated: February 2026
+                            <p className="download-note mt-4">
+                                * Official Digital Platform Guide • Updated: February 2026
                             </p>
                         </div>
                     </div>
