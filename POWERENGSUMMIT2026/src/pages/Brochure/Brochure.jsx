@@ -21,7 +21,7 @@ const Brochure = () => {
                                 <div className="preview-icon">
                                     <FileText size={64} strokeWidth={1} />
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>Global Summit on Clean Energy and Sustainable Technologies</h3>
+                                <h3 style={{ fontSize: '1.5rem' }}>ANNUAL INTERNATIONAL CONFERENCE ON POWERENGSUMMIT2026</h3>
                                 <p>Official Digital Platform Brochure</p>
                                 <div className="preview-badge">2027 Edition</div>
                             </div>
@@ -30,10 +30,8 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Global Summit on Clean Energy and Sustainable Technologies.
-                                It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
+                                Download the official conference brochure to get comprehensive information about the ANNUAL INTERNATIONAL CONFERENCE ON POWERENGSUMMIT2026. It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
-
                             <ul className="brochure-features mb-5">
                                 <li>
                                     <CheckCircle size={20} className="feature-icon" />

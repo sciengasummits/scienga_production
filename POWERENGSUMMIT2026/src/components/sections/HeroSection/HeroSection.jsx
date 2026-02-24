@@ -78,7 +78,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Global Summit on Power Energy and Electrical Engineering, where global experts unite to shape
+                        ANNUAL INTERNATIONAL CONFERENCE ON Power Energy and Electrical Engineering, where global experts unite to shape
                         the future of sustainable energy. Discover ground-breaking power technologies, connect with
                         top industry professionals, and explore solutions transforming our planet's energy grid.
                     </p>

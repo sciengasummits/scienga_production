@@ -31,10 +31,8 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    const earlyBirdEnd = new Date('2025-10-25');
-    const standardEnd = new Date('2026-02-16');
-    // const earlyBirdEnd = new Date('2026-10-25');
-    // const standardEnd = new Date('2027-02-16');
+    const earlyBirdEnd = new Date('2026-10-25');
+    const standardEnd = new Date('2027-02-16');
 
     let activePhase;
 
@@ -53,6 +51,7 @@ const Register = ({ isDiscounted = false }) => {
         { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
         { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
         { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+        { id: 'student-virtual', label: 'Virtual (Online)', early: 199, standard: 249, onspot: 299 },
     ];
 
     const academicPricing = baseAcademicPricing.map(item => ({

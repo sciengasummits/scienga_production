@@ -69,7 +69,7 @@ const StatsSection = () => {
 
 
                 <div className="text-center mb-5">
-                    <h2 className="section-title" style={{ marginBottom: '3rem', color: 'var(--color-text-header)' }}>CLEANENGTECH SUMMITS CONFERENCES APPROACH</h2>
+                    <h2 className="section-title" style={{ marginBottom: '3rem', color: 'var(--color-text-header)' }}>SCIENGA SUMMITS CONFERENCES APPROACH</h2>
                 </div>
 
                 <div className="stats-grid">

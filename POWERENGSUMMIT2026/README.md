@@ -1,6 +1,6 @@
-# Global Summit on Renewable Energy & Climate Change
+# ANNUAL INTERNATIONAL CONFERENCE ON POWERENGSUMMIT2026
 
-A comprehensive web application designed for the Global Summit on Renewable Energy & Climate Change, facilitating event management, attendee registration, and information dissemination.
+A comprehensive web application designed for the ANNUAL INTERNATIONAL CONFERENCE ON POWERENGSUMMIT2026, facilitating event management, attendee registration, and information dissemination.
 
 ## Features
 

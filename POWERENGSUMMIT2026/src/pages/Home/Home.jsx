@@ -4,6 +4,7 @@ import UniversitiesMarquee from '../../components/sections/UniversitiesMarquee/U
 import AboutSection from '../../components/sections/AboutSection/AboutSection';
 import KeyThemesSection from '../../components/sections/KeyThemesSection/KeyThemesSection';
 import SpeakersSection from '../../components/sections/SpeakersSection/SpeakersSection';
+import PricingSection from '../../components/sections/PricingSection/PricingSection';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import SponsorsSection from '../../components/sections/SponsorsSection/SponsorsSection';
 import StatsSection from '../../components/sections/StatsSection/StatsSection';
@@ -17,6 +18,7 @@ const Home = () => {
             <AboutSection />
             <StatsSection />
             <SpeakersSection showViewAll={true} />
+            <PricingSection />
             <KeyThemesSection showLearnMore={true} />
             <VenueSection />
             <SponsorsSection />
