@@ -1,49 +1,49 @@
 export const speakers = [
     {
         id: 1,
-        name: "Dr. Kadhim Alabady",
-        title: "Senior Food Safety Specialist",
-        affiliation: "International Food Policy Research Institute",
+        name: "Prof. Chaoqun Liu",
+        title: "Distinguished Professor",
+        affiliation: "University of Texas at Arlington, USA",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80"
     },
     {
         id: 2,
-        name: "Assoc. Prof. Dr. Suriyadeo Tripathi",
-        title: "Director of Agricultural Innovation",
-        affiliation: "Institute for Sustainable Agriculture",
+        name: "Prof. Yifei Chen",
+        title: "Professor of Fluid Mechanics",
+        affiliation: "Tsinghua University, China",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"
     },
     {
         id: 3,
-        name: "Prof. Qing Ping Xie",
-        title: "Head of Food Engineering",
-        affiliation: "Academy of Agricultural Sciences, China",
+        name: "Dr. James C. Williams",
+        title: "Senior Research Scientist",
+        affiliation: "NASA Langley Research Center, USA",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80"
     },
     {
         id: 4,
-        name: "Dr. Sarah Mitchell",
-        title: "Professor of Plant Genetics",
-        affiliation: "University of California, Davis",
+        name: "Prof. Sarah Mitchell",
+        title: "Professor of Computational Physics",
+        affiliation: "University of Cambridge, UK",
         category: "Plenary Speaker",
         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80"
     },
     {
         id: 5,
         name: "Prof. Dr. Ahmed Hassan",
-        title: "Professor of Soil Science",
-        affiliation: "Cairo University Faculty of Engineering, Egypt",
+        title: "Head of Aerospace Engineering",
+        affiliation: "Cairo University, Egypt",
         category: "Plenary Speaker",
         image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80"
     },
     {
         id: 6,
         name: "Dr. Maria Rodriguez",
-        title: "Director of Food Technology",
-        affiliation: "Barcelona Agrifood Research Center, Spain",
+        title: "Director of CFD Research",
+        affiliation: "Technical University of Munich, Germany",
         category: "Plenary Speaker",
         image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80"
     },

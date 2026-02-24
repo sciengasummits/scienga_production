@@ -23,7 +23,7 @@
 }
 
 .preview-card {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: radial-gradient(circle at center, #03045e 0%, #03045e 100%);
     color: white;
     width: 280px;
     height: 400px;
@@ -37,7 +37,7 @@
         inset 0 0 100px rgba(255, 255, 255, 0.05);
     position: relative;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(3, 4, 94, 0.2);
     cursor: default;
     overflow: hidden;
     transform-style: preserve-3d;
@@ -72,7 +72,7 @@
     font-weight: 800;
     font-size: 0.8rem;
     letter-spacing: 1px;
-    color: #fdba74;
+    color: var(--color-primary-start);
 }
 
 .preview-main {
@@ -89,7 +89,7 @@
     position: absolute;
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(3, 4, 94, 0.3) 0%, transparent 70%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -110,7 +110,7 @@
 .preview-divider {
     width: 30px;
     height: 3px;
-    background: #f97316;
+    background: var(--color-primary-start);
     margin-bottom: 1rem;
 }
 
@@ -132,8 +132,8 @@
 }
 
 .preview-badge {
-    background: #f97316;
-    color: white;
+    background: var(--color-primary-start);
+    color: var(--color-white);
     font-size: 0.6rem;
     font-weight: 900;
     padding: 3px 8px;
@@ -157,7 +157,7 @@
     left: 0;
     width: 60px;
     height: 4px;
-    background: #f97316;
+    background: var(--color-primary-start);
     border-radius: 2px;
 }
 
@@ -178,7 +178,7 @@
 }
 
 .feature-icon {
-    color: #f97316;
+    color: var(--color-primary-start);
     flex-shrink: 0;
     margin-top: 0.2rem;
 }
@@ -206,16 +206,16 @@
 }
 
 .download-btn {
-    background: #f97316;
+    background: var(--color-primary-gradient);
     color: white;
-    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 4px 15px rgba(3, 4, 94, 0.3);
     border: none;
 }
 
 .download-btn:hover {
-    background: #ea580c;
+    background: linear-gradient(90deg, #03045e, #03045e);
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+    box-shadow: 0 8px 25px rgba(3, 4, 94, 0.4);
 }
 
 .view-btn {
@@ -225,9 +225,9 @@
 }
 
 .view-btn:hover {
-    border-color: #f97316;
-    color: #f97316;
-    background: #fffaf5;
+    border-color: var(--color-primary-start);
+    color: var(--color-primary-start);
+    background: var(--color-bg-light);
     transform: translateY(-3px);
 }
 

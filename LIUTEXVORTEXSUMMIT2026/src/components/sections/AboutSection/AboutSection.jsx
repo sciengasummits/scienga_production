@@ -1,15 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CalendarDays, CheckCircle, Clock, Star } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './AboutSection.css';
 
 const AboutSection = () => {
+    const navigate = useNavigate();
     return (
         <section className="about section-padding" id="about">
             <div className="container about__container">
                 {/* Left Side: Content */}
                 <div className="about__content">
-                    <h4 className="section-subtitle">Liutex and Vortex Identification and Its Applications</h4>
+                    <h4 className="section-subtitle">Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</h4>
                     <h2 className="section-title">About The Conference</h2>
                     <p className="about__text">
                         The <strong>Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</strong> is a premier international platform dedicated to advancing the understanding of Liutex theory and its transformative applications in vortex identification and vortex dynamics.
@@ -37,10 +39,12 @@ const AboutSection = () => {
                         <li>Data-Driven and AI Approaches in Flow Field Identification</li>
                     </ul>
 
-
+                    <div className="about__actions" style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
+                        <Button onClick={() => navigate('/program')}>LEARN MORE</Button>
+                        <Button variant="secondary" onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                    </div>
                 </div>
 
-                {/* Right Side: Important Dates */}
                 {/* Right Side: Important Dates */}
                 <div className="about__dates-wrapper">
                     <div className="premium-dates-container">

@@ -1,9 +1,16 @@
 import React from 'react';
 import './Brochure.css';
-import brochurePdf from '../../assets/brochure/World-General-Medicine-Congress-Your-Official-Digital-Platform.pdf';
+import { useNavigate } from 'react-router-dom';
 import { Download, FileText, CheckCircle } from 'lucide-react';
+import Button from '../../components/common/Button/Button';
 
 const Brochure = () => {
+    const navigate = useNavigate();
+
+    const handleDownloadClick = (e) => {
+        e.preventDefault();
+        alert("The full PDF brochure is currently being updated for the 2026 Edition. Please use the 'View Online' button to see the digital version.");
+    };
     return (
         <div className="brochure-page pt-5">
             <div className="page-header">
@@ -24,9 +31,9 @@ const Brochure = () => {
                                 </div>
                                 <div className="preview-main">
                                     <div className="vortex-accent"></div>
-                                    <h3 className="preview-title">Annual International Conference on Liutex and Vortex Identification</h3>
+                                    <h3 className="preview-title">Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</h3>
                                     <div className="preview-divider"></div>
-                                    <p className="preview-subtitle">Official Digital Platform Brochure</p>
+                                    <p className="preview-subtitle">Official Conference Brochure</p>
                                 </div>
                                 <div className="preview-footer">
                                     <p>December 14-16, 2026</p>
@@ -38,7 +45,7 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Annual International Conference on Liutex and Vortex Identification.
+                                Download the official conference brochure to get comprehensive information about the Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 
@@ -66,14 +73,14 @@ const Brochure = () => {
                             </ul>
 
                             <div className="brochure-actions">
-                                <a href={brochurePdf} download="World-General-Medicine-Congress-Brochure.pdf" className="download-btn">
-                                    <Download size={20} />
+                                <Button onClick={handleDownloadClick}>
+                                    <Download size={20} style={{ marginRight: '8px' }} />
                                     Download Brochure
-                                </a>
-                                <a href={brochurePdf} target="_blank" rel="noopener noreferrer" className="view-btn">
-                                    <FileText size={20} />
+                                </Button>
+                                <Button variant="secondary" onClick={() => navigate('/digital-brochure')}>
+                                    <FileText size={20} style={{ marginRight: '8px' }} />
                                     View Online
-                                </a>
+                                </Button>
                             </div>
                             <p className="download-note mt-3">
                                 * File size: 2.5 MB • Format: PDF • Updated: February 2026

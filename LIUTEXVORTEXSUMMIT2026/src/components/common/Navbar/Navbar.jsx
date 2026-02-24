@@ -88,7 +88,7 @@ const Navbar = () => {
                     </button>
                 </div>
 
-                <div className="navbar__divider"></div>
+
 
                 <div className="navbar__bottom">
                     <div className={`navbar__links ${isMobileMenuOpen ? 'navbar__links--active' : ''}`}>

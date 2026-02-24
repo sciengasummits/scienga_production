@@ -82,11 +82,12 @@ export default function SponsorsSection() {
                         Promoting & Media Partners
                     </h2>
                     <div style={{
-                        width: '60px',
+                        width: '80px',
                         height: '4px',
-                        background: 'var(--brand-gradient, linear-gradient(135deg, #0F172A 0%, #1E40AF 100%))',
+                        background: 'var(--color-primary-gradient)',
                         margin: '0 auto',
-                        borderRadius: '2px'
+                        borderRadius: '4px',
+                        boxShadow: '0 2px 10px rgba(3, 4, 94, 0.2)'
                     }}></div>
                 </div>
 

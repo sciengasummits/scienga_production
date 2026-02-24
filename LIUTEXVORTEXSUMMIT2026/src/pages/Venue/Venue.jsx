@@ -1,10 +1,11 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
 import './Venue.css';
 import vortexImg from '../../assets/images/vortex.jpg';
 
 const Venue = () => {
+    const navigate = useNavigate();
     const venueFeatures = [
         {
             title: 'World-Class Facilities',
@@ -36,12 +37,12 @@ const Venue = () => {
         {
             name: 'Gardens by the Bay',
             distance: '1.5 km',
-            image: "https://images.unsplash.com/photo-1523013029803-3138b07aa06b?w=800&q=80"
+            image: "https://www.bing.com/th/id/OIP.d4BXWuPhEaobxhJHDsmpfgHaE8?w=238&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
         },
         {
             name: 'Marina Bay Sands',
             distance: '2.0 km',
-            image: "https://images.unsplash.com/photo-1549463259-83955610214a?w=800&q=80"
+            image: "https://www.bing.com/th/id/OIP.w-__LWQfcodvks2nfUOsdAHaEj?w=252&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
         },
         {
             name: 'Singapore Botanic Gardens',
@@ -118,11 +119,11 @@ const Venue = () => {
                         </div>
                         <div className="about-city-image">
                             <img
-                                src="https://images.unsplash.com/photo-1525625230556-8e8ad8aaad9d?w=800&q=80"
-                                alt="Singapore City"
+                                src="https://tse3.mm.bing.net/th/id/OIP.jJNZIfQn_INbB0uopJI_vgHaFH?w=1024&h=708&rs=1&pid=ImgDetMain&o=7&rm=3"
+                                alt="Singapore City Skyline"
+                                style={{ borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.2)', width: '100%', height: 'auto', display: 'block' }}
                                 onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = vortexImg;
+                                    e.target.src = "https://tse3.mm.bing.net/th/id/OIP.jJNZIfQn_INbB0uopJI_vgHaFH?w=1024&h=708&rs=1&pid=ImgDetMain&o=7&rm=3";
                                 }}
                             />
                         </div>
@@ -165,17 +166,21 @@ const Venue = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="venue-cta section-padding" style={{ background: 'var(--color-primary-gradient)' }}>
+            <section className="venue-cta section-padding">
                 <div className="container text-center">
-                    <h2 className="cta-title" style={{ color: 'white', marginBottom: '1rem' }}>
+                    <h2 className="cta-title">
                         Ready to Join Us?
                     </h2>
-                    <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-                        Secure your spot at the Annual International Conference on Liutex and Vortex Identification and be part of this transformative event
+                    <p className="cta-desc">
+                        Secure your spot at the Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics and be part of this transformative event
                     </p>
-                    <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }}>
-                        Register Now
-                    </Button>
+                    <div className="cta-action">
+                        <Button
+                            onClick={() => navigate('/register')}
+                        >
+                            Register Now
+                        </Button>
+                    </div>
                 </div>
             </section>
         </div>

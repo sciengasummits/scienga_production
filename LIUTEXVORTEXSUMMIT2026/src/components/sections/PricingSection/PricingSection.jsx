@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
+import Button from '../../common/Button/Button';
 import './PricingSection.css';
 
 const PricingSection = () => {
+    const navigate = useNavigate();
     const pricingData = [
         {
             title: "Speaker",
@@ -75,7 +77,12 @@ const PricingSection = () => {
                                 </ul>
                             </div>
                             <div className="pricing-card-footer">
-                                <Link to="/register" className="btn-register-home">REGISTER NOW</Link>
+                                <Button
+                                    className="w-100"
+                                    onClick={() => navigate('/register')}
+                                >
+                                    REGISTER NOW
+                                </Button>
                             </div>
                         </div>
                     ))}

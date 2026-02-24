@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Minus, Search } from 'lucide-react';
+import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
 import './FAQ.css';
@@ -13,7 +13,7 @@ const FAQ = () => {
             category: "Registration",
             items: [
                 {
-                    question: "How can I register for the Annual International Conference on Liutex and Vortex Identification?",
+                    question: "How can I register for the Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics?",
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline."
                 },
                 {
@@ -169,7 +169,9 @@ const FAQ = () => {
                             <h3>Still have questions?</h3>
                             <p>Can't find the answer you're looking for? Please chat to our friendly team.</p>
                             <Link to="/contact">
-                                <Button variant="primary">Contact Support</Button>
+                                <Button>
+                                    <MessageCircle size={18} style={{ marginRight: '8px' }} /> Contact Support
+                                </Button>
                             </Link>
                         </div>
                     </div>

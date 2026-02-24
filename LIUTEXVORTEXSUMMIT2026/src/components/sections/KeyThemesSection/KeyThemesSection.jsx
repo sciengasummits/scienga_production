@@ -1,61 +1,58 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    Sun,
+    Activity,
     Wind,
     Zap,
     Droplet,
-    Leaf,
     Globe,
     ShieldCheck,
-    Thermometer,
-    Recycle,
-    Battery,
-    CloudRain,
     Cpu,
     Anchor,
     Flame,
-    Activity,
-    Factory,
-    Lightbulb,
     BarChart,
-    TreeDeciduous,
-    Mountain,
-    Stethoscope
+    Terminal,
+    Layers,
+    Binary,
+    Boxes,
+    Compass,
+    Settings,
+    Unplug,
+    Trello,
+    Smartphone,
+    Share2,
+    Database,
+    LineChart,
+    Layout,
+    Target,
+    Eye,
+    Mic,
+    Factory
 } from 'lucide-react';
 import './KeyThemesSection.css';
+import Button from '../../common/Button/Button';
 
 const sessionsData = [
-    { title: "Solar Energy & Photovoltaics", icon: Sun },
-    { title: "Wind Energy Technologies", icon: Wind },
-    { title: "Climate Change & Global Warming", icon: Thermometer },
-    { title: "Hydroelectric Power Systems", icon: Droplet },
-    { title: "Bioenergy & Biofuels", icon: Leaf },
-    { title: "Smart Grids & Energy Storage", icon: Battery },
-    { title: "Green Hydrogen Economy", icon: Flame },
-    { title: "Carbon Capture & Storage", icon: CloudRain },
-    { title: "Environmental Policy & Regulation", icon: ShieldCheck },
-    { title: "Electric Vehicles & Clean Transport", icon: Zap },
-    { title: "Geothermal Energy", icon: Mountain },
-    { title: "Ocean & Tidal Energy", icon: Anchor },
-    { title: "Sustainable Urban Planning", icon: Factory },
-    { title: "Waste-to-Energy Systems", icon: Recycle },
-    { title: "AI in Energy Management", icon: Cpu },
-    { title: "Energy Economics & Finance", icon: BarChart },
-    { title: "Circular Economy", icon: Activity },
-    { title: "Nuclear Energy & Safety", icon: Zap },
-    { title: "Climate Adaptation Strategies", icon: Globe },
-    { title: "Forestry & Carbon Sinks", icon: TreeDeciduous },
-    { title: "Energy Efficiency in Industry", icon: Factory },
-    { title: "Advanced Battery Technologies", icon: Battery },
-    { title: "Renewable Energy Integration", icon: Zap },
-    { title: "Meteorology & Climate Modeling", icon: CloudRain },
-    { title: "Sustainable Agriculture & Land Use", icon: Leaf },
-    { title: "Green Building Technologies", icon: Factory },
-    { title: "Environmental Impact Assessment", icon: Activity },
-    { title: "Social Aspects of Climate Change", icon: Globe },
-    { title: "Innovation in Clean Tech", icon: Lightbulb },
-    { title: "Future of Global Energy", icon: Sun },
+    { title: "Fundamentals of Liutex Theory", icon: Compass },
+    { title: "Vortex Identification Methods", icon: Target },
+    { title: "Vector & Tensor Decompositions", icon: Binary },
+    { title: "Omega (Ω) Method Applications", icon: Settings },
+    { title: "Liutex-based Turbulence Modeling", icon: Layers },
+    { title: "Vortex Dynamics in Aerospace", icon: Wind },
+    { title: "CFD & High-Order Methods", icon: Cpu },
+    { title: "AI in Flow Field Identification", icon: Terminal },
+    { title: "Vortex-Induced Vibrations", icon: Activity },
+    { title: "Bio-inspired Vortex Flows", icon: Zap },
+    { title: "Hydrodynamics & Wake Analysis", icon: Droplet },
+    { title: "Oceanic & Atmospheric Vortices", icon: Globe },
+    { title: "Rotating Machinery Dynamics", icon: Factory },
+    { title: "Experimental Flow Visualization", icon: Eye },
+    { title: "Acoustic Noise & Vortex Flow", icon: Mic },
+    { title: "Liutex in Medical Fluid Dynamics", icon: Activity },
+    { title: "Mathematical Vortex Foundations", icon: Boxes },
+    { title: "Complex Flow Topology", icon: Share2 },
+    { title: "RANS/LES/DNS Comparisons", icon: Database },
+    { title: "Vortex Core Tracking Algorithms", icon: Layout },
 ];
 
 const Link = ({ href, children }) => <a href={href}>{children}</a>; // Placeholder if needed
@@ -114,7 +111,7 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                         <div className="sessions-list-container">
                             <ul className="sessions-list-clean">
                                 {displaySessions.map((session, index) => {
-                                    const Icon = session.icon || Stethoscope;
+                                    const Icon = session.icon || Activity;
                                     return (
                                         <li key={index} className="session-item-clean">
                                             <span className="session-icon-small">
@@ -196,9 +193,9 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                 {/* Learn More Button */}
                 {showLearnMore && (
                     <div className="text-center mt-4">
-                        <button className="btn-learn-more" onClick={() => navigate('/sessions')}>
+                        <Button onClick={() => navigate('/sessions')}>
                             Learn More
-                        </button>
+                        </Button>
                     </div>
                 )}
             </div>

@@ -26,7 +26,7 @@ const VisaInfo = () => {
                         <h2 className="visa-main-title">VISA INFORMATION FOR INTERNATIONAL PARTICIPANTS</h2>
 
                         <p className="visa-intro-text">
-                            The <strong>Annual International Conference on Liutex and Vortex Identification</strong> welcomes speakers & delegates from all over the world.
+                            The <strong>Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</strong> welcomes speakers & delegates from all over the world.
                             Below is essential visa-related information to assist with your travel planning to  Outram, Singapore:
                         </p>
 
@@ -88,7 +88,7 @@ const VisaInfo = () => {
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
-                                    <Button type="submit" variant="primary" className="btn-sm">Send Request</Button>
+                                    <Button type="submit" className="btn-send-request">Send Request</Button>
                                 </form>
                             </div>
                         </div>

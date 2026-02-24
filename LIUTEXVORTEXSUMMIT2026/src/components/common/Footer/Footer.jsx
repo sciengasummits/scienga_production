@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
 import './Footer.css';
 
@@ -17,10 +17,9 @@ const Footer = () => {
                             Advancing the science of Liutex-based vortex identification to unlock deeper insights into turbulence and rotational flow dynamics.
                         </p>
                         <div className="footer__socials">
-                            <a href="#" className="social-icon"><Facebook size={20} /></a>
-                            <a href="#" className="social-icon"><Twitter size={20} /></a>
-                            <a href="#" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="#" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
+                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
                         </div>
                     </div>
 
@@ -32,7 +31,7 @@ const Footer = () => {
                             <li><Link to="/sessions">Sessions</Link></li>
                             <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/register/discount">Discount Registration</Link></li>
+                            <li><Link to="/online-registration">Discount Registration</Link></li>
                             <li><Link to="/unsubscribe">Unsubscribe</Link></li>
                         </ul>
                     </div>

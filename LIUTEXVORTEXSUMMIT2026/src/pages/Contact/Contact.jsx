@@ -87,8 +87,8 @@ const Contact = () => {
                                 <label>Message</label>
                                 <textarea rows="5" className="form-control" placeholder="How can we help you?" required></textarea>
                             </div>
-                            <Button type="submit" className="btn-submit-custom">
-                                <Send size={18} /> SEND MESSAGE
+                            <Button type="submit" className="w-100" style={{ marginTop: '1rem' }}>
+                                <Send size={18} style={{ marginRight: '8px' }} /> SEND MESSAGE
                             </Button>
                         </form>
                     </div>

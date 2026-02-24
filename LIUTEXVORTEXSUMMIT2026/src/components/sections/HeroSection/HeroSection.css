@@ -3,28 +3,39 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background-color: #0f172a;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../assets/images/Hero.png');
+    background-color: var(--color-dark-void);
+    background-image: linear-gradient(rgba(3, 4, 94, 0.15), rgba(3, 4, 94, 0.15)), url('../../../assets/images/Hero.png');
     background-size: cover;
     background-position: center;
     color: var(--color-white);
     padding-top: 120px;
     padding-bottom: 120px;
-    /* For fixed navbar and bottom spacing */
     overflow: hidden;
 }
 
-/* Background image overlay for reduced opacity effect */
 .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 70% 30%, #fdba74 0%, transparent 40%),
-        radial-gradient(circle at 20% 80%, #ea580c 0%, transparent 40%);
-    opacity: 0.4;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at center, #ffffff 0%, #03045e 100%),
+        conic-gradient(from 180deg at center, var(--color-dark-void), #03045e, #03045e, var(--color-dark-void));
+    opacity: 0.15;
+    filter: blur(60px);
+    animation: vortexRotate 25s linear infinite;
+}
+
+@keyframes vortexRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .hero__overlay {
@@ -33,7 +44,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.35);
+    background: radial-gradient(circle at center, transparent 30%, rgba(3, 4, 94, 0.5) 100%);
     z-index: 1;
 }
 
@@ -52,25 +63,30 @@
 }
 
 .hero__title {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
     line-height: 1.1;
     margin-bottom: 2rem;
-    font-weight: 800;
+    font-weight: 900;
     color: var(--color-white);
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 20px rgba(3, 4, 94, 0.8), 0 4px 15px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
     max-width: 800px;
 }
 
 .hero__title-sub {
-    color: #fdba74;
+    color: var(--color-white);
     display: block;
     font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 3px;
+    font-weight: 900;
+    /* Max boldness */
+    font-style: normal;
+    /* Perfectly straight */
+    text-shadow: none;
+    /* Sharper visibility */
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    line-height: 1.4;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
 }
 
 .hero__desc {
@@ -79,34 +95,14 @@
     opacity: 0.9;
     line-height: 1.6;
     max-width: 550px;
-    color: rgba(255, 255, 255, 0.95);
+    color: var(--color-white);
 }
 
 .hero__actions {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.hero__actions button,
-.hero__actions .btn {
-    padding: 14px 28px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 50px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-    border: none;
-    color: white;
-}
-
-.hero__actions button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(234, 88, 12, 0.4);
-    filter: brightness(1.1);
+    margin-top: 2rem;
 }
 
 .hero__info-cards {
@@ -130,19 +126,20 @@
 .date-card {
     top: 0;
     left: 0;
-    background: #ff8a4d;
+    background: var(--color-secondary-blue);
     width: 240px;
     text-align: center;
     z-index: 2;
     padding: 2rem 1.5rem;
-    border: none;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(3, 4, 94, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(3, 4, 94, 0.2);
 }
 
 .date-card h3 {
     font-size: 2.4rem;
     margin-bottom: 0.8rem;
     color: var(--color-white);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     font-weight: 800;
 }
 
@@ -151,66 +148,67 @@
     font-weight: 700;
     opacity: 0.95;
     letter-spacing: 1px;
+    color: var(--color-white);
 }
 
 .hero__countdown {
     display: flex;
-    gap: 1.2rem;
+    gap: 2.5rem;
     margin-bottom: 2.5rem;
 }
 
 .hero__countdown-header {
-    font-size: 0.9rem;
-    font-weight: 800;
-    color: var(--color-white);
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 950;
+    font-style: normal;
     letter-spacing: 4px;
+    color: var(--color-white);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
 }
 
 .countdown-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
-    padding: 1.2rem;
-    border-radius: 15px;
-    min-width: 100px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    min-width: 80px;
+    padding: 0;
 }
 
 .countdown-value {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 800;
     line-height: 1;
     color: var(--color-white);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
+    text-shadow: 0 0 15px rgba(3, 4, 94, 0.6);
 }
 
 .countdown-label {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.8);
-    font-weight: 700;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 800;
 }
 
 .venue-card {
     bottom: 60px;
     right: 0;
-    background: #f97316;
+    background: var(--color-dark-void);
     width: 260px;
     z-index: 1;
     padding: 2rem 1.5rem;
-    border: none;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(3, 4, 94, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(3, 4, 94, 0.2);
 }
 
 .venue-card h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: var(--color-white);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     font-weight: 800;
 }
 
@@ -219,6 +217,7 @@
     opacity: 0.95;
     font-weight: 700;
     line-height: 1.5;
+    color: var(--color-white);
 }
 
 .hero__cpd-image {
@@ -295,7 +294,7 @@
 
 @media (max-width: 576px) {
     .hero__title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .hero__title-sub {

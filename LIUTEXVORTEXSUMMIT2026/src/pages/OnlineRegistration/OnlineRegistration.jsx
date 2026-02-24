@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShieldCheck, RefreshCw } from 'lucide-react';
 import './OnlineRegistration.css';
+import { countries } from '../../assets/constants/countries';
 
 const OnlineRegistration = () => {
     const [formData, setFormData] = useState({
@@ -11,14 +12,13 @@ const OnlineRegistration = () => {
         organization: '',
         country: '',
         description: '',
+        amount: ''
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,16 +28,15 @@ const OnlineRegistration = () => {
 
     return (
         <div className="online-reg-page">
-            <div className="reg-top-banner">
+            <div className="page-header">
                 <div className="container">
-                    <div className="reg-tab-wrapper">
-                    </div>
+                    <h1 className="page-title">Online Registration</h1>
+                    <p className="page-breadcrumb">Home / Register / Online</p>
                 </div>
             </div>
 
             <div className="container section-padding">
                 <div className="online-reg-container">
-                    <h1 className="online-reg-title">Registration</h1>
 
                     <div className="stripe-badge-wrapper">
                         <div className="stripe-badge">
@@ -126,11 +125,11 @@ const OnlineRegistration = () => {
                                     className="reg-control"
                                 >
                                     <option value="">Select country</option>
-                                    <option value="USA">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="Switzerland">Switzerland</option>
-                                    <option value="Germany">Germany</option>
-                                    <option value="India">India</option>
+                                    {countries.map((country) => (
+                                        <option key={country} value={country}>
+                                            {country}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -159,7 +158,7 @@ const OnlineRegistration = () => {
 
 
                         <div className="reg-submit-wrapper">
-                            <button type="submit" className="btn-online-register">Register</button>
+                            <button type="submit" className="btn-online-register">Securely Pay Now</button>
                         </div>
                     </form>
                 </div>

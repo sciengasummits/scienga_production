@@ -1,8 +1,10 @@
 import React from 'react';
 import './Sponsors.css';
 import Button from '../../components/common/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Sponsors = () => {
+    const navigate = useNavigate();
     const packages = [
         {
             title: "Platinum Sponsorship",
@@ -105,7 +107,7 @@ const Sponsors = () => {
                         </p>
                     </div>
                     <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                        <Button onClick={() => window.location.href = '/register'}>Pay Now</Button>
+                        <Button onClick={() => navigate('/register')}>Pay Now</Button>
                     </div>
                 </div>
             </div>

@@ -6,22 +6,27 @@ import heroImg from '../../../assets/images/Hero.png';
 const venues = [
     {
         id: 1,
-        image: "https://images.unsplash.com/photo-1540575861501-7ad05823c93e?w=1920&q=80", // Large Conference Hall
+        image: "https://images.unsplash.com/photo-1525625230556-8e8ad8aaad9d?w=1920&q=80", // Singapore Skyline
         local: heroImg
     },
     {
         id: 2,
-        image: "https://images.unsplash.com/photo-1512470876302-972fad2aa9dd?w=1920&q=80", // European Canal Scene
+        image: "https://images.unsplash.com/photo-1540575861501-7ad05823c93e?w=1920&q=80", // Large Conference Hall
         local: heroImg
     },
     {
         id: 3,
-        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80", // Modern Conference Forum
+        image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1920&q=80", // Modern Tech Conference
         local: heroImg
     },
     {
         id: 4,
-        image: heroImg, // Original Group Photo
+        image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&q=80", // Singapore Botanic Gardens (Venue atmosphere)
+        local: heroImg
+    },
+    {
+        id: 5,
+        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80", // Networking/Forum area
         local: heroImg
     }
 ];
@@ -57,7 +62,7 @@ const VenueSection = () => {
     };
 
     return (
-        <section className="venue" id="venue" style={{ backgroundColor: '#1e293b' }}>
+        <section className="venue" id="venue" style={{ backgroundColor: '#083344' }}>
             <div className="venue__slides">
                 {venues.map((venue, index) => (
                     <div

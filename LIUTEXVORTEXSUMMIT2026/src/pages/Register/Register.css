@@ -56,8 +56,8 @@
 
 .form-control:focus {
     outline: none;
-    border-color: #fb923c;
-    box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.1);
+    border-color: var(--color-primary-start);
+    box-shadow: 0 0 0 2px rgba(3, 4, 94, 0.1);
 }
 
 textarea.form-control {
@@ -92,16 +92,16 @@ textarea.form-control {
 }
 
 .pricing-table thead th {
-    background-color: #ea580c;
-    /* Dark Orange matching theme */
+    background-color: var(--color-primary-end);
+    /* Deep Electric Blue */
     color: white;
     font-weight: 600;
     vertical-align: top;
 }
 
 .category-header {
-    background-color: #c2410c !important;
-    /* Slightly darker for category */
+    background-color: var(--color-secondary-blue) !important;
+    /* Deep Ocean Blue */
     text-transform: uppercase;
     font-weight: 700;
 }
@@ -175,7 +175,7 @@ textarea.form-control {
 }
 
 .total-amount {
-    color: #ea580c;
+    color: var(--color-primary-start);
 }
 
 .terms-checkbox {
@@ -201,36 +201,7 @@ textarea.form-control {
     gap: 1rem;
 }
 
-.btn-register,
-.btn-reset {
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    transition: background 0.3s;
-}
 
-.btn-register {
-    background-color: #ea580c;
-    color: white;
-}
-
-.btn-register:hover {
-    background-color: #c2410c;
-}
-
-.btn-reset {
-    background-color: #ea580c;
-    /* Matching screenshot, maybe slightly different in reality but they look similar */
-    color: white;
-}
-
-.btn-reset:hover {
-    background-color: #c2410c;
-}
 
 
 /* Accommodation Section */
@@ -288,7 +259,7 @@ textarea.form-control {
     width: 18px;
     height: 18px;
     cursor: pointer;
-    accent-color: #ea580c;
+    accent-color: var(--color-primary-start);
 }
 
 
@@ -322,12 +293,12 @@ textarea.form-control {
 .pricing-table th.active-header-onspot,
 .pricing-table th.active-header-standard,
 .pricing-table th.active-header-early {
-    background-color: #ffd700 !important;
-    /* Yellow */
-    color: #7c2d12 !important;
-    /* Dark Orange Text */
+    background-color: var(--color-accent-blue) !important;
+    /* Soft Cyan Glow */
+    color: var(--color-dark-void) !important;
+    /* Deepest Blue Text */
     position: relative;
-    border-color: #ffd700;
+    border-color: var(--color-accent-blue);
 }
 
 /* Badge */
@@ -350,17 +321,15 @@ textarea.form-control {
 .pricing-table td.active-cell-onspot,
 .pricing-table td.active-cell-standard,
 .pricing-table td.active-cell-early {
-    background-color: #fffde7 !important;
-    /* Light Yellow */
-    /* border-left: 1px solid #ffd700;
-    border-right: 1px solid #ffd700; */
+    background-color: #ecfeff !important;
+    /* Cyan-50 background */
 }
 
 /* Active Price Text */
 .price-active {
     font-weight: 800;
-    color: #7c2d12;
-    /* Dark Orange similar to header */
+    color: var(--color-dark-void);
+    /* Deepest Blue */
     font-size: 1.05rem;
 }
 
@@ -373,12 +342,10 @@ textarea.form-control {
 
 /* Selected Row Active Cell Highlight */
 .pricing-table td.selected-active-cell {
-    background-color: #ffe082 !important;
-    /* Deeper Amber/Yellow */
-    border: 2px solid #ffa000 !important;
-    /* Darker border */
+    background-color: var(--color-bg-light) !important;
+    border: 2px solid var(--color-primary-start) !important;
     transform: scale(1.02);
     /* Slight pop */
     transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(240, 238, 238, 0.1);
 }

@@ -25,34 +25,23 @@
 }
 
 .pricing-card-header {
-    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    background: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
     color: white;
     padding: 2.5rem 1.5rem;
     text-align: center;
 }
 
-.pricing-card-home:nth-child(2) .pricing-card-header {
-    background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
-}
-
-.pricing-card-home:nth-child(3) .pricing-card-header {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+.pricing-card-home:nth-child(n) .pricing-card-header {
+    background: var(--color-primary-gradient);
 }
 
 /* Overriding to match screenshot orange-dominant theme if needed, 
    but different gradients look more premium. 
    Let's stick to the screenshot's orange theme for all but varied as requested "exact cards" */
 
-.pricing-card-home:nth-child(1) .pricing-card-header {
-    background: linear-gradient(135deg, #ff9933, #ff6633);
-}
-
-.pricing-card-home:nth-child(2) .pricing-card-header {
-    background: linear-gradient(135deg, #ff8c00, #ff4500);
-}
-
-.pricing-card-home:nth-child(3) .pricing-card-header {
-    background: linear-gradient(135deg, #ffa500, #ff8c00);
+/* Standardized pricing headers */
+.pricing-card-home .pricing-card-header {
+    background: var(--color-primary-gradient);
 }
 
 .pkg-title {
@@ -104,7 +93,7 @@
 }
 
 .check-icon {
-    color: #ff6633;
+    color: var(--color-primary-start);
     flex-shrink: 0;
     margin-top: 0.2rem;
 }
@@ -118,7 +107,7 @@
 .btn-register-home {
     display: inline-block;
     padding: 0.8rem 2rem;
-    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    background: var(--color-primary-gradient);
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -126,14 +115,14 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+    box-shadow: 0 4px 15px rgba(3, 4, 94, 0.3);
     width: 100%;
 }
 
 .btn-register-home:hover {
-    background: linear-gradient(90deg, #feb47b, #ff7e5f);
+    filter: brightness(1.2);
     transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(255, 126, 95, 0.4);
+    box-shadow: 0 6px 20px rgba(3, 4, 94, 0.4);
 }
 
 @media (max-width: 992px) {

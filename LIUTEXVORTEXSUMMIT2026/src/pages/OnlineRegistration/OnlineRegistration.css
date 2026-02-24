@@ -3,12 +3,7 @@
     min-height: 100vh;
 }
 
-.reg-top-banner {
-    background-color: #001219;
-    /* Deep blue/black as per screenshot */
-    padding: 60px 0 0;
-    margin-top: 0px;
-}
+/* Removed .reg-top-banner styles as we are using global .page-header */
 
 .reg-banner-content {
     display: flex;
@@ -127,7 +122,7 @@
 
 .reg-control:focus {
     outline: none;
-    border-color: #001219;
+    border-color: var(--color-primary-start);
 }
 
 .reg-control::placeholder {
@@ -214,18 +209,21 @@ select.reg-control {
 }
 
 .btn-online-register {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 5px 20px;
-    font-weight: 600;
-    color: #333;
+    background: var(--color-primary-gradient);
+    border: none;
+    padding: 12px 40px;
+    font-weight: 700;
+    color: #fff;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
+    border-radius: 4px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(3, 4, 94, 0.3);
 }
 
 .btn-online-register:hover {
-    background-color: #f8f9fa;
-    border-color: #999;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(3, 4, 94, 0.4);
 }
 
 /* Mobile Responsiveness */

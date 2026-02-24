@@ -102,17 +102,15 @@
 
 .text-invite-form input {
     flex: 1;
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: 1px solid #ced4da;
-    border-radius: 4px;
+    border-radius: 50px;
     font-size: 0.95rem;
 }
 
-.text-invite-form .btn-sm {
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    text-transform: none;
-    /* Override uppercase if needed for subtlety */
+.btn-send-request {
+    padding: 10px 20px;
+    white-space: nowrap;
 }
 
 /* Responsive */

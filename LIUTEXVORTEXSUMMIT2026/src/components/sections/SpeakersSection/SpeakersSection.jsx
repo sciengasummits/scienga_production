@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { speakers } from '../../../data/speakersData';
+import Button from '../../common/Button/Button';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
+    const navigate = useNavigate();
     const location = useLocation();
     const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
@@ -78,23 +80,25 @@ const SpeakersSection = ({ showViewAll }) => {
                                 <h3 className="speaker-name">{speaker.name}</h3>
                                 <p className="speaker-title">{speaker.title}</p>
                                 <p className="speaker-affiliation">{speaker.affiliation}</p>
-                                <button className="btn-biograph" onClick={() => openModal(speaker)}>
-                                    <User size={16} /> Biography
-                                </button>
+                                <Button
+                                    className="btn-biograph"
+                                    onClick={() => openModal(speaker)}
+                                >
+                                    <User size={16} style={{ marginRight: '8px' }} /> Biography
+                                </Button>
                             </div>
                         </div>
                     ))}
                 </div>
                 {showViewAll && (
                     <div className="text-center mt-5">
-                        <Link
-                            to="/speakers"
-                            state={{ category: activeCategory }}
+                        <Button
                             className="btn-biograph"
-                            style={{ textDecoration: 'none', display: 'inline-flex', marginTop: '2rem' }}
+                            onClick={() => navigate('/speakers', { state: { category: activeCategory } })}
+                            style={{ marginTop: '2rem' }}
                         >
                             Show More
-                        </Link>
+                        </Button>
                     </div>
                 )}
             </div>

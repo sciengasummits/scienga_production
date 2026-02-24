@@ -28,7 +28,7 @@
     top: 0;
     right: -2px;
     color: var(--color-primary-start);
-    /* Orange accent */
+    /* Electric blue vortex accent */
     animation: heartPulse 1.5s infinite;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .logo-text-main {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--color-text-dark);
@@ -96,6 +96,5 @@
 }
 
 .footer__coll-logo .logo-text-sub {
-    color: #fdba74;
-    /* Light orange for dark background */
+    color: var(--color-primary-start);
 }

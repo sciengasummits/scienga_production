@@ -7,7 +7,7 @@
 
 .section-subtitle {
     display: block;
-    color: var(--color-primary-start);
+    color: var(--color-secondary-blue);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -71,11 +71,12 @@
 }
 
 .header-decoration {
-    width: 60px;
+    width: 80px;
     height: 4px;
     background: var(--color-primary-gradient);
-    margin-top: 10px;
-    border-radius: 2px;
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(3, 4, 94, 0.2);
 }
 
 
@@ -208,8 +209,9 @@
 }
 
 .premium-date-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(3, 4, 94, 0.15);
+    border-color: rgba(3, 4, 94, 0.1);
 }
 
 /* Date Box */

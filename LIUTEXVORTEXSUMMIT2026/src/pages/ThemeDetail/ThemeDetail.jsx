@@ -1,55 +1,55 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Stethoscope, Heart, Brain, Activity, Microscope, Globe, ArrowLeft } from 'lucide-react';
+import { Compass, Target, Layers, Wind, Cpu, Terminal, ArrowLeft } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 
 const themesData = {
-    'primary-care': {
-        title: 'Primary Care',
-        icon: <Stethoscope size={48} />,
-        description: 'Innovations in primary healthcare delivery focusing on patient-centered care, prevention, and community health strategies.',
+    'liutex-fundamentals': {
+        title: 'Liutex Fundamentals',
+        icon: <Compass size={48} />,
+        description: 'Exploring the mathematical foundations and definition of Liutex as a physical quantity for rotation.',
         topics: [
-            'Family Medicine', 'Preventive Healthcare', 'Geriatrics', 'Chronic Disease Management', 'Telemedicine in Primary Care'
+            'Mathematical Definition of Liutex', 'Vector Decompositions', 'Principal Coordinate System', 'Liutex vs. Vorticity', 'Rotational Strength Analysis'
         ]
     },
-    'cardiology': {
-        title: 'Cardiology',
-        icon: <Heart size={48} />,
-        description: 'Latest research in cardiovascular medicine, including interventional cardiology, heart failure management, and preventive cardiology.',
+    'vortex-identification': {
+        title: 'Vortex Identification',
+        icon: <Target size={48} />,
+        description: 'Advanced methods for identifying and extracting vortex structures from complex flow fields.',
         topics: [
-            'Interventional Cardiology', 'Heart Failure', 'Preventive Cardiology', 'Pediatric Cardiology', 'Cardiac Imaging'
+            'Omega (Ω) Method', 'Q-criterion & λ2-criterion', 'Objective Vortex Identification', 'Threshold Selection Strategies', 'Comparative Study of Methods'
         ]
     },
-    'neurology': {
-        title: 'Neurology',
-        icon: <Brain size={48} />,
-        description: 'Advancements in treating neurological disorders such as stroke, epilepsy, Alzheimer\'s, and Parkinson\'s disease.',
+    'turbulence-modeling': {
+        title: 'Turbulence Modeling',
+        icon: <Layers size={48} />,
+        description: 'Applying Liutex theory to enhance turbulence models and understand energy cascades.',
         topics: [
-            'Stroke Management', 'Epilepsy Research', 'Neurodegenerative Diseases', 'Neuroimaging', 'Pediatric Neurology'
+            'Liutex-based RANS Models', 'LES & Wall-bounded Flows', 'DNS Data Analysis', 'Subgrid Scale Modeling', 'Turbulent Structure Extraction'
         ]
     },
-    'public-health': {
-        title: 'Public Health',
-        icon: <Globe size={48} />,
-        description: 'Global strategies for public health challenges, epidemiology, and health policy implementation.',
+    'aerospace-applications': {
+        title: 'Aerospace Engineering',
+        icon: <Wind size={48} />,
+        description: 'Vortex dynamics in aerodynamics, wing tip vortices, and propulsion systems.',
         topics: [
-            'Epidemiology', 'Global Health Policy', 'Infectious Disease Control', 'Health Equity', 'Occupational Health'
+            'Wing-tip Vortex Control', 'Delta Wing Aerodynamics', 'Turbomachinery Flows', 'Supersonic Vortex Stability', 'Unsteady Lift Generation'
         ]
     },
-    'emergency-medicine': {
-        title: 'Emergency Medicine',
-        icon: <Activity size={48} />,
-        description: 'Critical care and emergency response protocols, trauma management, and disaster medicine.',
+    'cfd-algorithms': {
+        title: 'CFD & Algorithms',
+        icon: <Cpu size={48} />,
+        description: 'High-order numerical schemes and hardware-accelerated vortex tracking.',
         topics: [
-            'Trauma Care', 'Critical Care Medicine', 'Disaster Response', 'Pediatric Emergency', 'Toxicology'
+            'High-Order Spectral Methods', 'Real-time Vortex Detection', 'GPU Accelerated Solvers', 'Adaptive Mesh Refinement', 'Flow Field Reconstruction'
         ]
     },
-    'clinical-research': {
-        title: 'Clinical Research',
-        icon: <Microscope size={48} />,
-        description: 'Updates from cutting-edge clinical trials, research methodology, and translational medicine.',
+    'ai-flow-analysis': {
+        title: 'AI & Flow Analysis',
+        icon: <Terminal size={48} />,
+        description: 'Leveraging machine learning for automated vortex feature extraction and prediction.',
         topics: [
-            'Clinical Trials Methodology', 'Translational Medicine', 'Bioethics', 'Drug Development', 'Data Analysis in Research'
+            'Deep Learning for Vortex Tracking', 'Physics-Informed Neural Networks', 'Reduced Order Modeling', 'Reinforcement Learning in Flow Control', 'Big Data in Fluid Mechanics'
         ]
     }
 };
