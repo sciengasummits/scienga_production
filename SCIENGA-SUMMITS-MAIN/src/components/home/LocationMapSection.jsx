@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import meetingLiutex from '../../assets/images/meetings/liutexvortex.jpg'
 import meeting12 from '../../assets/images/meetings/12.jpg'
 import meeting13 from '../../assets/images/meetings/13.jpg'
+import meeting14 from '../../assets/images/meetings/14.jpg'
 import locationAdvance from '../../assets/images/location/advance.jpg'
 import locationAstro from '../../assets/images/location/astro.jpg'
 import locationFood from '../../assets/images/location/food.jpg'
@@ -24,9 +25,9 @@ const venues = [
     { title: "POWERENGSUMMIT2026", location: "Munich, Germany", img: locationPower },
     { title: "CLEANENGTECHSUMMIT2026", location: "Munich, Germany", img: locationClean },
     { title: "ASTROSPACESUMMIT2026", location: "Tokyo, Japan", img: locationAstro },
-    { title: "LIUTEXSUMMIT2026", location: "Canada, Toronto", img: locationLiutex },
+    { title: "LIUTEX2026", location: "Outram, Singapore", img: locationLiutex },
     { title: "AIROBOTMLSUMMIT2026", location: "Seoul, South Korea", img: locationAirobot },
-    { title: "FLUIDTURBOSUMMIT2026", location: "Tokyo, Japan", img: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1600&q=80" }
+    { title: "FLUIDTURBOSUMMIT2026", location: "Tokyo, Japan", img: meeting14 }
 ];
 
 export default function LocationMapSection() {
