@@ -218,12 +218,12 @@ select.reg-control {
     transition: all 0.3s;
     border-radius: 4px;
     text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(3, 4, 94, 0.3);
+    box-shadow: 0 4px 15px rgba(52, 120, 223, 0.3);
 }
 
 .btn-online-register:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(3, 4, 94, 0.4);
+    box-shadow: 0 6px 20px rgba(52, 120, 223, 0.4);
 }
 
 /* Mobile Responsiveness */
