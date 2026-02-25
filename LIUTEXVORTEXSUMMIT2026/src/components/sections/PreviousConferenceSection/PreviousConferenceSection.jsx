@@ -48,7 +48,7 @@ const PreviousConferenceSection = () => {
         <section className="previous-conference-section">
             <div className="container">
                 <div className="section-header">
-                    <h2 className="section-title">Previous Conference</h2>
+                    <h2 className="section-title">Previous Conference Images</h2>
                     <div className="title-underline"></div>
                 </div>
 
