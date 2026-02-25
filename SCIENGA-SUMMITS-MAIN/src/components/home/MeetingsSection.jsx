@@ -1,8 +1,21 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import meetingLiutex from '../../assets/images/meetings/liutexvortex.jpg'
+import meeting1 from '../../assets/images/meetings/1.jpg'
+import meeting2 from '../../assets/images/meetings/2.jpg'
+import meeting3 from '../../assets/images/meetings/3.jpg'
 import meeting12 from '../../assets/images/meetings/12.jpg'
 import meeting13 from '../../assets/images/meetings/13.jpg'
+import meetingCropScieng from '../../assets/images/meetings/CROPSCIENGSUMMIT2026.jpg'
+import meetingFoodTech from '../../assets/images/meetings/Food tech.jpg'
+import meetingRenewable from '../../assets/images/meetings/Renewable.jpg'
+import meetingPowerEng from '../../assets/images/meetings/POWERENGSUMMIT2026.jpg'
+import meetingCleanEngTech from '../../assets/images/meetings/CLEANENGTECHSUMMIT2026.jpg'
+import meetingCondensedPhys from '../../assets/images/meetings/CONDENSEDPHYSSUMMIT2026.jpg'
+import meetingAstroPhysics from '../../assets/images/meetings/Astro physcis.jpg'
+import meetingCyber from '../../assets/images/meetings/cyber.jpg'
+import meetingPublic from '../../assets/images/meetings/Public.jpg'
+import meetingFluid from '../../assets/images/meetings/Fluid.jpg'
 
 const meetingsData = {
     2026: [
@@ -13,7 +26,7 @@ const meetingsData = {
             location: "AMSTERDAM, NETHERLANDS",
             date: "November 16-18, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+            image: meeting1,
             link: "https://polymatsummit2026.sciengasummits.com/"
         },
         {
@@ -23,7 +36,7 @@ const meetingsData = {
             location: "AMSTERDAM, NETHERLANDS",
             date: "November 16-18, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=800&q=80",
+            image: meeting2,
             link: "https://advancenanosummit2026.sciengasummits.com/"
         },
         {
@@ -33,7 +46,7 @@ const meetingsData = {
             location: "AMSTERDAM, NETHERLANDS",
             date: "November 16-18, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=800&q=80",
+            image: meeting3,
             link: "https://opticphotonsummit2026.sciengasummits.com/"
         },
         {
@@ -43,7 +56,7 @@ const meetingsData = {
             location: "MARINA BAY, SINGAPORE",
             date: "December 7-9, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&w=800&q=80",
+            image: meetingCropScieng,
             link: "https://cropsciengsummit2026.sciengasummits.com/"
         },
         {
@@ -63,7 +76,7 @@ const meetingsData = {
             location: "MARINA BAY, SINGAPORE",
             date: "December 7-9, 2026",
             year: "2026",
-            image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80",
+            image: meetingFoodTech,
             link: "https://foodagrisummit2026.sciengasummits.com/"
         }
     ],
@@ -75,7 +88,7 @@ const meetingsData = {
             location: "MUNICH, GERMANY",
             date: "March 23-25, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80",
+            image: meetingRenewable,
             link: "https://renewableclisummit2026.sciengasummits.com/"
         },
         {
@@ -85,7 +98,7 @@ const meetingsData = {
             location: "MUNICH, GERMANY",
             date: "March 23-25, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+            image: meetingPowerEng,
             link: "https://powerengsummit2026.sciengasummits.com/"
         },
         {
@@ -95,7 +108,7 @@ const meetingsData = {
             location: "MUNICH, GERMANY",
             date: "March 23-25, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80",
+            image: meetingCleanEngTech,
             link: "https://cleanengtechsummit2026.sciengasummits.com/"
         },
         {
@@ -105,7 +118,7 @@ const meetingsData = {
             location: "OUTRAM  ,SINGAPORE",
             date: "April 12-14, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
+            image: meetingAstroPhysics,
             link: "https://astrospacesummit2026.sciengasummits.com/"
         },
         {
@@ -135,7 +148,7 @@ const meetingsData = {
             location: "SEOUL, SOUTH KOREA",
             date: "May 10-12, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
+            image: meetingCondensedPhys,
             link: "https://condensedphyssummit2026.sciengasummits.com/"
         },
         {
@@ -145,7 +158,7 @@ const meetingsData = {
             location: "SEOUL, SOUTH KOREA",
             date: "May 10-12, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=800&q=80",
+            image: meetingCyber,
             link: "https://cyberquantumsummit2026.sciengasummits.com/"
         },
         {
@@ -155,7 +168,7 @@ const meetingsData = {
             location: "LONDON, UK",
             date: "June 7-9, 2027",
             year: "2027",
-            image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+            image: meetingPublic,
             link: "https://healthmedsummit2026.sciengasummits.com/"
         }
     ],
@@ -167,7 +180,7 @@ const meetingsData = {
             location: "OUTRAM  ,SINGAPORE",
             date: "December 14-16",
             year: "2026",
-            image: meeting13,
+            image: meetingFluid,
             link: "https://fluidturbosummit2026.sciengasummits.com/"
         }
     ]

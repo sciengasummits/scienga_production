@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import meetingLiutex from '../../assets/images/meetings/liutexvortex.jpg'
+import meeting1 from '../../assets/images/meetings/1.jpg'
 import meeting12 from '../../assets/images/meetings/12.jpg'
 import meeting13 from '../../assets/images/meetings/13.jpg'
 import meeting14 from '../../assets/images/meetings/14.jpg'
@@ -15,7 +16,7 @@ import locationClean from '../../assets/images/location/clean.jpg'
 import locationAirobot from '../../assets/images/location/airobot.jpg'
 
 const venues = [
-    { title: "POLYMATSUMMIT2026", location: "Amsterdam, Netherlands", img: locationPoly },
+    { title: "POLYMATSUMMIT2026", location: "Amsterdam, Netherlands", img: meeting1 },
     { title: "ADVANCENANOSUMMIT2026", location: "Amsterdam, Netherlands", img: locationAdvance },
     { title: "OPTICPHOTONSUMMIT2026", location: "Amsterdam, Netherlands", img: locationOptic },
     { title: "CROPSCIENGSUMMIT2026", location: "Marina Bay, Singapore", img: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1600&q=80" },
