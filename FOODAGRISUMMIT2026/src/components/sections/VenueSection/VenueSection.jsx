@@ -4,19 +4,23 @@ import './VenueSection.css';
 const venues = [
     {
         id: 1,
-        image: "https://images.unsplash.com/photo-1525625239513-44a08522b1c3?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1525625239513-44a08522b1c3?w=1920&q=80", // Marina Bay Sands
+        label: "Conference Venue"
     },
     {
         id: 2,
-        image: "https://images.unsplash.com/photo-1549417229-aa67d3263c09?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80", // Conference Hall
+        label: "Convention Center"
     },
     {
         id: 3,
-        image: "https://images.unsplash.com/photo-1543743336-d8053247bb41?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1920&q=80", // Food Science Lab
+        label: "Food Science Research"
     },
     {
         id: 4,
-        image: "https://images.unsplash.com/photo-1518683412747-fa80ca47c340?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80", // Field/Agriculture
+        label: "Sustainable Agriculture"
     }
 ];
 

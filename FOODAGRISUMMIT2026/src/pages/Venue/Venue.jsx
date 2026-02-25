@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
 import './Venue.css';
 
 const Venue = () => {
+    const navigate = useNavigate();
     const venueFeatures = [
         {
             title: 'World-Class Facilities',
@@ -35,17 +37,17 @@ const Venue = () => {
         {
             name: 'Marina Bay Sands',
             distance: '0.2 km',
-            image: "https://images.unsplash.com/photo-1525625239513-44a08522b1c3?w=800&q=80"
+            image: "https://bing.com/th?asid=432345564906096145&id=OAUMA.E5B43E086472331DC382B5935DA23216_E9CC49797C3DFBB4&pid=21.1&o=5&w=472&h=247&rs=2&qlt=100"
         },
         {
             name: 'Gardens by the Bay',
             distance: '0.5 km',
-            image: "https://images.unsplash.com/photo-1506351421178-63b52a2d25a2?w=800&q=80"
+            image: "https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=270,height=180,dpr=2/tour_img/5d54defd2c066.jpeg"
         },
         {
-            name: 'Merlion Park',
-            distance: '1.2 km',
-            image: "https://images.unsplash.com/photo-1543743336-d8053247bb41?w=800&q=80"
+            name: 'Botanic Gardens',
+            distance: '4.5 km',
+            image: "https://tse2.mm.bing.net/th/id/OIP.96-nkaoLC7k2SjWbvm5jtQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
         }
     ];
 
@@ -116,8 +118,8 @@ const Venue = () => {
                         </div>
                         <div className="about-city-image">
                             <img
-                                src="https://images.unsplash.com/photo-1525625239513-44a08522b1c3?w=800&q=80"
-                                alt="Singapore Skyline"
+                                src="https://tse1.mm.bing.net/th/id/OIP.wb9uUKXX0JVX87vX64NbQgHaE8?w=2936&h=1960&rs=1&pid=ImgDetMain&o=7&rm=3"
+                                alt="Singapore Cityscape"
                             />
                         </div>
                     </div>
@@ -158,9 +160,13 @@ const Venue = () => {
                         Ready to Join Us?
                     </h2>
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-                        Secure your spot at the ANNUAL INTERNATIONAL CONFERENCE FOOD SCIENCE TECHNOLOGY AND AGRICULTURE and be part of this transformative event
+                        Secure your spot at the ANNUAL INTERNATIONAL CONFERENCE ON FOOD SCIENCE TECHNOLOGY AND AGRICULTURE and be part of this transformative event
                     </p>
-                    <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }}>
+                    <Button
+                        onClick={() => navigate('/register')}
+                        variant="outline"
+                        style={{ borderColor: 'white', color: 'white', background: 'transparent' }}
+                    >
                         Register Now
                     </Button>
                 </div>

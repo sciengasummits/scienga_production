@@ -34,7 +34,7 @@ const DigitalBrochure = () => {
                 <div className="brochure-header">
                     <div className="brochure-badge">Official Guide</div>
                     <h1 className="brochure-title">
-                        ANNUAL INTERNATIONAL CONFERENCE <br />
+                        ANNUAL INTERNATIONAL CONFERENCE ON <br />
                         <span className="highlight-text">FOOD SCIENCE TECHNOLOGY AND AGRICULTURE</span> <br />
                         <span className="subtitle">Your Official Digital Platform Guide</span>
                     </h1>

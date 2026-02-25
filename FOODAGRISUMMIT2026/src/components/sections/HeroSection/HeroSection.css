@@ -46,7 +46,7 @@
 }
 
 .hero__content {
-    max-width: 550px;
+    max-width: 650px;
     margin-top: 2rem;
 }
 
@@ -63,6 +63,7 @@
     /* Light blue accent */
     font-size: 1.8rem;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .hero__desc {
@@ -177,18 +178,32 @@
 
 .hero__cpd-image {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 110px;
+    bottom: 30px;
+    right: 30px;
+    width: 280px;
     height: auto;
-    padding: 0.8rem;
+    padding: 0.5rem 1rem;
     background: var(--color-white);
-    border-radius: var(--radius-lg);
+    border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    animation: blink 1.5s infinite ease-in-out;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
 }
 
 .hero__cpd-image img {
