@@ -46,11 +46,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-<<<<<<< HEAD
                         <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span><br />
-=======
-                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span> <br />
->>>>>>> 64b6c3e2749082135920a52329775f98e3b5d7e1
                         FOOD SCIENCE TECHNOLOGY AND AGRICULTURE
                     </h1>
 
@@ -77,10 +73,10 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Annual International Conference on Food Science Technology and 
+                        Annual International Conference on Food Science Technology and
                         Agriculture, where global experts unite to shape the future of
                         food science and agricultural innovation. Discover ground-breaking
-                        technologies, connect with top researchers, and explore solutions 
+                        technologies, connect with top researchers, and explore solutions
                         transforming our world.
                     </p>
                     <div className="hero__actions">
