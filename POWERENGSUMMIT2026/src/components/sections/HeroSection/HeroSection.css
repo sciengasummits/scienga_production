@@ -203,15 +203,29 @@
     position: absolute;
     bottom: 30px;
     right: 30px;
-    width: 120px;
+    width: 180px;
     height: auto;
     z-index: 3;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     transition: transform 0.3s ease;
+    animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
 }
 
 .hero__cpd-image:hover {
     transform: scale(1.05);
+    animation-play-state: paused;
 }
 
 /* Responsive */
@@ -279,7 +293,7 @@
     }
 
     .hero__cpd-image {
-        width: 90px;
+        width: 130px;
         bottom: 10px;
         right: 10px;
     }

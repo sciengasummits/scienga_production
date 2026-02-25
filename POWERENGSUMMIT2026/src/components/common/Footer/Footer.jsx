@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
 import './Footer.css';
 
@@ -18,10 +18,9 @@ const Footer = () => {
                             Discover ground-breaking technologies and connect with top industry professionals.
                         </p>
                         <div className="footer__socials">
-                            <a href="#" className="social-icon"><Facebook size={20} /></a>
-                            <a href="#" className="social-icon"><Twitter size={20} /></a>
-                            <a href="#" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="#" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
+                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
                         </div>
                     </div>
 

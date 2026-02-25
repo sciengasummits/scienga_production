@@ -15,6 +15,7 @@ import FAQ from '../pages/FAQ/FAQ';
 import VisaInfo from '../pages/VisaInfo/VisaInfo';
 import Brochure from '../pages/Brochure/Brochure';
 import Program from '../pages/Program/Program';
+import DigitalBrochure from '../pages/DigitalBrochure/DigitalBrochure';
 import Unsubscribe from '../pages/Unsubscribe/Unsubscribe';
 
 
@@ -51,6 +52,7 @@ const AppRoutes = () => {
                     <Route path="online-registration" element={<DiscountRegister />} />
                     <Route path="discount-registration" element={<DiscountRegister />} />
                     <Route path="brochure" element={<Brochure />} />
+                    <Route path="digital-brochure" element={<DigitalBrochure />} />
                     <Route path="unsubscribe" element={<Unsubscribe />} />
                     <Route path="*" element={<div className="section-padding text-center"><h1>404 Not Found</h1></div>} />
                 </Route>

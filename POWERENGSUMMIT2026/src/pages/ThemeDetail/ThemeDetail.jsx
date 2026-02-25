@@ -1,12 +1,12 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Stethoscope, Heart, Brain, Activity, Microscope, Globe, ArrowLeft } from 'lucide-react';
+import { Sun, Wind, Leaf, Globe, Battery, Zap, ArrowLeft } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 
 const themesData = {
     'solar-energy': {
         title: 'Solar Energy',
-        icon: <Stethoscope size={48} />, // Placeholder icon
+        icon: <Sun size={48} />,
         description: 'Innovations in solar photovoltaic technologies, thermal systems, and large-scale solar integration.',
         topics: [
             'Photovoltaic Materials', 'Solar Thermal Energy', 'Grid Integration', 'Floating Solar', 'Solar Policy & Economics'
@@ -14,7 +14,7 @@ const themesData = {
     },
     'wind-energy': {
         title: 'Wind Energy',
-        icon: <Heart size={48} />, // Placeholder icon
+        icon: <Wind size={48} />,
         description: 'Latest advancements in onshore and offshore wind power, turbine technology, and wind farm management.',
         topics: [
             'Offshore Wind Farms', 'Turbine Design', 'Wind Resource Assessment', 'Environmental Impact', 'Maintenance Strategies'
@@ -22,7 +22,7 @@ const themesData = {
     },
     'bioenergy': {
         title: 'Bioenergy',
-        icon: <Brain size={48} />, // Placeholder icon
+        icon: <Leaf size={48} />,
         description: 'Exploring the potential of biomass, biofuels, and biogas as sustainable alternatives to fossil fuels.',
         topics: [
             'Biofuel Production', 'Biomass Conversion', 'Waste-to-Energy', 'Algal Biofuels', 'Biogas Technologies'
@@ -38,7 +38,7 @@ const themesData = {
     },
     'energy-storage': {
         title: 'Energy Storage',
-        icon: <Activity size={48} />,
+        icon: <Battery size={48} />,
         description: 'Critical technologies for storing renewable energy, including batteries, pumped hydro, and hydrogen storage.',
         topics: [
             'Lithium-Ion Batteries', 'Flow Batteries', 'Hydrogen Storage', 'Grid-Scale Storage', 'Thermal Storage'
@@ -46,7 +46,7 @@ const themesData = {
     },
     'green-tech': {
         title: 'Green Tech',
-        icon: <Microscope size={48} />,
+        icon: <Zap size={48} />,
         description: 'Emerging technologies that promote environmental sustainability and reduce ecological impact.',
         topics: [
             'Carbon Capture', 'Smart Grids', 'Electric Vehicles', 'Sustainable Materials', 'IoT in Energy'

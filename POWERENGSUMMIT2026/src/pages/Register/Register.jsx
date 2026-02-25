@@ -31,8 +31,8 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    const earlyBirdEnd = new Date('2026-10-25');
-    const standardEnd = new Date('2027-02-16');
+    const earlyBirdEnd = new Date('2026-09-25');
+    const standardEnd = new Date('2026-10-30');
 
     let activePhase;
 
@@ -45,13 +45,12 @@ const Register = ({ isDiscounted = false }) => {
     }
 
     // Pricing Data
-    // Pricing Data
     const baseAcademicPricing = [
-        { id: 'speaker', label: 'Speaker Registration', early: 749, standard: 849, onspot: 949 },
-        { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
-        { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
-        { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
-        { id: 'student-virtual', label: 'Virtual (Online)', early: 199, standard: 249, onspot: 299 },
+        { id: 'speaker', label: 'Speaker Presentation (In-Person)', early: 799, standard: 899, onspot: 999 },
+        { id: 'delegate', label: 'Delegate / Listener (In-Person)', early: 899, standard: 999, onspot: 1099 },
+        { id: 'student', label: 'Student (In-Person)', early: 399, standard: 499, onspot: 599 },
+        { id: 'poster', label: 'Poster (In-Person)', early: 499, standard: 599, onspot: 699 },
+        { id: 'student-virtual', label: 'Virtual (Online)', early: 299, standard: 399, onspot: 499 },
     ];
 
     const academicPricing = baseAcademicPricing.map(item => ({
@@ -260,15 +259,15 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
+                                <th className="category-header">TYPES OF PARTICIPATION</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">October 25, 2026</span>
+                                    <span className="date">September 25, 2026</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">February 16, 2027</span>
+                                    <span className="date">October 30, 2026</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>

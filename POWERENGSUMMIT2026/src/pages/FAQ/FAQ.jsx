@@ -13,12 +13,12 @@ const FAQ = () => {
             category: "Registration",
             items: [
                 {
-                    question: "How can I register for the ANNUAL                            ?",
+                    question: "How can I register for the ANNUAL INTERNATIONAL CONFERENCE ON POWERENGSUMMIT2026?",
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline."
                 },
                 {
                     question: "Is there a discount for group registrations?",
-                    answer: "Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at contact@cleanenergytechsummit.com for more details."
+                    answer: "Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at contact@powerenergysummit.com for more details."
                 },
                 {
                     question: "What is included in the registration fee?",

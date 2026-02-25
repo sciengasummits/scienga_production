@@ -47,7 +47,7 @@ const Venue = () => {
         {
             name: 'Nymphenburg Palace',
             distance: '6.5 km',
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Schloss_Nymphenburg.jpg/800px-Schloss_Nymphenburg.jpg"
+            image: "https://www.bing.com/th/id/OIP.fiyi9U4ZYU5FM8Jo0Rv_BgHaEK?w=240&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
         }
     ];
 
@@ -163,8 +163,8 @@ const Venue = () => {
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
                         Secure your spot at the ANNUAL INTERNATIONAL CONFERENCE ON POWERENGSUMMIT2026 and be part of this transformative event
                     </p>
-                    <Button 
-                        variant="outline" 
+                    <Button
+                        variant="outline"
                         style={{ borderColor: 'white', color: 'white', background: 'transparent' }}
                         onClick={() => navigate('/register')}
                     >

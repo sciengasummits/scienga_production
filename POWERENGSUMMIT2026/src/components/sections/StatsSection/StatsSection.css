@@ -27,8 +27,16 @@
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 1201px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
 }
 
 .stats-card {
@@ -87,7 +95,14 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }

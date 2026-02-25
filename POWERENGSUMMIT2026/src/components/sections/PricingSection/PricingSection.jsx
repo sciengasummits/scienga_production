@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import './PricingSection.css';
 
@@ -49,6 +50,8 @@ const pricingPlans = [
 ];
 
 const PricingSection = () => {
+    const navigate = useNavigate();
+
     return (
         <section className="pricing-section section-padding">
             <div className="container">
@@ -79,6 +82,13 @@ const PricingSection = () => {
                                     </li>
                                 ))}
                             </ul>
+
+                            <button 
+                                className="pricing-register-btn"
+                                onClick={() => navigate('/register')}
+                            >
+                                REGISTER NOW
+                            </button>
                         </div>
                     ))}
                 </div>

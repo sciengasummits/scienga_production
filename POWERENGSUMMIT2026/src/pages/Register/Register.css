@@ -210,26 +210,27 @@ textarea.form-control {
     cursor: pointer;
     text-transform: uppercase;
     font-size: 0.9rem;
-    transition: background 0.3s;
+    transition: var(--transition-default);
 }
 
 .btn-register {
-    background-color: #2e7d32;
+    background: var(--color-primary-gradient);
     color: white;
 }
 
 .btn-register:hover {
-    background-color: #1b5e20;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 0, 224, 0.3);
 }
 
 .btn-reset {
-    background-color: #2e7d32;
-    /* Matching screenshot, maybe slightly different in reality but they look similar */
+    background: var(--color-primary-gradient);
     color: white;
 }
 
 .btn-reset:hover {
-    background-color: #1b5e20;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 0, 224, 0.3);
 }
 
 
