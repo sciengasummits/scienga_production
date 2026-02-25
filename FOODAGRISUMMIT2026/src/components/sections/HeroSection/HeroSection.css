@@ -182,15 +182,12 @@
     right: 30px;
     width: 280px;
     height: auto;
-    padding: 0.5rem 1rem;
-    background: var(--color-white);
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    background: transparent;
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.05);
     animation: blink 1.5s infinite ease-in-out;
 }
 
