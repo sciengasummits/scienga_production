@@ -85,7 +85,7 @@ const HeroSection = () => {
                 <div className="hero__info-cards">
                     <div className="info-card date-card">
                         <h3> December</h3>
-                        <p>14-16, 2026,</p>
+                        <p>14-16, 2026</p>
                     </div>
 
                     <div className="info-card venue-card">
