@@ -178,7 +178,7 @@ const Venue = () => {
                         <Button
                             onClick={() => navigate('/register')}
                         >
-                            Register Now
+                            REGISTER NOW
                         </Button>
                     </div>
                 </div>

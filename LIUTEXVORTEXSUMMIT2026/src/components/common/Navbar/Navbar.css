@@ -149,7 +149,7 @@
 .navbar__link {
     color: var(--color-white);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.15rem;
     text-decoration: none;
     transition: all 0.3s ease;
     letter-spacing: 0.03em;

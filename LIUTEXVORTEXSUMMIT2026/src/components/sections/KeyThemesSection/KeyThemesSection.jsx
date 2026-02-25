@@ -163,8 +163,8 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                                 <table className="schedule__table">
                                     <thead>
                                         <tr>
-                                            <th>Time</th>
-                                            <th>Conference Schedule</th>
+                                            <th>TIME</th>
+                                            <th>CONFERENCE SCHEDULE</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -194,7 +194,7 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                 {showLearnMore && (
                     <div className="text-center mt-4">
                         <Button onClick={() => navigate('/sessions')}>
-                            Learn More
+                            LEARN MORE
                         </Button>
                     </div>
                 )}
