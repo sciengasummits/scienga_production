@@ -33,8 +33,8 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    const earlyBirdEnd = new Date('2026-09-30');
-    const standardEnd = new Date('2026-11-15');
+    const earlyBirdEnd = new Date('2026-09-29');
+    const standardEnd = new Date('2026-10-30');
 
     let activePhase = 'early';
 
@@ -48,11 +48,11 @@ const Register = ({ isDiscounted = false }) => {
 
     // Pricing Data
     const academicPricing = [
-        { id: 'speaker', label: 'Speaker Registration', early: applyDiscount(749), standard: applyDiscount(849), onspot: applyDiscount(949) },
-        { id: 'delegate', label: 'Delegate Registration', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
-        { id: 'poster', label: 'Poster Registration', early: applyDiscount(449), standard: applyDiscount(549), onspot: applyDiscount(649) },
-        { id: 'student', label: 'Student', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
-        { id: 'virtual', label: 'Virtual (Online)', early: applyDiscount(199), standard: applyDiscount(249), onspot: applyDiscount(299) },
+        { id: 'speaker', label: 'Speaker Presentation (In-Person)', early: applyDiscount(799), standard: applyDiscount(899), onspot: applyDiscount(999) },
+        { id: 'delegate', label: 'Delegate / Listener (In-Person)', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
+        { id: 'student', label: 'Student (In-Person)', early: applyDiscount(399), standard: applyDiscount(499), onspot: applyDiscount(599) },
+        { id: 'poster', label: 'Poster (In-Person)', early: applyDiscount(499), standard: applyDiscount(599), onspot: applyDiscount(699) },
+        { id: 'virtual', label: 'Virtual(online)', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
     ];
 
     const accommodationOptions = [
@@ -243,20 +243,20 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
+                                <th className="category-header">TYPES OF PARTICIPATION</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">SEP 30,2026</span>
+                                    <span className="date">September 29, 2026</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">NOV 15, 2026</span>
+                                    <span className="date">October 30, 2026</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">07 DEC, 2026</span>
+                                    <span className="date">December 07, 2026</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>
