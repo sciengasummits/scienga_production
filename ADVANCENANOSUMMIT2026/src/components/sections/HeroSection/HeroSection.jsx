@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import cpdImage from '../../../assets/images/cpd-certification.jpeg';
 
 const HeroSection = () => {
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ const HeroSection = () => {
     });
 
     React.useEffect(() => {
-        const targetDate = new Date('March 23, 2027 09:00:00 GMT+0100').getTime();
+        const targetDate = new Date('  November 16, 2026, 09:00:00 GMT+0100').getTime();
 
         const interval = setInterval(() => {
             const now = new Date().getTime();
@@ -46,7 +45,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE</span> <br />
+                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span> <br />
                         ADVANCED MATERIALS & NANOTECHNOLOGY
                     </h1>
 
@@ -86,19 +85,15 @@ const HeroSection = () => {
 
                 <div className="hero__info-cards">
                     <div className="info-card date-card">
-                        <h3>March</h3>
-                        <p>23-25, 2027</p>
+                        <h3>November</h3>
+                        <p>16-18, 2026</p>
                     </div>
 
                     <div className="info-card venue-card">
                         <h3>Venue</h3>
-                        <p>Event Venue: Munich, Germany</p>
+                        <p>Event Venue: Amsterdam, Netherlands</p>
                     </div>
                 </div>
-            </div>
-
-            <div className="info-card hero__cpd-image">
-                <img src={cpdImage} alt="CPD Certification" />
             </div>
         </section >
     );

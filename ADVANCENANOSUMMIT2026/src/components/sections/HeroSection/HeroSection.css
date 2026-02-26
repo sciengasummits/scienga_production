@@ -63,6 +63,7 @@
     /* Light blue accent */
     font-size: 1.8rem;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .hero__desc {
@@ -189,16 +190,26 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 110px;
+    width: 180px;
     height: auto;
-    padding: 0.8rem;
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
 }
 
 .hero__cpd-image img {

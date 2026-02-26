@@ -53,8 +53,8 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    const earlyBirdEnd = new Date('2027-12-15');
-    const standardEnd = new Date('2028-02-15');
+    const earlyBirdEnd = new Date('2026-09-25');
+    const standardEnd = new Date('2026-10-30');
     // const earlyBirdEnd = new Date('2026-10-25');
     // const standardEnd = new Date('2027-02-16');
 
@@ -283,20 +283,20 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
+                                <th className="category-header">TYPES OF PARTICIPATION</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">December 15, 2027</span>
+                                    <span className="date">September 25, 2026</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">February 15, 2028</span>
+                                    <span className="date">October 30, 2026</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">April 12, 2028</span>
+                                    <span className="date">December 14, 2026</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>

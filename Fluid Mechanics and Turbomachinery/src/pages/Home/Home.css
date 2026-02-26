@@ -1,38 +1,3 @@
 .home-page {
-    background-color: var(--color-white);
-}
-
-.home-content-wrapper {
-    position: relative;
-}
-
-.pinned-cpd-badge {
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    width: 120px;
-    z-index: 100;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid white;
-    border-radius: 4px;
-    animation: cpdPulse 2s infinite ease-in-out;
-}
-
-@keyframes cpdPulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-@media (max-width: 1200px) {
-    .pinned-cpd-badge {
-        display: none;
-        /* Hide or move if it overlaps too much */
-    }
+    min-height: 100vh;
 }

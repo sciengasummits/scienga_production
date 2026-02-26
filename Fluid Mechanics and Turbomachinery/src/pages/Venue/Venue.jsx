@@ -37,7 +37,7 @@ const Venue = () => {
         {
             name: 'Marina Bay Sands',
             distance: '10 mins',
-            image: "https://th.bing.com/th/id/OIP.4_AuZL9WmNGB-YSbATiFFwHaDn?w=367&h=170&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+            image: "https://www.bing.com/th/id/OIP.WmKTo60D5eOsQFN1wxz4dwHaEK?w=219&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
         },
         {
             name: 'Gardens by the Bay',
@@ -47,7 +47,7 @@ const Venue = () => {
         {
             name: 'Jewel Changi Airport',
             distance: '25 mins',
-            image: "https://c8.alamy.com/comp/WTPKN7/jewel-changi-airport-in-singapore-a-glass-dome-with-indoor-waterfall-and-forest-shopping-mall-terminal-and-hotel-WTPKN7.jpg"
+            image: "https://www.bing.com/th/id/OIP.ueYJWhmh593wEqTL3tHVLQHaFU?w=228&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
         }
     ];
 
@@ -117,13 +117,14 @@ const Venue = () => {
                         </div>
                         <div className="about-city-image">
                             <img
-                                src="https://www.itsliquid.com/wp-content/uploads/2020/10/Jewel-Changi-Airport_Safdie-Architects-15.jpg"
-                                alt="Singapore City"
+                                src="https://as2.ftcdn.net/v2/jpg/02/09/82/45/1000_F_209824591_K05Tob490TmBlTekkPlNrxh1Hy7IKMTU.jpg"
                             />
                         </div>
                     </div>
                 </div>
             </section>
+
+
 
             {/* Nearby Attractions */}
             <section className="nearby-attractions section-padding">

@@ -7,7 +7,7 @@ A comprehensive web application designed for the Global Summit on Renewable Ener
 - **Event Overview**: Detailed information about the summit, including theme, mission, and vision.
 - **Schedule & Program**: Interactive schedule of events, sessions, and workshops.
 - **Registration System**: User-friendly registration form for attendees.
-- **Venue & Travel**: Information about the venue in Munich, Germany, location maps, and travel guidelines.
+- **Venue & Travel**: Information about the venue in , Amsterdam, Netherlands location maps, and travel guidelines.
 - **Abstract Submission**: Portal for submitting abstracts and research papers.
 - **Sponsorship**: Details for sponsors and partners.
 - **Responsive Design**: Optimized for viewing on desktops, tablets, and mobile devices.

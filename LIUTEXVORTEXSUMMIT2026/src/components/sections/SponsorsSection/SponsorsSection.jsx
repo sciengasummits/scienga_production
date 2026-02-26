@@ -87,7 +87,7 @@ export default function SponsorsSection() {
                         background: 'var(--color-primary-gradient)',
                         margin: '0 auto',
                         borderRadius: '4px',
-                        boxShadow: '0 2px 10px rgba(52, 120, 223, 0.2)'
+                        boxShadow: '0 2px 10px rgba(var(--color-primary-rgb), 0.2)'
                     }}></div>
                 </div>
 

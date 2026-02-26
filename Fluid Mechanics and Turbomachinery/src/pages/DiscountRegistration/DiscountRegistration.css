@@ -1,30 +1,147 @@
 .discount-registration {
-    background-color: var(--color-bg-light);
+    min-height: 100vh;
+}
+
+.discount-registration__hero {
+    background: var(--color-primary-gradient);
+    padding: 120px 0 60px;
+    text-align: center;
+    color: var(--color-white);
+}
+
+.discount-registration__hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.breadcrumb {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    opacity: 0.9;
+}
+
+.discount-registration__content {
+    padding: 60px 0;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .registration-form {
     background: var(--color-white);
     padding: 3rem;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    border: 1px solid rgba(26, 43, 91, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 31, 63, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    width: 100%;
 }
 
 .form-group input,
 .form-group select {
-    background-color: var(--color-bg-light);
-    border: 1px solid rgba(26, 43, 91, 0.1);
-    border-radius: 10px;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: var(--font-primary);
+    transition: border-color 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: var(--color-accent);
+    outline: none;
+    border-color: var(--color-primary-end);
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 2rem;
 }
 
 .submit-btn {
     background: var(--color-primary-gradient);
     color: var(--color-white);
-    border-radius: 50px;
-    font-weight: 800;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 31, 63, 0.3);
+}
+
+.payment-info {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.payment-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stripe-logo {
+    width: 100px;
+    height: auto;
+}
+
+.payment-methods {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.payment-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-body);
+    letter-spacing: 1px;
+}
+
+.payment-methods img {
+    height: 30px;
+    width: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .discount-registration__hero h1 {
+        font-size: 2rem;
+    }
+
+    .registration-form {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
 }

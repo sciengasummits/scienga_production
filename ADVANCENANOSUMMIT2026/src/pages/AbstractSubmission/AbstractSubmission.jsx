@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { CalendarDays } from 'lucide-react';
+import { countries } from '../../data/countriesData';
 import './AbstractSubmission.css';
 
 const AbstractSubmission = () => {
@@ -118,11 +119,9 @@ const AbstractSubmission = () => {
                                         className="form-control"
                                     >
                                         <option value="" disabled>- Please choose a country -</option>
-                                        <option value="usa">United States</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="canada">Canada</option>
-                                        <option value="germany">Germany</option>
-                                        {/* Add more countries as needed */}
+                                        {countries.map((country, index) => (
+                                            <option key={index} value={country}>{country}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
@@ -197,7 +196,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Abstract Submission Opens</h4>
-                                    <p>June 15, 2025</p>
+                                    <p>March 16, 2026</p>
                                 </div>
                             </div>
 
@@ -207,7 +206,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Early Bird Deadline</h4>
-                                    <p>October 25, 2025</p>
+                                    <p>October 16, 2026</p>
                                 </div>
                             </div>
 
@@ -217,7 +216,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Abstract Submission Deadline</h4>
-                                    <p>February 25, 2026</p>
+                                    <p>November 02, 2026</p>
                                 </div>
                             </div>
 
@@ -227,7 +226,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Conference Date</h4>
-                                    <p>April 20–22, 2026</p>
+                                    <p>November 16–18, 2026</p>
                                 </div>
                             </div>
                         </div>

@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './BrochureSection.css';
 
 const BrochureSection = () => {
+    const navigate = useNavigate();
     const handleDownload = () => {
-        window.open('/brochure.pdf', '_blank');
+        navigate('/brochure');
     };
 
     return (
@@ -12,7 +14,7 @@ const BrochureSection = () => {
             <div className="container brochure__container">
                 <div className="brochure__content">
                     <h2 className="section-title">Conference Brochure</h2>
-                    <p className="brochure__description">
+                    <div className="brochure__description">
                         Download the official conference brochure to get detailed information about:
                         <ul>
                             <li>Comprehensive Tentative Program</li>
@@ -21,7 +23,7 @@ const BrochureSection = () => {
                             <li>Sponsorship Opportunities</li>
                             <li>Registration Packages</li>
                         </ul>
-                    </p>
+                    </div>
                     <div className="brochure__cta">
                         <Button onClick={handleDownload} size="large">
                             Download Brochure (PDF)
@@ -32,7 +34,7 @@ const BrochureSection = () => {
                     {/* Placeholder for brochure preview image */}
                     <div className="preview-card">
                         <div className="preview-page">
-                            <h3>WORLD GENERAL MEDICINE CONGRESS</h3>
+                            <h3>ADVANCED MATERIALS & NANOTECHNOLOGY</h3>
                             <p>2026</p>
                             <div className="preview-lines"></div>
                         </div>

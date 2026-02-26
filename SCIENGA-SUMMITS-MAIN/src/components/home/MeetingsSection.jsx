@@ -16,6 +16,7 @@ import meetingAstroPhysics from '../../assets/images/meetings/Astro physcis.jpg'
 import meetingCyber from '../../assets/images/meetings/cyber.jpg'
 import meetingPublic from '../../assets/images/meetings/Public.jpg'
 import meetingFluid from '../../assets/images/meetings/Fluid.jpg'
+import meetingShared from '../../assets/images/meetings/shared image.jpg'
 
 const meetingsData = {
     2026: [
@@ -138,7 +139,7 @@ const meetingsData = {
             location: "SEOUL, SOUTH KOREA",
             date: "May 10-12, 2027",
             year: "2027",
-            image: meeting12,
+            image: meetingShared,
             link: "https://airobotmlsummit2026.sciengasummits.com/"
         },
         {

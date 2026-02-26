@@ -57,7 +57,7 @@
     margin-bottom: 2rem;
     font-weight: 900;
     color: var(--color-white);
-    text-shadow: 0 0 20px rgba(52, 120, 223, 0.8), 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 20px rgba(0, 204, 255, 0.8), 0 4px 15px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
     max-width: 800px;
 }
@@ -120,8 +120,8 @@
     text-align: center;
     z-index: 2;
     padding: 2rem 1.5rem;
-    border: 1px solid rgba(52, 120, 223, 0.3);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(52, 120, 223, 0.2);
+    border: 1px solid rgba(0, 204, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 204, 255, 0.2);
 }
 
 .date-card h3 {
@@ -171,7 +171,7 @@
     line-height: 1;
     color: var(--color-white);
     margin-bottom: 0.2rem;
-    text-shadow: 0 0 15px rgba(52, 120, 223, 0.6);
+    text-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
 }
 
 .countdown-label {
@@ -185,12 +185,12 @@
 .venue-card {
     bottom: 60px;
     right: 0;
-    background: var(--color-dark-void);
+    background: var(--color-secondary-blue);
     width: 260px;
     z-index: 1;
     padding: 2rem 1.5rem;
-    border: 1px solid rgba(52, 120, 223, 0.3);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(52, 120, 223, 0.2);
+    border: 1px solid rgba(0, 204, 255, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 204, 255, 0.2);
 }
 
 .venue-card h3 {

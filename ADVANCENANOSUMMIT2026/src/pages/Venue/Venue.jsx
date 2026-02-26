@@ -33,19 +33,19 @@ const Venue = () => {
 
     const nearbyAttractions = [
         {
-            name: 'Marienplatz',
-            distance: '0.5 km',
-            image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&q=80"
-        },
-        {
-            name: 'English Garden',
-            distance: '3.2 km',
+            name: 'Van Gogh Museum',
+            distance: '1.2 km',
             image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800&q=80"
         },
         {
-            name: 'Nymphenburg Palace',
-            distance: '6.5 km',
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Schloss_Nymphenburg.jpg/800px-Schloss_Nymphenburg.jpg"
+            name: 'Rijksmuseum',
+            distance: '0.8 km',
+            image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=800&q=80"
+        },
+        {
+            name: 'Anne Frank House',
+            distance: '2.5 km',
+            image: "https://images.unsplash.com/photo-1605141261314-118c7e008df4?w=800&q=80"
         }
     ];
 
@@ -87,18 +87,18 @@ const Venue = () => {
                 <div className="container">
                     <div className="about-city-content">
                         <div className="about-city-text">
-                            <h4 className="section-subtitle">Discover Munich</h4>
+                            <h4 className="section-subtitle">Discover Amsterdam, Netherlands</h4>
                             <h2 className="section-title">About the Host City</h2>
                             <p className="city-description">
-                                Munich is the capital of Bavaria and one of Germany’s most popular destinations. Known for its
-                                rich history, stunning architecture, and vibrant culture, the city seamlessly blends
-                                traditional Bavarian charm with modern innovation.
+                                Amsterdam is the iconic capital of the Netherlands, world-renowned for its artistic heritage,
+                                elaborate canal system, and narrow houses with gabled facades. It's a city where
+                                historical charm meets a diverse, forward-thinking culture.
                             </p>
                             <p className="city-description">
-                                As a major European hub for technology and research, Munich provides world-class
-                                conference facilities and excellent infrastructure. Visitors can explore centuries-old
-                                buildings, numerous museums, and the famous English Garden, making it an ideal location
-                                for international summits.
+                                As a major European hub for technology, innovation, and research, Amsterdam provides world-class
+                                conference facilities and excellent international connectivity. Visitors can explore
+                                world-famous museums, historic canal houses, and vibrant cultural districts, making it an
+                                exceptional location for the Annual International Conference on Advanced Materials & Nanotechnology.
                             </p>
                             <div className="city-stats">
                                 <div className="stat-box">
@@ -118,7 +118,7 @@ const Venue = () => {
                         <div className="about-city-image">
                             <img
                                 src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80"
-                                alt="Munich City"
+                                alt="Amsterdam, Netherlands City"
                             />
                         </div>
                     </div>
@@ -129,7 +129,7 @@ const Venue = () => {
             <section className="nearby-attractions section-padding">
                 <div className="container">
                     <div className="text-center mb-5">
-                        <h4 className="section-subtitle">Explore Munich</h4>
+                        <h4 className="section-subtitle">Explore Amsterdam, Netherlands</h4>
                         <h2 className="section-title">Nearby Attractions</h2>
                         <p className="section-desc">
                             Make the most of your visit with these must-see destinations
@@ -159,7 +159,7 @@ const Venue = () => {
                         Ready to Join Us?
                     </h2>
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-                        Secure your spot at the Global Summit on Food Science Technology and Agriculture and be part of this transformative event
+                        Secure your spot at the ANNUAL INTERNATIONAL CONFERENCE ON ADVANCED MATERIALS & NANOTECHNOLOGY and be part of this transformative event
                     </p>
                     <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }}>
                         Register Now

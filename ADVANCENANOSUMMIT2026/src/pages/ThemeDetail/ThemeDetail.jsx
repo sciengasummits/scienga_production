@@ -1,55 +1,55 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Stethoscope, Heart, Brain, Activity, Microscope, Globe, ArrowLeft } from 'lucide-react';
+import { Microscope, Atom, Cpu, Zap, Layers, Dna, Activity, FlaskConical, Globe, ArrowLeft } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 
 const themesData = {
-    'primary-care': {
-        title: 'Primary Care',
-        icon: <Stethoscope size={48} />,
-        description: 'Innovations in primary healthcare delivery focusing on patient-centered care, prevention, and community health strategies.',
-        topics: [
-            'Family Medicine', 'Preventive Healthcare', 'Geriatrics', 'Chronic Disease Management', 'Telemedicine in Primary Care'
-        ]
-    },
-    'cardiology': {
-        title: 'Cardiology',
-        icon: <Heart size={48} />,
-        description: 'Latest research in cardiovascular medicine, including interventional cardiology, heart failure management, and preventive cardiology.',
-        topics: [
-            'Interventional Cardiology', 'Heart Failure', 'Preventive Cardiology', 'Pediatric Cardiology', 'Cardiac Imaging'
-        ]
-    },
-    'neurology': {
-        title: 'Neurology',
-        icon: <Brain size={48} />,
-        description: 'Advancements in treating neurological disorders such as stroke, epilepsy, Alzheimer\'s, and Parkinson\'s disease.',
-        topics: [
-            'Stroke Management', 'Epilepsy Research', 'Neurodegenerative Diseases', 'Neuroimaging', 'Pediatric Neurology'
-        ]
-    },
-    'public-health': {
-        title: 'Public Health',
-        icon: <Globe size={48} />,
-        description: 'Global strategies for public health challenges, epidemiology, and health policy implementation.',
-        topics: [
-            'Epidemiology', 'Global Health Policy', 'Infectious Disease Control', 'Health Equity', 'Occupational Health'
-        ]
-    },
-    'emergency-medicine': {
-        title: 'Emergency Medicine',
-        icon: <Activity size={48} />,
-        description: 'Critical care and emergency response protocols, trauma management, and disaster medicine.',
-        topics: [
-            'Trauma Care', 'Critical Care Medicine', 'Disaster Response', 'Pediatric Emergency', 'Toxicology'
-        ]
-    },
-    'clinical-research': {
-        title: 'Clinical Research',
+    'nanomaterials': {
+        title: 'Nanomaterials Synthesis & Characterization',
         icon: <Microscope size={48} />,
-        description: 'Updates from cutting-edge clinical trials, research methodology, and translational medicine.',
+        description: 'Advanced methods for synthesizing and analyzing materials at the nanoscale, exploring their unique physical and chemical properties.',
         topics: [
-            'Clinical Trials Methodology', 'Translational Medicine', 'Bioethics', 'Drug Development', 'Data Analysis in Research'
+            'Chemical Vapor Deposition (CVD)', 'Sol-Gel Synthesis', 'Atomic Force Microscopy (AFM)', 'Transmission Electron Microscopy (TEM)', 'Nanoparticle Functionalization'
+        ]
+    },
+    'energy-materials': {
+        title: 'Advanced Energy Storage Materials',
+        icon: <Zap size={48} />,
+        description: 'Innovations in materials for high-capacity batteries, supercapacitors, and next-generation energy conversion systems.',
+        topics: [
+            'Lithium-Ion & Solid-State Batteries', 'Hydrogen Storage Technologies', 'Photovoltaic Materials', 'Piezoelectric Energy Harvesting', 'Thermal Interface Materials'
+        ]
+    },
+    'carbon-nanostructures': {
+        title: 'Carbon Nanostructures & Graphene',
+        icon: <Atom size={48} />,
+        description: 'Exploring the revolutionary properties of graphene, carbon nanotubes, and other carbon allotropes in various industries.',
+        topics: [
+            'Graphene Electronics', 'Carbon Nanotube Composites', 'Fullerene Derivatives', '2D Materials Beyond Graphene', 'Carbon-based Supercapacitors'
+        ]
+    },
+    'nanoelectronics': {
+        title: 'Nanoelectronics & Nanosensors',
+        icon: <Cpu size={48} />,
+        description: 'Development of nanoscale electronic components, quantum computing materials, and ultra-sensitive molecular sensors.',
+        topics: [
+            'Nano-FETs and Memristors', 'Quantum Dot Displays', 'Molecular Electronics', 'Nanosensors for Healthcare', 'Flexible & Stretchable Electronics'
+        ]
+    },
+    'polymers': {
+        title: 'Polymers & Nanocomposites',
+        icon: <Layers size={48} />,
+        description: 'Designing polymer-based nanomaterials with enhanced mechanical, thermal, and barrier properties for industrial applications.',
+        topics: [
+            'Polymer Matrix Nanocomposites', 'Smart Polymer Coatings', 'Self-healing Materials', 'Biodegradable Nanopolymers', 'Reinforced Engineering Plastics'
+        ]
+    },
+    'biomaterials': {
+        title: 'Biomaterials & Tissue Engineering',
+        icon: <Dna size={48} />,
+        description: 'Integrating nanotechnology with biology to create biocompatible materials for regenerative medicine and medical devices.',
+        topics: [
+            'Scaffolds for Tissue Regeneration', 'Nanotechnology in Drug Delivery', 'Bio-inspired Nanostructures', 'Orthopedic Implant Materials', 'Biocompatibility Testing'
         ]
     }
 };

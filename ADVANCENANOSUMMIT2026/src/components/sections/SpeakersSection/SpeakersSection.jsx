@@ -106,7 +106,7 @@ const SpeakersSection = ({ showViewAll }) => {
                                 <h3 className="modal-title">{selectedSpeaker.name}</h3>
                                 <span className="modal-type">{selectedSpeaker.title}</span>
                                 <p className="modal-affiliation-highlight">{selectedSpeaker.affiliation}</p>
-                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of general medicine, contributing significantly to research and clinical practice. With years of experience leading healthcare initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing medical standards globally. Their work focuses on innovative treatment methodologies and improving patient outcomes through evidence-based medicine."}</p>
+                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of Advanced Materials and Nanotechnology, contributing significantly to research and industrial applications. With years of experience leading material science initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing the standards of nanotechnology globally. Their work focuses on innovative synthesis methodologies and improving material performance through nanoscale engineering."}</p>
                             </div>
                         </div>
                     </div>

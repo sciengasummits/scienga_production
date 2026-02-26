@@ -26,21 +26,21 @@ const VisaInfo = () => {
                         <h2 className="visa-main-title">VISA INFORMATION FOR INTERNATIONAL PARTICIPANTS</h2>
 
                         <p className="visa-intro-text">
-                            The <strong>Global Summit on Food Science Technology and Agriculture</strong> welcomes speakers & delegates from all over the world.
-                            Below is essential visa-related information to assist with your travel planning to Singapore:
+                            The <strong>ANNUAL INTERNATIONAL CONFERENCE ON ADVANCED MATERIALS & NANOTECHNOLOGY</strong> welcomes speakers & delegates from all over the world.
+                            Below is essential visa-related information to assist with your travel planning to Amsterdam, Netherlands:
                         </p>
 
                         <div className="visa-info-block">
                             <h3 className="visa-block-title">1. Do You Need a Visa?</h3>
                             <ul className="visa-list">
                                 <li>
-                                    <strong>Check if you require a visa to enter Singapore</strong> using the immigration & Checkpoints Authority (ICA) website or your local Singapore Embassy.
+                                    <strong>Check if you require a Schengen visa to enter the Netherlands</strong> using the official Netherlands Ministry of Foreign Affairs website or your local Embassy.
                                 </li>
                                 <li>
-                                    Nationals of many countries (including <strong>USA, UK, Canada, Australia, Japan, and most EU countries</strong>) may enter Singapore for short-term visits (up to 30 or 90 days) without applying for a visa in advance.
+                                    Nationals of many countries (including <strong>USA, UK, Canada, Australia, Japan, and most EU countries</strong>) may enter the Netherlands for short-term visits (up to 90 days) without applying for a visa in advance.
                                 </li>
                                 <li>
-                                    All visitors must complete the <strong>SG Arrival Card (SGAC)</strong> with Electronic Health Declaration within 3 days prior to arrival.
+                                    For countries that require a visa, you will typically need a <strong>Short-stay Schengen Visa</strong> for the duration of the conference.
                                 </li>
                             </ul>
                         </div>
@@ -49,10 +49,10 @@ const VisaInfo = () => {
                             <h3 className="visa-block-title">2. Visa Types</h3>
                             <ul className="visa-list">
                                 <li>
-                                    <strong>Short-Term Visit Pass:</strong> This is granted upon arrival for social visits, tourism, or attending short seminars/conferences.
+                                    <strong>Schengen Visa:</strong> This allows you to stay in the Schengen area for up to 90 days in a 180-day period.
                                 </li>
                                 <li>
-                                    <strong>Entry Visa:</strong> For nationals of assessment level I and II countries, an entry visa is required before travel. Check the ICA website for the list of countries.
+                                    <strong>Transit Visa:</strong> For participants who are transitioning through a Schengen airport to a destination outside the Schengen area.
                                 </li>
                             </ul>
                         </div>

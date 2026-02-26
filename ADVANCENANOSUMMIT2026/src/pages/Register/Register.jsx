@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { countries } from '../../data/countriesData';
 import './Register.css';
 
 const Register = ({ isDiscounted = false }) => {
@@ -13,8 +14,8 @@ const Register = ({ isDiscounted = false }) => {
         address: ''
     });
 
-    // State for selected academic category (Radio)
-    const [selectedAcademicCategory, setSelectedAcademicCategory] = useState(null);
+    // State for selected registration type
+    const [selectedType, setSelectedType] = useState(null); // speaker, delegate, poster, student, virtual
 
     // State for Terms
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -30,16 +31,10 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    // const earlyBirdEnd = new Date('2025-10-25');
-    // const standardEnd = new Date('2026-02-16');
-
-    // For demo/screenshot purpose, let's assume specific dates or just logic
-    // But since the user wants it to look like the screenshot where OnSpot is active:
-    // Today is Feb 17, 2026. Standard ended Feb 16, 2026. So OnSpot is active.
+    const earlyBirdEnd = new Date('2026-09-25');
+    const standardEnd = new Date('2026-10-25');
 
     let activePhase = 'onspot';
-    const earlyBirdEnd = new Date('2025-10-25');
-    const standardEnd = new Date('2026-02-16');
 
     if (currentDate <= earlyBirdEnd) {
         activePhase = 'early';
@@ -49,12 +44,13 @@ const Register = ({ isDiscounted = false }) => {
         activePhase = 'onspot';
     }
 
-    // Pricing Data
-    const academicPricing = [
-        { id: 'speaker', label: 'Speaker Registration', early: applyDiscount(749), standard: applyDiscount(849), onspot: applyDiscount(949) },
-        { id: 'delegate', label: 'Delegate Registration', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
-        { id: 'poster', label: 'Poster Registration', early: applyDiscount(449), standard: applyDiscount(549), onspot: applyDiscount(649) },
-        { id: 'student', label: 'Student', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
+    // Pricing Data - 5 rows including Virtual (Online)
+    const registrationPricing = [
+        { id: 'speaker', label: 'Speaker Registration', academic: 749, earlyBird: 849, standard: 949, onspot: 949 },
+        { id: 'delegate', label: 'Delegate Registration', academic: 899, earlyBird: 999, standard: 1099, onspot: 1099 },
+        { id: 'poster', label: 'Poster Registration', academic: 449, earlyBird: 549, standard: 649, onspot: 649 },
+        { id: 'student', label: 'Student', academic: 299, earlyBird: 399, standard: 499, onspot: 499 },
+        { id: 'virtual', label: 'Virtual (Online)', academic: 599, earlyBird: 699, standard: 799, onspot: 799 },
     ];
 
     const accommodationOptions = [
@@ -71,16 +67,15 @@ const Register = ({ isDiscounted = false }) => {
         { id: 'exhibitor', label: 'Exhibitor', price: applyDiscount(1999) },
     ];
 
-    // Helper to calculate total
+    // Helper to calculate total (using academic pricing as default, or add category selector)
     const calculateTotal = () => {
         let total = 0;
 
-        // Add Academic Registration
-        if (selectedAcademicCategory) {
-            const item = academicPricing.find(p => p.id === selectedAcademicCategory);
+        // Add Registration Price (using academic pricing)
+        if (selectedType) {
+            const item = registrationPricing.find(p => p.id === selectedType);
             if (item) {
-                // Use activePhase price
-                total += item[activePhase];
+                total += item.academic; // Default to academic pricing
             }
         }
 
@@ -89,20 +84,6 @@ const Register = ({ isDiscounted = false }) => {
             const item = sponsorshipPricing.find(p => p.id === selectedSponsorship);
             if (item) {
                 total += item.price;
-            }
-        }
-
-        // Add Accompanying Person
-        if (includeAccompanying) {
-            total += 249;
-        }
-
-        // Add Accommodation
-        if (selectedAccommodation) {
-            const [nights, type] = selectedAccommodation.split('-');
-            const option = accommodationOptions.find(o => o.nights === parseInt(nights));
-            if (option) {
-                total += option[type];
             }
         }
 
@@ -142,10 +123,8 @@ Registration Summary:
             company: '',
             address: ''
         });
-        setSelectedAcademicCategory(null);
+        setSelectedType(null);
         setTermsAccepted(false);
-        setIncludeAccompanying(false);
-        setSelectedAccommodation(null);
         setSelectedSponsorship(null);
     };
 
@@ -206,14 +185,17 @@ Registration Summary:
                             />
                         </div>
                         <div className="form-row">
-                            <input
-                                type="text"
+                            <select
                                 name="country"
-                                placeholder="Select Country"
                                 className="form-control"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="" disabled>Select Country</option>
+                                {countries.map((country, index) => (
+                                    <option key={index} value={country}>{country}</option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 name="company"
@@ -242,47 +224,30 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
-                                <th className={activePhase === 'early' ? 'active-header-early' : ''}>
-                                    Early Bird Registration<br />
-                                    <span className="date">October 25, 2025</span>
-                                    {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
-                                </th>
-                                <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
-                                    Standard Registration<br />
-                                    <span className="date">February 16, 2026</span>
-                                    {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
-                                </th>
-                                <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
-                                    OnSpot Registration<br />
-                                    <span className="date">April 20, 2026</span>
-                                    {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
-                                </th>
+                                <th className="category-label-header">ACADEMIC</th>
+                                <th className="early-bird-header">Early Bird Registration<br /><span className="date-small">September 29, 2026</span><span className="badge-active">ACTIVE</span></th>
+                                <th className="standard-header">Standard Registration<br /><span className="date-small">October 30, 2026</span></th>
+                                <th className="onspot-header">OnSpot Registration<br /><span className="date-small">December 07, 2026</span></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {academicPricing.map(item => (
-                                <tr key={item.id} className={selectedAcademicCategory === item.id ? 'selected-row' : ''}>
-                                    <td className="item-cell">
-                                        <label className="radio-label">
+                            {registrationPricing.map(item => (
+                                <tr key={item.id} className={selectedType === item.id ? 'selected-row' : ''}>
+                                    <td className="item-cell-with-radio">
+                                        <label className="radio-label-left">
                                             <input
                                                 type="radio"
-                                                name="academicCategory"
-                                                checked={selectedAcademicCategory === item.id}
-                                                onChange={() => setSelectedAcademicCategory(item.id)}
+                                                name="registration"
+                                                value={item.id}
+                                                checked={selectedType === item.id}
+                                                onChange={() => setSelectedType(item.id)}
                                             />
                                             {item.label}
                                         </label>
                                     </td>
-                                    <td className={`${activePhase === 'early' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}`}>
-                                        <span className={activePhase === 'early' ? 'price-active' : ''}>$ {item.early}</span>
-                                    </td>
-                                    <td className={`${activePhase === 'standard' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}`}>
-                                        <span className={activePhase === 'standard' ? 'price-active' : ''}>$ {item.standard}</span>
-                                    </td>
-                                    <td className={`${activePhase === 'onspot' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}`}>
-                                        <span className={activePhase === 'onspot' ? 'price-active' : ''}>$ {item.onspot}</span>
-                                    </td>
+                                    <td className="price-cell price-cell-earlybird">$ {item.earlyBird}</td>
+                                    <td className="price-cell">$ {item.standard}</td>
+                                    <td className="price-cell">$ {item.onspot}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -62,7 +62,7 @@ const VenueSection = () => {
     };
 
     return (
-        <section className="venue" id="venue" style={{ backgroundColor: '#083344' }}>
+        <section className="venue" id="venue" style={{ backgroundColor: 'var(--color-primary-start)' }}>
             <div className="venue__slides">
                 {venues.map((venue, index) => (
                     <div

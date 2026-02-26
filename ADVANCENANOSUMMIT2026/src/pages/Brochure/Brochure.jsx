@@ -1,9 +1,17 @@
 import React from 'react';
 import './Brochure.css';
-import brochurePdf from '../../assets/brochure/World-General-Medicine-Congress-Your-Official-Digital-Platform.pdf';
+import brochurePdf from '../../assets/brochure/Advanced-Materials-Nanotechnology-Brochure.pdf';
 import { Download, FileText, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Brochure = () => {
+    const navigate = useNavigate();
+
+    const handleViewOnline = (e) => {
+        e.preventDefault();
+        navigate('/brochure/view');
+    };
+
     return (
         <div className="brochure-page pt-5">
             <div className="page-header">
@@ -21,7 +29,7 @@ const Brochure = () => {
                                 <div className="preview-icon">
                                     <FileText size={64} strokeWidth={1} />
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>Global Summit on Food Science Technology and Agriculture</h3>
+                                <h3 style={{ fontSize: '1.5rem' }}>ANNUAL INTERNATIONAL CONFERENCE ON ADVANCED MATERIALS & NANOTECHNOLOGY</h3>
                                 <p>Official Digital Platform Brochure</p>
                                 <div className="preview-badge">2026 Edition</div>
                             </div>
@@ -30,7 +38,7 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Global Summit on Food Science Technology and Agriculture.
+                                Download the official conference brochure to get comprehensive information about the ANNUAL INTERNATIONAL CONFERENCE ON ADVANCED MATERIALS & NANOTECHNOLOGY.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 
@@ -58,14 +66,14 @@ const Brochure = () => {
                             </ul>
 
                             <div className="brochure-actions">
-                                <a href={brochurePdf} download="World-General-Medicine-Congress-Brochure.pdf" className="download-btn">
+                                <button onClick={handleViewOnline} className="download-btn" style={{ border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <Download size={20} />
                                     Download Brochure
-                                </a>
-                                <a href={brochurePdf} target="_blank" rel="noopener noreferrer" className="view-btn">
+                                </button>
+                                <button onClick={handleViewOnline} className="view-btn" style={{ background: 'none', border: '1px solid currentColor', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <FileText size={20} />
                                     View Online
-                                </a>
+                                </button>
                             </div>
                             <p className="download-note mt-3">
                                 * File size: 2.5 MB • Format: PDF • Updated: February 2026

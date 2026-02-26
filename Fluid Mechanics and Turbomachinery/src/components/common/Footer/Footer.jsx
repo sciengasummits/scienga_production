@@ -14,12 +14,12 @@ const Footer = () => {
                             <Logo />
                         </div>
                         <p className="footer__desc">
-                            Global experts unite to shape the future of fluid mechanics and turbomachinery.
+                            ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY,Global experts unite to shape the future of fluid mechanics and turbomachinery.
                             Discover ground-breaking technologies and connect with top mechanical engineering professionals.
                         </p>
                         <div className="footer__socials">
                             <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
-                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
                             <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
                         </div>
                     </div>
