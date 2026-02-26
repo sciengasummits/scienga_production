@@ -36,7 +36,6 @@ const HeroSection = () => {
         return () => clearInterval(interval);
     }, []);
 
-
     const handleDownloadBrochure = () => {
         navigate('/brochure');
     };
@@ -84,6 +83,7 @@ const HeroSection = () => {
                     </p>
                     <div className="hero__actions">
                         <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
+
                         <Button onClick={() => navigate('/register')}>Register Now</Button>
                         <Button onClick={() => navigate('/abstract-submission')}>
                             Submit Abstract

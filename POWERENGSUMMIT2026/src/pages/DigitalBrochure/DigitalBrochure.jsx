@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Download, Printer, ArrowLeft, CheckCircle, Calendar, MapPin, Users, Award, Globe, Zap, Battery, Wind, Sun } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Download, Printer, ArrowLeft, CheckCircle, Calendar, MapPin, Users, Zap, Battery, Wind, Sun, Globe } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import './DigitalBrochure.css';
 
@@ -28,14 +28,14 @@ const DigitalBrochure = () => {
             <div className="brochure-toolbar no-print">
                 <div className="container toolbar-container">
                     <button className="back-link" onClick={handleBack}>
-                        <ArrowLeft size={18} /> Back to Brochure
+                        <ArrowLeft size={18} /> Back to Overview
                     </button>
                     <div className="toolbar-actions">
                         <Button variant="outline" className="btn-sm" onClick={() => window.print()}>
                             <Printer size={16} /> Print
                         </Button>
                         <Button variant="primary" className="btn-sm" onClick={() => window.print()}>
-                            Download PDF
+                            <Download size={16} /> Save as PDF
                         </Button>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ const DigitalBrochure = () => {
                                 <span className="title-main">POWERENGSUMMIT2026</span>
                             </h1>
                             <p className="brochure-tagline">
-                                Bridging Modern Power Systems and Sustainable Energy Solutions for a Greener Tomorrow.
+                                Advancing the Future of Global Power Systems and Sustainable Energy Solutions.
                             </p>
 
                             <div className="event-meta">
@@ -60,14 +60,14 @@ const DigitalBrochure = () => {
                                     <Calendar className="meta-icon" size={24} />
                                     <div className="meta-info">
                                         <span className="meta-label">DATE</span>
-                                        <span className="meta-value">November 10-12, 2026</span>
+                                        <span className="meta-value">March 23-25, 2027</span>
                                     </div>
                                 </div>
                                 <div className="meta-item">
                                     <MapPin className="meta-icon" size={24} />
                                     <div className="meta-info">
                                         <span className="meta-label">VENUE</span>
-                                        <span className="meta-value">London, United Kingdom</span>
+                                        <span className="meta-value">Munich, Germany</span>
                                     </div>
                                 </div>
                             </div>
@@ -84,84 +84,81 @@ const DigitalBrochure = () => {
                     <div className="page-section">
                         <h2 className="section-heading">Vision & Scope</h2>
                         <p className="section-text">
-                            The **POWERENGSUMMIT2026** is the largest gathering of energy specialists, electrical engineers, and sustainability researchers.
-                            Our mission is to foster a global dialogue on the decarbonization of power grids and the integration of large-scale renewable energy.
+                            The <strong>POWERENGSUMMIT2026</strong> is a premier global forum for energy specialists, electrical engineers, and sustainability researchers.
+                            Our mission is to explore the technological frontiers of power generation, distribution, and the critical integration of renewable energy sources into modern grids.
                         </p>
                         <p className="section-text">
-                            With over 20+ specialized tracks, this summit offers a deep dive into the latest breakthroughs in high-voltage engineering,
-                            smart grid management, and energy storage lifecycle.
+                            This year's summit focuses on "Electrifying the Future," bringing together industry leaders and academics to solve the challenges of grid stabilization, energy storage, and decarbonization.
                         </p>
                     </div>
 
                     <div className="page-section">
                         <h2 className="section-heading">Key Highlights</h2>
-                        <ul className="feature-list">
-                            <li><CheckCircle className="check-icon" size={18} /> **Keynote Plenaries:** Insights from world-renowned energy policy makers.</li>
-                            <li><CheckCircle className="check-icon" size={18} /> **Interactive Workshops:** Hands-on sessions on Grid Simulation software.</li>
-                            <li><CheckCircle className="check-icon" size={18} /> **B2B Networking:** Connect with top utility companies and technology providers.</li>
-                            <li><CheckCircle className="check-icon" size={18} /> **Poster Sessions:** Showcasing the latest academic research from PhD scholars.</li>
+                        <ul className="feature-list-digital">
+                            <li><CheckCircle className="check-icon" size={18} /> <strong>World-Class Keynotes:</strong> Hear from pioneers in HVDC and Smart Grid technology.</li>
+                            <li><CheckCircle className="check-icon" size={18} /> <strong>Technical Tracks:</strong> Over 40 sessions covering Solar, Wind, and Nuclear energy.</li>
+                            <li><CheckCircle className="check-icon" size={18} /> <strong>Exhibition Zone:</strong> Discover the latest hardware from top energy tech providers.</li>
+                            <li><CheckCircle className="check-icon" size={18} /> <strong>Networking Hub:</strong> Dedicated sessions for B2B collaboration and academic exchange.</li>
                         </ul>
                     </div>
 
-                    <div className="stats-grid">
-                        <div className="stat-card">
+                    <div className="stats-grid-digital">
+                        <div className="stat-card-digital">
                             <Zap size={32} />
-                            <div className="stat-num">40+</div>
-                            <div className="stat-label">Power Tracks</div>
+                            <div className="stat-num">50+</div>
+                            <div className="stat-label">Scientific Sessions</div>
                         </div>
-                        <div className="stat-card">
+                        <div className="stat-card-digital">
                             <Globe size={32} />
-                            <div className="stat-num">25+</div>
-                            <div className="stat-label">Nations Involved</div>
+                            <div className="stat-num">30+</div>
+                            <div className="stat-label">Countries Represented</div>
                         </div>
-                        <div className="stat-card">
+                        <div className="stat-card-digital">
                             <Users size={32} />
-                            <div className="stat-num">500+</div>
-                            <div className="stat-label">Total Delegates</div>
+                            <div className="stat-num">600+</div>
+                            <div className="stat-label">Expected Delegates</div>
                         </div>
                     </div>
                 </div>
 
-                {/* Page 3: Technical Tracks */}
+                {/* Page 3: Technical Themes */}
                 <div className="brochure-page">
-                    <h2 className="section-heading">Core Scientific Tracks</h2>
-                    <div className="themes-list">
-                        <div className="theme-item">
-                            <div className="theme-header">
-                                <Sun size={20} className="theme-icon" />
-                                <h3>Solar & PV Integration</h3>
+                    <h2 className="section-heading">Core Scientific Themes</h2>
+                    <div className="themes-grid-digital">
+                        <div className="theme-item-digital">
+                            <Sun size={24} className="theme-icon" />
+                            <div>
+                                <h3>Renewable Energy Integration</h3>
+                                <p>Large-scale solar and wind farm management and grid synchronization.</p>
                             </div>
-                            <p>Scaling up grid-tied photovoltaic systems and addressing variability through advanced prediction models.</p>
                         </div>
-                        <div className="theme-item">
-                            <div className="theme-header">
-                                <Wind size={20} className="theme-icon" />
-                                <h3>Advanced Wind Turbines</h3>
-                            </div>
-                            <p>Floating offshore wind platforms and the next generation of aero-elastic turbine designs.</p>
-                        </div>
-                        <div className="theme-item">
-                            <div className="theme-header">
-                                <Zap size={20} className="theme-icon" />
-                                <h3>HVDC & Smart Grids</h3>
-                            </div>
-                            <p>High Voltage Direct Current (HVDC) transmission for long-distance renewable energy transport.</p>
-                        </div>
-                        <div className="theme-item">
-                            <div className="theme-header">
-                                <Battery size={20} className="theme-icon" />
+                        <div className="theme-item-digital">
+                            <Battery size={24} className="theme-icon" />
+                            <div>
                                 <h3>Next-Gen Energy Storage</h3>
+                                <p>Solid-state batteries, hydrogen storage, and pumped hydro innovations.</p>
                             </div>
-                            <p>Beyond Lithium-Ion: Solid-state batteries, Flow batteries, and Green Hydrogen storage solutions.</p>
+                        </div>
+                        <div className="theme-item-digital">
+                            <Zap size={24} className="theme-icon" />
+                            <div>
+                                <h3>Smart Grids & Microgrids</h3>
+                                <p>AI-driven demand response and decentralized energy management systems.</p>
+                            </div>
+                        </div>
+                        <div className="theme-item-digital">
+                            <Globe size={24} className="theme-icon" />
+                            <div>
+                                <h3>Power System Stability</h3>
+                                <p>Addressing inertia issues and voltage control in inverter-dominated grids.</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="registration-info-box">
-                        <h3>Registration Tiers</h3>
-                        <p>Student Pass: From **$299**</p>
-                        <p>Academic Professional: From **$499**</p>
-                        <p>Industry Professional: From **$699**</p>
-                        <div className="cta-note">Secure your spot at www.powerenergysummit.com</div>
+                    <div className="info-box-digital">
+                        <h3>Registration Information</h3>
+                        <p>Early Bird Registration is now open. Secure your participation to shape the future of energy.</p>
+                        <div className="cta-digital">Register Today at www.powerenergysummit.com</div>
                     </div>
                 </div>
             </div>

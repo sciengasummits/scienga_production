@@ -1,10 +1,10 @@
 :root {
   --color-primary-start: #1a2b5b;
   /* Navy Blue */
-  --color-primary-end: #1a2b5b;
-  /* Keeping it solid navy for now or a subtle gradient */
+  --color-primary-end: #004e92;
+  /* Royal Blue */
   --color-primary-rgb: 26, 43, 91;
-  --color-primary-gradient: linear-gradient(135deg, #1a2b5b 0%, #2a3b6b 100%);
+  --color-primary-gradient: linear-gradient(135deg, #1a2b5b 0%, #004e92 100%);
   --color-accent: #c5a059;
   /* Gold */
   --color-accent-hover: #b48f48;
@@ -18,7 +18,7 @@
   --font-heading: 'Barlow', sans-serif;
 
   --shadow-card: 0 10px 20px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 15px 30px rgba(0, 78, 146, 0.2);
+  --shadow-hover: 0 15px 30px rgba(46, 125, 50, 0.2);
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 16px;

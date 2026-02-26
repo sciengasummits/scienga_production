@@ -37,6 +37,7 @@ const Navbar = () => {
         { name: 'PROGRAM', path: '/program' },
         { name: 'SESSIONS', path: '/sessions' },
         { name: 'BROCHURE', path: '/brochure' },
+
         { name: 'ABSTRACT', path: '/abstract-submission' },
         { name: 'SPEAKERS', path: '/speakers' },
         { name: 'SPONSORSHIP', path: '/sponsors' },

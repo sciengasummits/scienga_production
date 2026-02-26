@@ -133,17 +133,13 @@ img {
 
 /* Page Header Generic Styles */
 .page-header {
-    background: linear-gradient(rgba(26, 43, 91, 0.9), rgba(26, 43, 91, 0.9)), url('../images/hero-bg.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     color: var(--color-white);
-    padding: 170px 0 70px;
-    /* Reduced height as requested */
+    padding: 170px 0 100px;
     text-align: center;
-    margin-top: 0;
     position: relative;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    /* Clean edges */
 }
 
 .page-title {
