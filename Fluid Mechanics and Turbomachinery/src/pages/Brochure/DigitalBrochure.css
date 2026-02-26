@@ -1,0 +1,51 @@
+.digital-brochure-container {
+    background-color: var(--color-bg-light);
+}
+
+.back-link {
+    color: var(--color-primary-start);
+}
+
+.print-btn {
+    background: var(--color-primary-gradient);
+    color: var(--color-white);
+}
+
+.cover-overlay {
+    background: linear-gradient(to bottom, rgba(26, 43, 91, 0.4) 0%, rgba(26, 43, 91, 0.85) 100%);
+}
+
+.conf-badge {
+    background: var(--color-accent);
+    color: var(--color-white);
+}
+
+.sub-title {
+    color: var(--color-white);
+}
+
+.accent-line {
+    background: var(--color-accent);
+}
+
+.page-header-small h3 {
+    color: var(--color-primary-start);
+    border-left-color: var(--color-accent);
+}
+
+.obj-card h4 {
+    color: var(--color-accent);
+}
+
+.bullet {
+    color: var(--color-accent);
+}
+
+.highlight-box {
+    background: var(--color-primary-gradient);
+    color: var(--color-white);
+}
+
+.time-date {
+    color: var(--color-accent);
+}

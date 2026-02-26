@@ -1,0 +1,108 @@
+.pricing-section {
+    padding: 100px 0;
+    background: var(--color-bg-light);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.pricing-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(26, 43, 91, 0.05);
+}
+
+.pricing-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(26, 43, 91, 0.1);
+    border-color: var(--color-accent);
+}
+
+.pricing-card__header {
+    background: var(--color-primary-gradient);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card__header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.pricing-card__title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-white);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.pricing-card__price {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: var(--color-accent);
+}
+
+.pricing-card__price .currency {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+.pricing-card__price .amount {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-white);
+}
+
+.pricing-card__features {
+    list-style: none;
+    padding: 3rem 2rem;
+    flex-grow: 1;
+}
+
+.pricing-card__features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    color: var(--color-text-body);
+    font-weight: 500;
+    border-bottom: 1px solid rgba(26, 43, 91, 0.05);
+}
+
+.pricing-card__features li svg {
+    color: var(--color-accent);
+}
+
+.pricing-card__button {
+    margin: 0 2rem 3rem;
+    background: var(--color-primary-gradient);
+    color: var(--color-white);
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}

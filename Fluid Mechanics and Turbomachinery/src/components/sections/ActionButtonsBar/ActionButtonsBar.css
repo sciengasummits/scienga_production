@@ -1,0 +1,47 @@
+.action-buttons-bar {
+    background-color: #1a2b5b;
+    /* Navy Blue matching Navbar */
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.action-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.action-bar-btn {
+    background: #2563eb;
+    /* Bright blue for visibility */
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-bar-btn:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .action-buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .action-bar-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}

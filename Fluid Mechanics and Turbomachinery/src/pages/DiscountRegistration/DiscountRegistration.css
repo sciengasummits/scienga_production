@@ -1,0 +1,30 @@
+.discount-registration {
+    background-color: var(--color-bg-light);
+}
+
+.registration-form {
+    background: var(--color-white);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(26, 43, 91, 0.05);
+}
+
+.form-group input,
+.form-group select {
+    background-color: var(--color-bg-light);
+    border: 1px solid rgba(26, 43, 91, 0.1);
+    border-radius: 10px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--color-accent);
+}
+
+.submit-btn {
+    background: var(--color-primary-gradient);
+    color: var(--color-white);
+    border-radius: 50px;
+    font-weight: 800;
+}
