@@ -16,6 +16,29 @@ const AbstractSubmission = () => {
         address: ''
     });
 
+    const countries = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+        "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+        "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+        "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
+        "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
+        "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+        "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+        "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
+        "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan",
+        "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
+        "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
+        "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
+        "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
+        "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
+        "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
+        "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
+        "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
+        "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
+        "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
+        "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+    ];
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -118,11 +141,9 @@ const AbstractSubmission = () => {
                                         className="form-control"
                                     >
                                         <option value="" disabled>- Please choose a country -</option>
-                                        <option value="usa">United States</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="canada">Canada</option>
-                                        <option value="germany">Germany</option>
-                                        {/* Add more countries as needed */}
+                                        {countries.map((country, index) => (
+                                            <option key={index} value={country}>{country}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
@@ -200,7 +221,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Abstract Submission Opens</h4>
-                                    <p>September 15, 2027</p>
+                                    <p> June 15, 2026</p>
                                 </div>
                             </div>
 
@@ -210,7 +231,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Early Bird Deadline</h4>
-                                    <p>December 15, 2027</p>
+                                    <p>September 25, 2026</p>
                                 </div>
                             </div>
 
@@ -220,7 +241,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Abstract Submission Deadline</h4>
-                                    <p>February 15, 2028</p>
+                                    <p>October 30, 2026</p>
                                 </div>
                             </div>
 
@@ -230,7 +251,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Conference Date</h4>
-                                    <p>April 12-14, 2028</p>
+                                    <p>December 14–16, 2026</p>
                                 </div>
                             </div>
                         </div>

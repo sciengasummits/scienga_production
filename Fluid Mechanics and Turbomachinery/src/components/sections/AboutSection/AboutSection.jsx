@@ -13,18 +13,18 @@ const AboutSection = () => {
                     <h2 className="section-title">About The Conference</h2>
                     <div className="about__scroll-content">
                         <p className="about__text">
-                            We are truly delighted to welcome you to the <strong>Global Summit on Fluid Mechanics and Turbomachinery</strong>, scheduled to take place from <strong>April 12-14, 2028</strong>, in the vibrant city of <strong>Tokyo, Japan</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in fluid dynamics and turbomachinery systems.
+                            We are truly delighted to welcome you to the <strong>ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</strong>, scheduled to take place from <strong>December 14-16, 2026</strong>, in the vibrant city of <strong> Outram, Singapore</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in fluid dynamics and turbomachinery systems.
                         </p>
                         <p className="about__text">
                             The congress is designed to bridge the gap between visionary research and real-world implementation, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The conference aims to accelerate progress across disciplines and foster impactful connections that will drive a sustainable future for engineering efficiency.
                         </p>
                         <p className="about__text">
-                            Join us in <strong>Japan</strong> for three impactful days of insight, innovation, and connection at the forefront of mechanical engineering and fluid sciences!
+                            Join us in <strong>Singapore</strong> for three impactful days of insight, innovation, and connection at the forefront of mechanical engineering and fluid sciences!
                         </p>
                         <p className="about__text">
-                            Industry Excellence: Tokyo is a global hub for advanced manufacturing and robotics, making it a focal point for the fluid mechanics and turbomachinery industry.
-                            State-of-the-Art Infrastructure: The summit will leverage Tokyo’s advanced conference facilities, known for hosting premier international trade shows.
-                            Innovation Leadership: Japan’s commitment to precision engineering makes Tokyo an inspiring location to witness real-world implementations of advanced fluid systems at scale.
+                            Industrial Hub: Singapore is a leading global hub for advanced manufacturing and aerospace engineering, making it a focal point for the fluid mechanics and turbomachinery industry.
+                            State-of-the-Art Infrastructure: The summit will leverage Singapore’s world-class conference facilities, known for hosting premier international technology events.
+                            Innovation Leadership: Singapore’s commitment to sustainable engineering and smart technologies makes it an inspiring location to witness real-world implementations of advanced fluid systems and energy efficiency.
                         </p>
 
                         <div className="about__lists-container">
@@ -67,11 +67,11 @@ const AboutSection = () => {
                             {/* Card 1 */}
                             <div className="premium-date-card">
                                 <div className="pd-date-box">
-                                    <span className="pd-month">SEP</span>
+                                    <span className="pd-month">June</span>
                                     <span className="pd-day">15</span>
                                 </div>
                                 <div className="pd-content">
-                                    <span className="pd-year">2027</span>
+                                    <span className="pd-year">2026</span>
                                     <h4 className="pd-event">Abstract Submission Opens</h4>
                                 </div>
                                 <div className="pd-icon-bg">
@@ -82,11 +82,11 @@ const AboutSection = () => {
                             {/* Card 2 */}
                             <div className="premium-date-card">
                                 <div className="pd-date-box">
-                                    <span className="pd-month">DEC</span>
-                                    <span className="pd-day">15</span>
+                                    <span className="pd-month"> September</span>
+                                    <span className="pd-day">25</span>
                                 </div>
                                 <div className="pd-content">
-                                    <span className="pd-year">2027</span>
+                                    <span className="pd-year">2026</span>
                                     <h4 className="pd-event">Early Bird Deadline</h4>
                                 </div>
                                 <div className="pd-icon-bg">
@@ -97,11 +97,11 @@ const AboutSection = () => {
                             {/* Card 3 */}
                             <div className="premium-date-card">
                                 <div className="pd-date-box">
-                                    <span className="pd-month">FEB</span>
-                                    <span className="pd-day">15</span>
+                                    <span className="pd-month">October </span>
+                                    <span className="pd-day">30</span>
                                 </div>
                                 <div className="pd-content">
-                                    <span className="pd-year">2028</span>
+                                    <span className="pd-year">2026</span>
                                     <h4 className="pd-event">Submission Deadline</h4>
                                 </div>
                                 <div className="pd-icon-bg">
@@ -112,13 +112,13 @@ const AboutSection = () => {
                             {/* Card 4 - Highlight */}
                             <div className="premium-date-card highlight-card">
                                 <div className="pd-date-box">
-                                    <span className="pd-month">APR</span>
-                                    <span className="pd-day">12</span>
+                                    <span className="pd-month">December</span>
+                                    <span className="pd-day">14</span>
                                 </div>
                                 <div className="pd-content">
-                                    <span className="pd-year">2028</span>
+                                    <span className="pd-year">2026</span>
                                     <h4 className="pd-event">Conference Date</h4>
-                                    <span className="pd-sub">April 12-14, Tokyo</span>
+                                    <span className="pd-sub">December 14-16 </span>
                                 </div>
                                 <div className="pd-icon-bg">
                                     <Star size={40} />

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
 import './Venue.css';
 
 const Venue = () => {
+    const navigate = useNavigate();
     const venueFeatures = [
         {
             title: 'World-Class Facilities',
@@ -33,19 +35,19 @@ const Venue = () => {
 
     const nearbyAttractions = [
         {
-            name: 'Senso-ji Temple',
-            distance: '15 mins',
-            image: "https://images.unsplash.com/photo-1542640244-7e67286feb8f?w=800&q=80"
+            name: 'Marina Bay Sands',
+            distance: '10 mins',
+            image: "https://th.bing.com/th/id/OIP.4_AuZL9WmNGB-YSbATiFFwHaDn?w=367&h=170&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
         },
         {
-            name: 'Tokyo Tower',
-            distance: '20 mins',
-            image: "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=800&q=80"
+            name: 'Gardens by the Bay',
+            distance: '12 mins',
+            image: "https://images.unsplash.com/photo-1506466010722-395aa2bef877?w=800&q=80"
         },
         {
-            name: 'Shibuya Crossing',
-            distance: '30 mins',
-            image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80"
+            name: 'Jewel Changi Airport',
+            distance: '25 mins',
+            image: "https://c8.alamy.com/comp/WTPKN7/jewel-changi-airport-in-singapore-a-glass-dome-with-indoor-waterfall-and-forest-shopping-mall-terminal-and-hotel-WTPKN7.jpg"
         }
     ];
 
@@ -87,36 +89,36 @@ const Venue = () => {
                 <div className="container">
                     <div className="about-city-content">
                         <div className="about-city-text">
-                            <h4 className="section-subtitle">Discover Tokyo</h4>
+                            <h4 className="section-subtitle">Discover Singapore</h4>
                             <h2 className="section-title">About the Host City</h2>
                             <p className="city-description">
-                                Tokyo is the capital of Japan and the world's most populous metropolis. It is a city where
-                                ultramodern neon-lit skyscrapers coexist peacefully with historic temples and shrines.
+                                Singapore is a global financial center and a tropical city-state located at the southern tip of the Malay Peninsula. It is a city where
+                                colonial history meets futuristic architecture and lush green spaces.
                             </p>
                             <p className="city-description">
-                                As a global hub for technology, engineering, and innovation, Tokyo provides state-of-the-art
-                                conference facilities and unmatched infrastructure. Visitors can explore a dazzling array of
-                                culture, cuisine, and cutting-edge technology, making it the perfect location for our summit.
+                                As a premier global hub for technology, aerospace engineering, and trade, Singapore provides state-of-the-art
+                                conference facilities and unparalleled connectivity. Participants can experience a unique blend of
+                                cultures, world-class dining, and innovative urban solutions.
                             </p>
                             <div className="city-stats">
                                 <div className="stat-box">
-                                    <h3>14M+</h3>
+                                    <h3>5.9M+</h3>
                                     <p>Population</p>
                                 </div>
                                 <div className="stat-box">
-                                    <h3>19°C</h3>
+                                    <h3>31°C</h3>
                                     <p>Avg. Temperature</p>
                                 </div>
                                 <div className="stat-box">
-                                    <h3>GMT+9</h3>
+                                    <h3>GMT+8</h3>
                                     <p>Time Zone</p>
                                 </div>
                             </div>
                         </div>
                         <div className="about-city-image">
                             <img
-                                src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=800&q=80"
-                                alt="Tokyo City"
+                                src="https://www.itsliquid.com/wp-content/uploads/2020/10/Jewel-Changi-Airport_Safdie-Architects-15.jpg"
+                                alt="Singapore City"
                             />
                         </div>
                     </div>
@@ -127,10 +129,10 @@ const Venue = () => {
             <section className="nearby-attractions section-padding">
                 <div className="container">
                     <div className="text-center mb-5">
-                        <h4 className="section-subtitle">Explore Tokyo</h4>
+                        <h4 className="section-subtitle">Explore Singapore</h4>
                         <h2 className="section-title">Nearby Attractions</h2>
                         <p className="section-desc">
-                            Make the most of your visit with these iconic Tokyo destinations
+                            Make the most of your visit with these iconic Singapore destinations
                         </p>
                     </div>
 
@@ -157,9 +159,13 @@ const Venue = () => {
                         Ready to Join Us?
                     </h2>
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-                        Secure your spot at the Global Summit on Fluid Mechanics and Turbomachinery and be part of this transformative event
+                        Secure your spot at the ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY and be part of this transformative event
                     </p>
-                    <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }}>
+                    <Button
+                        variant="outline"
+                        style={{ borderColor: 'white', color: 'white', background: 'transparent' }}
+                        onClick={() => navigate('/register')}
+                    >
                         Register Now
                     </Button>
                 </div>

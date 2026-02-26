@@ -48,11 +48,11 @@ const Register = ({ isDiscounted = false }) => {
 
     // Pricing Data
     const academicPricing = [
-        { id: 'speaker', label: 'Speaker Presentation (In-Person)', early: applyDiscount(799), standard: applyDiscount(899), onspot: applyDiscount(999) },
-        { id: 'delegate', label: 'Delegate / Listener (In-Person)', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
-        { id: 'student', label: 'Student (In-Person)', early: applyDiscount(399), standard: applyDiscount(499), onspot: applyDiscount(599) },
-        { id: 'poster', label: 'Poster (In-Person)', early: applyDiscount(499), standard: applyDiscount(599), onspot: applyDiscount(699) },
-        { id: 'virtual', label: 'Virtual(online)', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
+        { id: 'speaker', label: 'Speaker Registration ', early: applyDiscount(749), standard: applyDiscount(849), onspot: applyDiscount(949) },
+        { id: 'delegate', label: 'Delegate Registration', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
+        { id: 'poster', label: 'Poster Registration', early: applyDiscount(449), standard: applyDiscount(549), onspot: applyDiscount(649) },
+        { id: 'student', label: 'Student ', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
+        { id: 'virtual', label: 'Virtual(Online)', early: applyDiscount(199), standard: applyDiscount(249), onspot: applyDiscount(299) },
     ];
 
     const accommodationOptions = [

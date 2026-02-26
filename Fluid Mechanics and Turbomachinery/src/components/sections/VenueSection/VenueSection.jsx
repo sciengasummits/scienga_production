@@ -4,19 +4,23 @@ import './VenueSection.css';
 const venues = [
     {
         id: 1,
-        image: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=80" // Conference hall
     },
     {
         id: 2,
-        image: "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1920&q=80" // Modern conference center
     },
     {
         id: 3,
-        image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1525625239911-372990664e40?w=1920&q=80" // Marina Bay Sands Singapore
     },
     {
         id: 4,
-        image: "https://images.unsplash.com/photo-1542640244-7e67286feb8f?w=1920&q=80"
+        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80" // Singapore cityscape
+    },
+    {
+        id: 5,
+        image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80" // Conference room setup
     }
 ];
 

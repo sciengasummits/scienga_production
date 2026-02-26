@@ -1,51 +1,65 @@
+.sponsors-section {
+    padding: 100px 0;
+    background: var(--color-white);
+}
+
 .marquee-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
     overflow: hidden;
     position: relative;
     width: 100%;
-    -webkit-mask-image: linear-gradient(to right,
-            transparent,
-            black 10%,
-            black 90%,
-            transparent);
-    mask-image: linear-gradient(to right,
-            transparent,
-            black 10%,
-            black 90%,
-            transparent);
 }
 
 .marquee-row {
     display: flex;
-    gap: 2rem;
-    padding-right: 2rem;
+    gap: 4rem;
+    padding-right: 4rem;
     width: max-content;
 }
 
 .marquee-item {
-    width: 200px;
-    height: 100px;
+    width: 220px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    padding: 1rem;
-    background: transparent;
-    transition: transform 0.3s ease;
+    padding: 1.5rem;
+    background: var(--color-bg-light);
+    border-radius: var(--radius-md);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(26, 43, 91, 0.05);
 }
 
 .marquee-item:hover {
-    transform: scale(1.05);
+    transform: translateY(-10px) scale(1.05);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 25px rgba(26, 43, 91, 0.1);
+    background: var(--color-white);
+}
+
+.marquee-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.4s ease;
+}
+
+.marquee-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
 }
 
 .scroll-left {
-    animation: scrollLeft 30s linear infinite;
+    animation: scrollLeft 40s linear infinite;
 }
 
 .scroll-right {
-    animation: scrollRight 30s linear infinite;
+    animation: scrollRight 40s linear infinite;
 }
 
 @keyframes scrollLeft {
@@ -70,7 +84,7 @@
 
 @media (max-width: 768px) {
     .marquee-item {
-        width: 150px;
-        height: 80px;
+        width: 180px;
+        height: 100px;
     }
 }

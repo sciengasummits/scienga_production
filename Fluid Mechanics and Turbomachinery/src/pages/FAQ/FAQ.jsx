@@ -13,7 +13,7 @@ const FAQ = () => {
             category: "Registration",
             items: [
                 {
-                    question: "How can I register for the Global Summit on Fluid Mechanics and Turbomachinery?",
+                    question: "How can I register for the ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY?",
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline."
                 },
                 {
@@ -56,7 +56,7 @@ const FAQ = () => {
             items: [
                 {
                     question: "Where is the congress taking place?",
-                    answer: "The congress will be held in Tokyo, Japan. Detailed venue information and maps are available on the 'Venue' page."
+                    answer: "The congress will be held in  Outram, Singapore. Detailed venue information and maps are available on the 'Venue' page."
                 },
                 {
                     question: "Are there recommended hotels nearby?",

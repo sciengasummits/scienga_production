@@ -26,33 +26,36 @@ const VisaInfo = () => {
                         <h2 className="visa-main-title">VISA INFORMATION FOR INTERNATIONAL PARTICIPANTS</h2>
 
                         <p className="visa-intro-text">
-                            The <strong>Global Summit on Fluid Mechanics and Turbomachinery</strong> welcomes speakers & delegates from all over the world.
-                            Below is essential visa-related information to assist with your travel planning to Japan:
+                            The <strong>ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</strong> welcomes speakers & delegates from all over the world.
+                            Below is essential visa-related information to assist with your travel planning to Singapore:
                         </p>
 
                         <div className="visa-info-block">
                             <h3 className="visa-block-title">1. Do You Need a Visa?</h3>
                             <ul className="visa-list">
                                 <li>
-                                    <strong>Check if you require a visa to enter Japan</strong> using the Ministry of Foreign Affairs of Japan website or your local Japanese Embassy.
+                                    <strong>Check if you require a visa to enter Singapore</strong> using the Immigration & Checkpoints Authority (ICA) website or your local Singapore Overseas Mission.
                                 </li>
                                 <li>
-                                    Nationals of many countries (including <strong>USA, UK, Canada, Australia, and most EU countries</strong>) are eligible for visa exemptions for short-term stays (usually up to 90 days) for tourism or business conferences.
+                                    Nationals of many countries (including <strong>USA, UK, Canada, Australia, and most EU countries</strong>) are eligible for visa-free entry for short-term stays (usually up to 30 or 90 days).
                                 </li>
                                 <li>
-                                    All visitors must have valid travel insurance coverage for the duration of their stay within Japan.
+                                    All visitors must submit an <strong>SG Arrival Card (SGAC)</strong> with Health Declaration via the ICA e-Service within 3 days before arrival in Singapore.
                                 </li>
                             </ul>
                         </div>
 
                         <div className="visa-info-block">
-                            <h3 className="visa-block-title">2. Visa Types</h3>
+                            <h3 className="visa-block-title">2. Travel Requirements</h3>
                             <ul className="visa-list">
                                 <li>
-                                    <strong>Short-Term Stay Visa:</strong> For stays up to 90 days for tourism, business, or attending conferences. This applies to citizens of countries that require a visa.
+                                    <strong>Passport:</strong> Minimum 6 months validity from the date of arrival.
                                 </li>
                                 <li>
-                                    <strong>Work or Long-Term Visa:</strong> Required for paid activities or long-term stays. Attendees typically require a Short-Term Stay Visa for conference participation.
+                                    <strong>Confirmed Return Ticket:</strong> Proof of onward or return travel.
+                                </li>
+                                <li>
+                                    <strong>Sufficient Funds:</strong> Evidence of sufficient funds for your stay in Singapore.
                                 </li>
                             </ul>
                         </div>

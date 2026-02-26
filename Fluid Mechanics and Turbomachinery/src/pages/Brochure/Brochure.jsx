@@ -1,9 +1,25 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Brochure.css';
 import brochurePdf from '../../assets/brochure/World-General-Medicine-Congress-Your-Official-Digital-Platform.pdf';
-import { Download, FileText, CheckCircle } from 'lucide-react';
+import { Download, FileText, CheckCircle, Globe } from 'lucide-react';
 
 const Brochure = () => {
+    const navigate = useNavigate();
+
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = brochurePdf;
+        link.download = 'Fluid-Mechanics-and-Turbomachinery-Summit-2026-Brochure.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const handleViewOnline = () => {
+        navigate('/online-brochure');
+    };
+
     return (
         <div className="brochure-page pt-5">
             <div className="page-header">
@@ -19,18 +35,18 @@ const Brochure = () => {
                         <div className="brochure-preview">
                             <div className="preview-card">
                                 <div className="preview-icon">
-                                    <FileText size={64} strokeWidth={1} />
+                                    <Globe size={64} strokeWidth={1} />
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>Global Summit on Fluid Mechanics and Turbomachinery</h3>
+                                <h3 style={{ fontSize: '1.5rem' }}>ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</h3>
                                 <p>Official Digital Platform Brochure</p>
-                                <div className="preview-badge">2028 Edition</div>
+                                <div className="preview-badge">2026 Edition</div>
                             </div>
                         </div>
 
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Global Summit on Fluid Mechanics and Turbomachinery.
+                                Download the official conference brochure to get comprehensive information about the ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 
@@ -58,17 +74,17 @@ const Brochure = () => {
                             </ul>
 
                             <div className="brochure-actions">
-                                <a href={brochurePdf} download="Fluid-Mechanics-Turbomachinery-Brochure.pdf" className="download-btn">
+                                <button onClick={handleDownload} className="download-btn">
                                     <Download size={20} />
                                     Download Brochure
-                                </a>
-                                <a href={brochurePdf} target="_blank" rel="noopener noreferrer" className="view-btn">
+                                </button>
+                                <button onClick={handleViewOnline} className="view-btn">
                                     <FileText size={20} />
                                     View Online
-                                </a>
+                                </button>
                             </div>
                             <p className="download-note mt-3">
-                                * File size: 2.5 MB • Format: PDF • Updated: February 2026
+                                * Brochure coming soon • Format: PDF • Updated: February 2026
                             </p>
                         </div>
                     </div>

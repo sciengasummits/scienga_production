@@ -24,14 +24,23 @@ const SpeakersSection = ({ showViewAll }) => {
         return true;
     }).slice(0, showViewAll ? 8 : speakers.length);
 
+    React.useEffect(() => {
+        if (selectedSpeaker) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [selectedSpeaker]);
+
     const openModal = (speaker) => {
         setSelectedSpeaker(speaker);
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
     };
 
     const closeModal = () => {
         setSelectedSpeaker(null);
-        document.body.style.overflow = 'auto'; // Restore scrolling
     };
 
     return (
@@ -101,7 +110,7 @@ const SpeakersSection = ({ showViewAll }) => {
                                 <h3 className="modal-title">{selectedSpeaker.name}</h3>
                                 <span className="modal-type">{selectedSpeaker.title}</span>
                                 <p className="modal-affiliation-highlight">{selectedSpeaker.affiliation}</p>
-                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of general medicine, contributing significantly to research and clinical practice. With years of experience leading healthcare initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing medical standards globally. Their work focuses on innovative treatment methodologies and improving patient outcomes through evidence-based medicine."}</p>
+                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of fluid dynamics and turbomachinery, contributing significantly to computational research and industrial applications. With years of experience leading aerospace initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing mechanical engineering standards globally. Their work focuses on innovative propulsion methodologies and improving energy efficiency through advanced fluid simulations."}</p>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
 import './Footer.css';
 
@@ -18,21 +18,22 @@ const Footer = () => {
                             Discover ground-breaking technologies and connect with top mechanical engineering professionals.
                         </p>
                         <div className="footer__socials">
-                            <a href="#" className="social-icon"><Facebook size={20} /></a>
-                            <a href="#" className="social-icon"><Twitter size={20} /></a>
-                            <a href="#" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="#" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
+                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
+                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
                         </div>
                     </div>
 
                     <div className="footer__col">
                         <h4>Quick Links</h4>
                         <ul className="footer__links">
-                            <li><Link to="/">Home</Link></li>
                             <li><Link to="/abstract-submission">Abstract Submission</Link></li>
+                            <li><Link to="/register">Registration</Link></li>
+                            <li><Link to="/sessions">Sessions</Link></li>
+                            <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/sessions">Schedule</Link></li>
-                            <li><Link to="/contact">Contact Us</Link></li>
+                            <li><Link to="/discount-registration">Discount Registration</Link></li>
+                            <li><Link to="/unsubscribe">Unsubscribe</Link></li>
                         </ul>
                     </div>
 
@@ -43,7 +44,7 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span>Tokyo, Japan</span>
+                                    <span> Outram, Singapore</span>
                                 </div>
                             </li>
 
@@ -69,7 +70,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} Global Summit on Fluid Mechanics and Turbomachinery. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>

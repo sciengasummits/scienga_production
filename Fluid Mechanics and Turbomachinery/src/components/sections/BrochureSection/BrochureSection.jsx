@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Button from '../../common/Button/Button';
 import './BrochureSection.css';
 
 const BrochureSection = () => {
     const handleDownload = () => {
-        window.open('/brochure.pdf', '_blank');
+        window.open('/brochure', '_self');
     };
 
     return (
@@ -32,8 +32,8 @@ const BrochureSection = () => {
                     {/* Placeholder for brochure preview image */}
                     <div className="preview-card">
                         <div className="preview-page">
-                            <h3>WORLD GENERAL MEDICINE CONGRESS</h3>
-                            <p>2026</p>
+                            <h3>FLUID MECHANICS & TURBOMACHINERY</h3>
+                            <p>2026 EDITION</p>
                             <div className="preview-lines"></div>
                         </div>
                     </div>

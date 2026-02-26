@@ -7,19 +7,30 @@ import SpeakersSection from '../../components/sections/SpeakersSection/SpeakersS
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import SponsorsSection from '../../components/sections/SponsorsSection/SponsorsSection';
 import StatsSection from '../../components/sections/StatsSection/StatsSection';
+import PricingSection from '../../components/sections/PricingSection/PricingSection';
 import './Home.css';
+
+import ActionButtonsBar from '../../components/sections/ActionButtonsBar/ActionButtonsBar';
+import cpdImage from '../../assets/images/cpd.jpg';
 
 const Home = () => {
     return (
         <div className="home-page">
             <HeroSection />
-            <UniversitiesMarquee />
-            <AboutSection />
-            <StatsSection />
-            <SpeakersSection showViewAll={true} />
-            <KeyThemesSection showLearnMore={true} />
-            <VenueSection />
-            <SponsorsSection />
+            <ActionButtonsBar />
+
+            <div className="home-content-wrapper">
+                <UniversitiesMarquee />
+                <img src={cpdImage} alt="CPD Certified" className="pinned-cpd-badge" />
+
+                <AboutSection />
+                <StatsSection />
+                <SpeakersSection showViewAll={true} />
+                <PricingSection />
+                <KeyThemesSection showLearnMore={true} />
+                <VenueSection />
+                <SponsorsSection />
+            </div>
         </div>
     );
 };

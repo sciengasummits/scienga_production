@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import mediaImage from '../../../assets/images/Media.jpg';
 
 const HeroSection = () => {
     const navigate = useNavigate();
@@ -95,9 +94,6 @@ const HeroSection = () => {
 
 
                 </div>
-            </div>
-            <div className="hero__cpd-image">
-                <img src={mediaImage} alt="Media Partner" className="blinking-image" />
             </div>
         </section>
     );

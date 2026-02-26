@@ -4,17 +4,18 @@ import Button from '../../common/Button/Button';
 import './HeroSection.css';
 import cpdImage from '../../../assets/images/cpd.jpg';
 
+
 const HeroSection = () => {
     const navigate = useNavigate();
     const [timeLeft, setTimeLeft] = React.useState({
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0
+        days: 776,
+        hours: 12,
+        minutes: 17,
+        seconds: 12
     });
 
     React.useEffect(() => {
-        const targetDate = new Date('April 12, 2028 09:00:00 GMT+0900').getTime();
+        const targetDate = new Date('December 14, 2026 09:00:00').getTime();
 
         const interval = setInterval(() => {
             const now = new Date().getTime();
@@ -35,71 +36,61 @@ const HeroSection = () => {
         return () => clearInterval(interval);
     }, []);
 
-
-    const handleDownloadBrochure = () => {
-        navigate('/brochure');
-    };
-
     return (
         <section className="hero">
-            <div className="hero__overlay"></div>
+            <div className="hero__bg"></div>
+
             <div className="container hero__container">
                 <div className="hero__content">
-                    <h1 className="hero__title">
-                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span> <br />
-                        FLUID MECHANICS & TURBOMACHINERY
-                    </h1>
+                    <div className="hero__titles">
+                        <h4 className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</h4>
+                        <h1 className="hero__title-main">
+                            FLUID MECHANICS &<br />
+                            TURBOMACHINERY
+                        </h1>
+                    </div>
 
-                    <div className="hero__countdown-wrapper">
-                        <span className="days-to-go-label" style={{ display: 'block', fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.5rem', color: 'var(--color-primary-end)', textTransform: 'uppercase', letterSpacing: '1px' }}>Days To Go</span>
-                        <div className="hero__countdown">
+                    <div className="hero__countdown-section">
+                        <h5 className="hero__countdown-label">DAYS TO GO</h5>
+                        <div className="hero__countdown-grid">
                             <div className="countdown-item">
                                 <span className="countdown-value">{timeLeft.days}</span>
-                                <span className="countdown-label">Days</span>
+                                <span className="countdown-tag">DAYS</span>
                             </div>
                             <div className="countdown-item">
                                 <span className="countdown-value">{timeLeft.hours}</span>
-                                <span className="countdown-label">Hours</span>
+                                <span className="countdown-tag">HOURS</span>
                             </div>
                             <div className="countdown-item">
                                 <span className="countdown-value">{timeLeft.minutes}</span>
-                                <span className="countdown-label">Minutes</span>
+                                <span className="countdown-tag">MINUTES</span>
                             </div>
                             <div className="countdown-item">
                                 <span className="countdown-value">{timeLeft.seconds}</span>
-                                <span className="countdown-label">Seconds</span>
+                                <span className="countdown-tag">SECONDS</span>
                             </div>
                         </div>
                     </div>
 
-                    <p className="hero__desc">
-                        Global Summit on Fluid Mechanics and Turbomachinery, where global experts unite to shape
-                        the future of engineering dynamics. Discover ground-breaking innovations in fluid systems, connect with
-                        top mechanical engineers, and explore solutions transforming industrial efficiency.
+                    <p className="hero__description">
+                        Global Summit on Fluid Mechanics and Turbomachinery, where global experts unite to shape the future of engineering dynamics. Discover ground-breaking innovations in fluid systems, connect with top mechanical engineers, and explore solutions transforming industrial efficiency.
                     </p>
-                    <div className="hero__actions">
-                        <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
-                        <Button onClick={() => navigate('/register')}>Register Now</Button>
-                        <Button onClick={() => navigate('/abstract-submission')}>
-                            Submit Abstract
-                        </Button>
-                    </div>
                 </div>
 
-                <div className="hero__info-cards">
-                    <div className="info-card date-card">
-                        <h3>April</h3>
-                        <p>12-14, 2028</p>
+                <div className="hero__cards">
+                    <div className="hero-card hero-card--top">
+                        <h2 className="card-month">December</h2>
+                        <p className="card-date">14-16, 2026</p>
                     </div>
-
-                    <div className="info-card venue-card">
-                        <h3>Venue</h3>
-                        <p>Event Venue: Tokyo, Japan</p>
+                    <div className="hero-card hero-card--bottom">
+                        <h3 className="card-venue-title">Venue</h3>
+                        <div className="card-venue-detail">
+                            <p className="venue-label">Event Venue: Outram,</p>
+                            <p className="venue-location">Singapore</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <img src={cpdImage} alt="CPD Certified" className="hero__cpd-image" />
         </section>
     );
 };

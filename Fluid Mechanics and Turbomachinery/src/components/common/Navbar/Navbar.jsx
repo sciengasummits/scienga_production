@@ -61,21 +61,21 @@ const Navbar = () => {
 
                     <div className="navbar__contact">
                         <div className="contact-item">
-                            <Mail size={18} className="contact-icon" />
+                            <Mail size={16} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">SEND US AN EMAIL</span>
                                 <span className="contact-value">contact@fluidturbosummit.com</span>
                             </div>
                         </div>
                         <div className="contact-item">
-                            <Phone size={18} className="contact-icon" />
+                            <Phone size={16} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">CALL US NOW</span>
                                 <span className="contact-value">+91 7842090097</span>
                             </div>
                         </div>
                         <div className="contact-item">
-                            <MessageCircle size={18} className="contact-icon" />
+                            <MessageCircle size={16} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">WHATSAPP</span>
                                 <span className="contact-value">+91 7842090097</span>

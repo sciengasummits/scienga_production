@@ -2,24 +2,24 @@ export const speakers = [
     {
         id: 1,
         name: "Dr. Kadhim Alabady",
-        title: "Senior Food Safety Specialist",
-        affiliation: "International Food Policy Research Institute",
+        title: "Senior Fluid Dynamics Researcher",
+        affiliation: "International Fluid Mechanics Institute",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80"
     },
     {
         id: 2,
         name: "Assoc. Prof. Dr. Suriyadeo Tripathi",
-        title: "Director of Agricultural Innovation",
-        affiliation: "Institute for Sustainable Agriculture",
+        title: "Director of Turbomachinery Systems",
+        affiliation: "Institute for Advanced Propulsion",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80"
     },
     {
         id: 3,
         name: "Prof. Qing Ping Xie",
-        title: "Head of Food Engineering",
-        affiliation: "Academy of Agricultural Sciences, China",
+        title: "Head of Propulsion Engineering",
+        affiliation: "Academy of Mechanical Sciences, China",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80"
     },
@@ -364,7 +364,7 @@ export const speakers = [
         id: 46,
         name: "Prof. Yuki Tanaka",
         title: "Energy Policy Advisor",
-        affiliation: "University of Tokyo, Japan",
+        affiliation: "University of  Outram, Singapore",
         category: "Keynote Speaker",
         image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80"
     },

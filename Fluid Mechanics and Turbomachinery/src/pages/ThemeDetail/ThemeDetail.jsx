@@ -1,55 +1,55 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Stethoscope, Heart, Brain, Activity, Microscope, Globe, ArrowLeft } from 'lucide-react';
+import { Activity, Wind, Droplet, Factory, Flame, Zap, ArrowLeft } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 
 const themesData = {
-    'solar-energy': {
-        title: 'Solar Energy',
-        icon: <Stethoscope size={48} />, // Placeholder icon
-        description: 'Innovations in solar photovoltaic technologies, thermal systems, and large-scale solar integration.',
-        topics: [
-            'Photovoltaic Materials', 'Solar Thermal Energy', 'Grid Integration', 'Floating Solar', 'Solar Policy & Economics'
-        ]
-    },
-    'wind-energy': {
-        title: 'Wind Energy',
-        icon: <Heart size={48} />, // Placeholder icon
-        description: 'Latest advancements in onshore and offshore wind power, turbine technology, and wind farm management.',
-        topics: [
-            'Offshore Wind Farms', 'Turbine Design', 'Wind Resource Assessment', 'Environmental Impact', 'Maintenance Strategies'
-        ]
-    },
-    'bioenergy': {
-        title: 'Bioenergy',
-        icon: <Brain size={48} />, // Placeholder icon
-        description: 'Exploring the potential of biomass, biofuels, and biogas as sustainable alternatives to fossil fuels.',
-        topics: [
-            'Biofuel Production', 'Biomass Conversion', 'Waste-to-Energy', 'Algal Biofuels', 'Biogas Technologies'
-        ]
-    },
-    'sustainability': {
-        title: 'Sustainability',
-        icon: <Globe size={48} />,
-        description: 'Global strategies for sustainable development, climate action, and environmental protection.',
-        topics: [
-            'Circular Economy', 'Climate Policy', 'Sustainable Urban Planning', 'Green Building', 'Carbon Footprint Reduction'
-        ]
-    },
-    'energy-storage': {
-        title: 'Energy Storage',
+    'cfd': {
+        title: 'Computational Fluid Dynamics (CFD)',
         icon: <Activity size={48} />,
-        description: 'Critical technologies for storing renewable energy, including batteries, pumped hydro, and hydrogen storage.',
+        description: 'Advanced simulations, turbulence modeling, and high-performance computing in fluid flow analysis.',
         topics: [
-            'Lithium-Ion Batteries', 'Flow Batteries', 'Hydrogen Storage', 'Grid-Scale Storage', 'Thermal Storage'
+            'Turbulence Modeling', 'Numerical Methods', 'DNS & LES Simulations', 'Fluid-Structure Interaction', 'Algorithm Development'
         ]
     },
-    'green-tech': {
-        title: 'Green Tech',
-        icon: <Microscope size={48} />,
-        description: 'Emerging technologies that promote environmental sustainability and reduce ecological impact.',
+    'aerodynamics': {
+        title: 'Aerodynamics & Gas Dynamics',
+        icon: <Wind size={48} />,
+        description: 'Exploration of air flow over objects, supersonic flows, and aerodynamic optimization for vehicles and aircraft.',
         topics: [
-            'Carbon Capture', 'Smart Grids', 'Electric Vehicles', 'Sustainable Materials', 'IoT in Energy'
+            'External Aerodynamics', 'Compressible Flow', 'Flow Control Techniques', 'Transonic & Supersonic Flows', 'Boundary Layer Analysis'
+        ]
+    },
+    'hydrodynamics': {
+        title: 'Hydrodynamics & Marine Engineering',
+        icon: <Droplet size={48} />,
+        description: 'Study of liquid motion, ship propulsion, offshore structures, and marine energy systems.',
+        topics: [
+            'Ship Hydrodynamics', 'Wave Mechanics', 'Underwater Vehicles', 'Cavitation & Bubble Dynamics', 'Coastal Engineering'
+        ]
+    },
+    'turbomachinery-design': {
+        title: 'Turbomachinery Design & Analysis',
+        icon: <Factory size={48} />,
+        description: 'Innovations in the design, optimization, and reliability of rotating fluid machinery.',
+        topics: [
+            'Blade Design & Optimization', 'Loss Mechanisms', 'Stall & Surge Control', 'Variable Geometry Systems', 'Component Matching'
+        ]
+    },
+    'gas-turbines': {
+        title: 'Gas Turbines & Jet Engines',
+        icon: <Flame size={48} />,
+        description: 'Advancements in propulsion systems, internal combustion, and high-temperature material applications.',
+        topics: [
+            'Combustion Stability', 'Cooling Technologies', 'Emissions Reduction', 'Cycle Analysis', 'Aero-engine Performance'
+        ]
+    },
+    'steam-turbines': {
+        title: 'Steam Turbines & Power Plants',
+        icon: <Zap size={48} />,
+        description: 'Optimizing power generation through advanced steam turbine cycles and thermodynamic efficiency.',
+        topics: [
+            'Rankine Cycle Optimization', 'Moisture Management', 'Seal Technology', 'Dynamic Response', 'Cogeneration Systems'
         ]
     }
 };
