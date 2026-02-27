@@ -12,7 +12,7 @@ const AboutSection = () => {
                     <h4 className="section-subtitle">Advancing Food Innovation</h4>
                     <h2 className="section-title">About The Conference</h2>
                     <p className="about__text">
-                        The <strong>Annual International Conference on Food Science Technology and Agriculture</strong> is a premier international platform dedicated to advancing the understanding of food science, agricultural innovation, and sustainable food systems.
+                        The <strong> International Conference on Food Science Technology and Agriculture</strong> is a premier international platform dedicated to advancing the understanding of food science, agricultural innovation, and sustainable food systems.
                     </p>
                     <p className="about__text">
                         This conference brings together leading researchers, academicians, food scientists, agricultural experts, and industry professionals to explore recent developments, innovative technologies, sustainable practices, and real-world applications in food science and agriculture.

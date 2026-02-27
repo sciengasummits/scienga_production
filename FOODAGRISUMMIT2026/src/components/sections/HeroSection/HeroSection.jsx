@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import cpdImage from '../../../assets/images/Media.jpg';
 
 const HeroSection = () => {
     const navigate = useNavigate();
@@ -46,7 +45,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span><br />
+                        <span className="hero__title-sub">INTERNATIONAL CONFERENCE ON</span><br />
                         FOOD SCIENCE TECHNOLOGY AND AGRICULTURE
                     </h1>
 
@@ -73,7 +72,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Annual International Conference on Food Science Technology and
+                        International Conference on Food Science Technology and
                         Agriculture, where global experts unite to shape the future of
                         food science and agricultural innovation. Discover ground-breaking
                         technologies, connect with top researchers, and explore solutions
@@ -100,10 +99,6 @@ const HeroSection = () => {
                     </div>
 
                 </div>
-            </div>
-
-            <div className="hero__cpd-image">
-                <img src={cpdImage} alt="CPD Certification" />
             </div>
         </section>
     );

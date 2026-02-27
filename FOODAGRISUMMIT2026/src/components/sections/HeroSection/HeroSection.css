@@ -43,19 +43,22 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    gap: 3rem;
 }
 
 .hero__content {
+    flex: 1;
     max-width: 650px;
-    margin-top: 2rem;
+    margin-top: 0;
 }
 
 .hero__title {
     font-size: 2.8rem;
-    line-height: 1.1;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
     font-weight: 800;
     color: var(--color-white);
+    text-align: left;
 }
 
 .hero__title-sub {
@@ -71,14 +74,15 @@
     margin-bottom: 2rem;
     opacity: 0.9;
     line-height: 1.6;
-    max-width: 500px;
-    padding-left: 1rem;
+    max-width: 600px;
+    text-align: left;
 }
 
 .hero__actions {
     display: flex;
-    gap: 0.8rem;
-    flex-wrap: nowrap;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 /* Override button styles in hero section */
@@ -95,6 +99,7 @@
     position: relative;
     width: 400px;
     height: 300px;
+    flex-shrink: 0;
 }
 
 .info-card {
@@ -126,16 +131,22 @@
     font-weight: 700;
 }
 
+.hero__countdown-wrapper {
+    margin-bottom: 2rem;
+}
+
 .hero__countdown {
     display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .countdown-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 70px;
 }
 
 .countdown-value {
