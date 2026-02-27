@@ -83,7 +83,7 @@ img {
 
 /* Page Header Generic Styles */
 .page-header {
-    background: linear-gradient(135deg, rgba(10, 40, 133, 0.9) 0%, rgba(0, 26, 114, 0.8) 100%), url('../images/litex.avif');
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.9) 0%, rgba(0, 82, 163, 0.8) 100%), url('../images/litex.avif');
     background-size: cover;
     background-position: center;
     color: var(--color-white);

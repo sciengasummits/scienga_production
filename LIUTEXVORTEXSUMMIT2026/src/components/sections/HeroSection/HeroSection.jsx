@@ -45,7 +45,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">Annual International Conference on</span>
+                        <span className="hero__title-sub">International Conference on</span>
                         Liutex Theory and Applications <br /> in Vortex Identification and Vortex Dynamics
                     </h1>
 
@@ -70,7 +70,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.
+                        International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.
                     </p>
                     <div className="hero__actions">
                         <Button onClick={handleDownloadBrochure}>DOWNLOAD BROCHURE</Button>

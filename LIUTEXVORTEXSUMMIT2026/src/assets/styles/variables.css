@@ -1,35 +1,35 @@
 :root {
-  /* Jio Blue Palette */
-  --color-primary-start: #0A2885;
-  /* Jio Blue */
-  --color-primary-rgb: 10, 40, 133;
-  --color-primary-end: #001A72;
-  /* Deep Jio Blue */
-  --color-secondary-blue: #1E3A8A;
-  /* Blue 800 */
+  /* Tech Blue Palette */
+  --color-primary-start: #0066CC;
+  /* Tech Blue */
+  --color-primary-rgb: 0, 102, 204;
+  --color-primary-end: #0052A3;
+  /* Deep Tech Blue */
+  --color-secondary-blue: #0080FF;
+  /* Bright Tech Blue */
 
-  --color-accent-blue: #DBEAFE;
-  /* Light Blue 100 */
-  --color-dark-void: #001A72;
-  /* Deep Navy */
+  --color-accent-blue: #E6F2FF;
+  /* Light Tech Blue */
+  --color-dark-void: #001F3F;
+  /* Dark Tech */
 
-  --color-primary-gradient: linear-gradient(135deg, #0A2885 0%, #001A72 100%);
-  --color-vortex-gradient: radial-gradient(circle at center, #ffffff 0%, #0A2885 30%, #001A72 100%);
-  --color-deep-blue-gradient: linear-gradient(180deg, #0A2885 0%, #001A72 100%);
+  --color-primary-gradient: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
+  --color-vortex-gradient: radial-gradient(circle at center, #ffffff 0%, #0080FF 30%, #0052A3 100%);
+  --color-deep-blue-gradient: linear-gradient(180deg, #0066CC 0%, #0052A3 100%);
 
   --color-text-dark: #1F2937;
   /* Dark Gray */
   --color-text-body: #4B5563;
   /* Medium Gray */
-  --color-bg-light: #F0F9FF;
-  /* Sky 50 */
+  --color-bg-light: #F0F7FF;
+  /* Tech Blue 50 */
   --color-white: #ffffff;
 
   --font-primary: 'Open Sans', sans-serif;
   --font-heading: 'Barlow', sans-serif;
 
-  --shadow-card: 0 10px 25px rgba(10, 40, 133, 0.15);
-  --shadow-glow: 0 0 20px rgba(10, 40, 133, 0.4);
+  --shadow-card: 0 10px 25px rgba(0, 102, 204, 0.15);
+  --shadow-glow: 0 0 20px rgba(0, 102, 204, 0.4);
 
   --radius-sm: 4px;
   --radius-md: 8px;

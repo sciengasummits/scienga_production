@@ -14,7 +14,7 @@ const AboutSection = () => {
                     <h4 className="section-subtitle">Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</h4>
                     <h2 className="section-title">About The Conference</h2>
                     <p className="about__text">
-                        The <strong>Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</strong> is a premier international platform dedicated to advancing the understanding of Liutex theory and its transformative applications in vortex identification and vortex dynamics.
+                        The <strong>International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</strong> is a premier international platform dedicated to advancing the understanding of Liutex theory and its transformative applications in vortex identification and vortex dynamics.
                     </p>
                     <p className="about__text">
                         This conference brings together leading researchers, academicians, computational scientists, engineers, and industry professionals to explore recent developments, theoretical foundations, numerical methods, and real-world applications of Liutex-based vortex analysis.
