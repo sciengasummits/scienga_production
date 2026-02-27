@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import cpdImage from '../../../assets/images/cpd.jpg';
 
 const HeroSection = () => {
     const navigate = useNavigate();
@@ -46,7 +45,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">Annual International Conference</span> <br />
+                        <span className="hero__title-sub">International Conference On</span> <br />
                         RENEWABLE ENERGY & CLIMATE CHANGE
                     </h1>
 
@@ -71,9 +70,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Global Summit on Renewable Energy and Climate Change, where global experts unite to shape
-                        the future of sustainable energy. Discover ground-breaking technologies, connect with
-                        top environmental professionals, and explore solutions transforming our planet's climate resilience.
+                        Join distinguished researchers, industry leaders, and policymakers at the forefront of renewable energy innovation and climate action. Engage with cutting-edge research, establish strategic collaborations, and contribute to sustainable solutions addressing critical global environmental challenges.
                     </p>
                     <div className="hero__actions">
                         <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
@@ -96,8 +93,6 @@ const HeroSection = () => {
                     </div>
                 </div>
             </div>
-
-            <img src={cpdImage} alt="CPD Certified" className="hero__cpd-image" />
         </section>
     );
 };

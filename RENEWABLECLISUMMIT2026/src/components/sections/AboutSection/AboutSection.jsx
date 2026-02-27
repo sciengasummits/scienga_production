@@ -13,7 +13,7 @@ const AboutSection = () => {
                     <h2 className="section-title">About The Conference</h2>
                     <div className="about__scroll-content">
                         <p className="about__text">
-                            We are truly delighted to welcome you to the <strong>Global Summit on Renewable Energy and Climate Change</strong>, scheduled to take place from <strong>March 23-25, 2027</strong>, in the vibrant city of <strong>Munich, Germany</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in renewable energy and climate resilience.
+                            We are truly delighted to welcome you to the <strong>International Conference On RENEWABLE ENERGY & CLIMATE CHANGE</strong>, scheduled to take place from <strong>March 23-25, 2027</strong>, in the vibrant city of <strong>Munich, Germany</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in renewable energy and climate resilience.
                         </p>
                         <p className="about__text">
                             The congress is designed to bridge the gap between visionary research and real-world implementation, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The conference aims to accelerate progress across disciplines and foster impactful connections that will drive a sustainable future for our planet.

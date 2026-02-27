@@ -1,0 +1,109 @@
+.discount-registration-page {
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.discount-reg-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.payment-badges {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.payment-badges img {
+    height: 30px;
+    width: auto;
+}
+
+.secure-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #666;
+    letter-spacing: 0.5px;
+}
+
+.discount-reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-input {
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+    font-family: var(--font-primary);
+    background: white;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.form-input::placeholder {
+    color: #999;
+}
+
+.form-actions-center {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.form-actions-center button {
+    min-width: 200px;
+    padding: 0.875rem 3rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .discount-reg-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-row-two {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .payment-badges {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .payment-badges img {
+        height: 25px;
+    }
+}
+
+@media (max-width: 576px) {
+    .discount-reg-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .form-actions-center button {
+        width: 100%;
+    }
+}

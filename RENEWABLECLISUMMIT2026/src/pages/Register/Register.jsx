@@ -1,6 +1,30 @@
 import React, { useState } from 'react';
 import './Register.css';
 
+// Comprehensive list of all countries
+const countries = [
+    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+    "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+    "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+    "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
+    "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
+    "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+    "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+    "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
+    "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan",
+    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
+    "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
+    "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
+    "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
+    "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
+    "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
+    "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
+    "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
+    "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
+    "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
+    "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+];
+
 const Register = ({ isDiscounted = false }) => {
     // State for form fields
     const [formData, setFormData] = useState({
@@ -30,16 +54,16 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    // const earlyBirdEnd = new Date('2025-10-25');
-    // const standardEnd = new Date('2026-02-16');
+    // const earlyBirdEnd = new Date('2026-11-25');
+    // const standardEnd = new Date('2027-01-25');
 
     // For demo/screenshot purpose, let's assume specific dates or just logic
     // But since the user wants it to look like the screenshot where OnSpot is active:
     // Today is Feb 17, 2026. Standard ended Feb 16, 2026. So OnSpot is active.
 
     let activePhase = 'onspot';
-    const earlyBirdEnd = new Date('2025-10-25');
-    const standardEnd = new Date('2026-02-16');
+    const earlyBirdEnd = new Date('2026-11-25');
+    const standardEnd = new Date('2027-01-25');
 
     if (currentDate <= earlyBirdEnd) {
         activePhase = 'early';
@@ -56,6 +80,7 @@ const Register = ({ isDiscounted = false }) => {
         { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
         { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
         { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+        { id: 'Virtual', label: 'virtual(Online)', early: 199, standard: 249, onspot: 299 },
     ];
 
     const academicPricing = baseAcademicPricing.map(item => ({
@@ -225,14 +250,17 @@ Registration Summary:
                             />
                         </div>
                         <div className="form-row">
-                            <input
-                                type="text"
+                            <select
                                 name="country"
-                                placeholder="Select Country"
                                 className="form-control"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="" disabled>Select Country</option>
+                                {countries.map((country) => (
+                                    <option key={country} value={country}>{country}</option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 name="company"
@@ -261,20 +289,20 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
+                                <th className="category-header">TYPES OF PARTICIPATION</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">October 25, 2025</span>
+                                    <span className="date">November 25, 2026</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">February 16, 2026</span>
+                                    <span className="date">January 25, 2027</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">April 20, 2026</span>
+                                    <span className="date">March 23, 2027</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>
