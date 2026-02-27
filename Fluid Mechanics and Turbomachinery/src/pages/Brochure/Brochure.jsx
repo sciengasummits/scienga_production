@@ -37,7 +37,7 @@ const Brochure = () => {
                                 <div className="preview-icon">
                                     <Globe size={64} strokeWidth={1} />
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</h3>
+                                <h3 style={{ fontSize: '1.5rem' }}>INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</h3>
                                 <p>Official Digital Platform Brochure</p>
                                 <div className="preview-badge">2026 Edition</div>
                             </div>
@@ -46,7 +46,7 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY.
+                                Download the official conference brochure to get comprehensive information about the  INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 

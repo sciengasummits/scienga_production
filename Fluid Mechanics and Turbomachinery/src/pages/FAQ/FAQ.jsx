@@ -13,7 +13,7 @@ const FAQ = () => {
             category: "Registration",
             items: [
                 {
-                    question: "How can I register for the ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY?",
+                    question: "How can I register for the INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY?",
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline."
                 },
                 {

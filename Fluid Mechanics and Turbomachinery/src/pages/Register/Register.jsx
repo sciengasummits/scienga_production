@@ -74,7 +74,7 @@ const Register = ({ isDiscounted = false }) => {
         { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
         { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
         { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
-        { id: 'virtual', label: 'Virtual (Online)', early: 599, standard: 699, onspot: 799 },
+        { id: 'virtual', label: 'Virtual (Online)', early: 199, standard: 249, onspot: 299 },
     ];
 
     const academicPricing = baseAcademicPricing.map(item => ({

@@ -14,7 +14,7 @@ const Footer = () => {
                             <Logo />
                         </div>
                         <p className="footer__desc">
-                            ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY,Global experts unite to shape the future of fluid mechanics and turbomachinery.
+                            INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY,Global experts unite to shape the future of fluid mechanics and turbomachinery.
                             Discover ground-breaking technologies and connect with top mechanical engineering professionals.
                         </p>
                         <div className="footer__socials">
@@ -70,7 +70,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>

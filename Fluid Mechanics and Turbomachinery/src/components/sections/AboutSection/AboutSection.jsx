@@ -13,7 +13,7 @@ const AboutSection = () => {
                     <h2 className="section-title">About The Conference</h2>
                     <div className="about__scroll-content">
                         <p className="about__text">
-                            We are truly delighted to welcome you to the <strong>ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</strong>, scheduled to take place from <strong>December 14-16, 2026</strong>, in the vibrant city of <strong> Outram, Singapore</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in fluid dynamics and turbomachinery systems.
+                            We are truly delighted to welcome you to the <strong>INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</strong>, scheduled to take place from <strong>December 14-16, 2026</strong>, in the vibrant city of <strong> Outram, Singapore</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in fluid dynamics and turbomachinery systems.
                         </p>
                         <p className="about__text">
                             The congress is designed to bridge the gap between visionary research and real-world implementation, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The conference aims to accelerate progress across disciplines and foster impactful connections that will drive a sustainable future for engineering efficiency.

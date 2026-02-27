@@ -42,7 +42,7 @@ const DigitalBrochure = () => {
                     <div className="cover-overlay"></div>
                     <div className="cover-content">
                         <div className="conf-badge">International Summit 2026</div>
-                        <h1 className="main-title">ANNUAL INTERNATIONAL CONFERENCE ON</h1>
+                        <h1 className="main-title"> INTERNATIONAL CONFERENCE ON</h1>
                         <h2 className="sub-title">FLUID MECHANICS & TURBOMACHINERY</h2>
 
                         <div className="conf-details-strip">
@@ -71,7 +71,7 @@ const DigitalBrochure = () => {
 
                     <div className="page-body">
                         <p className="intro-para">
-                            We are delighted to welcome you to the <strong>ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</strong>,
+                            We are delighted to welcome you to the <strong>INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</strong>,
                             scheduled to take place from December 14-16, 2026, in the vibrant city of Outram, Singapore.
                         </p>
 
@@ -188,7 +188,7 @@ const DigitalBrochure = () => {
                                     <span>Singapore Event Committee</span>
                                 </div>
                             </div>
-                            <p className="disclaimer">© 2026 ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</p>
+                            <p className="disclaimer">© 2026 INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY</p>
                         </div>
                     </div>
                 </div>

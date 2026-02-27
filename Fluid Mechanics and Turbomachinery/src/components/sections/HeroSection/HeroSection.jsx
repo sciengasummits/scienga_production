@@ -47,7 +47,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">ANNUAL INTERNATIONAL CONFERENCE ON</span> <br />
+                        <span className="hero__title-sub">INTERNATIONAL CONFERENCE ON</span> <br />
                         FLUID MECHANICS & TURBOMACHINERY
                     </h1>
 
@@ -74,7 +74,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        ANNUAL INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY, where global experts unite to shape
+                      INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY, where global experts unite to shape
                         the future of engineering dynamics. Discover ground-breaking innovations in fluid systems, connect with
                         top mechanical engineers, and explore solutions transforming industrial efficiency.
                     </p>
