@@ -21,7 +21,7 @@ const Brochure = () => {
                                 <div className="preview-icon">
                                     <FileText size={64} strokeWidth={1} />
                                 </div>
-                                <h3 style={{ fontSize: '1.5rem' }}>Global Summit on Food Science Technology and Agriculture</h3>
+                                <h3 style={{ fontSize: '1.5rem' }}>ANNUAL INTERNATIONAL CONFERENCE ON AI, ROBOTICS & MACHINE LEARNING SUMMIT 2026</h3>
                                 <p>Official Digital Platform Brochure</p>
                                 <div className="preview-badge">2026 Edition</div>
                             </div>
@@ -30,7 +30,7 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the Global Summit on Food Science Technology and Agriculture.
+                                Download the official conference brochure to get comprehensive information about the ANNUAL INTERNATIONAL CONFERENCE ON AI, ROBOTICS & MACHINE LEARNING SUMMIT 2026.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 
@@ -58,7 +58,7 @@ const Brochure = () => {
                             </ul>
 
                             <div className="brochure-actions">
-                                <a href={brochurePdf} download="World-General-Medicine-Congress-Brochure.pdf" className="download-btn">
+                                <a href={brochurePdf} download="AI-Robotics-ML-Summit-2026-Brochure.pdf" className="download-btn">
                                     <Download size={20} />
                                     Download Brochure
                                 </a>
@@ -68,7 +68,7 @@ const Brochure = () => {
                                 </a>
                             </div>
                             <p className="download-note mt-3">
-                                * File size: 2.5 MB • Format: PDF • Updated: February 2026
+                                * File size: 2.5 MB • Format: PDF • Updated: March 2027
                             </p>
                         </div>
                     </div>

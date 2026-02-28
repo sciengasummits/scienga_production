@@ -4,6 +4,8 @@ import Layout from '../components/common/Layout';
 import Home from '../pages/Home/Home';
 import AbstractSubmission from '../pages/AbstractSubmission/AbstractSubmission';
 import Register from '../pages/Register/Register';
+import RegistrationPricing from '../pages/RegistrationPricing/RegistrationPricing';
+import DiscountRegistration from '../pages/DiscountRegistration/DiscountRegistration';
 import Contact from '../pages/Contact/Contact';
 import Speakers from '../pages/Speakers/Speakers';
 import Venue from '../pages/Venue/Venue';
@@ -14,6 +16,7 @@ import FAQ from '../pages/FAQ/FAQ';
 import VisaInfo from '../pages/VisaInfo/VisaInfo';
 import Brochure from '../pages/Brochure/Brochure';
 import Program from '../pages/Program/Program';
+import Unsubscribe from '../pages/Unsubscribe/Unsubscribe';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -42,9 +45,11 @@ const AppRoutes = () => {
                     <Route path="visa-info" element={<VisaInfo />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="register" element={<Register />} />
-                    <Route path="register/onlineregistration" element={<Register isDiscounted={true} />} />
+                    <Route path="registration-pricing" element={<RegistrationPricing />} />
+                    <Route path="register/onlineregistration" element={<DiscountRegistration />} />
                     <Route path="brochure" element={<Brochure />} />
                     <Route path="program" element={<Program />} />
+                    <Route path="unsubscribe" element={<Unsubscribe />} />
                     <Route path="*" element={<div className="section-padding text-center"><h1>404 Not Found</h1></div>} />
                 </Route>
             </Routes>

@@ -197,7 +197,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Abstract Submission Opens</h4>
-                                    <p>June 15, 2025</p>
+                                    <p>June 15, 2026</p>
                                 </div>
                             </div>
 
@@ -207,7 +207,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Early Bird Deadline</h4>
-                                    <p>October 25, 2025</p>
+                                    <p>October 25, 2026</p>
                                 </div>
                             </div>
 
@@ -217,7 +217,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Abstract Submission Deadline</h4>
-                                    <p>February 25, 2026</p>
+                                    <p>February 25, 2027</p>
                                 </div>
                             </div>
 
@@ -227,7 +227,7 @@ const AbstractSubmission = () => {
                                 </div>
                                 <div className="date-content">
                                     <h4>Conference Date</h4>
-                                    <p>April 20–22, 2026</p>
+                                    <p>April 12–14, 2027</p>
                                 </div>
                             </div>
                         </div>

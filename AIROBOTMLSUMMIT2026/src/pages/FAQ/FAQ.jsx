@@ -13,7 +13,7 @@ const FAQ = () => {
             category: "Registration",
             items: [
                 {
-                    question: "How can I register for the Global Summit on Food Science Technology and Agriculture?",
+                    question: "How can I register for the ANNUAL INTERNATIONAL CONFERENCE ON AI, ROBOTICS & MACHINE LEARNING SUMMIT 2026?",
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline."
                 },
                 {

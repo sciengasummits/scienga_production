@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import cpdImage from '../../../assets/images/cpd.jpg';
 
 const HeroSection = () => {
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ const HeroSection = () => {
     });
 
     React.useEffect(() => {
-        const targetDate = new Date('March 23, 2027 09:00:00 GMT+0100').getTime();
+        const targetDate = new Date('April 12, 2027 09:00:00 GMT+0900').getTime();
 
         const interval = setInterval(() => {
             const now = new Date().getTime();
@@ -71,9 +70,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                        Global Summit on Renewable Energy and Climate Change, where global experts unite to shape
-                        the future of sustainable energy. Discover ground-breaking technologies, connect with
-                        top environmental professionals, and explore solutions transforming our planet's climate resilience.
+                        Annual International Conference on Astronomy, Astrophysics and Space Science, where global experts unite to explore the mysteries of the universe. Discover ground-breaking research, connect with leading astronomers and astrophysicists, and explore cutting-edge discoveries transforming our understanding of space and cosmic phenomena.
                     </p>
                     <div className="hero__actions">
                         <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
@@ -86,18 +83,16 @@ const HeroSection = () => {
 
                 <div className="hero__info-cards">
                     <div className="info-card date-card">
-                        <h3>March</h3>
-                        <p>23-25, 2027</p>
+                        <h3>April</h3>
+                        <p>12-14, 2027</p>
                     </div>
 
                     <div className="info-card venue-card">
                         <h3>Venue</h3>
-                        <p>Event Venue: Munich, Germany</p>
+                        <p>Event Venue: Tokyo, Japan</p>
                     </div>
                 </div>
             </div>
-
-            <img src={cpdImage} alt="CPD Certified" className="hero__cpd-image" />
         </section>
     );
 };

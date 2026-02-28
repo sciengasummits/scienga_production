@@ -28,7 +28,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Address</h4>
-                                <p>Munich, Germany</p>
+                                <p>Seoul, South Korea</p>
                             </div>
                         </div>
 

@@ -13,42 +13,42 @@ const AboutSection = () => {
                     <h2 className="section-title">About The Conference</h2>
                     <div className="about__scroll-content">
                         <p className="about__text">
-                            We are truly delighted to welcome you to the <strong>Global Summit on Renewable Energy and Climate Change</strong>, scheduled to take place from <strong>March 23-25, 2027</strong>, in the vibrant city of <strong>Munich, Germany</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in renewable energy and climate resilience.
+                            We are truly delighted to welcome you to the <strong>Annual International Conference on AI, Robotics & Machine Learning Summit 2026</strong>, scheduled to take place from <strong>March 10-12, 2027</strong>, in the vibrant city of <strong>Seoul, South Korea</strong>. This premier international summit brings together top minds from academia, industry, and government to explore transformative innovations in artificial intelligence, robotics, and machine learning.
                         </p>
                         <p className="about__text">
-                            The congress is designed to bridge the gap between visionary research and real-world implementation, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The conference aims to accelerate progress across disciplines and foster impactful connections that will drive a sustainable future for our planet.
+                            The conference is designed to bridge the gap between cutting-edge research and real-world implementation, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The summit aims to accelerate progress across AI disciplines and foster impactful connections that will drive intelligent automation and innovation across industries.
                         </p>
                         <p className="about__text">
-                            Join us in <strong>Germany</strong> for three impactful days of insight, innovation, and connection at the forefront of clean energy and environmental science!
+                            Join us in <strong>Seoul, South Korea</strong> for three impactful days of insight, innovation, and connection at the forefront of artificial intelligence and intelligent systems!
                         </p>
                         <p className="about__text">
-                            Industry Excellence: Munich is home to world-leading energy exhibitions like Intersolar Europe, making it a focal point for the global solar and clean-tech industry.
-                            State-of-the-Art Infrastructure: The summit will leverage Munich’s advanced conference facilities, such as the Messe München or ICM, known for hosting premier international trade shows.
-                            Sustainability Leadership: Germany’s "Energiewende" (Energy Transition) policy makes Munich an inspiring location to witness real-world implementations of renewable energy at scale.
+                            Industry Excellence: Munich is home to world-leading technology companies and research institutions, making it a focal point for AI innovation and robotics development.
+                            State-of-the-Art Infrastructure: The summit will leverage Munich's advanced conference facilities, such as the Messe München or ICM, known for hosting premier international technology events.
+                            Innovation Leadership: Seoul, South Korea's strong focus on Industry 4.0 and AI research makes Munich an inspiring location to witness real-world implementations of intelligent systems at scale.
                         </p>
 
                         <div className="about__objectives" style={{ marginTop: '2rem' }}>
                             <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--color-text-header)' }}>Conference Objectives</h3>
                             <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: 'var(--color-text-body)' }}>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Advance Global Knowledge Exchange:</strong> To facilitate a premier platform for researchers, industry leaders, and policymakers to exchange groundbreaking ideas and research in renewable energy and climate science.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Foster Interdisciplinary Collaboration:</strong> To encourage cross-sector partnerships between academia, government bodies, and private industries for accelerating sustainable solutions.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Showcase Innovative Technologies:</strong> To present state-of-the-art technologies and methodologies that address the pressing challenges of climate change and energy transition.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Promote Policy Development:</strong> To discuss and formulate actionable policy frameworks that support global sustainability goals and environmental protection.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Empower Future Leaders:</strong> To mentor and inspire young scientists and engineers through workshops, networking, and exposure to cutting-edge research.</li>
+                                <li style={{ marginBottom: '0.5rem' }}><strong>Advance Global Knowledge Exchange:</strong> To facilitate a premier platform for researchers, industry leaders, and policymakers to exchange groundbreaking ideas and research in artificial intelligence, robotics, and machine learning.</li>
+                                <li style={{ marginBottom: '0.5rem' }}><strong>Foster Interdisciplinary Collaboration:</strong> To encourage cross-sector partnerships between academia, government bodies, and private industries for accelerating AI-driven solutions and intelligent automation.</li>
+                                <li style={{ marginBottom: '0.5rem' }}><strong>Showcase Innovative Technologies:</strong> To present state-of-the-art AI technologies and methodologies that address complex challenges across industries through machine learning and robotics.</li>
+                                <li style={{ marginBottom: '0.5rem' }}><strong>Promote Policy Development:</strong> To discuss and formulate actionable policy frameworks that support responsible AI development, ethical considerations, and global innovation standards.</li>
+                                <li style={{ marginBottom: '0.5rem' }}><strong>Empower Future Leaders:</strong> To mentor and inspire young AI researchers and engineers through workshops, networking, and exposure to cutting-edge developments in intelligent systems.</li>
                             </ul>
                         </div>
 
                         <div className="about__themes" style={{ marginTop: '2rem' }}>
                             <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--color-text-header)' }}>Key Themes & Topics</h3>
                             <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: 'var(--color-text-body)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.5rem' }}>
-                                <li>Solar Energy Technologies & Photovoltaics</li>
-                                <li>Wind Energy Systems & Offshore Developments</li>
-                                <li>Bioenergy, Biofuels & Biomass</li>
-                                <li>Green Hydrogen & Fuel Cells</li>
-                                <li>Climate Change Adaptation & Mitigation Strategies</li>
-                                <li>Energy Storage & Grid Modernization</li>
-                                <li>Sustainable Urban Planning & Smart Cities</li>
-                                <li>Carbon Capture, Utilization, and Storage (CCUS)</li>
+                                <li>Machine Learning & Deep Learning</li>
+                                <li>Natural Language Processing & Computer Vision</li>
+                                <li>Robotics & Autonomous Systems</li>
+                                <li>AI Ethics & Responsible AI</li>
+                                <li>Intelligent Automation & Industry 4.0</li>
+                                <li>Neural Networks & Reinforcement Learning</li>
+                                <li>AI in Healthcare & Medical Robotics</li>
+                                <li>Edge AI & IoT Integration</li>
                             </ul>
                         </div>
                     </div>
@@ -112,12 +112,12 @@ const AboutSection = () => {
                             <div className="premium-date-card highlight-card">
                                 <div className="pd-date-box">
                                     <span className="pd-month">MAR</span>
-                                    <span className="pd-day">23</span>
+                                    <span className="pd-day">12</span>
                                 </div>
                                 <div className="pd-content">
                                     <span className="pd-year">2027</span>
                                     <h4 className="pd-event">Conference Date</h4>
-                                    <span className="pd-sub">March 23-25, Munich</span>
+                                    <span className="pd-sub"> 10-12, Munich</span>
                                 </div>
                                 <div className="pd-icon-bg">
                                     <Star size={40} />

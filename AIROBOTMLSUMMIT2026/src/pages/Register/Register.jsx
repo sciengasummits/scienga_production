@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { countries } from '../../data/countries';
 import './Register.css';
 
 const Register = ({ isDiscounted = false }) => {
@@ -30,16 +31,10 @@ const Register = ({ isDiscounted = false }) => {
 
     // Date Logic to determine active phase
     const currentDate = new Date();
-    // const earlyBirdEnd = new Date('2025-10-25');
-    // const standardEnd = new Date('2026-02-16');
-
-    // For demo/screenshot purpose, let's assume specific dates or just logic
-    // But since the user wants it to look like the screenshot where OnSpot is active:
-    // Today is Feb 17, 2026. Standard ended Feb 16, 2026. So OnSpot is active.
 
     let activePhase = 'onspot';
-    const earlyBirdEnd = new Date('2025-10-25');
-    const standardEnd = new Date('2026-02-16');
+    const earlyBirdEnd = new Date('2026-11-25'); // November 25, 2026
+    const standardEnd = new Date('2027-01-25'); // January 25, 2027
 
     if (currentDate <= earlyBirdEnd) {
         activePhase = 'early';
@@ -56,6 +51,7 @@ const Register = ({ isDiscounted = false }) => {
         { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
         { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
         { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+        { id: 'virtual', label: 'virtual(Online)', early: 199, standard: 249, onspot: 299 },
     ];
 
     const academicPricing = baseAcademicPricing.map(item => ({
@@ -225,14 +221,20 @@ Registration Summary:
                             />
                         </div>
                         <div className="form-row">
-                            <input
-                                type="text"
+                            <select
                                 name="country"
-                                placeholder="Select Country"
                                 className="form-control"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                            />
+                                required
+                            >
+                                <option value="">Select Country</option>
+                                {countries.map((country) => (
+                                    <option key={country} value={country}>
+                                        {country}
+                                    </option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 name="company"
@@ -261,20 +263,20 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
+                                <th className="category-header">TYPES OF PARTICIPATION</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">October 25, 2025</span>
+                                    <span className="date">November 25, 2026</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">February 16, 2026</span>
+                                    <span className="date">January 25, 2027</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">April 20, 2026</span>
+                                    <span className="date">March 10, 2027</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>

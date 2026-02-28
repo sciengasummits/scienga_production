@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
 import './Footer.css';
 
@@ -14,25 +14,26 @@ const Footer = () => {
                             <Logo />
                         </div>
                         <p className="footer__desc">
-                            Global experts unite to shape the future of sustainable energy.
-                            Discover ground-breaking technologies and connect with top environmental professionals.
+                            Global experts unite to explore the mysteries of the universe.
+                            Discover ground-breaking research and connect with leading astronomers and astrophysicists.
                         </p>
                         <div className="footer__socials">
-                            <a href="#" className="social-icon"><Facebook size={20} /></a>
-                            <a href="#" className="social-icon"><Twitter size={20} /></a>
-                            <a href="#" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="#" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
+                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
+                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
                         </div>
                     </div>
 
                     <div className="footer__col">
-                        <h4>Quick Links</h4>
+                        <h4>Important Links</h4>
                         <ul className="footer__links">
-                            <li><Link to="/">Home</Link></li>
                             <li><Link to="/abstract-submission">Abstract Submission</Link></li>
+                            <li><Link to="/register">Registration</Link></li>
+                            <li><Link to="/register/onlineregistration">Discount Registration</Link></li>
+                            <li><Link to="/sessions">Sessions</Link></li>
+                            <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/sessions">Schedule</Link></li>
-                            <li><Link to="/contact">Contact Us</Link></li>
+                            <li><Link to="/unsubscribe">Unsubscribe</Link></li>
                         </ul>
                     </div>
 
@@ -43,7 +44,7 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span>Munich, Germany</span>
+                                    <span>Tokyo, Japan</span>
                                 </div>
                             </li>
 
@@ -69,7 +70,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} Global Summit on Renewable Energy & Climate Change. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Annual International Conference on Astronomy, Astrophysics and Space Science. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>
