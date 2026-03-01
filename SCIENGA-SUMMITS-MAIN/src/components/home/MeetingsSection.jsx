@@ -23,7 +23,7 @@ const meetingsData = {
         {
             id: 1,
             title: "POLYMATSUMMIT2026",
-            description: "Annual International Conference on Polymers and Composite Materials",
+            description: "International Conference on Polymers and Composite Materials",
             location: "AMSTERDAM, NETHERLANDS",
             date: "November 16-18, 2026",
             year: "2026",
@@ -33,7 +33,7 @@ const meetingsData = {
         {
             id: 2,
             title: "ADVANCENANOSUMMIT2026",
-            description: "Annual International Conference on Advanced Materials and Nanotechnology",
+            description: "International Conference on Advanced Materials and Nanotechnology",
             location: "AMSTERDAM, NETHERLANDS",
             date: "November 16-18, 2026",
             year: "2026",
@@ -43,7 +43,7 @@ const meetingsData = {
         {
             id: 3,
             title: "OPTICPHOTONSUMMIT2026",
-            description: "Annual International Conference on Optics, Photonics and Laser Technology",
+            description: "International Conference on Optics, Photonics and Laser Technology",
             location: "AMSTERDAM, NETHERLANDS",
             date: "November 16-18, 2026",
             year: "2026",
@@ -53,7 +53,7 @@ const meetingsData = {
         {
             id: 4,
             title: "CROPSCIENGSUMMIT2026",
-            description: "Annual International Conference on Crop Science and Engineering",
+            description: "International Conference on Crop Science and Engineering",
             location: "MARINA BAY, SINGAPORE",
             date: "December 7-9, 2026",
             year: "2026",
@@ -63,7 +63,7 @@ const meetingsData = {
         {
             id: 5,
             title: "CIVILENVSUMMIT2026",
-            description: "Annual International Conference on Civil Structural and Environmental Science",
+            description: "International Conference on Civil Structural and Environmental Science",
             location: "MARINA BAY, SINGAPORE",
             date: "December 7-9, 2026",
             year: "2026",
@@ -73,7 +73,7 @@ const meetingsData = {
         {
             id: 6,
             title: "FOODAGRISUMMIT2026",
-            description: "Annual International Conference on Food Science Technology and Agriclulture",
+            description: "International Conference on Food Science Technology and Agriclulture",
             location: "MARINA BAY, SINGAPORE",
             date: "December 7-9, 2026",
             year: "2026",
@@ -85,7 +85,7 @@ const meetingsData = {
         {
             id: 7,
             title: "RENECLIMSUMMIT2026",
-            description: "Annual International Conference on Renewable Energy and Climate Change",
+            description: "International Conference on Renewable Energy and Climate Change",
             location: "MUNICH, GERMANY",
             date: "March 23-25, 2027",
             year: "2027",
@@ -95,7 +95,7 @@ const meetingsData = {
         {
             id: 8,
             title: "POWERENGSUMMIT2026",
-            description: "Annual International Conference on Power Energy and Electrical Engineering",
+            description: "International Conference on Power Energy and Electrical Engineering",
             location: "MUNICH, GERMANY",
             date: "March 23-25, 2027",
             year: "2027",
@@ -105,7 +105,7 @@ const meetingsData = {
         {
             id: 9,
             title: "CLEANENGTECHSUMMIT2026",
-            description: "Annual International Conference on Clean Energy and Sustainable Technologies",
+            description: "International Conference on Clean Energy and Sustainable Technologies",
             location: "MUNICH, GERMANY",
             date: "March 23-25, 2027",
             year: "2027",
@@ -115,8 +115,8 @@ const meetingsData = {
         {
             id: 10,
             title: "ASTROSPACESUMMIT2026",
-            description: "Annual International Conference on Astronomy, Astrophysics and Space Science",
-            location: "OUTRAM  ,SINGAPORE",
+            description: "International Conference on Astronomy, Astrophysics and Space Science",
+            location: "TOKYO, JAPAN",
             date: "April 12-14, 2027",
             year: "2027",
             image: meetingAstroPhysics,
@@ -125,8 +125,8 @@ const meetingsData = {
         {
             id: 11,
             title: "LIUTEX2026",
-            description: "Annual International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics",
-            location: "OUTRAM,SINGAPORE",
+            description: "International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics",
+            location: "OUTRAM, SINGAPORE",
             date: "December 14-16, 2026",
             year: "2026",
             image: meetingLiutex,
@@ -135,7 +135,7 @@ const meetingsData = {
         {
             id: 13,
             title: "AIROBOTMLSUMMIT2026",
-            description: "Annual International Conference on AI, Robotics, and Machine Learning",
+            description: "International Conference on AI, Robotics, and Machine Learning",
             location: "SEOUL, SOUTH KOREA",
             date: "May 10-12, 2027",
             year: "2027",
@@ -145,7 +145,7 @@ const meetingsData = {
         {
             id: 14,
             title: "CONDENSEDPHYSSUMMIT2026",
-            description: "Annual International Conference on Condensed Matter & Applied Physics",
+            description: "International Conference on Condensed Matter & Applied Physics",
             location: "SEOUL, SOUTH KOREA",
             date: "May 10-12, 2027",
             year: "2027",
@@ -155,7 +155,7 @@ const meetingsData = {
         {
             id: 15,
             title: "CYBERQUANTUMSUMMIT2026",
-            description: "Annual International Conference on Cybersecurity and Quantum Computing",
+            description: "International Conference on Cybersecurity and Quantum Computing",
             location: "SEOUL, SOUTH KOREA",
             date: "May 10-12, 2027",
             year: "2027",
@@ -165,7 +165,7 @@ const meetingsData = {
         {
             id: 16,
             title: "HEALTHMEDSUMMIT2026/GLOHEALTHSUMMIT2026",
-            description: "Annual International Conference on Public Health and Preventive Medicine",
+            description: "International Conference on Public Health and Preventive Medicine",
             location: "LONDON, UK",
             date: "June 7-9, 2027",
             year: "2027",
@@ -177,9 +177,9 @@ const meetingsData = {
         {
             id: 12,
             title: "FLUIDTURBOSUMMIT2026",
-            description: "Annual International Conference on Fluid Mechanics and Turbomachinery",
-            location: "OUTRAM  ,SINGAPORE",
-            date: "December 14-16",
+            description: "International Conference on Fluid Mechanics and Turbomachinery",
+            location: "OUTRAM, SINGAPORE",
+            date: "December 14-16, 2026",
             year: "2026",
             image: meetingFluid,
             link: "https://fluidturbosummit2026.sciengasummits.com/"
