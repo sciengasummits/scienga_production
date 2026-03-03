@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import { CalendarDays } from 'lucide-react';
+import { submitAbstract, uploadAbstractFile } from '../../api/siteApi';
 import './AbstractSubmission.css';
 
 const AbstractSubmission = () => {
@@ -15,6 +16,10 @@ const AbstractSubmission = () => {
         topic: '',
         address: ''
     });
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitMsg, setSubmitMsg] = useState(null);
 
     const countries = [
         "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
@@ -40,14 +45,35 @@ const AbstractSubmission = () => {
     ];
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value, type, files } = e.target;
+        if (type === 'file') {
+            setSelectedFile(files[0] || null);
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        alert('Abstract submitted successfully! (This is a demo)');
+        setSubmitting(true);
+        setSubmitMsg(null);
+        try {
+            let fileUrl = '';
+            let fileOriginalName = '';
+            if (selectedFile) {
+                const uploaded = await uploadAbstractFile(selectedFile);
+                fileUrl = uploaded.url || '';
+                fileOriginalName = uploaded.originalName || selectedFile.name;
+            }
+            await submitAbstract({ ...formData, fileUrl, fileOriginalName });
+            setSubmitMsg({ type: 'success', text: 'Abstract submitted successfully! Our team will review and respond shortly.' });
+            setFormData({ title: '', name: '', email: '', mobile: '', organization: '', country: '', interest: '', topic: '', address: '' });
+            setSelectedFile(null);
+        } catch (err) {
+            setSubmitMsg({ type: 'error', text: 'Submission failed. Please try again or contact support.' });
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -205,7 +231,22 @@ const AbstractSubmission = () => {
                             </div>
 
                             <div className="form-actions">
-                                <Button type="submit">Submit Abstract</Button>
+                                {submitMsg && (
+                                    <div style={{
+                                        padding: '12px 16px',
+                                        borderRadius: '8px',
+                                        marginBottom: '12px',
+                                        background: submitMsg.type === 'success' ? '#dcfce7' : '#fee2e2',
+                                        color: submitMsg.type === 'success' ? '#166534' : '#991b1b',
+                                        border: `1px solid ${submitMsg.type === 'success' ? '#86efac' : '#fca5a5'}`,
+                                        fontWeight: '500',
+                                    }}>
+                                        {submitMsg.text}
+                                    </div>
+                                )}
+                                <Button type="submit" disabled={submitting}>
+                                    {submitting ? 'Submitting...' : 'Submit Abstract'}
+                                </Button>
                             </div>
                         </form>
                     </div>

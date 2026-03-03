@@ -43,22 +43,19 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 3rem;
 }
 
 .hero__content {
-    flex: 1;
     max-width: 650px;
-    margin-top: 0;
+    margin-top: 2rem;
 }
 
 .hero__title {
     font-size: 2.8rem;
-    line-height: 1.2;
+    line-height: 1.1;
     margin-bottom: 1.5rem;
     font-weight: 800;
     color: var(--color-white);
-    text-align: left;
 }
 
 .hero__title-sub {
@@ -74,15 +71,14 @@
     margin-bottom: 2rem;
     opacity: 0.9;
     line-height: 1.6;
-    max-width: 600px;
-    text-align: left;
+    max-width: 500px;
+    padding-left: 1rem;
 }
 
 .hero__actions {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    gap: 0.8rem;
+    flex-wrap: nowrap;
 }
 
 /* Override button styles in hero section */
@@ -97,8 +93,8 @@
 
 .hero__info-cards {
     position: relative;
-    width: 400px;
-    height: 300px;
+    width: 380px;
+    height: 280px;
     flex-shrink: 0;
 }
 
@@ -115,7 +111,7 @@
     top: 0;
     left: 0;
     background: var(--color-primary-gradient);
-    width: 280px;
+    width: 240px;
     text-align: center;
     z-index: 2;
 }
@@ -131,22 +127,16 @@
     font-weight: 700;
 }
 
-.hero__countdown-wrapper {
-    margin-bottom: 2rem;
-}
-
 .hero__countdown {
     display: flex;
-    gap: 1.5rem;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 .countdown-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 70px;
 }
 
 .countdown-value {
@@ -166,12 +156,11 @@
 }
 
 .venue-card {
-    bottom: 0;
+    top: 100px;
     right: 0;
-    /* Solid green for distinction */
     background: linear-gradient(135deg, var(--color-primary-start), var(--color-primary-end));
     border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 250px;
+    width: 220px;
     z-index: 1;
 }
 
@@ -188,7 +177,7 @@
 }
 
 .hero__cpd-image {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 30px;
     width: 280px;
@@ -199,7 +188,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: blink 1.5s infinite ease-in-out;
+    animation: blink 0.6s infinite ease-in-out;
 }
 
 @keyframes blink {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './VenueSection.css';
+import { fetchContent } from '../../../api/siteApi';
 
-const venues = [
+const defaultVenues = [
     {
         id: 1,
         image: "https://images.unsplash.com/photo-1525625239911-372990664e40?w=1920&q=80" // Marina Bay Sands
@@ -35,6 +36,19 @@ const venues = [
 const VenueSection = () => {
     const [activeVenue, setActiveVenue] = useState(0);
     const [direction, setDirection] = useState('next');
+    const [venues, setVenues] = useState(defaultVenues);
+
+    useEffect(() => {
+        fetchContent('venue').then(data => {
+            if (data && data.images && Array.isArray(data.images) && data.images.length > 0) {
+                const venueImages = data.images.map((image, index) => ({
+                    id: index + 1,
+                    image: image
+                }));
+                setVenues(venueImages);
+            }
+        });
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -43,7 +57,7 @@ const VenueSection = () => {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [venues.length]);
 
     const goToVenue = (index) => {
         if (index !== activeVenue) {

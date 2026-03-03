@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ScheduleSection.css';
+import { fetchContent } from '../../../api/siteApi';
 
-const scheduleData = {
+const defaultScheduleData = {
     day1: [
         { time: '8.30 – 9.00', program: 'Registration' },
         { time: '9.00 – 9.30', program: 'Conference Inauguration' },
@@ -35,7 +36,16 @@ const scheduleData = {
 
 const ScheduleSection = () => {
     const [activeDay, setActiveDay] = useState('day1');
+    const [scheduleData, setScheduleData] = useState(defaultScheduleData);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchContent('sessions').then(data => {
+            if (data && data.schedule) {
+                setScheduleData(data.schedule);
+            }
+        });
+    }, []);
 
     return (
         <section className="schedule section-padding" id="schedule">
@@ -81,7 +91,7 @@ const ScheduleSection = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {scheduleData[activeDay].slice(0, 6).map((item, index) => (
+                                {(scheduleData[activeDay] || []).slice(0, 6).map((item, index) => (
                                     <tr key={index}>
                                         <td className="time-col">
                                             <div className="time-badge">{item.time}</div>

@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
-import Button from '../../components/common/Button/Button';
-import { CalendarDays } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
 import { countries } from '../../data/countriesData';
 import './AbstractSubmission.css';
+import { submitAbstract, uploadAbstractFile, fetchContent } from '../../api/siteApi';
+
+// ─── Important Dates defaults (shown if backend is unreachable) ───────────────
+const DEFAULT_DATES = [
+    { month: 'JUL', day: '1', year: '2026', event: 'Abstract Submission Opens', icon: 'CalendarDays' },
+    { month: 'SEP', day: '30', year: '2026', event: 'Early Bird Deadline', icon: 'CheckCircle' },
+    { month: 'NOV', day: '5', year: '2026', event: 'Abstract Submission Deadline', icon: 'Clock' },
+    {
+        month: 'DEC', day: '7', year: '2026',
+        event: 'Conference Date',
+        sub: 'December 7–9, 2026, Singapore',
+        icon: 'Star',
+    },
+];
+
+const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
 
 const AbstractSubmission = () => {
     const [formData, setFormData] = useState({
@@ -14,18 +29,86 @@ const AbstractSubmission = () => {
         country: '',
         interest: '',
         topic: '',
-        address: ''
+        address: '',
     });
 
+    const [abstractFile, setAbstractFile] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
+
+    const [importantDates, setImportantDates] = useState(DEFAULT_DATES);
+
+    // Live-fetch Important Dates from backend; silently fall back to defaults
+    useEffect(() => {
+        fetchContent('importantDates')
+            .then(data => { if (data?.dates?.length) setImportantDates(data.dates); })
+            .catch(() => { });
+    }, []);
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value, files } = e.target;
+        if (name === 'file') {
+            setAbstractFile(files[0] || null);
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        alert('Abstract submitted successfully! (This is a demo)');
+
+        if (!formData.name || !formData.email) {
+            alert('Please fill in your Name and Email before submitting.');
+            return;
+        }
+
+        setSubmitting(true);
+        setSubmitStatus(null);
+
+        let fileUrl = '';
+        let fileName = '';
+
+        // Upload file first if one was selected
+        if (abstractFile) {
+            try {
+                const uploaded = await uploadAbstractFile(abstractFile);
+                fileUrl = uploaded.url || '';
+                fileName = uploaded.originalName || abstractFile.name;
+            } catch {
+                fileName = abstractFile.name; // non-fatal — keep filename anyway
+            }
+        }
+
+        const payload = {
+            title: formData.title,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.mobile,
+            organization: formData.organization,
+            country: formData.country,
+            interest: formData.interest,
+            topic: formData.topic,
+            address: formData.address,
+            fileName,
+            fileUrl,
+            status: 'Pending',
+        };
+
+        try {
+            // submitAbstract() in siteApi.js automatically adds conference: 'foodagri'
+            await submitAbstract(payload);
+            setSubmitStatus('success');
+            // Reset form
+            setFormData({
+                title: '', name: '', email: '', mobile: '',
+                organization: '', country: '', interest: '', topic: '', address: '',
+            });
+            setAbstractFile(null);
+        } catch {
+            setSubmitStatus('error');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -40,12 +123,14 @@ const AbstractSubmission = () => {
             <div className="container section-padding">
                 <div className="abstract-layout">
 
-                    {/* Left Column: Form */}
+                    {/* ── Left Column: Form ─────────────────────────────────── */}
                     <div className="abstract-col-left">
                         <h2 className="abstract-title">Abstract Submission</h2>
 
                         <p className="abstract-intro">
-                            You are invited to submit abstract. Kindly fill the below form to submit an abstract of your research. <a href="#" className="template-link">Download the Abstract Template</a>
+                            You are invited to submit abstract. Kindly fill the below form to submit an abstract
+                            of your research.{' '}
+                            <a href="#" className="template-link">Download the Abstract Template</a>
                         </p>
 
                         <form className="submission-form" onSubmit={handleSubmit}>
@@ -148,12 +233,12 @@ const AbstractSubmission = () => {
                                         className="form-control"
                                     >
                                         <option value="" disabled>- Select Topics of Discussion: -</option>
-                                        <option value="food-processing">Food Processing & Engineering</option>
+                                        <option value="food-processing">Food Processing &amp; Engineering</option>
                                         <option value="sustainable-agri">Sustainable Agriculture</option>
                                         <option value="agri-biotech">Agricultural Biotechnology</option>
-                                        <option value="food-safety">Food Safety & Quality Control</option>
+                                        <option value="food-safety">Food Safety &amp; Quality Control</option>
                                         <option value="nutritional-science">Nutritional Science</option>
-                                        <option value="smart-farming">Smart Farming & IoT</option>
+                                        <option value="smart-farming">Smart Farming &amp; IoT</option>
                                     </select>
                                 </div>
                             </div>
@@ -166,7 +251,7 @@ const AbstractSubmission = () => {
                                     placeholder="Full Postal Address..."
                                     rows="4"
                                     className="form-control"
-                                ></textarea>
+                                />
                             </div>
 
                             <div className="form-group full-width">
@@ -178,60 +263,75 @@ const AbstractSubmission = () => {
                                         accept=".doc,.docx,.pdf,.zip"
                                         onChange={handleChange}
                                     />
-                                    <p className="file-upload-note">Note: (.doc), (.docx), (.pdf) and (.zip) files only.</p>
+                                    <p className="file-upload-note">
+                                        Note: (.doc), (.docx), (.pdf) and (.zip) files only.
+                                    </p>
                                 </div>
                             </div>
 
+                            {/* ── Inline feedback banners ─────────────────────── */}
+                            {submitStatus === 'success' && (
+                                <div style={{
+                                    padding: '14px 20px',
+                                    background: '#f0fdf4',
+                                    border: '1px solid #86efac',
+                                    borderRadius: '10px',
+                                    color: '#15803d',
+                                    fontWeight: 600,
+                                    marginBottom: '16px',
+                                    textAlign: 'center',
+                                }}>
+                                    ✅ Abstract submitted successfully! We will review your submission and get back to you.
+                                </div>
+                            )}
+                            {submitStatus === 'error' && (
+                                <div style={{
+                                    padding: '14px 20px',
+                                    background: '#fef2f2',
+                                    border: '1px solid #fca5a5',
+                                    borderRadius: '10px',
+                                    color: '#dc2626',
+                                    fontWeight: 600,
+                                    marginBottom: '16px',
+                                    textAlign: 'center',
+                                }}>
+                                    ❌ Submission failed. Please check your internet connection and try again.
+                                </div>
+                            )}
+
                             <div className="form-actions">
-                                <Button type="submit">Submit Abstract</Button>
+                                <button
+                                    type="submit"
+                                    disabled={submitting}
+                                    className="abstract-submit-btn"
+                                    style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+                                >
+                                    {submitting ? 'Submitting…' : 'Submit Abstract'}
+                                </button>
                             </div>
                         </form>
                     </div>
 
-                    {/* Right Column: Important Dates */}
+                    {/* ── Right Column: Important Dates — live from backend ─── */}
                     <div className="abstract-col-right">
                         <h3 className="dates-header-title">Important Dates</h3>
 
                         <div className="dates-list-vertical">
-                            <div className="date-card-item">
-                                <div className="date-icon-circle">
-                                    <CalendarDays size={20} />
-                                </div>
-                                <div className="date-content">
-                                    <h4>Abstract Submission Opens</h4>
-                                    <p>Jul 1, 2026</p>
-                                </div>
-                            </div>
-
-                            <div className="date-card-item">
-                                <div className="date-icon-circle">
-                                    <CalendarDays size={20} />
-                                </div>
-                                <div className="date-content">
-                                    <h4>Early Bird Deadline</h4>
-                                    <p>SEP 30, 2026</p>
-                                </div>
-                            </div>
-
-                            <div className="date-card-item">
-                                <div className="date-icon-circle">
-                                    <CalendarDays size={20} />
-                                </div>
-                                <div className="date-content">
-                                    <h4>Abstract Submission Deadline</h4>
-                                    <p>NOV 5, 2026</p>
-                                </div>
-                            </div>
-
-                            <div className="date-card-item">
-                                <div className="date-icon-circle">
-                                    <CalendarDays size={20} />
-                                </div>
-                                <div className="date-content">
-                                    <h4>Conference Date</h4>
-                                    <p>DEC 7, 2026</p>
-                                </div>
-                            </div>
+                            {importantDates.map((d, i) => {
+                                const Icon = ICON_MAP[d.icon] || CalendarDays;
+                                const label = [d.month, d.day, d.year].filter(Boolean).join(' ');
+                                return (
+                                    <div key={i} className="date-card-item">
+                                        <div className="date-icon-circle">
+                                            <Icon size={20} />
+                                        </div>
+                                        <div className="date-content">
+                                            <h4>{d.event}</h4>
+                                            <p>{d.sub || label}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
 

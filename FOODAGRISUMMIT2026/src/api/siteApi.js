@@ -1,0 +1,118 @@
+// API service for FOODAGRISUMMIT2026 website
+// Fetches live data from the shared dashboard backend (port 5000)
+
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+// ── This must ALWAYS be 'foodagri' for this conference site ──
+const CONFERENCE_ID = 'foodagri';
+
+async function get(endpoint) {
+    try {
+        const res = await fetch(`${BASE_URL}${endpoint}`);
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+    } catch (e) {
+        console.warn(`[SiteAPI-FoodAgri] Failed to fetch ${endpoint}:`, e.message);
+        return null;
+    }
+}
+
+// Get a single content block by key (e.g. 'hero', 'about', etc.)
+export const fetchContent = (key) =>
+    get(`/content/${key}?conference=${CONFERENCE_ID}`);
+
+// Get all content blocks at once
+export const fetchAllContent = () =>
+    get(`/content?conference=${CONFERENCE_ID}`);
+
+// Speakers — uses public endpoint (visible only, sorted by order)
+export const fetchSpeakers = (category) =>
+    get(`/speakers?conference=${CONFERENCE_ID}${category ? `&category=${encodeURIComponent(category)}` : ''}`);
+
+// Sponsors/Media partners — uses public endpoint (visible only)
+export const fetchSponsors = (type) =>
+    get(`/sponsors?conference=${CONFERENCE_ID}${type ? `&type=${encodeURIComponent(type)}` : ''}`);
+
+// Submit abstract — always tags with this conference
+export async function submitAbstract(payload) {
+    const res = await fetch(`${BASE_URL}/abstracts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: CONFERENCE_ID }),
+    });
+    if (!res.ok) throw new Error('Server error');
+    return res.json();
+}
+
+// Upload an abstract file — returns { url, originalName }
+export async function uploadAbstractFile(file) {
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch(`${BASE_URL}/upload-file`, { method: 'POST', body: fd });
+    if (!res.ok) throw new Error('Upload failed');
+    return res.json();
+}
+
+// Submit registration — always tags with this conference
+export async function submitRegistration(data) {
+    try {
+        const res = await fetch(`${BASE_URL}/registrations`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...data, conference: CONFERENCE_ID }),
+        });
+        return res.json();
+    } catch (e) {
+        console.warn('[SiteAPI-FoodAgri] submitRegistration failed:', e.message);
+        return { error: e.message };
+    }
+}
+
+// Validate a discount coupon code against the backend
+export async function validateDiscountCode(coupon) {
+    try {
+        const res = await fetch(`${BASE_URL}/discounts/validate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ coupon, conference: CONFERENCE_ID }),
+        });
+        if (!res.ok) throw new Error('Server error');
+        return res.json();
+    } catch (e) {
+        console.warn('[SiteAPI-FoodAgri] Discount validate failed:', e.message);
+        return { valid: false, message: 'Could not reach server. Please try again.' };
+    }
+}
+
+// ── Razorpay Payment Integration ─────────────────────────────────────────────
+
+export async function getRazorpayKey() {
+    try {
+        const res = await fetch(`${BASE_URL}/payment/key`);
+        if (!res.ok) throw new Error('Failed to fetch key');
+        return res.json();
+    } catch (e) {
+        console.warn('[SiteAPI-FoodAgri] getRazorpayKey failed:', e.message);
+        return null;
+    }
+}
+
+export async function createPaymentOrder({ amount, currency = 'USD', registrationId, description }) {
+    const res = await fetch(`${BASE_URL}/payment/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, currency, registrationId, conference: CONFERENCE_ID, description }),
+    });
+    if (!res.ok) throw new Error('Failed to create order');
+    return res.json();
+}
+
+export async function verifyPayment({ razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId }) {
+    const res = await fetch(`${BASE_URL}/payment/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId }),
+    });
+    if (!res.ok) throw new Error('Verification failed');
+    return res.json();
+}

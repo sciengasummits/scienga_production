@@ -1,182 +1,662 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Tag, CheckCircle, XCircle, Loader, ShieldCheck, AlertCircle } from 'lucide-react';
 import './DiscountRegistration.css';
+import { countries } from '../../data/countriesData';
+import { validateDiscountCode, submitRegistration, getRazorpayKey, createPaymentOrder, verifyPayment } from '../../api/siteApi';
+
+/* ── Pricing base values (USD) ─────────────────────────────── */
+const BASE_PRICING = [
+    { id: 'speaker', label: 'Speaker Registration', early: 799, standard: 899, onspot: 949 },
+    { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
+    { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
+    { id: 'student', label: 'Student Registration', early: 499, standard: 599, onspot: 699 },
+    { id: 'virtual', label: 'Virtual(Online)', early: 199, standard: 249, onspot: 299 },
+];
+
+const ACCOMMODATION_OPTIONS = [
+    { nights: 2, single: 360, double: 400, triple: 440 },
+    { nights: 3, single: 540, double: 600, triple: 660 },
+    { nights: 4, single: 720, double: 800, triple: 880 },
+    { nights: 5, single: 900, double: 1000, triple: 1100 },
+];
+
+const SPONSORSHIP_BASE = [
+    { id: 'platinum', label: 'Platinum Sponsor', price: 4999 },
+    { id: 'diamond', label: 'Diamond Sponsor', price: 3999 },
+    { id: 'gold', label: 'Gold Sponsor', price: 2999 },
+    { id: 'exhibitor', label: 'Exhibitor', price: 1999 },
+];
+
+/* ── Date logic ─────────────────────────────────────────────── */
+const getActivePhase = () => {
+    const now = new Date();
+    if (now <= new Date('2026-09-29')) return 'early';
+    if (now <= new Date('2026-10-30')) return 'standard';
+    return 'onspot';
+};
+
+/* ── Apply discount to a price ──────────────────────────────── */
+const applyPct = (price, pct) => Math.round(price * (1 - pct / 100));
 
 const DiscountRegistration = () => {
+    const activePhase = getActivePhase();
+
+    /* ── Razorpay state ── */
+    const [razorpayKey, setRazorpayKey] = useState(null);
+
+    useEffect(() => {
+        if (!document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')) {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.async = true;
+            document.body.appendChild(script);
+        }
+        getRazorpayKey().then(data => { if (data?.key) setRazorpayKey(data.key); });
+    }, []);
+
+    /* ── Discount state ── */
+    const [couponInput, setCouponInput] = useState('');
+    const [couponStatus, setCouponStatus] = useState('idle');
+    const [discount, setDiscount] = useState(null);
+    const [couponMsg, setCouponMsg] = useState('');
+
+    /* ── Registration form state ── */
     const [formData, setFormData] = useState({
-        title: '',
-        name: '',
+        designation: '',
+        fullName: '',
         email: '',
-        phone: '',
-        organization: '',
+        telephone: '',
         country: '',
-        paymentDescription: '',
-        amount: ''
+        company: '',
+        address: '',
     });
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedAccommodation, setSelectedAccommodation] = useState(null);
+    const [selectedSponsorship, setSelectedSponsorship] = useState(null);
+    const [includeAccompanying, setIncludeAccompanying] = useState(false);
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | 'paid'
 
-    const countries = [
-        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-        "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-        "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
-        "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
-        "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
-        "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
-        "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
-        "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-        "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan",
-        "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
-        "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
-        "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
-        "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
-        "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
-        "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
-        "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
-        "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
-        "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
-        "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
-        "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-    ];
+    /* ── Derived pricing with discount applied ───────────────── */
+    const regDiscount = discount && (discount.category === 'registration' || discount.category === 'both')
+        ? discount.percentage : 0;
+    const accomDiscount = discount && (discount.category === 'accommodation' || discount.category === 'both')
+        ? discount.percentage : 0;
 
+    const pricingData = BASE_PRICING.map(item => ({
+        ...item,
+        early: applyPct(item.early, regDiscount),
+        standard: applyPct(item.standard, regDiscount),
+        onspot: applyPct(item.onspot, regDiscount),
+    }));
+
+    const sponsorshipPricing = SPONSORSHIP_BASE.map(item => ({
+        ...item,
+        price: applyPct(item.price, regDiscount),
+    }));
+
+    /* ── Validate coupon ─────────────────────────────────────── */
+    const handleValidateCoupon = useCallback(async () => {
+        const code = couponInput.trim().toUpperCase();
+        if (!code) {
+            setCouponMsg('Please enter a discount code.');
+            setCouponStatus('invalid');
+            return;
+        }
+        setCouponStatus('checking');
+        setCouponMsg('');
+        const result = await validateDiscountCode(code);
+        if (result.valid) {
+            setDiscount(result);
+            setCouponStatus('valid');
+            setCouponMsg(`✅ "${result.coupon}" applied — ${result.percentage}% off ${result.category === 'both' ? 'registration & accommodation'
+                : result.category === 'accommodation' ? 'accommodation'
+                    : 'registration'
+                }!`);
+        } else {
+            setDiscount(null);
+            setCouponStatus('invalid');
+            setCouponMsg(result.message || 'Invalid or expired code.');
+        }
+    }, [couponInput]);
+
+    const handleRemoveCoupon = () => {
+        setDiscount(null);
+        setCouponInput('');
+        setCouponStatus('idle');
+        setCouponMsg('');
+    };
+
+    /* ── Total calculation ───────────────────────────────────── */
+    const calculateTotal = () => {
+        let total = 0;
+        if (selectedCategory) {
+            const item = pricingData.find(p => p.id === selectedCategory);
+            if (item) total += item[activePhase];
+        }
+        if (selectedSponsorship) {
+            const item = sponsorshipPricing.find(p => p.id === selectedSponsorship);
+            if (item) total += item.price;
+        }
+        if (includeAccompanying) total += 249;
+        if (selectedAccommodation) {
+            const [nights, type] = selectedAccommodation.split('-');
+            const opt = ACCOMMODATION_OPTIONS.find(o => o.nights === parseInt(nights));
+            if (opt) total += accomDiscount > 0 ? applyPct(opt[type], accomDiscount) : opt[type];
+        }
+        return total;
+    };
+
+    /* ── Form handlers ───────────────────────────────────────── */
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleReset = () => {
+        setFormData({ designation: '', fullName: '', email: '', telephone: '', country: '', company: '', address: '' });
+        setSelectedCategory(null);
+        setSelectedAccommodation(null);
+        setSelectedSponsorship(null);
+        setIncludeAccompanying(false);
+        setTermsAccepted(false);
+        setSubmitStatus(null);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // Add payment processing logic here
+        if (!formData.fullName || !formData.email) {
+            alert('Please fill in your Full Name and Email before submitting.');
+            return;
+        }
+        if (!termsAccepted) {
+            alert('Please accept the terms & conditions.');
+            return;
+        }
+
+        const total = calculateTotal();
+
+        const descParts = [];
+        if (selectedCategory) {
+            const cat = pricingData.find(p => p.id === selectedCategory);
+            if (cat) descParts.push(`${cat.label} : ${cat[activePhase]}`);
+        }
+        if (selectedSponsorship) {
+            const sp = sponsorshipPricing.find(p => p.id === selectedSponsorship);
+            if (sp) descParts.push(`${sp.label} : ${sp.price}`);
+        }
+        if (includeAccompanying) descParts.push('Accompanying Person : $249');
+        if (selectedAccommodation) descParts.push(`Accommodation : ${selectedAccommodation}`);
+        if (discount) descParts.push(`Discount Code: ${discount.coupon} (${discount.percentage}% off)`);
+
+        const payload = {
+            title: formData.designation,
+            name: formData.fullName,
+            email: formData.email,
+            phone: formData.telephone,
+            country: formData.country,
+            company: formData.company,
+            address: formData.address,
+            registrationCategory: selectedCategory
+                ? pricingData.find(p => p.id === selectedCategory)?.label || '' : '',
+            accommodation: selectedAccommodation || '',
+            sponsorship: selectedSponsorship
+                ? sponsorshipPricing.find(p => p.id === selectedSponsorship)?.label || '' : '',
+            accompanyingPerson: includeAccompanying,
+            totalAmount: total,
+            description: descParts.join('\n'),
+            status: 'Pending',
+        };
+
+        setSubmitting(true);
+        setSubmitStatus(null);
+        try {
+            if (total > 0 && razorpayKey && window.Razorpay) {
+                try {
+                    const orderResult = await createPaymentOrder({
+                        amount: total, currency: 'USD',
+                        description: `Fluid Mechanics & Turbomachinery 2026 - ${descParts[0] || 'Registration'}`,
+                    });
+                    if (!orderResult.success) throw new Error(orderResult.error);
+
+                    const options = {
+                        key: razorpayKey,
+                        amount: orderResult.order.amount,
+                        currency: orderResult.order.currency,
+                        name: 'Fluid Mechanics & Turbomachinery 2026',
+                        description: `Registration - ${formData.fullName}`,
+                        order_id: orderResult.order.id,
+                        prefill: { name: formData.fullName, email: formData.email, contact: formData.telephone },
+                        theme: { color: '#0ea5e9' },
+                        handler: async function (response) {
+                            try {
+                                const v = await verifyPayment({
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                });
+
+                                if (v.success) {
+                                    // Submit registration to backend only after successful verification
+                                    payload.status = 'Paid';
+                                    payload.txnId = response.razorpay_payment_id;
+                                    await submitRegistration(payload);
+                                    setSubmitStatus('paid');
+                                    handleReset();
+                                } else {
+                                    setSubmitStatus('error');
+                                }
+                            } catch {
+                                setSubmitStatus('error');
+                            }
+                            setSubmitting(false);
+                        },
+                        modal: {
+                            ondismiss: () => {
+                                setSubmitting(false);
+                                // User closed modal, don't submit the form, leave them on the page to retry
+                            }
+                        },
+                    };
+                    const rzp = new window.Razorpay(options);
+                    rzp.open();
+                    return;
+                } catch (payErr) {
+                    console.warn('Payment initiation failed:', payErr.message);
+                    setSubmitStatus('error');
+                    setSubmitting(false);
+                    return;
+                }
+            }
+
+            // Fallback for free registrations
+            await submitRegistration(payload);
+            setSubmitStatus('success');
+            handleReset();
+        } catch {
+            setSubmitStatus('error');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
+    /* ── Render ──────────────────────────────────────────────── */
     return (
         <div className="discount-registration">
-            <div className="discount-registration__hero">
+            <div className="page-header">
                 <div className="container">
-                    <h1>Online Registration</h1>
-                    <p className="breadcrumb">HOME / REGISTER / ONLINE</p>
+                    <h1 className="page-title">Discount Registration</h1>
+                    <p className="page-breadcrumb">HOME /Discount Registration</p>
                 </div>
             </div>
 
             <div className="container">
                 <div className="discount-registration__content">
-                    <form className="registration-form" onSubmit={handleSubmit}>
-                        <div className="form-row">
-                            <div className="form-group">
-                                <select 
-                                    name="title" 
-                                    value={formData.title}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select Titles</option>
-                                    <option value="Dr.">Dr.</option>
-                                    <option value="Prof.">Prof.</option>
-                                    <option value="Mr.">Mr.</option>
-                                    <option value="Ms.">Ms.</option>
-                                    <option value="Mrs.">Mrs.</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <input 
-                                    type="text" 
-                                    name="name"
-                                    placeholder="Your Name *"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
+                    {(submitStatus === 'paid' || (submitStatus === 'success' && calculateTotal() === 0)) || (submitStatus === 'success' && !window.Razorpay) ? (
+                        <div className="registration-success-card" style={{ textAlign: 'center', padding: '4rem 2rem', background: '#fff', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                            <CheckCircle size={80} color="#0ea5e9" style={{ margin: '0 auto 1.5rem' }} />
+                            <h2 style={{ fontSize: '2rem', color: '#0369a1', marginBottom: '1rem' }}>
+                                {submitStatus === 'paid' ? 'Payment Successful!' : 'Registration Confirmed!'}
+                            </h2>
+                            <p style={{ fontSize: '1.1rem', color: '#4b5563', marginBottom: '2rem' }}>
+                                Thank you, <strong>{formData.fullName}</strong>. Your registration has been securely processed.
+                                A confirmation has been secured for <strong>{formData.email}</strong>.
+                            </p>
 
-                        <div className="form-row">
-                            <div className="form-group">
-                                <input 
-                                    type="email" 
-                                    name="email"
-                                    placeholder="Your Email *"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
+                            <div style={{ background: '#f0f9ff', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem', textAlign: 'left', maxWidth: '500px', margin: '0 auto 2rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', borderBottom: '1px solid #bae6fd', paddingBottom: '0.8rem' }}>
+                                    <span style={{ color: '#4b5563' }}>Attendee</span>
+                                    <strong style={{ color: '#075985' }}>{formData.fullName}</strong>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', borderBottom: '1px solid #bae6fd', paddingBottom: '0.8rem' }}>
+                                    <span style={{ color: '#4b5563' }}>Total Processed</span>
+                                    <strong style={{ color: '#0ea5e9', fontSize: '1.2rem' }}>${calculateTotal()} USD</strong>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span style={{ color: '#4b5563' }}>Payment Status</span>
+                                    <strong style={{ color: '#0ea5e9' }}>{submitStatus === 'paid' ? 'Paid & Verified' : 'Confirmed'}</strong>
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <input 
-                                    type="tel" 
-                                    name="phone"
-                                    placeholder="Your Phone *"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group">
-                                <input 
-                                    type="text" 
-                                    name="organization"
-                                    placeholder="Organization Name"
-                                    value={formData.organization}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <select 
-                                    name="country"
-                                    value={formData.country}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select country</option>
-                                    {countries.map((country, index) => (
-                                        <option key={index} value={country}>{country}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group">
-                                <input 
-                                    type="text" 
-                                    name="paymentDescription"
-                                    placeholder="Enter the description of your payment"
-                                    value={formData.paymentDescription}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input 
-                                    type="number" 
-                                    name="amount"
-                                    placeholder="Enter the Amount"
-                                    value={formData.amount}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-actions">
-                            <button type="submit" className="submit-btn">
-                                SECURELY PAY NOW
+                            <button onClick={() => window.location.href = '/'} className="submit-btn" style={{ maxWidth: '300px', margin: '0 auto', background: '#0ea5e9' }}>
+                                Return to Homepage
                             </button>
                         </div>
-                    </form>
-
-                    <div className="payment-info">
-                        <div className="payment-badges">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" className="stripe-logo" />
-                            <div className="payment-methods">
-                                <span className="payment-label">SECURE PAYMENTS BY</span>
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg" alt="Mastercard" />
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" />
+                    ) : (
+                        <>
+                            {/* ── Razorpay Badge ── */}
+                            <div className="stripe-badge-wrapper">
+                                <div className="stripe-badge">
+                                    <div className="stripe-header">
+                                        <span className="stripe-logo" style={{ color: '#072654', fontWeight: 800 }}>Razorpay</span>
+                                        <span className="stripe-text">Secure<br />Payments</span>
+                                    </div>
+                                    <div className="stripe-cards">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" />
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" />
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" />
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Rupay-Logo.png" alt="RuPay" />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+
+                            {/* ── Discount Code Section ── */}
+                            <div className="discount-code-section">
+                                <div className="discount-code-header">
+                                    <Tag size={18} className="discount-icon" />
+                                    <h3 className="discount-code-title">Have a Discount Code?</h3>
+                                </div>
+                                <p className="discount-code-desc">
+                                    Enter the discount code provided by the organizers to get reduced pricing.
+                                </p>
+                                <div className="discount-input-row">
+                                    <input
+                                        type="text"
+                                        className={`discount-code-input${couponStatus === 'valid' ? ' discount-input--valid' : couponStatus === 'invalid' ? ' discount-input--invalid' : ''}`}
+                                        placeholder="Enter discount code (e.g. SAVE20)"
+                                        value={couponInput}
+                                        onChange={e => { setCouponInput(e.target.value.toUpperCase()); setCouponStatus('idle'); setDiscount(null); setCouponMsg(''); }}
+                                        onKeyDown={e => e.key === 'Enter' && handleValidateCoupon()}
+                                        disabled={couponStatus === 'valid'}
+                                        maxLength={30}
+                                    />
+                                    {couponStatus !== 'valid' ? (
+                                        <button
+                                            className="discount-apply-btn"
+                                            onClick={handleValidateCoupon}
+                                            disabled={couponStatus === 'checking' || !couponInput.trim()}
+                                        >
+                                            {couponStatus === 'checking'
+                                                ? <><Loader size={15} className="spin-icon" /> Checking…</>
+                                                : <><ShieldCheck size={15} /> Apply Code</>}
+                                        </button>
+                                    ) : (
+                                        <button className="discount-remove-btn" onClick={handleRemoveCoupon}>
+                                            <XCircle size={15} /> Remove
+                                        </button>
+                                    )}
+                                </div>
+                                {couponMsg && (
+                                    <div className={`discount-msg ${couponStatus === 'valid' ? 'discount-msg--valid' : 'discount-msg--invalid'}`}>
+                                        {couponStatus === 'valid' ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
+                                        <span>{couponMsg}</span>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* ── Personal Details Form ── */}
+                            <form className="registration-form" onSubmit={handleSubmit}>
+
+                                <div className="section-label">Personal Details</div>
+                                <div className="form-grid">
+                                    <div className="form-group">
+                                        <select name="designation" value={formData.designation} onChange={handleChange} className="form-control">
+                                            <option value="">Select Title</option>
+                                            <option value="Mr">Mr.</option>
+                                            <option value="Mrs">Mrs.</option>
+                                            <option value="Ms">Ms.</option>
+                                            <option value="Dr">Dr.</option>
+                                            <option value="Prof">Prof.</option>
+                                            <option value="PhD">PhD</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text" name="fullName" placeholder="Full Name *"
+                                            value={formData.fullName} onChange={handleChange}
+                                            className="form-control" required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="email" name="email" placeholder="Email Address *"
+                                            value={formData.email} onChange={handleChange}
+                                            className="form-control" required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="tel" name="telephone" placeholder="Phone Number *"
+                                            value={formData.telephone} onChange={handleChange}
+                                            className="form-control" required
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <select name="country" value={formData.country} onChange={handleChange} className="form-control">
+                                            <option value="">Select Country</option>
+                                            {countries.map(c => <option key={c} value={c}>{c}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text" name="company" placeholder="Company / University"
+                                            value={formData.company} onChange={handleChange}
+                                            className="form-control"
+                                        />
+                                    </div>
+                                    <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                                        <textarea
+                                            name="address" placeholder="Address"
+                                            value={formData.address} onChange={handleChange}
+                                            className="form-control" rows="3"
+                                            style={{ resize: 'vertical' }}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* ── Registration Category Table ── */}
+                                <div className="section-label" style={{ marginTop: '2rem' }}>
+                                    Select Registration Category
+                                    {discount && regDiscount > 0 && (
+                                        <span className="discount-badge">
+                                            {discount.percentage}% OFF applied
+                                        </span>
+                                    )}
+                                </div>
+
+                                <table className="pricing-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th className={activePhase === 'early' ? 'active-col' : ''}>
+                                                Early Bird<br /><span className="date">Sep 29, 2026</span>
+                                                {activePhase === 'early' && <span className="active-badge">ACTIVE</span>}
+                                            </th>
+                                            <th className={activePhase === 'standard' ? 'active-col' : ''}>
+                                                Standard<br /><span className="date">Oct 30, 2026</span>
+                                                {activePhase === 'standard' && <span className="active-badge">ACTIVE</span>}
+                                            </th>
+                                            <th className={activePhase === 'onspot' ? 'active-col' : ''}>
+                                                On-Spot<br /><span className="date">Dec 14, 2026</span>
+                                                {activePhase === 'onspot' && <span className="active-badge">ACTIVE</span>}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {pricingData.map(item => (
+                                            <tr
+                                                key={item.id}
+                                                className={selectedCategory === item.id ? 'selected-row' : ''}
+                                                onClick={() => setSelectedCategory(item.id)}
+                                                style={{ cursor: 'pointer' }}
+                                            >
+                                                <td>
+                                                    <label className="radio-label">
+                                                        <input
+                                                            type="radio"
+                                                            name="category"
+                                                            checked={selectedCategory === item.id}
+                                                            onChange={() => setSelectedCategory(item.id)}
+                                                        />
+                                                        {item.label}
+                                                    </label>
+                                                </td>
+                                                <td className={activePhase === 'early' && selectedCategory === item.id ? 'selected-price' : ''}>
+                                                    <span className={activePhase === 'early' ? 'price-active' : ''}>
+                                                        ${item.early}
+                                                        {regDiscount > 0 && (
+                                                            <span className="original-price">${BASE_PRICING.find(b => b.id === item.id).early}</span>
+                                                        )}
+                                                    </span>
+                                                </td>
+                                                <td className={activePhase === 'standard' && selectedCategory === item.id ? 'selected-price' : ''}>
+                                                    <span className={activePhase === 'standard' ? 'price-active' : ''}>
+                                                        ${item.standard}
+                                                        {regDiscount > 0 && (
+                                                            <span className="original-price">${BASE_PRICING.find(b => b.id === item.id).standard}</span>
+                                                        )}
+                                                    </span>
+                                                </td>
+                                                <td className={activePhase === 'onspot' && selectedCategory === item.id ? 'selected-price' : ''}>
+                                                    <span className={activePhase === 'onspot' ? 'price-active' : ''}>
+                                                        ${item.onspot}
+                                                        {regDiscount > 0 && (
+                                                            <span className="original-price">${BASE_PRICING.find(b => b.id === item.id).onspot}</span>
+                                                        )}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+
+                                {/* ── Sponsorship Table ── */}
+                                <div className="section-label" style={{ marginTop: '2rem' }}>Sponsorship Opportunities</div>
+                                <table className="pricing-table sponsorship-table">
+                                    <thead>
+                                        <tr>
+                                            {sponsorshipPricing.map(item => <th key={item.id}>{item.label}</th>)}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {sponsorshipPricing.map(item => (
+                                                <td key={item.id}>
+                                                    <label className="radio-label" style={{ justifyContent: 'center' }}>
+                                                        <input
+                                                            type="radio"
+                                                            name="sponsorship"
+                                                            checked={selectedSponsorship === item.id}
+                                                            onChange={() => setSelectedSponsorship(item.id)}
+                                                        />
+                                                        ${item.price}
+                                                        {regDiscount > 0 && (
+                                                            <span className="original-price">${SPONSORSHIP_BASE.find(b => b.id === item.id).price}</span>
+                                                        )}
+                                                    </label>
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                {/* ── Accommodation ── */}
+                                <div className="section-label" style={{ marginTop: '2rem' }}>
+                                    Accommodation
+                                    {discount && accomDiscount > 0 && (
+                                        <span className="discount-badge">{discount.percentage}% OFF applied</span>
+                                    )}
+                                </div>
+                                <div className="accompanying-check">
+                                    <label className="check-label">
+                                        <input
+                                            type="checkbox"
+                                            checked={includeAccompanying}
+                                            onChange={e => setIncludeAccompanying(e.target.checked)}
+                                        />
+                                        <strong>Include Accompanying Person ($249 extra)</strong>
+                                    </label>
+                                </div>
+                                <table className="pricing-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nights</th>
+                                            <th>Single Occupancy</th>
+                                            <th>Double Occupancy</th>
+                                            <th>Triple Occupancy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ACCOMMODATION_OPTIONS.map(opt => (
+                                            <tr key={opt.nights}>
+                                                <td><strong>{opt.nights} Nights</strong></td>
+                                                {['single', 'double', 'triple'].map(type => {
+                                                    const basePrice = opt[type];
+                                                    const discountedPrice = accomDiscount > 0 ? applyPct(basePrice, accomDiscount) : basePrice;
+                                                    return (
+                                                        <td key={type}>
+                                                            <label className="radio-label">
+                                                                <input
+                                                                    type="radio"
+                                                                    name="accommodation"
+                                                                    checked={selectedAccommodation === `${opt.nights}-${type}`}
+                                                                    onChange={() => setSelectedAccommodation(`${opt.nights}-${type}`)}
+                                                                />
+                                                                ${discountedPrice}
+                                                                {accomDiscount > 0 && (
+                                                                    <span className="original-price">${basePrice}</span>
+                                                                )}
+                                                            </label>
+                                                        </td>
+                                                    );
+                                                })}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+
+                                {/* ── Total & Submit ── */}
+                                <div className="summary-section">
+                                    <div className="total-display">
+                                        <span className="total-label">TOTAL AMOUNT (USD):</span>
+                                        <span className="total-amount">${calculateTotal()}</span>
+                                    </div>
+                                    {discount && (
+                                        <div className="savings-note">
+                                            🎉 You're saving with code <strong>{discount.coupon}</strong> — {discount.percentage}% discount applied!
+                                        </div>
+                                    )}
+                                    <div className="terms-checkbox">
+                                        <label className="check-label">
+                                            <input
+                                                type="checkbox"
+                                                checked={termsAccepted}
+                                                onChange={e => setTermsAccepted(e.target.checked)}
+                                            />
+                                            I've read and accept the <span className="terms-link">terms &amp; conditions</span>.
+                                        </label>
+                                    </div>
+                                    <p className="processing-fee">Note: 5% processing charges will be applicable.</p>
+
+                                    {submitStatus === 'success' && (
+                                        <div className="status status--success">
+                                            ✅ Registration submitted successfully! We will contact you shortly.
+                                        </div>
+                                    )}
+                                    {submitStatus === 'paid' && (
+                                        <div className="status status--success">
+                                            ✅ Payment successful! Your registration is confirmed.
+                                        </div>
+                                    )}
+                                    {submitStatus === 'error' && (
+                                        <div className="status status--error">
+                                            ❌ Submission failed. Please check your connection and try again.
+                                        </div>
+                                    )}
+
+                                    <div className="form-actions">
+                                        <button
+                                            className="submit-btn"
+                                            disabled={submitting}
+                                            style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+                                        >
+                                            {submitting ? 'Processing…' : (razorpayKey && calculateTotal() > 0 ? 'REGISTER & PAY' : 'SECURELY PAY NOW')}
+                                        </button>
+                                        <button type="button" className="reset-btn" onClick={handleReset}>RESET</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </>)}
                 </div>
             </div>
         </div>

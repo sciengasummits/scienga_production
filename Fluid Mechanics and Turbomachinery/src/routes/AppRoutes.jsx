@@ -47,6 +47,7 @@ const AppRoutes = () => {
                     <Route path="contact" element={<Contact />} />
                     <Route path="register" element={<Register />} />
                     <Route path="discount-registration" element={<DiscountRegistration />} />
+                    <Route path="online-registration" element={<DiscountRegistration />} />
                     <Route path="unsubscribe" element={<Unsubscribe />} />
                     <Route path="register/onlineregistration" element={<Register isDiscounted={true} />} />
                     <Route path="brochure" element={<Brochure />} />

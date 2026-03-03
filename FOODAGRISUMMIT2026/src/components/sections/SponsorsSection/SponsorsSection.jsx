@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './SponsorsSection.css';
+import { fetchSponsors } from '../../../api/siteApi';
 
-// Import partner images
+// Import partner images (used as fallback when backend has no data)
 import partner1 from '../../../assets/images/media/486-Mediapartner-Photo.png';
 import partner2 from '../../../assets/images/media/487-Mediapartner-Photo.png';
 import partner3 from '../../../assets/images/media/488-Mediapartner-Photo.jpg';
@@ -19,7 +20,7 @@ import partner14 from '../../../assets/images/media/536-Mediapartner-Photo.png';
 import partner15 from '../../../assets/images/media/538-Mediapartner-Photo.png';
 import partner16 from '../../../assets/images/media/540-Mediapartner-Photo.png';
 
-const sponsorsData = [
+const staticSponsorsData = [
     { name: 'International Conference Alerts', logo: partner1 },
     { name: 'AI & ML Events', logo: partner2 },
     { name: 'Conference Alerts', logo: partner3 },
@@ -59,8 +60,24 @@ const MarqueeRow = ({ items, direction }) => (
 );
 
 export default function SponsorsSection() {
-    const row1 = sponsorsData.slice(0, 8);
-    const row2 = sponsorsData.slice(8);
+    const [sponsorsData, setSponsorsData] = useState(staticSponsorsData);
+
+    useEffect(() => {
+        // Fetch media partners from backend
+        fetchSponsors('media').then(data => {
+            if (data && data.length > 0) {
+                const mapped = data.map(s => ({
+                    name: s.name,
+                    logo: s.logo || s.image || '',
+                })).filter(s => s.logo);
+                if (mapped.length > 0) setSponsorsData(mapped);
+            }
+        });
+    }, []);
+
+    const row1 = sponsorsData.slice(0, Math.ceil(sponsorsData.length / 2));
+    const row2 = sponsorsData.slice(Math.ceil(sponsorsData.length / 2));
+
 
     return (
         <section id="sponsors" style={{

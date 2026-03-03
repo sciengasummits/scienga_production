@@ -14,25 +14,24 @@ const Footer = () => {
                             <Logo />
                         </div>
                         <p className="footer__desc">
-                            INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY,Global experts unite to shape the future of fluid mechanics and turbomachinery.
-                            Discover ground-breaking technologies and connect with top mechanical engineering professionals.
+                            International Conference on Fluid Mechanics & Turbomachinery, where global experts unite to shape the future of engineering dynamics and turbomachinery innovation.
                         </p>
                         <div className="footer__socials">
                             <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
-                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
+                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
                             <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
                         </div>
                     </div>
 
                     <div className="footer__col">
-                        <h4>Quick Links</h4>
+                        <h4>Important Links</h4>
                         <ul className="footer__links">
                             <li><Link to="/abstract-submission">Abstract Submission</Link></li>
                             <li><Link to="/register">Registration</Link></li>
+                            <li><Link to="/online-registration">Discount Registration</Link></li>
                             <li><Link to="/sessions">Sessions</Link></li>
                             <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/discount-registration">Discount Registration</Link></li>
                             <li><Link to="/unsubscribe">Unsubscribe</Link></li>
                         </ul>
                     </div>
@@ -44,17 +43,17 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span> Outram, Singapore</span>
+                                    <span>Outram, Singapore</span>
                                 </div>
                             </li>
 
                             <li>
                                 <Mail size={18} />
-                                <span>contact@fluidturbosummit.com</span>
+                                <span>info@fluidmechsummit.com</span>
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+91 7842090097</span>
+                                <span>+65 0000 0000</span>
                             </li>
                         </ul>
                     </div>
@@ -70,7 +69,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} International Conference on Fluid Mechanics & Turbomachinery. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>

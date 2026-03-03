@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './SponsorsSection.css';
+import { fetchSponsors } from '../../../api/siteApi';
 
-// Import partner images
+// Import static partner images as fallback
 import partner1 from '../../../assets/images/media/486-Mediapartner-Photo.png';
 import partner2 from '../../../assets/images/media/487-Mediapartner-Photo.png';
 import partner3 from '../../../assets/images/media/488-Mediapartner-Photo.jpg';
@@ -19,7 +20,7 @@ import partner14 from '../../../assets/images/media/536-Mediapartner-Photo.png';
 import partner15 from '../../../assets/images/media/538-Mediapartner-Photo.png';
 import partner16 from '../../../assets/images/media/540-Mediapartner-Photo.png';
 
-const sponsorsData = [
+const staticSponsorsData = [
     { name: 'International Conference Alerts', logo: partner1 },
     { name: 'AI & ML Events', logo: partner2 },
     { name: 'Conference Alerts', logo: partner3 },
@@ -44,14 +45,15 @@ const MarqueeRow = ({ items, direction }) => (
         {[...items, ...items].map((sponsor, index) => (
             <div key={index} className="marquee-item">
                 <img
-                    src={sponsor.logo}
+                    src={sponsor.logo || sponsor.image || sponsor.logoUrl}
                     alt={`${sponsor.name} logo`}
                     style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'contain',
-                        filter: 'none' // Ensure full color
+                        filter: 'none'
                     }}
+                    onError={e => { e.target.style.display = 'none'; }}
                 />
             </div>
         ))}
@@ -59,8 +61,23 @@ const MarqueeRow = ({ items, direction }) => (
 );
 
 export default function SponsorsSection() {
-    const row1 = sponsorsData.slice(0, 8);
-    const row2 = sponsorsData.slice(8);
+    const [sponsorsData, setSponsorsData] = useState(staticSponsorsData);
+
+    useEffect(() => {
+        fetchSponsors('media partner').then(data => {
+            if (data && Array.isArray(data) && data.length > 0) {
+                // Map backend sponsor format to what MarqueeRow expects
+                const mapped = data.map(s => ({ name: s.name, logo: s.image || s.logoUrl || s.logo }));
+                setSponsorsData(mapped);
+            }
+            // else keep static fallback
+        }).catch(() => {
+            // keep static fallback on error
+        });
+    }, []);
+
+    const row1 = sponsorsData.slice(0, Math.ceil(sponsorsData.length / 2));
+    const row2 = sponsorsData.slice(Math.ceil(sponsorsData.length / 2));
 
     return (
         <section id="sponsors" style={{
@@ -68,7 +85,7 @@ export default function SponsorsSection() {
             backgroundColor: '#ffffff',
             borderTop: '1px solid #e2e8f0',
             borderBottom: '1px solid #e2e8f0',
-            overflow: 'hidden' // Prevent horizontal scrollbar on page
+            overflow: 'hidden'
         }}>
             <div className="container">
                 <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -79,7 +96,7 @@ export default function SponsorsSection() {
                         marginBottom: '1rem',
                         textAlign: 'center'
                     }}>
-                        Promoting & Media Partners
+                        Promoting &amp; Media Partners
                     </h2>
                     <div style={{
                         width: '60px',
@@ -92,7 +109,7 @@ export default function SponsorsSection() {
 
                 <div className="marquee-wrapper">
                     <MarqueeRow items={row1} direction="scroll-left" />
-                    <MarqueeRow items={row2} direction="scroll-right" />
+                    {row2.length > 0 && <MarqueeRow items={row2} direction="scroll-right" />}
                 </div>
 
                 <div style={{ textAlign: 'center', marginTop: '3rem' }}>
@@ -102,5 +119,5 @@ export default function SponsorsSection() {
                 </div>
             </div>
         </section>
-    )
+    );
 }

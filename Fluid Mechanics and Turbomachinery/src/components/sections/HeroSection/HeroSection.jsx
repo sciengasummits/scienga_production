@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
 import mediaImage from '../../../assets/images/Media.jpg';
+import { fetchContent } from '../../../api/siteApi';
 
+const DEFAULTS = {
+    subtitle: 'INTERNATIONAL CONFERENCE ON',
+    title: 'FLUID MECHANICS & TURBOMACHINERY',
+    description: 'International Conference on Fluid Mechanics & Turbomachinery, where global experts unite to shape the future of engineering dynamics. Discover ground-breaking innovations in fluid systems, connect with top mechanical engineers, and explore solutions transforming industrial efficiency.',
+    conferenceDate: 'December 14-16, 2026',
+    venue: 'Outram, Singapore',
+    countdownTarget: '2026-12-14T09:00:00+01:00',
+    showRegister: true,
+    showAbstract: true,
+    showBrochure: true
+};
 
 const HeroSection = () => {
     const navigate = useNavigate();
-    const [timeLeft, setTimeLeft] = React.useState({
+    const [hero, setHero] = useState(DEFAULTS);
+    const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 0,
         minutes: 0,
         seconds: 0
     });
 
-    React.useEffect(() => {
-        const targetDate = new Date('December 14, 2026 09:00:00').getTime();
+    // Fetch dynamic hero content from backend
+    useEffect(() => {
+        fetchContent('hero').then(data => {
+            if (data) setHero({ ...DEFAULTS, ...data });
+        });
+    }, []);
+
+    useEffect(() => {
+        const targetDate = new Date(hero.countdownTarget || '2026-12-14T09:00:00+01:00').getTime();
 
         const interval = setInterval(() => {
             const now = new Date().getTime();
@@ -34,8 +54,7 @@ const HeroSection = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
-
+    }, [hero.countdownTarget]);
 
     const handleDownloadBrochure = () => {
         navigate('/brochure');
@@ -47,8 +66,8 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">INTERNATIONAL CONFERENCE ON</span> <br />
-                        FLUID MECHANICS & TURBOMACHINERY
+                        <span className="hero__title-sub">{hero.subtitle}</span> <br />
+                        {hero.title}
                     </h1>
 
                     <div className="hero__countdown-wrapper">
@@ -74,16 +93,20 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">
-                      INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY, where global experts unite to shape
-                        the future of engineering dynamics. Discover ground-breaking innovations in fluid systems, connect with
-                        top mechanical engineers, and explore solutions transforming industrial efficiency.
+                        {hero.description}
                     </p>
                     <div className="hero__actions">
-                        <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
-                        <Button onClick={() => navigate('/register')}>Register Now</Button>
-                        <Button onClick={() => navigate('/abstract-submission')}>
-                            Submit Abstract
-                        </Button>
+                        {hero.showBrochure && (
+                            <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
+                        )}
+                        {hero.showRegister && (
+                            <Button onClick={() => navigate('/register')}>Register Now</Button>
+                        )}
+                        {hero.showAbstract && (
+                            <Button onClick={() => navigate('/abstract-submission')}>
+                                Submit Abstract
+                            </Button>
+                        )}
                     </div>
                 </div>
 
@@ -95,7 +118,7 @@ const HeroSection = () => {
 
                     <div className="info-card venue-card">
                         <h3>Venue</h3>
-                        <p>Event Venue:  Outram, Singapore</p>
+                        <p>Event Venue: {hero.venue}</p>
                     </div>
                 </div>
             </div>

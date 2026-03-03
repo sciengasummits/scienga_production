@@ -1,13 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User } from 'lucide-react';
-import { speakers } from '../../../data/speakersData';
+import { speakers as staticSpeakers } from '../../../data/speakersData';
+import { fetchSpeakers } from '../../../api/siteApi';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
     const location = useLocation();
     const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+    const [speakers, setSpeakers] = useState(staticSpeakers);
+
+    useEffect(() => {
+        fetchSpeakers().then(data => {
+            if (data && data.length > 0) {
+                // Map backend speaker fields to the format expected by the UI
+                const mapped = data.filter(s => s.visible !== false).map(s => ({
+                    id: s._id,
+                    name: s.name,
+                    title: s.designation || s.title || '',
+                    affiliation: s.affiliation || s.institution || '',
+                    category: s.category || 'Speakers',
+                    image: s.image || s.photo || '',
+                    bio: s.bio || '',
+                }));
+                if (mapped.length > 0) setSpeakers(mapped);
+            }
+        });
+    }, []);
+
+
     const getDisplayCategory = (category) => {
         if (category === 'Student') return 'Student Speaker';
         if (category === 'Committee') return 'Committee';

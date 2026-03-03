@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Sun,
@@ -23,8 +23,9 @@ import {
     Mountain
 } from 'lucide-react';
 import './KeyThemesSection.css';
+import { fetchContent } from '../../../api/siteApi';
 
-const sessionsData = [
+const defaultSessionsData = [
     { title: "Computational Fluid Dynamics (CFD)", icon: Activity },
     { title: "Aerodynamics & Gas Dynamics", icon: Wind },
     { title: "Hydrodynamics & Marine Engineering", icon: Droplet },
@@ -45,21 +46,9 @@ const sessionsData = [
     { title: "Renewable Energy Fluid Dynamics", icon: Sun },
     { title: "Vortex Dynamics & Turbulence", icon: Wind },
     { title: "HVAC & Refrigeration Systems", icon: Thermometer },
-    { title: "Environmental Fluid Mechanics", icon: Globe },
-    { title: "Rheology & Non-Newtonian Fluids", icon: Droplet },
-    { title: "Smart Flow Control Systems", icon: Cpu },
-    { title: "Energy Recovery Turbines", icon: Battery },
-    { title: "Aeroacoustics & Noise Control", icon: ShieldCheck },
-    { title: "Automotive Aerodynamics", icon: Wind },
-    { title: "Geophysical Fluid Dynamics", icon: Mountain },
-    { title: "Combustion & Reacting Flows", icon: Flame },
-    { title: "Mathematical Fluid Mechanics", icon: BarChart },
-    { title: "Future of Turbomachinery", icon: Lightbulb },
 ];
 
-const Link = ({ href, children }) => <a href={href}>{children}</a>; // Placeholder if needed
-
-const scheduleData = {
+const defaultScheduleData = {
     day1: [
         { time: '8.30 – 9.00', program: 'Registration' },
         { time: '9.00 – 9.30', program: 'Conference Inauguration' },
@@ -90,13 +79,38 @@ const scheduleData = {
     ]
 };
 
+const iconMap = [
+    Activity, Wind, Droplet, Factory, Flame, Zap, Anchor, Wind, Thermometer, CloudRain,
+    Leaf, Cpu, Lightbulb, Activity, Flame, Factory, Recycle, Sun, Wind, Thermometer,
+    Globe, Droplet, Cpu, Battery, ShieldCheck, Wind, Mountain, Flame, BarChart, Lightbulb
+];
+
 const KeyThemesSection = ({ showLearnMore = false }) => {
     const [activeDay, setActiveDay] = useState('day1');
+    const [sessionsData, setSessionsData] = useState(defaultSessionsData);
+    const [scheduleData, setScheduleData] = useState(defaultScheduleData);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchContent('sessions').then(data => {
+            if (data) {
+                if (data.sessions && Array.isArray(data.sessions)) {
+                    const dynamicSessions = data.sessions.map((title, index) => ({
+                        title: title,
+                        icon: iconMap[index % iconMap.length]
+                    }));
+                    setSessionsData(dynamicSessions);
+                }
+                if (data.schedule) {
+                    setScheduleData(data.schedule);
+                }
+            }
+        });
+    }, []);
 
     // Limit items if in preview mode (Home page)
     const displaySessions = showLearnMore ? sessionsData.slice(0, 10) : sessionsData;
-    const displaySchedule = showLearnMore ? scheduleData[activeDay].slice(0, 5) : scheduleData[activeDay];
+    const displaySchedule = showLearnMore ? scheduleData[activeDay]?.slice(0, 5) : scheduleData[activeDay];
 
     return (
         <section className={`sessions-schedule-section section-padding ${showLearnMore ? 'preview-mode' : ''}`} id="sessions">
@@ -148,14 +162,14 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                                     onClick={() => setActiveDay('day2')}
                                 >
                                     <span className="tab-day">Day 02</span>
-                                    <span className="tab-date">Discussions</span>
+                                    <span className="tab-date">Conference</span>
                                 </button>
                                 <button
                                     className={`schedule__tab ${activeDay === 'day3' ? 'active' : ''}`}
                                     onClick={() => setActiveDay('day3')}
                                 >
                                     <span className="tab-day">Day 03</span>
-                                    <span className="tab-date">Workshops</span>
+                                    <span className="tab-date">Conference</span>
                                 </button>
                             </div>
                         </div>
@@ -170,7 +184,7 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {displaySchedule.map((item, index) => (
+                                        {(displaySchedule || []).map((item, index) => (
                                             <tr key={index}>
                                                 <td className="time-col">
                                                     <div className="time-badge">{item.time}</div>
