@@ -9,11 +9,9 @@
     color: var(--color-white);
     padding-top: 120px;
     padding-bottom: 120px;
-    /* For fixed navbar and bottom spacing */
     overflow: hidden;
 }
 
-/* Background image overlay for reduced opacity effect */
 .hero::before {
     content: '';
     position: absolute;
@@ -43,24 +41,26 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    gap: 3rem;
 }
 
 .hero__content {
+    flex: 1;
     max-width: 650px;
-    margin-top: 2rem;
+    margin-top: 0;
 }
 
 .hero__title {
     font-size: 2.8rem;
-    line-height: 1.1;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
     font-weight: 800;
     color: var(--color-white);
+    text-align: left;
 }
 
 .hero__title-sub {
     color: #C8E6C9;
-    /* Light blue accent */
     font-size: 1.8rem;
     font-weight: 700;
     white-space: nowrap;
@@ -71,23 +71,21 @@
     margin-bottom: 2rem;
     opacity: 0.9;
     line-height: 1.6;
-    max-width: 500px;
-    padding-left: 1rem;
+    max-width: 600px;
+    text-align: left;
 }
 
 .hero__actions {
     display: flex;
-    gap: 0.8rem;
-    flex-wrap: nowrap;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
-/* Override button styles in hero section */
 .hero__actions button,
 .hero__actions .btn {
     padding: 10px 16px;
-    /* Reduced padding */
     font-size: 0.85rem;
-    /* Reduced font size */
     white-space: nowrap;
 }
 
@@ -111,7 +109,7 @@
     top: 0;
     left: 0;
     background: var(--color-primary-gradient);
-    width: 240px;
+    width: 280px;
     text-align: center;
     z-index: 2;
 }
@@ -127,16 +125,22 @@
     font-weight: 700;
 }
 
+.hero__countdown-wrapper {
+    margin-bottom: 2rem;
+}
+
 .hero__countdown {
     display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .countdown-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 70px;
 }
 
 .countdown-value {
@@ -156,11 +160,12 @@
 }
 
 .venue-card {
-    top: 100px;
-    right: 0;
+    top: 125px;
+    left: 120px;
     background: linear-gradient(135deg, var(--color-primary-start), var(--color-primary-end));
     border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 220px;
+    width: 265px;
+    text-align: center;
     z-index: 1;
 }
 
@@ -177,7 +182,7 @@
 }
 
 .hero__cpd-image {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
     right: 30px;
     width: 280px;
@@ -188,16 +193,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: blink 0.6s infinite ease-in-out;
+    animation: blink 1.5s infinite ease-in-out;
 }
 
 @keyframes blink {
-
-    0%,
-    100% {
+    0%, 100% {
         opacity: 1;
     }
-
     50% {
         opacity: 0.3;
     }
@@ -250,8 +252,6 @@
         position: static;
         width: 100%;
     }
-
-
 }
 
 @media (max-width: 576px) {
