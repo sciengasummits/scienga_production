@@ -9,9 +9,11 @@
     color: var(--color-white);
     padding-top: 120px;
     padding-bottom: 120px;
+    /* For fixed navbar and bottom spacing */
     overflow: hidden;
 }
 
+/* Background image overlay for reduced opacity effect */
 .hero::before {
     content: '';
     position: absolute;
@@ -41,26 +43,24 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 3rem;
 }
 
 .hero__content {
-    flex: 1;
     max-width: 650px;
-    margin-top: 0;
+    margin-top: 2rem;
 }
 
 .hero__title {
     font-size: 2.8rem;
-    line-height: 1.2;
+    line-height: 1.1;
     margin-bottom: 1.5rem;
     font-weight: 800;
     color: var(--color-white);
-    text-align: left;
 }
 
 .hero__title-sub {
     color: #C8E6C9;
+    /* Light blue accent */
     font-size: 1.8rem;
     font-weight: 700;
     white-space: nowrap;
@@ -71,28 +71,30 @@
     margin-bottom: 2rem;
     opacity: 0.9;
     line-height: 1.6;
-    max-width: 600px;
-    text-align: left;
+    max-width: 500px;
+    padding-left: 1rem;
 }
 
 .hero__actions {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    gap: 0.8rem;
+    flex-wrap: nowrap;
 }
 
+/* Override button styles in hero section */
 .hero__actions button,
 .hero__actions .btn {
     padding: 10px 16px;
+    /* Reduced padding */
     font-size: 0.85rem;
+    /* Reduced font size */
     white-space: nowrap;
 }
 
 .hero__info-cards {
     position: relative;
-    width: 380px;
-    height: 280px;
+    width: 450px;
+    height: 320px;
     flex-shrink: 0;
 }
 
@@ -125,22 +127,16 @@
     font-weight: 700;
 }
 
-.hero__countdown-wrapper {
-    margin-bottom: 2rem;
-}
-
 .hero__countdown {
     display: flex;
-    gap: 1.5rem;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 .countdown-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 70px;
 }
 
 .countdown-value {
@@ -160,12 +156,11 @@
 }
 
 .venue-card {
-    top: 125px;
-    left: 120px;
+    top: 140px;
+    right: 0;
     background: linear-gradient(135deg, var(--color-primary-start), var(--color-primary-end));
     border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 265px;
-    text-align: center;
+    width: 260px;
     z-index: 1;
 }
 
@@ -182,7 +177,7 @@
 }
 
 .hero__cpd-image {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 30px;
     width: 280px;
@@ -193,13 +188,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: blink 1.5s infinite ease-in-out;
+    animation: blink 0.6s infinite ease-in-out;
 }
 
 @keyframes blink {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 1;
     }
+
     50% {
         opacity: 0.3;
     }
@@ -252,6 +250,8 @@
         position: static;
         width: 100%;
     }
+
+
 }
 
 @media (max-width: 576px) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
 import { countries } from '../../data/countriesData';
 import './AbstractSubmission.css';
-import { submitAbstract, uploadAbstractFile, fetchContent } from '../../api/siteApi';
+import { submitAbstract, uploadAbstractFile } from '../../api/siteApi';
 
 // ─── Important Dates defaults (shown if backend is unreachable) ───────────────
 const DEFAULT_DATES = [
@@ -40,7 +40,8 @@ const AbstractSubmission = () => {
 
     // Live-fetch Important Dates from backend; silently fall back to defaults
     useEffect(() => {
-        fetchContent('importantDates')
+        fetch('http://localhost:5000/api/content/importantDates?conference=foodagri')
+            .then(r => r.ok ? r.json() : null)
             .then(data => { if (data?.dates?.length) setImportantDates(data.dates); })
             .catch(() => { });
     }, []);

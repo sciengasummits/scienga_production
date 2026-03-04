@@ -78,38 +78,36 @@ export async function validateDiscountCode(coupon) {
     }
 }
 
-// ── Razorpay Payment Integration ─────────────────────────────────────────────
+// ─── Payment APIs ──────────────────────────────────────────────
 
-// Get Razorpay public key from backend
-export async function getRazorpayKey() {
-    try {
-        const res = await fetch(`${BASE_URL}/payment/key`);
-        if (!res.ok) throw new Error('Failed to fetch key');
-        return res.json();
-    } catch (e) {
-        console.warn('[SiteAPI] getRazorpayKey failed:', e.message);
-        return null;
-    }
-}
+// Fetch the Razorpay public key
+export const fetchPaymentKey = () => get('/payment/key');
 
-// Create a Razorpay payment order
-export async function createPaymentOrder({ amount, currency = 'USD', registrationId, description }) {
+// Create a Razorpay order
+export async function createPaymentOrder(payload) {
     const res = await fetch(`${BASE_URL}/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, currency, registrationId, conference: 'liutex', description }),
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
     });
-    if (!res.ok) throw new Error('Failed to create order');
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to create payment order.');
+    }
     return res.json();
 }
 
-// Verify Razorpay payment after completion
-export async function verifyPayment({ razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId }) {
+// Verify a Razorpay payment signature
+export async function verifyPayment(payload) {
     const res = await fetch(`${BASE_URL}/payment/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId }),
+        body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error('Verification failed');
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Payment verification failed.');
+    }
     return res.json();
 }
+

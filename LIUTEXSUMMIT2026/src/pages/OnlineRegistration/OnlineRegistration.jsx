@@ -1,16 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Tag, CheckCircle, XCircle, Loader, ShieldCheck, AlertCircle } from 'lucide-react';
 import './OnlineRegistration.css';
 import { countries } from '../../assets/constants/countries';
-import { validateDiscountCode, submitRegistration, getRazorpayKey, createPaymentOrder, verifyPayment } from '../../api/siteApi';
+import * as siteApi from '../../api/siteApi';
 
 /* ── Pricing base values (USD) ─────────────────────────────── */
 const BASE_PRICING = [
-    { id: 'speaker', label: 'Speaker Registration', early: 749, standard: 849, onspot: 949 },
-    { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
-    { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
+    { id: 'speaker', label: 'Speaker Registration', early: 599, standard: 699, onspot: 799 },
+    { id: 'delegate', label: 'Delegate Registration', early: 699, standard: 799, onspot: 899 },
+    { id: 'poster', label: 'Poster Registration', early: 399, standard: 499, onspot: 599 },
     { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
-    { id: 'virtual', label: 'Virtual (Online)', early: 199, standard: 249, onspot: 299 },
+    { id: 'virtual', label: 'Virtual (Online)', early: 200, standard: 300, onspot: 400 },
 ];
 
 const ACCOMMODATION_OPTIONS = [
@@ -41,24 +41,6 @@ const applyPct = (price, pct) => Math.round(price * (1 - pct / 100));
 const OnlineRegistration = () => {
     const activePhase = getActivePhase();
 
-    /* ── Razorpay state ──────────────────────────────────────── */
-    const [razorpayKey, setRazorpayKey] = useState(null);
-
-    /* Load Razorpay checkout script + fetch key */
-    useEffect(() => {
-        // Load Razorpay script
-        if (!document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')) {
-            const script = document.createElement('script');
-            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-            script.async = true;
-            document.body.appendChild(script);
-        }
-        // Fetch Razorpay public key
-        getRazorpayKey().then(data => {
-            if (data?.key) setRazorpayKey(data.key);
-        });
-    }, []);
-
     /* ── Discount state ──────────────────────────────────────── */
     const [couponInput, setCouponInput] = useState('');
     const [couponStatus, setCouponStatus] = useState('idle'); // 'idle' | 'checking' | 'valid' | 'invalid'
@@ -81,7 +63,7 @@ const OnlineRegistration = () => {
     const [includeAccompanying, setIncludeAccompanying] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | 'paid'
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
 
     /* ── Derived pricing with discount applied ───────────────── */
     const regDiscount = discount && (discount.category === 'registration' || discount.category === 'both')
@@ -111,7 +93,7 @@ const OnlineRegistration = () => {
         }
         setCouponStatus('checking');
         setCouponMsg('');
-        const result = await validateDiscountCode(code);
+        const result = await siteApi.validateDiscountCode(code);
         if (result.valid) {
             setDiscount(result);
             setCouponStatus('valid');
@@ -217,79 +199,67 @@ const OnlineRegistration = () => {
         setSubmitting(true);
         setSubmitStatus(null);
         try {
-            // Step 1: If total > 0 and Razorpay is configured, initiate payment
-            if (total > 0 && razorpayKey && window.Razorpay) {
-                try {
-                    const orderResult = await createPaymentOrder({
-                        amount: total,
-                        currency: 'USD',
-                        description: `LIUTEX SUMMIT 2026 - ${descParts[0] || 'Registration'}`,
-                    });
+            // 1. Create registration record (Pending)
+            const registration = await siteApi.submitRegistration(payload);
+            if (!registration || registration.error) throw new Error(registration?.error || 'Failed to save registration.');
 
-                    if (!orderResult.success) throw new Error(orderResult.error);
+            // 2. Fetch Razorpay key & Create order
+            const { key } = await siteApi.fetchPaymentKey();
+            const { order } = await siteApi.createPaymentOrder({
+                amount: total,
+                registrationId: registration._id,
+                description: `LIUTEX Online Reg: ${formData.fullName}`
+            });
 
-                    // Step 2: Open Razorpay checkout
-                    const options = {
-                        key: razorpayKey,
-                        amount: orderResult.order.amount,
-                        currency: orderResult.order.currency,
-                        name: 'LIUTEX VORTEX SUMMIT 2026',
-                        description: `Registration - ${formData.fullName}`,
-                        order_id: orderResult.order.id,
-                        prefill: {
-                            name: formData.fullName,
-                            email: formData.email,
-                            contact: formData.telephone,
-                        },
-                        theme: { color: '#6366f1' },
-                        handler: async function (response) {
-                            // Step 3: Verify payment
-                            try {
-                                const verifyResult = await verifyPayment({
-                                    razorpay_order_id: response.razorpay_order_id,
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_signature: response.razorpay_signature,
-                                });
-                                if (verifyResult.success) {
-                                    // Step 4: Submit registration to backend only after successful verification
-                                    payload.status = 'Paid';
-                                    payload.txnId = response.razorpay_payment_id;
-                                    await submitRegistration(payload);
-                                    setSubmitStatus('paid');
-                                    handleReset();
-                                } else {
-                                    setSubmitStatus('error');
-                                }
-                            } catch {
-                                setSubmitStatus('error');
-                            }
-                            setSubmitting(false);
-                        },
-                        modal: {
-                            ondismiss: function () {
-                                setSubmitting(false);
-                                // User closed modal, don't submit the form, leave them on the page to retry
-                            },
-                        },
-                    };
+            // 3. Open Razorpay Checkout
+            const options = {
+                key: key,
+                amount: order.amount,
+                currency: order.currency,
+                name: 'LIUTEX Summit 2026',
+                description: `Payment for ${formData.fullName}`,
+                order_id: order.id,
+                prefill: {
+                    name: formData.fullName,
+                    email: formData.email,
+                    contact: formData.telephone,
+                },
+                theme: { color: '#2563eb' },
+                handler: async (response) => {
+                    // 4. Verify Payment
+                    try {
+                        const verifyResult = await siteApi.verifyPayment({
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                            registrationId: registration._id,
+                        });
 
-                    const rzp = new window.Razorpay(options);
-                    rzp.open();
-                    return; // Don't setSubmitting(false) yet — Razorpay modal is open
-                } catch (payErr) {
-                    console.warn('Payment initiation failed:', payErr.message);
-                    setSubmitStatus('error');
-                    setSubmitting(false);
-                    return;
+                        if (verifyResult.success) {
+                            setSubmitStatus('success');
+                            handleReset();
+                        } else {
+                            throw new Error(verifyResult.message || 'Payment verification failed.');
+                        }
+                    } catch (err) {
+                        alert('Payment success but verification failed: ' + err.message);
+                        setSubmitStatus('error');
+                    }
+                },
+                modal: {
+                    ondismiss: () => {
+                        setSubmitting(false);
+                    }
                 }
-            }
+            };
 
-            // No payment needed or Razorpay not configured
-            await submitRegistration(payload);
-            setSubmitStatus('success');
-            handleReset();
-        } catch {
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+
+        } catch (err) {
+            console.error('Registration/Payment error:', err);
             setSubmitStatus('error');
+            alert(err.message || 'An error occurred during registration.');
         } finally {
             setSubmitting(false);
         }
@@ -307,371 +277,335 @@ const OnlineRegistration = () => {
 
             <div className="container section-padding">
                 <div className="online-reg-container">
-                    {(submitStatus === 'paid' || (submitStatus === 'success' && calculateTotal() === 0)) || (submitStatus === 'success' && !window.Razorpay) ? (
-                        <div className="registration-success-card" style={{ textAlign: 'center', padding: '4rem 2rem', background: '#fff', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
-                            <CheckCircle size={80} color="#10b981" style={{ margin: '0 auto 1.5rem' }} />
-                            <h2 style={{ fontSize: '2rem', color: '#072654', marginBottom: '1rem' }}>
-                                {submitStatus === 'paid' ? 'Payment Successful!' : 'Registration Confirmed!'}
-                            </h2>
-                            <p style={{ fontSize: '1.1rem', color: '#64748b', marginBottom: '2rem' }}>
-                                Thank you, <strong>{formData.fullName}</strong>. Your registration has been securely processed.
-                                A confirmation has been secured for <strong>{formData.email}</strong>.
-                            </p>
 
-                            <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '8px', marginBottom: '2rem', textAlign: 'left', maxWidth: '500px', margin: '0 auto 2rem' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.8rem' }}>
-                                    <span style={{ color: '#64748b' }}>Attendee</span>
-                                    <strong style={{ color: '#0f172a' }}>{formData.fullName}</strong>
-                                </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.8rem' }}>
-                                    <span style={{ color: '#64748b' }}>Total Processed</span>
-                                    <strong style={{ color: '#10b981', fontSize: '1.2rem' }}>${calculateTotal()} USD</strong>
-                                </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span style={{ color: '#64748b' }}>Payment Status</span>
-                                    <strong style={{ color: '#10b981' }}>{submitStatus === 'paid' ? 'Paid & Verified' : 'Confirmed'}</strong>
-                                </div>
+                    {/* ── Stripe Badge ── */}
+                    <div className="stripe-badge-wrapper">
+                        <div className="stripe-badge">
+                            <div className="stripe-header">
+                                <span className="stripe-logo">stripe</span>
+                                <span className="stripe-text">Secure<br />Payments</span>
                             </div>
-                            <button onClick={() => window.location.href = '/'} className="btn-online-register" style={{ maxWidth: '300px', margin: '0 auto' }}>
-                                Return to Homepage
-                            </button>
+                            <div className="stripe-cards">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" alt="Amex" />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/JCB_logo.svg" alt="JCB" />
+                            </div>
                         </div>
-                    ) : (
-                        <>
-                            {/* ── Razorpay Badge ── */}
-                            <div className="stripe-badge-wrapper">
-                                <div className="stripe-badge">
-                                    <div className="stripe-header">
-                                        <span className="stripe-logo" style={{ color: '#072654', fontWeight: 800 }}>Razorpay</span>
-                                        <span className="stripe-text">Secure<br />Payments</span>
-                                    </div>
-                                    <div className="stripe-cards">
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" />
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" />
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" />
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Rupay-Logo.png" alt="RuPay" />
-                                    </div>
-                                </div>
+                    </div>
+
+                    {/* ── Discount Code Section ── */}
+                    <div className="discount-code-section">
+                        <div className="discount-code-header">
+                            <Tag size={18} className="discount-icon" />
+                            <h3 className="discount-code-title">Have a Discount Code?</h3>
+                        </div>
+                        <p className="discount-code-desc">
+                            Enter the discount code provided by the organizers to get reduced pricing.
+                        </p>
+                        <div className="discount-input-row">
+                            <input
+                                type="text"
+                                className={`discount-code-input${couponStatus === 'valid' ? ' discount-input--valid' : couponStatus === 'invalid' ? ' discount-input--invalid' : ''}`}
+                                placeholder="Enter discount code (e.g. SAVE20)"
+                                value={couponInput}
+                                onChange={e => { setCouponInput(e.target.value.toUpperCase()); setCouponStatus('idle'); setDiscount(null); setCouponMsg(''); }}
+                                onKeyDown={e => e.key === 'Enter' && handleValidateCoupon()}
+                                disabled={couponStatus === 'valid'}
+                                maxLength={30}
+                            />
+                            {couponStatus !== 'valid' ? (
+                                <button
+                                    className="discount-apply-btn"
+                                    onClick={handleValidateCoupon}
+                                    disabled={couponStatus === 'checking' || !couponInput.trim()}
+                                >
+                                    {couponStatus === 'checking'
+                                        ? <><Loader size={15} className="spin-icon" /> Checking…</>
+                                        : <><ShieldCheck size={15} /> Apply Code</>}
+                                </button>
+                            ) : (
+                                <button className="discount-remove-btn" onClick={handleRemoveCoupon}>
+                                    <XCircle size={15} /> Remove
+                                </button>
+                            )}
+                        </div>
+                        {couponMsg && (
+                            <div className={`discount-msg ${couponStatus === 'valid' ? 'discount-msg--valid' : 'discount-msg--invalid'}`}>
+                                {couponStatus === 'valid' ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
+                                <span>{couponMsg}</span>
                             </div>
+                        )}
+                    </div>
 
-                            {/* ── Discount Code Section ── */}
-                            <div className="discount-code-section">
-                                <div className="discount-code-header">
-                                    <Tag size={18} className="discount-icon" />
-                                    <h3 className="discount-code-title">Have a Discount Code?</h3>
-                                </div>
-                                <p className="discount-code-desc">
-                                    Enter the discount code provided by the organizers to get reduced pricing.
-                                </p>
-                                <div className="discount-input-row">
-                                    <input
-                                        type="text"
-                                        className={`discount-code-input${couponStatus === 'valid' ? ' discount-input--valid' : couponStatus === 'invalid' ? ' discount-input--invalid' : ''}`}
-                                        placeholder="Enter discount code (e.g. SAVE20)"
-                                        value={couponInput}
-                                        onChange={e => { setCouponInput(e.target.value.toUpperCase()); setCouponStatus('idle'); setDiscount(null); setCouponMsg(''); }}
-                                        onKeyDown={e => e.key === 'Enter' && handleValidateCoupon()}
-                                        disabled={couponStatus === 'valid'}
-                                        maxLength={30}
-                                    />
-                                    {couponStatus !== 'valid' ? (
-                                        <button
-                                            className="discount-apply-btn"
-                                            onClick={handleValidateCoupon}
-                                            disabled={couponStatus === 'checking' || !couponInput.trim()}
-                                        >
-                                            {couponStatus === 'checking'
-                                                ? <><Loader size={15} className="spin-icon" /> Checking…</>
-                                                : <><ShieldCheck size={15} /> Apply Code</>}
-                                        </button>
-                                    ) : (
-                                        <button className="discount-remove-btn" onClick={handleRemoveCoupon}>
-                                            <XCircle size={15} /> Remove
-                                        </button>
-                                    )}
-                                </div>
-                                {couponMsg && (
-                                    <div className={`discount-msg ${couponStatus === 'valid' ? 'discount-msg--valid' : 'discount-msg--invalid'}`}>
-                                        {couponStatus === 'valid' ? <CheckCircle size={14} /> : <AlertCircle size={14} />}
-                                        <span>{couponMsg}</span>
-                                    </div>
-                                )}
+                    {/* ── Personal Details Form ── */}
+                    <form className="online-reg-form" onSubmit={handleSubmit}>
+
+                        <div className="or-section-label">Personal Details</div>
+                        <div className="reg-form-grid">
+                            <div className="form-group">
+                                <select name="designation" value={formData.designation} onChange={handleChange} className="reg-control">
+                                    <option value="">Select Title</option>
+                                    <option value="Mr">Mr.</option>
+                                    <option value="Mrs">Mrs.</option>
+                                    <option value="Ms">Ms.</option>
+                                    <option value="Dr">Dr.</option>
+                                    <option value="Prof">Prof.</option>
+                                    <option value="PhD">PhD</option>
+                                </select>
                             </div>
+                            <div className="form-group">
+                                <input
+                                    type="text" name="fullName" placeholder="Full Name *"
+                                    value={formData.fullName} onChange={handleChange}
+                                    className="reg-control" required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="email" name="email" placeholder="Email Address *"
+                                    value={formData.email} onChange={handleChange}
+                                    className="reg-control" required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="tel" name="telephone" placeholder="Phone Number *"
+                                    value={formData.telephone} onChange={handleChange}
+                                    className="reg-control" required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <select name="country" value={formData.country} onChange={handleChange} className="reg-control">
+                                    <option value="">Select Country</option>
+                                    {countries.map(c => <option key={c} value={c}>{c}</option>)}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    type="text" name="company" placeholder="Company / University"
+                                    value={formData.company} onChange={handleChange}
+                                    className="reg-control"
+                                />
+                            </div>
+                            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                                <textarea
+                                    name="address" placeholder="Address"
+                                    value={formData.address} onChange={handleChange}
+                                    className="reg-control" rows="3"
+                                    style={{ resize: 'vertical' }}
+                                />
+                            </div>
+                        </div>
 
-                            {/* ── Personal Details Form ── */}
-                            <form className="online-reg-form" onSubmit={handleSubmit}>
+                        {/* ── Registration Category Table ── */}
+                        <div className="or-section-label" style={{ marginTop: '2rem' }}>
+                            Select Registration Category
+                            {discount && regDiscount > 0 && (
+                                <span className="or-discount-badge">
+                                    {discount.percentage}% OFF applied
+                                </span>
+                            )}
+                        </div>
 
-                                <div className="or-section-label">Personal Details</div>
-                                <div className="reg-form-grid">
-                                    <div className="form-group">
-                                        <select name="designation" value={formData.designation} onChange={handleChange} className="reg-control">
-                                            <option value="">Select Title</option>
-                                            <option value="Mr">Mr.</option>
-                                            <option value="Mrs">Mrs.</option>
-                                            <option value="Ms">Ms.</option>
-                                            <option value="Dr">Dr.</option>
-                                            <option value="Prof">Prof.</option>
-                                            <option value="PhD">PhD</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <input
-                                            type="text" name="fullName" placeholder="Full Name *"
-                                            value={formData.fullName} onChange={handleChange}
-                                            className="reg-control" required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <input
-                                            type="email" name="email" placeholder="Email Address *"
-                                            value={formData.email} onChange={handleChange}
-                                            className="reg-control" required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <input
-                                            type="tel" name="telephone" placeholder="Phone Number *"
-                                            value={formData.telephone} onChange={handleChange}
-                                            className="reg-control" required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <select name="country" value={formData.country} onChange={handleChange} className="reg-control">
-                                            <option value="">Select Country</option>
-                                            {countries.map(c => <option key={c} value={c}>{c}</option>)}
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <input
-                                            type="text" name="company" placeholder="Company / University"
-                                            value={formData.company} onChange={handleChange}
-                                            className="reg-control"
-                                        />
-                                    </div>
-                                    <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                                        <textarea
-                                            name="address" placeholder="Address"
-                                            value={formData.address} onChange={handleChange}
-                                            className="reg-control" rows="3"
-                                            style={{ resize: 'vertical' }}
-                                        />
-                                    </div>
-                                </div>
+                        <table className="or-pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th className={activePhase === 'early' ? 'or-active-col' : ''}>
+                                        Early Bird<br /><span className="or-date">Sep 25, 2026</span>
+                                        {activePhase === 'early' && <span className="or-active-badge">ACTIVE</span>}
+                                    </th>
+                                    <th className={activePhase === 'standard' ? 'or-active-col' : ''}>
+                                        Standard<br /><span className="or-date">Oct 30, 2026</span>
+                                        {activePhase === 'standard' && <span className="or-active-badge">ACTIVE</span>}
+                                    </th>
+                                    <th className={activePhase === 'onspot' ? 'or-active-col' : ''}>
+                                        On-Spot<br /><span className="or-date">Dec 14, 2026</span>
+                                        {activePhase === 'onspot' && <span className="or-active-badge">ACTIVE</span>}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pricingData.map(item => (
+                                    <tr
+                                        key={item.id}
+                                        className={selectedCategory === item.id ? 'or-selected-row' : ''}
+                                        onClick={() => setSelectedCategory(item.id)}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        <td>
+                                            <label className="or-radio-label">
+                                                <input
+                                                    type="radio"
+                                                    name="category"
+                                                    checked={selectedCategory === item.id}
+                                                    onChange={() => setSelectedCategory(item.id)}
+                                                />
+                                                {item.label}
+                                            </label>
+                                        </td>
+                                        <td className={activePhase === 'early' && selectedCategory === item.id ? 'or-selected-price' : ''}>
+                                            <span className={activePhase === 'early' ? 'or-price-active' : ''}>
+                                                ${item.early}
+                                                {regDiscount > 0 && (
+                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).early}</span>
+                                                )}
+                                            </span>
+                                        </td>
+                                        <td className={activePhase === 'standard' && selectedCategory === item.id ? 'or-selected-price' : ''}>
+                                            <span className={activePhase === 'standard' ? 'or-price-active' : ''}>
+                                                ${item.standard}
+                                                {regDiscount > 0 && (
+                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).standard}</span>
+                                                )}
+                                            </span>
+                                        </td>
+                                        <td className={activePhase === 'onspot' && selectedCategory === item.id ? 'or-selected-price' : ''}>
+                                            <span className={activePhase === 'onspot' ? 'or-price-active' : ''}>
+                                                ${item.onspot}
+                                                {regDiscount > 0 && (
+                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).onspot}</span>
+                                                )}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
 
-                                {/* ── Registration Category Table ── */}
-                                <div className="or-section-label" style={{ marginTop: '2rem' }}>
-                                    Select Registration Category
-                                    {discount && regDiscount > 0 && (
-                                        <span className="or-discount-badge">
-                                            {discount.percentage}% OFF applied
-                                        </span>
-                                    )}
-                                </div>
+                        {/* ── Sponsorship Table ── */}
+                        <div className="or-section-label" style={{ marginTop: '2rem' }}>Sponsorship Opportunities</div>
+                        <table className="or-pricing-table or-sponsorship-table">
+                            <thead>
+                                <tr>
+                                    {sponsorshipPricing.map(item => <th key={item.id}>{item.label}</th>)}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {sponsorshipPricing.map(item => (
+                                        <td key={item.id}>
+                                            <label className="or-radio-label" style={{ justifyContent: 'center' }}>
+                                                <input
+                                                    type="radio"
+                                                    name="sponsorship"
+                                                    checked={selectedSponsorship === item.id}
+                                                    onChange={() => setSelectedSponsorship(item.id)}
+                                                />
+                                                ${item.price}
+                                                {regDiscount > 0 && (
+                                                    <span className="or-original-price">${SPONSORSHIP_BASE.find(b => b.id === item.id).price}</span>
+                                                )}
+                                            </label>
+                                        </td>
+                                    ))}
+                                </tr>
+                            </tbody>
+                        </table>
 
-                                <table className="or-pricing-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Category</th>
-                                            <th className={activePhase === 'early' ? 'or-active-col' : ''}>
-                                                Early Bird<br /><span className="or-date">Sep 25, 2026</span>
-                                                {activePhase === 'early' && <span className="or-active-badge">ACTIVE</span>}
-                                            </th>
-                                            <th className={activePhase === 'standard' ? 'or-active-col' : ''}>
-                                                Standard<br /><span className="or-date">Oct 30, 2026</span>
-                                                {activePhase === 'standard' && <span className="or-active-badge">ACTIVE</span>}
-                                            </th>
-                                            <th className={activePhase === 'onspot' ? 'or-active-col' : ''}>
-                                                On-Spot<br /><span className="or-date">Dec 14, 2026</span>
-                                                {activePhase === 'onspot' && <span className="or-active-badge">ACTIVE</span>}
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {pricingData.map(item => (
-                                            <tr
-                                                key={item.id}
-                                                className={selectedCategory === item.id ? 'or-selected-row' : ''}
-                                                onClick={() => setSelectedCategory(item.id)}
-                                                style={{ cursor: 'pointer' }}
-                                            >
-                                                <td>
+                        {/* ── Accommodation ── */}
+                        <div className="or-section-label" style={{ marginTop: '2rem' }}>
+                            Accommodation
+                            {discount && accomDiscount > 0 && (
+                                <span className="or-discount-badge">{discount.percentage}% OFF applied</span>
+                            )}
+                        </div>
+                        <div className="accompanying-check">
+                            <label className="or-check-label">
+                                <input
+                                    type="checkbox"
+                                    checked={includeAccompanying}
+                                    onChange={e => setIncludeAccompanying(e.target.checked)}
+                                />
+                                <strong>Include Accompanying Person ($249 extra)</strong>
+                            </label>
+                        </div>
+                        <table className="or-pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Nights</th>
+                                    <th>Single Occupancy</th>
+                                    <th>Double Occupancy</th>
+                                    <th>Triple Occupancy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ACCOMMODATION_OPTIONS.map(opt => (
+                                    <tr key={opt.nights}>
+                                        <td><strong>{opt.nights} Nights</strong></td>
+                                        {['single', 'double', 'triple'].map(type => {
+                                            const basePrice = opt[type];
+                                            const discountedPrice = accomDiscount > 0 ? applyPct(basePrice, accomDiscount) : basePrice;
+                                            return (
+                                                <td key={type}>
                                                     <label className="or-radio-label">
                                                         <input
                                                             type="radio"
-                                                            name="category"
-                                                            checked={selectedCategory === item.id}
-                                                            onChange={() => setSelectedCategory(item.id)}
+                                                            name="accommodation"
+                                                            checked={selectedAccommodation === `${opt.nights}-${type}`}
+                                                            onChange={() => setSelectedAccommodation(`${opt.nights}-${type}`)}
                                                         />
-                                                        {item.label}
-                                                    </label>
-                                                </td>
-                                                <td className={activePhase === 'early' && selectedCategory === item.id ? 'or-selected-price' : ''}>
-                                                    <span className={activePhase === 'early' ? 'or-price-active' : ''}>
-                                                        ${item.early}
-                                                        {regDiscount > 0 && (
-                                                            <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).early}</span>
-                                                        )}
-                                                    </span>
-                                                </td>
-                                                <td className={activePhase === 'standard' && selectedCategory === item.id ? 'or-selected-price' : ''}>
-                                                    <span className={activePhase === 'standard' ? 'or-price-active' : ''}>
-                                                        ${item.standard}
-                                                        {regDiscount > 0 && (
-                                                            <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).standard}</span>
-                                                        )}
-                                                    </span>
-                                                </td>
-                                                <td className={activePhase === 'onspot' && selectedCategory === item.id ? 'or-selected-price' : ''}>
-                                                    <span className={activePhase === 'onspot' ? 'or-price-active' : ''}>
-                                                        ${item.onspot}
-                                                        {regDiscount > 0 && (
-                                                            <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).onspot}</span>
-                                                        )}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-
-                                {/* ── Sponsorship Table ── */}
-                                <div className="or-section-label" style={{ marginTop: '2rem' }}>Sponsorship Opportunities</div>
-                                <table className="or-pricing-table or-sponsorship-table">
-                                    <thead>
-                                        <tr>
-                                            {sponsorshipPricing.map(item => <th key={item.id}>{item.label}</th>)}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            {sponsorshipPricing.map(item => (
-                                                <td key={item.id}>
-                                                    <label className="or-radio-label" style={{ justifyContent: 'center' }}>
-                                                        <input
-                                                            type="radio"
-                                                            name="sponsorship"
-                                                            checked={selectedSponsorship === item.id}
-                                                            onChange={() => setSelectedSponsorship(item.id)}
-                                                        />
-                                                        ${item.price}
-                                                        {regDiscount > 0 && (
-                                                            <span className="or-original-price">${SPONSORSHIP_BASE.find(b => b.id === item.id).price}</span>
+                                                        ${discountedPrice}
+                                                        {accomDiscount > 0 && (
+                                                            <span className="or-original-price">${basePrice}</span>
                                                         )}
                                                     </label>
                                                 </td>
-                                            ))}
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            );
+                                        })}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
 
-                                {/* ── Accommodation ── */}
-                                <div className="or-section-label" style={{ marginTop: '2rem' }}>
-                                    Accommodation
-                                    {discount && accomDiscount > 0 && (
-                                        <span className="or-discount-badge">{discount.percentage}% OFF applied</span>
-                                    )}
+                        {/* ── Total & Submit ── */}
+                        <div className="or-summary">
+                            <div className="or-total-row">
+                                <span className="or-total-label">TOTAL AMOUNT (USD):</span>
+                                <span className="or-total-value">${calculateTotal()}</span>
+                            </div>
+                            {discount && (
+                                <div className="or-savings-note">
+                                    🎉 You're saving with code <strong>{discount.coupon}</strong> — {discount.percentage}% discount applied!
                                 </div>
-                                <div className="accompanying-check">
-                                    <label className="or-check-label">
-                                        <input
-                                            type="checkbox"
-                                            checked={includeAccompanying}
-                                            onChange={e => setIncludeAccompanying(e.target.checked)}
-                                        />
-                                        <strong>Include Accompanying Person ($249 extra)</strong>
-                                    </label>
+                            )}
+                            <div className="or-terms">
+                                <label className="or-check-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={termsAccepted}
+                                        onChange={e => setTermsAccepted(e.target.checked)}
+                                    />
+                                    I've read and accept the <span className="or-terms-link">terms &amp; conditions</span>.
+                                </label>
+                            </div>
+                            <p className="or-processing-note">Note: 5% processing charges will be applicable.</p>
+
+                            {submitStatus === 'success' && (
+                                <div className="or-status or-status--success">
+                                    ✅ Registration submitted successfully! We will contact you shortly.
                                 </div>
-                                <table className="or-pricing-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nights</th>
-                                            <th>Single Occupancy</th>
-                                            <th>Double Occupancy</th>
-                                            <th>Triple Occupancy</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {ACCOMMODATION_OPTIONS.map(opt => (
-                                            <tr key={opt.nights}>
-                                                <td><strong>{opt.nights} Nights</strong></td>
-                                                {['single', 'double', 'triple'].map(type => {
-                                                    const basePrice = opt[type];
-                                                    const discountedPrice = accomDiscount > 0 ? applyPct(basePrice, accomDiscount) : basePrice;
-                                                    return (
-                                                        <td key={type}>
-                                                            <label className="or-radio-label">
-                                                                <input
-                                                                    type="radio"
-                                                                    name="accommodation"
-                                                                    checked={selectedAccommodation === `${opt.nights}-${type}`}
-                                                                    onChange={() => setSelectedAccommodation(`${opt.nights}-${type}`)}
-                                                                />
-                                                                ${discountedPrice}
-                                                                {accomDiscount > 0 && (
-                                                                    <span className="or-original-price">${basePrice}</span>
-                                                                )}
-                                                            </label>
-                                                        </td>
-                                                    );
-                                                })}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-
-                                {/* ── Total & Submit ── */}
-                                <div className="or-summary">
-                                    <div className="or-total-row">
-                                        <span className="or-total-label">TOTAL AMOUNT (USD):</span>
-                                        <span className="or-total-value">${calculateTotal()}</span>
-                                    </div>
-                                    {discount && (
-                                        <div className="or-savings-note">
-                                            🎉 You're saving with code <strong>{discount.coupon}</strong> — {discount.percentage}% discount applied!
-                                        </div>
-                                    )}
-                                    <div className="or-terms">
-                                        <label className="or-check-label">
-                                            <input
-                                                type="checkbox"
-                                                checked={termsAccepted}
-                                                onChange={e => setTermsAccepted(e.target.checked)}
-                                            />
-                                            I've read and accept the <span className="or-terms-link">terms &amp; conditions</span>.
-                                        </label>
-                                    </div>
-                                    <p className="or-processing-note">Note: 5% processing charges will be applicable.</p>
-
-                                    {submitStatus === 'success' && (
-                                        <div className="or-status or-status--success">
-                                            ✅ Registration submitted successfully! We will contact you shortly.
-                                        </div>
-                                    )}
-                                    {submitStatus === 'paid' && (
-                                        <div className="or-status or-status--success">
-                                            ✅ Payment successful! Your registration is confirmed. You will receive a confirmation email shortly.
-                                        </div>
-                                    )}
-                                    {submitStatus === 'error' && (
-                                        <div className="or-status or-status--error">
-                                            ❌ Submission failed. Please check your connection and try again.
-                                        </div>
-                                    )}
-
-                                    <div className="or-action-buttons">
-                                        <button
-                                            type="submit"
-                                            className="btn-online-register"
-                                            disabled={submitting}
-                                            style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
-                                        >
-                                            {submitting ? 'Processing…' : (razorpayKey && calculateTotal() > 0 ? 'REGISTER & PAY' : 'REGISTER NOW')}
-                                        </button>
-                                        <button type="button" className="btn-or-reset" onClick={handleReset}>RESET</button>
-                                    </div>
+                            )}
+                            {submitStatus === 'error' && (
+                                <div className="or-status or-status--error">
+                                    ❌ Submission failed. Please check your connection and try again.
                                 </div>
-                            </form>
-                        </>)}
+                            )}
+
+                            <div className="or-action-buttons">
+                                <button
+                                    type="submit"
+                                    className="btn-online-register"
+                                    disabled={submitting}
+                                    style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+                                >
+                                    {submitting ? 'Submitting…' : 'REGISTER NOW'}
+                                </button>
+                                <button type="button" className="btn-or-reset" onClick={handleReset}>RESET</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
