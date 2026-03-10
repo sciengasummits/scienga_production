@@ -248,6 +248,20 @@ export default function MeetingsSection() {
                                 <div style={{
                                     position: 'absolute',
                                     top: '1rem',
+                                    left: '1rem',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                    padding: '6px 12px',
+                                    borderRadius: '8px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '700',
+                                    color: '#0f172a',
+                                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                }}>
+                                    Hybrid
+                                </div>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '1rem',
                                     right: '1rem',
                                     backgroundColor: 'rgba(255, 255, 255, 0.9)',
                                     padding: '6px 12px',
