@@ -207,6 +207,142 @@
     color: var(--color-white);
 }
 
+/* ── Conference Chairman – pinned bottom-right ── */
+.hero__chairman {
+    position: absolute;
+    bottom: 20px;
+    right: 28px;
+    z-index: 5;
+    width: 200px;
+    height: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid rgba(52, 120, 223, 0.5);
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(52, 120, 223, 0.15);
+    animation: chairmanFadeIn 0.7s ease-out 1.2s both;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+}
+
+.hero__chairman:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 16px 45px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(52, 120, 223, 0.25);
+}
+
+.hero__chairman:hover .hero__chairman-photo {
+    transform: scale(1.05);
+}
+
+@keyframes chairmanFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Full-bleed photo */
+.hero__chairman-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Gradient overlay from bottom */
+.hero__chairman-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top,
+            rgba(5, 10, 30, 0.95) 0%,
+            rgba(5, 10, 30, 0.6) 50%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Badge at top */
+.hero__chairman-badge {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: linear-gradient(135deg, #3478df, #1e56a0);
+    color: #fff;
+    font-size: 0.52rem;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(52, 120, 223, 0.5);
+}
+
+/* Info overlay at bottom */
+.hero__chairman-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1px;
+}
+
+.hero__chairman-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.hero__chairman-uni {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 2px 0 0;
+    font-weight: 500;
+    line-height: 1.3;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero__chairman-loc {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.68rem;
+    color: #60a5fa;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+.hero__chairman-loc svg {
+    opacity: 0.9;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .hero {
@@ -247,6 +383,16 @@
     .info-card {
         position: static;
         width: 100%;
+    }
+
+    .hero__chairman {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: 180px;
+        height: 250px;
+        margin: 1.5rem auto 0;
+        z-index: 2;
     }
 
 }

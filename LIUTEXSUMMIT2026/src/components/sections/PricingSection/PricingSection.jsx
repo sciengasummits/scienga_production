@@ -10,7 +10,7 @@ const DEFAULT_PRICING = {
     packages: [
         {
             title: 'Speaker',
-            price: '799',
+            price: '599',
             currency: 'USD',
             features: [
                 'Oral Presentation',
@@ -24,7 +24,7 @@ const DEFAULT_PRICING = {
         },
         {
             title: 'Delegate',
-            price: '899',
+            price: '699',
             currency: 'USD',
             features: [
                 'Delegate Opportunities',
@@ -38,7 +38,7 @@ const DEFAULT_PRICING = {
         },
         {
             title: 'Student',
-            price: '499',
+            price: '299',
             currency: 'USD',
             features: [
                 'Student Presentation',

@@ -44,11 +44,15 @@
 }
 
 .about__list li::before {
-    content: 'â†’';
+    content: '';
     position: absolute;
     left: 0;
-    color: var(--color-primary-start);
-    font-weight: bold;
+    top: 7px;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid var(--color-secondary-blue, #3478df);
 }
 
 /* Dates Side Panel */

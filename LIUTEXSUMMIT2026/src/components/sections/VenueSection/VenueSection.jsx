@@ -3,14 +3,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { fetchContent } from '../../../api/siteApi';
 import './VenueSection.css';
 import heroImg from '../../../assets/images/Hero.png';
+import venue1 from '../../../assets/images/venue/venue1.png';
+import venue2 from '../../../assets/images/venue/venue2.png';
+import venue3 from '../../../assets/images/venue/venue3.png';
+import venue4 from '../../../assets/images/venue/venue4.png';
+import venue5 from '../../../assets/images/venue/venue5.png';
 
-const DEFAULT_IMAGES = [
-    'https://images.unsplash.com/photo-1525625230556-8e8ad8aaad9d?w=1920&q=80',
-    'https://images.unsplash.com/photo-1540575861501-7ad05823c93e?w=1920&q=80',
-    'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1920&q=80',
-    'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&q=80',
-    'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80',
-];
+const DEFAULT_IMAGES = [venue1, venue2, venue3, venue4, venue5];
 
 const VenueSection = () => {
     const [activeVenue, setActiveVenue] = useState(0);
