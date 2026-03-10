@@ -46,16 +46,16 @@ export const validateDiscount = (code) =>
 
 // ── Payment ───────────────────────────────────────────────────────
 export const fetchPaymentKey = () =>
-    api(`/registrations/payment-key`);
+    api(`/payment/key`);
 
 export const createPaymentOrder = (data) =>
-    api(`/registrations/create-order`, {
+    api(`/payment/create-order`, {
         method: 'POST',
         body: JSON.stringify({ ...data, conference: CONFERENCE }),
     });
 
 export const verifyPayment = (data) =>
-    api(`/registrations/verify-payment`, {
+    api(`/payment/verify`, {
         method: 'POST',
         body: JSON.stringify({ ...data, conference: CONFERENCE }),
     });
