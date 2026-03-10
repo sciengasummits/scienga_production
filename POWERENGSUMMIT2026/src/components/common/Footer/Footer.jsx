@@ -24,18 +24,18 @@ const Footer = () => {
                         </div>
                     </div>
 
-                     <div className="footer__col">
-                                            <h4>Important Links</h4>
-                                            <ul className="footer__links">
-                                                <li><Link to="/abstract-submission">Abstract Submission</Link></li>
-                                                <li><Link to="/register">Registration</Link></li>
-                                                <li><Link to="/sessions">Sessions</Link></li>
-                                                <li><Link to="/program">Program</Link></li>
-                                                <li><Link to="/speakers">Speakers</Link></li>
-                                                <li><Link to="/register/discount">Discount Registration</Link></li>
-                                                <li><Link to="/unsubscribe">Unsubscribe</Link></li>
-                                            </ul>
-                                        </div>
+                    <div className="footer__col">
+                        <h4>Important Links</h4>
+                        <ul className="footer__links">
+                            <li><Link to="/abstract-submission">Abstract Submission</Link></li>
+                            <li><Link to="/register">Registration</Link></li>
+                            <li><Link to="/sessions">Sessions</Link></li>
+                            <li><Link to="/program">Program</Link></li>
+                            <li><Link to="/speakers">Speakers</Link></li>
+                            <li><Link to="/register/discount">Discount Registration</Link></li>
+                            <li><Link to="/unsubscribe">Unsubscribe</Link></li>
+                        </ul>
+                    </div>
 
                     <div className="footer__col">
                         <h4>Contact Info</h4>
@@ -70,7 +70,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()}  Annual Interntaional Conference on Power Energy and Electrical Engineering. All Rights Reserved by SCIENGA SUMMITS. & other all subdomains SHOUDL BE AS PER THE TOPICS </p>
+                    <p>&copy; {new Date().getFullYear()} Annual International Conference on Power Energy and Electrical Engineering. All Rights Reserved by SCIENGA SUMMITS.</p>
                 </div>
             </div>
         </footer>
