@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
 import { countries } from '../../data/countriesData';
 import './AbstractSubmission.css';
-import { submitAbstract, uploadAbstractFile, fetchContent } from '../../api/siteApi';
+import { submitAbstract, uploadAbstractFile } from '../../api/siteApi';
 
 // ─── Important Dates defaults (shown if backend is unreachable) ───────────────
 const DEFAULT_DATES = [
@@ -40,9 +40,16 @@ const AbstractSubmission = () => {
 
     // Live-fetch Important Dates from backend; silently fall back to defaults
     useEffect(() => {
-        fetchContent('importantDates')
-            .then(data => { if (data?.dates?.length) setImportantDates(data.dates); })
-            .catch(() => { });
+        // Use the siteApi instead of hardcoded fetch
+        const loadDates = async () => {
+            try {
+                const data = await fetchContent('importantDates');
+                if (data?.dates?.length) setImportantDates(data.dates);
+            } catch (err) {
+                console.warn('[AbstractSubmission] Failed to fetch dates:', err.message);
+            }
+        };
+        loadDates();
     }, []);
 
     const handleChange = (e) => {

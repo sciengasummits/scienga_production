@@ -1,71 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    Sun,
-    Wind,
-    Zap,
-    Droplet,
-    Leaf,
-    Globe,
-    ShieldCheck,
-    Thermometer,
-    Recycle,
-    Battery,
-    CloudRain,
-    Cpu,
-    Anchor,
-    Flame,
-    Activity,
-    Factory,
-    Lightbulb,
-    BarChart,
-    TreeDeciduous,
-    Mountain
+    Zap, Activity, Battery, Cpu, Factory, Lightbulb,
+    BarChart, Globe, ShieldCheck, Thermometer, Wind, Sun, Droplet
 } from 'lucide-react';
 import './KeyThemesSection.css';
+import * as siteApi from '../../../api/siteApi';
 
-const sessionsData = [
-    { title: "Solar Energy & Photovoltaics", icon: Sun },
-    { title: "Wind Energy Technologies", icon: Wind },
-    { title: "Climate Change & Global Warming", icon: Thermometer },
-    { title: "Hydroelectric Power Systems", icon: Droplet },
-    { title: "Bioenergy & Biofuels", icon: Leaf },
-    { title: "Smart Grids & Energy Storage", icon: Battery },
-    { title: "Green Hydrogen Economy", icon: Flame },
-    { title: "Carbon Capture & Storage", icon: CloudRain },
-    { title: "Environmental Policy & Regulation", icon: ShieldCheck },
-    { title: "Electric Vehicles & Clean Transport", icon: Zap },
-    { title: "Geothermal Energy", icon: Mountain },
-    { title: "Ocean & Tidal Energy", icon: Anchor },
-    { title: "Sustainable Urban Planning", icon: Factory },
-    { title: "Waste-to-Energy Systems", icon: Recycle },
-    { title: "AI in Energy Management", icon: Cpu },
-    { title: "Energy Economics & Finance", icon: BarChart },
-    { title: "Circular Economy", icon: Activity },
-    { title: "Nuclear Energy & Safety", icon: Zap },
-    { title: "Climate Adaptation Strategies", icon: Globe },
-    { title: "Forestry & Carbon Sinks", icon: TreeDeciduous },
-    { title: "Energy Efficiency in Industry", icon: Factory },
-    { title: "Advanced Battery Technologies", icon: Battery },
-    { title: "Renewable Energy Integration", icon: Zap },
-    { title: "Meteorology & Climate Modeling", icon: CloudRain },
-    { title: "Sustainable Agriculture & Land Use", icon: Leaf },
-    { title: "Green Building Technologies", icon: Factory },
-    { title: "Environmental Impact Assessment", icon: Activity },
-    { title: "Social Aspects of Climate Change", icon: Globe },
-    { title: "Innovation in Clean Tech", icon: Lightbulb },
-    { title: "Future of Global Energy", icon: Sun },
+const ICON_LIST = [Zap, Battery, Cpu, Factory, Lightbulb, BarChart, Globe, ShieldCheck, Thermometer, Wind, Sun, Droplet, Activity];
+
+const DEFAULT_SESSIONS = [
+    'Smart Grid Technologies',
+    'Power Electronics & Converters',
+    'Renewable Energy Systems',
+    'Electric Machines & Drives',
+    'High Voltage Engineering',
+    'Energy Storage Technologies',
+    'Power Quality & Harmonics',
+    'Distributed Generation Systems',
+    'Electric Vehicles & Charging',
+    'Microgrids & Manogrids',
+    'HVDC & Flexible AC Transmission',
+    'Electromagnetic Compatibility',
+    'Protection & Control Systems',
+    'Power System Stability & Dynamics',
+    'Computational Intelligence in Power',
+    'Sustainable Energy Policy',
+    'Industrial Power Applications',
+    'Wireless Power Transfer',
+    'Energy Harvesting Technologies',
+    'Digital Twins in Power Systems',
 ];
 
-const Link = ({ href, children }) => <a href={href}>{children}</a>; // Placeholder if needed
-
-const scheduleData = {
+const DEFAULT_SCHEDULE = {
     day1: [
         { time: '8.30 – 9.00', program: 'Registration' },
         { time: '9.00 – 9.30', program: 'Conference Inauguration' },
         { time: '9.30 – 11.00', program: 'Plenary Sessions' },
         { time: '11.00 – 11.20', program: 'Tea/Coffee Break' },
-        { time: '11:20 – 13.00', program: 'Plenary Sessions' },
+        { time: '11.20 – 13.00', program: 'Plenary Sessions' },
         { time: '13.00 – 13.10', program: 'Group Photograph' },
         { time: '13.10 – 14.00', program: 'Lunch' },
         { time: '14.00 – 15.40', program: 'Keynote Sessions' },
@@ -92,11 +65,25 @@ const scheduleData = {
 
 const KeyThemesSection = ({ showLearnMore = false }) => {
     const [activeDay, setActiveDay] = useState('day1');
+    const [sessions, setSessions] = useState(DEFAULT_SESSIONS);
+    const [schedule, setSchedule] = useState(DEFAULT_SCHEDULE);
     const navigate = useNavigate();
 
-    // Limit items if in preview mode (Home page)
-    const displaySessions = showLearnMore ? sessionsData.slice(0, 10) : sessionsData;
-    const displaySchedule = showLearnMore ? scheduleData[activeDay].slice(0, 5) : scheduleData[activeDay];
+    useEffect(() => {
+        const load = async () => {
+            try {
+                const res = await siteApi.fetchContent('sessions');
+                if (res?.sessions?.length) setSessions(res.sessions);
+                if (res?.schedule) setSchedule({ ...DEFAULT_SCHEDULE, ...res.schedule });
+            } catch { /* use defaults */ }
+        };
+        load();
+    }, []);
+
+    const displaySessions = showLearnMore ? sessions.slice(0, 10) : sessions;
+    const displaySchedule = showLearnMore
+        ? (schedule[activeDay] || DEFAULT_SCHEDULE[activeDay]).slice(0, 5)
+        : (schedule[activeDay] || DEFAULT_SCHEDULE[activeDay]);
 
     return (
         <section className={`sessions-schedule-section section-padding ${showLearnMore ? 'preview-mode' : ''}`} id="sessions">
@@ -107,19 +94,18 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                 </div>
 
                 <div className="sessions-schedule-layout" style={showLearnMore ? { overflow: 'hidden' } : {}}>
-                    {/* Left Column: Sessions List */}
+                    {/* Left Column: Sessions */}
                     <div className="sessions-column">
                         <h3 className="column-title">Sessions</h3>
                         <div className="sessions-list-container">
                             <ul className="sessions-list-clean">
                                 {displaySessions.map((session, index) => {
-                                    const Icon = session.icon || Sun;
+                                    const Icon = ICON_LIST[index % ICON_LIST.length];
+                                    const title = typeof session === 'string' ? session : session.title;
                                     return (
                                         <li key={index} className="session-item-clean">
-                                            <span className="session-icon-small">
-                                                <Icon size={18} />
-                                            </span>
-                                            <span className="session-text">{session.title}</span>
+                                            <span className="session-icon-small"><Icon size={18} /></span>
+                                            <span className="session-text">{title}</span>
                                         </li>
                                     );
                                 })}
@@ -136,50 +122,28 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                     <div className="schedule-column">
                         <div className="schedule__tabs-wrapper">
                             <div className="schedule__tabs">
-                                <button
-                                    className={`schedule__tab ${activeDay === 'day1' ? 'active' : ''}`}
-                                    onClick={() => setActiveDay('day1')}
-                                >
-                                    <span className="tab-day">Day 01</span>
-                                    <span className="tab-date">Conference</span>
-                                </button>
-                                <button
-                                    className={`schedule__tab ${activeDay === 'day2' ? 'active' : ''}`}
-                                    onClick={() => setActiveDay('day2')}
-                                >
-                                    <span className="tab-day">Day 02</span>
-                                    <span className="tab-date">Discussions</span>
-                                </button>
-                                <button
-                                    className={`schedule__tab ${activeDay === 'day3' ? 'active' : ''}`}
-                                    onClick={() => setActiveDay('day3')}
-                                >
-                                    <span className="tab-day">Day 03</span>
-                                    <span className="tab-date">Workshops</span>
-                                </button>
+                                {['day1', 'day2', 'day3'].map((day, i) => {
+                                    const labels = [['Day 01', 'Conference'], ['Day 02', 'Discussions'], ['Day 03', 'Workshops']];
+                                    return (
+                                        <button key={day} className={`schedule__tab ${activeDay === day ? 'active' : ''}`} onClick={() => setActiveDay(day)}>
+                                            <span className="tab-day">{labels[i][0]}</span>
+                                            <span className="tab-date">{labels[i][1]}</span>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
-
                         <div className="schedule__content fade-in">
                             <div className="schedule__table-container">
                                 <table className="schedule__table">
                                     <thead>
-                                        <tr>
-                                            <th>Time</th>
-                                            <th>Conference Schedule</th>
-                                        </tr>
+                                        <tr><th>Time</th><th>Conference Schedule</th></tr>
                                     </thead>
                                     <tbody>
                                         {displaySchedule.map((item, index) => (
                                             <tr key={index}>
-                                                <td className="time-col">
-                                                    <div className="time-badge">{item.time}</div>
-                                                </td>
-                                                <td className="program-col">
-                                                    <div className="program-info">
-                                                        <span className="program-title">{item.program}</span>
-                                                    </div>
-                                                </td>
+                                                <td className="time-col"><div className="time-badge">{item.time}</div></td>
+                                                <td className="program-col"><div className="program-info"><span className="program-title">{item.program}</span></div></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -188,11 +152,9 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                         </div>
                     </div>
 
-                    {/* Fade Overlay */}
                     {showLearnMore && <div className="key-themes-fade-overlay"></div>}
                 </div>
 
-                {/* Learn More Button */}
                 {showLearnMore && (
                     <div className="text-center mt-4">
                         <button className="btn-learn-more" onClick={() => navigate('/sessions')}>

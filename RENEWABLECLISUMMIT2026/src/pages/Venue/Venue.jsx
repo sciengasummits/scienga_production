@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
 import './Venue.css';
 
 const Venue = () => {
+    const navigate = useNavigate();
     const venueFeatures = [
         {
             title: 'World-Class Facilities',
@@ -161,7 +163,7 @@ const Venue = () => {
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
                         Secure your spot at the International Conference On RENEWABLE ENERGY & CLIMATE CHANGE and be part of this transformative event
                     </p>
-                    <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }}>
+                    <Button variant="outline" style={{ borderColor: 'white', color: 'white', background: 'transparent' }} onClick={() => navigate('/register')}>
                         Register Now
                     </Button>
                 </div>

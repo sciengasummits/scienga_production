@@ -1,8 +1,7 @@
-// API service for Fluid Mechanics & Turbomachinery 2026 website
-// Fetches live data from the shared dashboard backend (port 5000)
+// API service for RENEWABLECLISUMMIT2026 website
+// Fetches live data from the dashboard backend (port 5000)
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-const CONFERENCE = 'fluid';
 
 async function get(endpoint) {
     try {
@@ -10,32 +9,32 @@ async function get(endpoint) {
         if (!res.ok) throw new Error(res.statusText);
         return res.json();
     } catch (e) {
-        console.warn(`[SiteAPI-Fluid] Failed to fetch ${endpoint}:`, e.message);
+        console.warn(`[SiteAPI] Failed to fetch ${endpoint}:`, e.message);
         return null;
     }
 }
 
 // Get a single content block by key (e.g. 'hero', 'about', etc.)
-export const fetchContent = (key) => get(`/content/${key}?conference=${CONFERENCE}`);
+export const fetchContent = (key) => get(`/content/${key}?conference=renewable`);
 
 // Get all content blocks at once
-export const fetchAllContent = () => get(`/content?conference=${CONFERENCE}`);
+export const fetchAllContent = () => get('/content?conference=renewable');
 
 // Speakers — uses public endpoint (visible only, sorted by order)
-// Always pass conference=fluid so the backend filters correctly
+// Always pass conference=renewable so the backend filters correctly
 export const fetchSpeakers = (category) =>
-    get(`/speakers?conference=${CONFERENCE}${category ? `&category=${encodeURIComponent(category)}` : ''}`);
+    get(`/speakers?conference=renewable${category ? `&category=${encodeURIComponent(category)}` : ''}`);
 
 // Sponsors/Media partners — uses public endpoint (visible only)
 export const fetchSponsors = (type) =>
-    get(`/sponsors?conference=${CONFERENCE}${type ? `&type=${encodeURIComponent(type)}` : ''}`);
+    get(`/sponsors?conference=renewable${type ? `&type=${encodeURIComponent(type)}` : ''}`);
 
-// Submit an abstract — always tags conference: 'fluid'
+// Submit an abstract — always tags conference: 'renewable'
 export async function submitAbstract(payload) {
     const res = await fetch(`${BASE_URL}/abstracts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, conference: CONFERENCE }),
+        body: JSON.stringify({ ...payload, conference: 'renewable' }),
     });
     if (!res.ok) throw new Error('Server error');
     return res.json();
@@ -50,12 +49,12 @@ export async function uploadAbstractFile(file) {
     return res.json();
 }
 
-// Submit registration — always tags conference: 'fluid'
+// Submit registration — always tags conference: 'renewable'
 export async function submitRegistration(payload) {
     const res = await fetch(`${BASE_URL}/registrations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, conference: CONFERENCE }),
+        body: JSON.stringify({ ...payload, conference: 'renewable' }),
     });
     if (!res.ok) throw new Error('Server error');
     return res.json();
@@ -68,12 +67,12 @@ export async function validateDiscountCode(coupon) {
         const res = await fetch(`${BASE_URL}/discounts/validate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ coupon, conference: CONFERENCE }),
+            body: JSON.stringify({ coupon, conference: 'renewable' }),
         });
         if (!res.ok) throw new Error('Server error');
         return res.json();
     } catch (e) {
-        console.warn('[SiteAPI-Fluid] Discount validate failed:', e.message);
+        console.warn('[SiteAPI] Discount validate failed:', e.message);
         return { valid: false, message: 'Could not reach server. Please try again.' };
     }
 }
@@ -88,7 +87,7 @@ export async function createPaymentOrder(payload) {
     const res = await fetch(`${BASE_URL}/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, conference: CONFERENCE }),
+        body: JSON.stringify({ ...payload, conference: 'renewable' }),
     });
     if (!res.ok) {
         const err = await res.json();

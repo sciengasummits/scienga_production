@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
+import Button from '../../components/common/Button/Button';
 import './Unsubscribe.css';
+import * as siteApi from '../../api/siteApi';
 
 const Unsubscribe = () => {
     const [email, setEmail] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle unsubscribe logic here
-        console.log('Unsubscribing email:', email);
-        setIsSubmitted(true);
-        setEmail('');
+        if (!email) return;
+        setLoading(true);
+        setError('');
+        try {
+            await siteApi.unsubscribeEmail(email);
+            setSubmitted(true);
+        } catch (err) {
+            setError('Failed to unsubscribe. Please try again or contact us at contact@powerenergysummit.com');
+            console.error('Unsubscribe error:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -22,39 +34,46 @@ const Unsubscribe = () => {
                 </div>
             </div>
 
-            <section className="unsubscribe-content section-padding">
-                <div className="container">
-                    <div className="unsubscribe-card">
-                        <h2 className="unsubscribe-title">Mailing List Unsubscribe</h2>
-                        
-                        {!isSubmitted ? (
-                            <>
-                                <p className="unsubscribe-description">
-                                    We are sorry to see you go. Please enter your email address below to unsubscribe from our mailing list.
-                                </p>
-
-                                <form onSubmit={handleSubmit} className="unsubscribe-form">
+            <div className="container section-padding">
+                <div className="unsubscribe-container">
+                    {!submitted ? (
+                        <>
+                            <h2 className="unsubscribe-title">Mailing List Unsubscribe</h2>
+                            <p className="unsubscribe-desc">
+                                We are sorry to see you go. Please enter your email address below to unsubscribe from our mailing list.
+                            </p>
+                            <form className="unsubscribe-form" onSubmit={handleSubmit}>
+                                <div className="form-group">
                                     <input
                                         type="email"
-                                        className="unsubscribe-input"
                                         placeholder="Enter your email address"
+                                        className="form-control"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
-                                    <button type="submit" className="unsubscribe-button">
-                                        UNSUBSCRIBE
-                                    </button>
-                                </form>
-                            </>
-                        ) : (
-                            <div className="unsubscribe-success">
-                                <p>You have been successfully unsubscribed from our mailing list.</p>
-                            </div>
-                        )}
-                    </div>
+                                </div>
+                                {error && <p className="unsubscribe-error">{error}</p>}
+                                <div className="form-actions">
+                                    <Button type="submit" disabled={loading}>
+                                        {loading ? 'Unsubscribing...' : 'Unsubscribe'}
+                                    </Button>
+                                </div>
+                            </form>
+                        </>
+                    ) : (
+                        <div className="unsubscribe-success">
+                            <div className="success-icon">✓</div>
+                            <h2>Unsubscribed Successfully</h2>
+                            <p>
+                                You have been successfully unsubscribed from our mailing list.
+                                You will no longer receive updates from POWERENGSUMMIT2026.
+                            </p>
+                            <Button onClick={() => window.location.href = '/'}>Back to Home</Button>
+                        </div>
+                    )}
                 </div>
-            </section>
+            </div>
         </div>
     );
 };

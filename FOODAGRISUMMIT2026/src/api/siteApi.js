@@ -1,19 +1,26 @@
 // API service for FOODAGRISUMMIT2026 website
 // Fetches live data from the shared dashboard backend (port 5000)
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const BASE_URL = (import.meta.env.VITE_API_URL || 'https://backend-phi-ivory-81.vercel.app/api').replace(/\/$/, '');
 
 // ── This must ALWAYS be 'foodagri' for this conference site ──
 const CONFERENCE_ID = 'foodagri';
 
+console.log(`[SiteAPI-FoodAgri] Base URL: ${BASE_URL}`);
+
 async function get(endpoint) {
     try {
-        const res = await fetch(`${BASE_URL}${endpoint}`);
-        if (!res.ok) throw new Error(res.statusText);
+        const url = `${BASE_URL}${endpoint}`;
+        console.log(`[SiteAPI-FoodAgri] GET request to: ${url}`);
+        const res = await fetch(url);
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            throw new Error(errorData.error || errorData.message || `Fetch failed: ${res.statusText} (${res.status})`);
+        }
         return res.json();
     } catch (e) {
-        console.warn(`[SiteAPI-FoodAgri] Failed to fetch ${endpoint}:`, e.message);
-        return null;
+        console.error(`[SiteAPI-FoodAgri] GET ${endpoint} failed:`, e.message);
+        throw new Error(`Connection Error: ${e.message} (Is the backend at ${BASE_URL} reachable?)`);
     }
 }
 
@@ -40,7 +47,10 @@ export async function submitAbstract(payload) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...payload, conference: CONFERENCE_ID }),
     });
-    if (!res.ok) throw new Error('Server error');
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || err.message || 'Submission failed');
+    }
     return res.json();
 }
 
@@ -49,26 +59,36 @@ export async function uploadAbstractFile(file) {
     const fd = new FormData();
     fd.append('file', file);
     const res = await fetch(`${BASE_URL}/upload-file`, { method: 'POST', body: fd });
-    if (!res.ok) throw new Error('Upload failed');
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || err.message || 'Upload failed');
+    }
     return res.json();
 }
 
 // Submit registration — always tags with this conference
 export async function submitRegistration(data) {
+    const url = `${BASE_URL}/registrations`;
     try {
-        const res = await fetch(`${BASE_URL}/registrations`, {
+        console.log(`[SiteAPI-FoodAgri] POST request to: ${url}`);
+        const res = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ...data, conference: CONFERENCE_ID }),
         });
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            throw new Error(errorData.error || errorData.message || `Submission failed: ${res.statusText} (${res.status})`);
+        }
         return res.json();
     } catch (e) {
-        console.warn('[SiteAPI-FoodAgri] submitRegistration failed:', e.message);
-        return { error: e.message };
+        console.error('[SiteAPI-FoodAgri] submitRegistration failed:', e.message);
+        throw new Error(`Connection Error: ${e.message} (Is the backend at ${BASE_URL} reachable?)`);
     }
 }
 
 // Validate a discount coupon code against the backend
+// Returns: { valid: true, percentage, category, coupon } | { valid: false, message }
 export async function validateDiscountCode(coupon) {
     try {
         const res = await fetch(`${BASE_URL}/discounts/validate`, {
@@ -76,43 +96,46 @@ export async function validateDiscountCode(coupon) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ coupon, conference: CONFERENCE_ID }),
         });
-        if (!res.ok) throw new Error('Server error');
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            return { valid: false, message: err.message || 'Invalid code' };
+        }
         return res.json();
     } catch (e) {
-        console.warn('[SiteAPI-FoodAgri] Discount validate failed:', e.message);
+        console.error('[SiteAPI-FoodAgri] Discount validate failed:', e.message);
         return { valid: false, message: 'Could not reach server. Please try again.' };
     }
 }
 
-// ── Razorpay Payment Integration ─────────────────────────────────────────────
+// ─── Payment APIs ──────────────────────────────────────────────
 
-export async function getRazorpayKey() {
-    try {
-        const res = await fetch(`${BASE_URL}/payment/key`);
-        if (!res.ok) throw new Error('Failed to fetch key');
-        return res.json();
-    } catch (e) {
-        console.warn('[SiteAPI-FoodAgri] getRazorpayKey failed:', e.message);
-        return null;
-    }
-}
+// Fetch the Razorpay public key
+export const fetchPaymentKey = () => get('/payment/key');
 
-export async function createPaymentOrder({ amount, currency = 'USD', registrationId, description }) {
+// Create a Razorpay order
+export async function createPaymentOrder(payload) {
     const res = await fetch(`${BASE_URL}/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, currency, registrationId, conference: CONFERENCE_ID, description }),
+        body: JSON.stringify({ ...payload, conference: CONFERENCE_ID }),
     });
-    if (!res.ok) throw new Error('Failed to create order');
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || err.message || 'Failed to create payment order.');
+    }
     return res.json();
 }
 
-export async function verifyPayment({ razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId }) {
+// Verify a Razorpay payment signature
+export async function verifyPayment(payload) {
     const res = await fetch(`${BASE_URL}/payment/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature, registrationId }),
+        body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error('Verification failed');
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || err.message || 'Payment verification failed.');
+    }
     return res.json();
 }
