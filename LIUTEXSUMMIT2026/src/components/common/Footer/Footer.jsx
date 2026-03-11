@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
+import { fetchContent } from '../../../api/siteApi';
 import './Footer.css';
 
 const Footer = () => {
+    const [contact, setContact] = useState({
+        email: 'contact@liutexvortexsummit.com',
+        phone: '+91 7842090097'
+    });
+
+    useEffect(() => {
+        fetchContent('contact').then(d => {
+            if (d) setContact(prev => ({ ...prev, ...d }));
+        }).catch(err => console.error("Error fetching contact info:", err));
+    }, []);
     return (
         <footer className="footer">
             <div className="container">
@@ -49,11 +60,11 @@ const Footer = () => {
 
                             <li>
                                 <Mail size={18} />
-                                <span>contact@liutexvortexsummit.com</span>
+                                <span>{contact.email}</span>
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+91 7842090097</span>
+                                <span>{contact.phone}</span>
                             </li>
                         </ul>
                     </div>
