@@ -3,18 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Mail, Phone, MessageCircle } from 'lucide-react';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
-import { fetchContent } from '../../../api/siteApi';
 import './Navbar.css';
 
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [contact, setContact] = useState({
-        email: 'contact@liutexvortexsummit.com',
-        phone: '+91 7842090097',
-        whatsapp: '+91 7842090097'
-    });
     const location = useLocation();
 
     useEffect(() => {
@@ -27,10 +21,6 @@ const Navbar = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        fetchContent('contact').then(d => {
-            if (d) setContact(prev => ({ ...prev, ...d }));
-        }).catch(err => console.error("Error fetching contact info:", err));
-        
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -74,21 +64,21 @@ const Navbar = () => {
                             <Mail size={18} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">SEND US AN EMAIL</span>
-                                <span className="contact-value">{contact.email}</span>
+                                <span className="contact-value">contact@liutexvortexsummit.com</span>
                             </div>
                         </div>
                         <div className="contact-item">
                             <Phone size={18} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">CALL US NOW</span>
-                                <span className="contact-value">{contact.phone}</span>
+                                <span className="contact-value">+91 7842090097</span>
                             </div>
                         </div>
                         <div className="contact-item">
                             <MessageCircle size={18} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">WHATSAPP</span>
-                                <span className="contact-value">{contact.whatsapp}</span>
+                                <span className="contact-value">+91 7842090097</span>
                             </div>
                         </div>
                     </div>

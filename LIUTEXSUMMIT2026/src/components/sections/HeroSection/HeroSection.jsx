@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
 import { fetchContent } from '../../../api/siteApi';
-import chairmanImg from '../../../assets/images/chairman-wang.png';
 
 const DEFAULT = {
     subtitle: 'International Conference on',
@@ -128,21 +127,6 @@ const HeroSection = () => {
                         <h3>Venue</h3>
                         <p>Event Venue: {data.venue}</p>
                     </div>
-                </div>
-            </div>
-
-            {/* Conference Chairman – bottom-right */}
-            <div className="hero__chairman">
-                <img src={chairmanImg} alt="Dr. Yiqian Wang" className="hero__chairman-photo" />
-                <div className="hero__chairman-overlay"></div>
-                <span className="hero__chairman-badge">Conference Chairman</span>
-                <div className="hero__chairman-info">
-                    <h4 className="hero__chairman-name">Dr. Yiqian Wang</h4>
-                    <p className="hero__chairman-uni">Soochow University</p>
-                    <span className="hero__chairman-loc">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                        China
-                    </span>
                 </div>
             </div>
         </section>
