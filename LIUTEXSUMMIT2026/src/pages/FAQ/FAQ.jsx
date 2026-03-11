@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchContent } from '../../api/siteApi';
 import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,15 @@ import './FAQ.css';
 const FAQ = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [dynamicFaqs, setDynamicFaqs] = useState(null);
+
+    useEffect(() => {
+        fetchContent('faq').then(data => {
+            if (data && data.faqs) {
+                setDynamicFaqs(data.faqs);
+            }
+        });
+    }, []);
 
     const faqs = [
         {
@@ -91,10 +101,13 @@ const FAQ = () => {
         setSearchTerm(e.target.value.toLowerCase());
     }
 
+    // Use dynamic FAQs if available, otherwise fallback to hardcoded list
+    const currentFaqs = dynamicFaqs || faqs;
+
     // Filter FAQs based on search
-    const filteredFaqs = faqs.map(cat => ({
+    const filteredFaqs = currentFaqs.map(cat => ({
         ...cat,
-        items: cat.items.filter(item =>
+        items: (cat.items || []).filter(item =>
             item.question.toLowerCase().includes(searchTerm) ||
             item.answer.toLowerCase().includes(searchTerm)
         )
