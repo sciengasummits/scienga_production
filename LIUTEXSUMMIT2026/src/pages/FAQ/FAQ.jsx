@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { fetchContent } from '../../api/siteApi';
-=======
->>>>>>> 3bfe3ff (feat: Implement dynamic content fetching for contact details and important dates across the site, and update the API base URL.)
 import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
-import { fetchContent } from '../../api/siteApi';
 import './FAQ.css';
 
 const FAQ = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-<<<<<<< HEAD
     const [dynamicFaqs, setDynamicFaqs] = useState(null);
 
     useEffect(() => {
@@ -21,14 +16,6 @@ const FAQ = () => {
                 setDynamicFaqs(data.faqs);
             }
         });
-=======
-    const [contactEmail, setContactEmail] = useState('contact@liutexvortexsummit.com');
-
-    useEffect(() => {
-        fetchContent('contact')
-            .then(d => { if (d && d.email) setContactEmail(d.email); })
-            .catch(err => console.error("Error fetching contact info:", err));
->>>>>>> 3bfe3ff (feat: Implement dynamic content fetching for contact details and important dates across the site, and update the API base URL.)
     }, []);
 
     const faqs = [
@@ -41,7 +28,7 @@ const FAQ = () => {
                 },
                 {
                     question: "Is there a discount for group registrations?",
-                    answer: `Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at ${contactEmail} for more details.`
+                    answer: "Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at contact@liutexvortexsummit.com for more details."
                 },
                 {
                     question: "What is included in the registration fee?",
