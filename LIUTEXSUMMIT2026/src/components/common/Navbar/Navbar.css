@@ -84,8 +84,22 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--color-white);
+    color: #ffffff;
     transition: color 0.3s ease;
+}
+
+.contact-item,
+.contact-item .contact-label,
+.contact-item .contact-value {
+    color: #ffffff;
+}
+
+a.contact-item,
+a.contact-item:visited,
+a.contact-item:hover,
+a.contact-item:active {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .navbar--scrolled .contact-item {
@@ -93,7 +107,7 @@
 }
 
 .contact-icon {
-    color: var(--color-white);
+    color: #ffffff;
     transition: color 0.3s ease;
 }
 
