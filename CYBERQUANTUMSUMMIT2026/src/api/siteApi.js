@@ -1,6 +1,5 @@
-// API service for LIUTEXSUMMIT2026 website
-// Fetches live data from the dashboard backend (port 5000)
-
+// API service for CYBERQUANTUMSUMMIT2026 website
+// Fetches live data from the dashboard backend
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -16,26 +15,25 @@ async function get(endpoint) {
 }
 
 // Get a single content block by key (e.g. 'hero', 'about', etc.)
-export const fetchContent = (key) => get(`/content/${key}?conference=liutex`);
+export const fetchContent = (key) => get(`/content/${key}?conference=cyber`);
 
 // Get all content blocks at once
-export const fetchAllContent = () => get('/content?conference=liutex');
+export const fetchAllContent = () => get('/content?conference=cyber');
 
 // Speakers — uses public endpoint (visible only, sorted by order)
-// Always pass conference=liutex so the backend filters correctly
 export const fetchSpeakers = (category) =>
-    get(`/speakers?conference=liutex${category ? `&category=${encodeURIComponent(category)}` : ''}`);
+    get(`/speakers?conference=cyber${category ? `&category=${encodeURIComponent(category)}` : ''}`);
 
 // Sponsors/Media partners — uses public endpoint (visible only)
 export const fetchSponsors = (type) =>
-    get(`/sponsors?conference=liutex${type ? `&type=${encodeURIComponent(type)}` : ''}`);
+    get(`/sponsors?conference=cyber${type ? `&type=${encodeURIComponent(type)}` : ''}`);
 
-// Submit an abstract — always tags conference: 'liutex'
+// Submit an abstract — always tags conference: 'cyber'
 export async function submitAbstract(payload) {
     const res = await fetch(`${BASE_URL}/abstracts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+        body: JSON.stringify({ ...payload, conference: 'cyber' }),
     });
     if (!res.ok) throw new Error('Server error');
     return res.json();
@@ -50,25 +48,24 @@ export async function uploadAbstractFile(file) {
     return res.json();
 }
 
-// Submit registration — always tags conference: 'liutex'
+// Submit registration — always tags conference: 'cyber'
 export async function submitRegistration(payload) {
     const res = await fetch(`${BASE_URL}/registrations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+        body: JSON.stringify({ ...payload, conference: 'cyber' }),
     });
     if (!res.ok) throw new Error('Server error');
     return res.json();
 }
 
 // Validate a discount coupon code against the backend
-// Returns: { valid: true, percentage, category, coupon } | { valid: false, message }
 export async function validateDiscountCode(coupon) {
     try {
         const res = await fetch(`${BASE_URL}/discounts/validate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ coupon, conference: 'liutex' }),
+            body: JSON.stringify({ coupon, conference: 'cyber' }),
         });
         if (!res.ok) throw new Error('Server error');
         return res.json();
@@ -88,7 +85,7 @@ export async function createPaymentOrder(payload) {
     const res = await fetch(`${BASE_URL}/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+        body: JSON.stringify({ ...payload, conference: 'cyber' }),
     });
     if (!res.ok) {
         const err = await res.json();
@@ -110,4 +107,3 @@ export async function verifyPayment(payload) {
     }
     return res.json();
 }
-

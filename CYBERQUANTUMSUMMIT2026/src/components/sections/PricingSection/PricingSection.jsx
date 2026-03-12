@@ -70,7 +70,6 @@ const PricingSection = () => {
 
         load();
 
-        // Poll every 30s so dashboard changes appear without a refresh
         const interval = setInterval(load, 30000);
         const onVisible = () => { if (document.visibilityState === 'visible') load(); };
         document.addEventListener('visibilitychange', onVisible);

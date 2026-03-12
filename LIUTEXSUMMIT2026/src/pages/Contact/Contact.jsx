@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Button from '../../components/common/Button/Button';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
-import { fetchContent } from '../../api/siteApi';
 import './Contact.css';
 
 const Contact = () => {
-    const [contact, setContact] = useState({
-        email: 'contact@liutexvortexsummit.com',
-        phone: '+91 7842090097'
-    });
-
-    useEffect(() => {
-        fetchContent('contact').then(d => {
-            if (d) setContact(prev => ({ ...prev, ...d }));
-        }).catch(err => console.error("Error fetching contact info:", err));
-    }, []);
     return (
         <div className="contact-page">
             <div className="page-header">
@@ -49,7 +38,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Phone</h4>
-                                <p>{contact.phone}</p>
+                                <p>+91 7842090097</p>
                             </div>
                         </div>
 
@@ -59,7 +48,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>{contact.email}</p>
+                                <p>contact@liutexvortexsummit.com</p>
                             </div>
                         </div>
 

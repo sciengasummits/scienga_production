@@ -1,9 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Register.css';
 import { countries } from '../../assets/constants/countries';
 import * as siteApi from '../../api/siteApi';
 
+/* ── Default fallback pricing (used if API is unavailable) ── */
+const DEFAULTS = {
+    earlyBirdEndDate: '2026-09-25',
+    standardEndDate: '2026-10-30',
+    onspotEndDate: '2026-12-14',
+    categories: [
+        { id: 'speaker', label: 'Speaker Registration', early: 599, standard: 699, onspot: 799 },
+        { id: 'delegate', label: 'Delegate Registration', early: 699, standard: 799, onspot: 899 },
+        { id: 'poster', label: 'Poster Registration', early: 399, standard: 499, onspot: 599 },
+        { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+        { id: 'virtual', label: 'Virtual(Online)', early: 200, standard: 300, onspot: 400 },
+    ],
+    sponsorships: [
+        { id: 'platinum', label: 'Platinum Sponsor', price: 4999 },
+        { id: 'diamond', label: 'Diamond Sponsor', price: 3999 },
+        { id: 'gold', label: 'Gold Sponsor', price: 2999 },
+        { id: 'exhibitor', label: 'Exhibitor', price: 1999 },
+    ],
+    accommodation: [
+        { nights: 2, single: 360, double: 400, triple: 440 },
+        { nights: 3, single: 540, double: 600, triple: 660 },
+        { nights: 4, single: 720, double: 800, triple: 880 },
+        { nights: 5, single: 900, double: 1000, triple: 1100 },
+    ],
+    accompanyingPersonPrice: 249,
+    processingFeePercent: 5,
+};
+
 const Register = ({ isDiscounted = false }) => {
+    // ── Pricing state loaded from backend ──
+    const [regPricing, setRegPricing] = useState(DEFAULTS);
+
+    useEffect(() => {
+        siteApi.fetchContent('registration-prices')
+            .then(data => {
+                if (data && !data.error) {
+                    setRegPricing(prev => ({ ...prev, ...data }));
+                }
+            })
+            .catch(e => console.warn('[Register] Could not load pricing:', e.message));
+    }, []);
+
     // State for form fields
     const [formData, setFormData] = useState({
         designation: '',
@@ -31,12 +72,12 @@ const Register = ({ isDiscounted = false }) => {
 
     // Discount multiplier (20% off if discounted)
     const discountMultiplier = isDiscounted ? 0.8 : 1;
-    const applyDiscount = (price) => Math.round(price * discountMultiplier);
+    const applyDiscount = (price) => Math.round(Number(price) * discountMultiplier);
 
-    // Date Logic to determine active phase
+    // ── Date Logic to determine active phase (driven by backend dates) ──
     const currentDate = new Date();
-    const earlyBirdEnd = new Date('2026-09-25');
-    const standardEnd = new Date('2026-10-30');
+    const earlyBirdEnd = new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate);
+    const standardEnd = new Date(regPricing.standardEndDate || DEFAULTS.standardEndDate);
 
     let activePhase = 'early';
     if (currentDate <= earlyBirdEnd) {
@@ -47,28 +88,22 @@ const Register = ({ isDiscounted = false }) => {
         activePhase = 'onspot';
     }
 
-    // Pricing Data (Liutex-specific)
-    const pricingData = [
-        { id: 'speaker', label: 'Speaker Registration', early: applyDiscount(599), standard: applyDiscount(699), onspot: applyDiscount(799) },
-        { id: 'delegate', label: 'Delegate Registration', early: applyDiscount(699), standard: applyDiscount(799), onspot: applyDiscount(899) },
-        { id: 'poster', label: 'Poster Registration', early: applyDiscount(399), standard: applyDiscount(499), onspot: applyDiscount(599) },
-        { id: 'student', label: 'Student', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
-        { id: 'virtual', label: 'Virtual(Online)', early: applyDiscount(200), standard: applyDiscount(300), onspot: applyDiscount(400) },
-    ];
+    // ── Derived pricing arrays from backend data ──
+    const pricingData = (regPricing.categories || DEFAULTS.categories).map(cat => ({
+        ...cat,
+        early: applyDiscount(cat.early),
+        standard: applyDiscount(cat.standard),
+        onspot: applyDiscount(cat.onspot),
+    }));
 
-    const accommodationOptions = [
-        { nights: 2, single: 360, double: 400, triple: 440 },
-        { nights: 3, single: 540, double: 600, triple: 660 },
-        { nights: 4, single: 720, double: 800, triple: 880 },
-        { nights: 5, single: 900, double: 1000, triple: 1100 },
-    ];
+    const accommodationOptions = regPricing.accommodation || DEFAULTS.accommodation;
 
-    const sponsorshipPricing = [
-        { id: 'platinum', label: 'Platinum Sponsor', price: applyDiscount(4999) },
-        { id: 'diamond', label: 'Diamond Sponsor', price: applyDiscount(3999) },
-        { id: 'gold', label: 'Gold Sponsor', price: applyDiscount(2999) },
-        { id: 'exhibitor', label: 'Exhibitor', price: applyDiscount(1999) },
-    ];
+    const sponsorshipPricing = (regPricing.sponsorships || DEFAULTS.sponsorships).map(sp => ({
+        ...sp,
+        price: applyDiscount(sp.price),
+    }));
+
+    const accompanyingPersonPrice = Number(regPricing.accompanyingPersonPrice ?? DEFAULTS.accompanyingPersonPrice);
 
     // Helper to calculate total
     const calculateTotal = () => {
@@ -82,7 +117,7 @@ const Register = ({ isDiscounted = false }) => {
             const item = sponsorshipPricing.find(p => p.id === selectedSponsorship);
             if (item) total += item.price;
         }
-        if (includeAccompanying) total += 249;
+        if (includeAccompanying) total += accompanyingPersonPrice;
         if (selectedAccommodation) {
             const [nights, type] = selectedAccommodation.split('-');
             const option = accommodationOptions.find(o => o.nights === parseInt(nights));
@@ -120,8 +155,13 @@ const Register = ({ isDiscounted = false }) => {
             const sp = sponsorshipPricing.find(p => p.id === selectedSponsorship);
             if (sp) descParts.push(`${sp.label} : $${sp.price}`);
         }
-        if (includeAccompanying) descParts.push('Accompanying Person : $249');
-        if (selectedAccommodation) descParts.push(`Accommodation : ${selectedAccommodation}`);
+        if (includeAccompanying) descParts.push(`Accompanying Person : $${accompanyingPersonPrice}`);
+        if (selectedAccommodation) {
+            const [nights, type] = selectedAccommodation.split('-');
+            const accOpt = accommodationOptions.find(o => o.nights === parseInt(nights));
+            const accPrice = accOpt ? accOpt[type] : '';
+            descParts.push(`Accommodation (${nights} nights, ${type}) : $${accPrice}`);
+        }
 
         const payload = {
             title: formData.designation,
@@ -153,10 +193,14 @@ const Register = ({ isDiscounted = false }) => {
 
             // 2. Fetch Razorpay key & Create order
             const { key } = await siteApi.fetchPaymentKey();
+            const fullDescription = descParts.length > 0
+                ? descParts.join(' | ')
+                : 'LIUTEX Summit Registration';
+
             const { order } = await siteApi.createPaymentOrder({
                 amount: total,
                 registrationId: registration._id,
-                description: `LIUTEX Registration: ${formData.fullName}`
+                description: `LIUTEX Registration: ${formData.fullName} — ${fullDescription}`
             });
 
             // 3. Open Razorpay Checkout
@@ -165,7 +209,9 @@ const Register = ({ isDiscounted = false }) => {
                 amount: order.amount,
                 currency: order.currency,
                 name: 'LIUTEX Summit 2026',
-                description: `Payment for ${formData.fullName}`,
+                description: descParts.length > 0
+                    ? descParts.join(' | ')
+                    : `Registration for ${formData.fullName}`,
                 order_id: order.id,
                 prefill: {
                     name: formData.fullName,
@@ -323,17 +369,17 @@ const Register = ({ isDiscounted = false }) => {
                                 <th className="category-header">Types of Participation</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">September 25, 2026</span>
+                                    <span className="date">{new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">October 30, 2026</span>
+                                    <span className="date">{new Date(regPricing.standardEndDate || DEFAULTS.standardEndDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">December 14, 2026</span>
+                                    <span className="date">{new Date(regPricing.onspotEndDate || DEFAULTS.onspotEndDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>
@@ -404,7 +450,7 @@ const Register = ({ isDiscounted = false }) => {
                                 checked={includeAccompanying}
                                 onChange={(e) => setIncludeAccompanying(e.target.checked)}
                             />
-                            <strong>Include Accompanying Person ( $249 Extra)</strong>
+                            <strong>{`Include Accompanying Person ( $${accompanyingPersonPrice} Extra)`}</strong>
                         </label>
                     </div>
 
@@ -477,7 +523,7 @@ const Register = ({ isDiscounted = false }) => {
                         </label>
                     </div>
 
-                    <p className="processing-fee">Note: 5% of processing charges will be applicable.</p>
+                    <p className="processing-fee">Note: {regPricing.processingFeePercent ?? 5}% of processing charges will be applicable.</p>
 
                     {submitStatus === 'success' && (
                         <div style={{ padding: '14px 20px', background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '10px', color: '#15803d', fontWeight: 600, marginBottom: '16px', textAlign: 'center' }}>

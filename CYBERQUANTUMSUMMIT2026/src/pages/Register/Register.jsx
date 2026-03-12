@@ -1,111 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Register.css';
+import { countries } from '../../assets/constants/countries';
+import * as siteApi from '../../api/siteApi';
 
-const Register = ({ isDiscounted = false }) => {
-    // State for form fields
-    const [formData, setFormData] = useState({
-        designation: '',
-        fullName: '',
-        email: '',
-        telephone: '',
-        country: '',
-        company: '',
-        address: ''
-    });
-
-    // State for selected academic category (Radio)
-    const [selectedAcademicCategory, setSelectedAcademicCategory] = useState(null);
-
-    // State for Terms
-    const [termsAccepted, setTermsAccepted] = useState(false);
-
-    // New State for Accommodation
-    const [includeAccompanying, setIncludeAccompanying] = useState(false);
-    const [selectedAccommodation, setSelectedAccommodation] = useState(null);
-    const [selectedSponsorship, setSelectedSponsorship] = useState(null);
-
-    // Discount multiplier (20% off if discounted)
-    const discountMultiplier = isDiscounted ? 0.8 : 1;
-    const applyDiscount = (price) => Math.round(price * discountMultiplier);
-
-    // Date Logic to determine active phase
-    const currentDate = new Date();
-    // const earlyBirdEnd = new Date('2025-10-25');
-    // const standardEnd = new Date('2026-02-16');
-
-    // For demo/screenshot purpose, let's assume specific dates or just logic
-    // But since the user wants it to look like the screenshot where OnSpot is active:
-    // Today is Feb 17, 2026. Standard ended Feb 16, 2026. So OnSpot is active.
-
-    let activePhase = 'onspot';
-    const earlyBirdEnd = new Date('2025-10-25');
-    const standardEnd = new Date('2026-02-16');
-
-    if (currentDate <= earlyBirdEnd) {
-        activePhase = 'early';
-    } else if (currentDate <= standardEnd) {
-        activePhase = 'standard';
-    } else {
-        activePhase = 'onspot';
-    }
-
-    // Pricing Data
-    const academicPricing = [
-        { id: 'speaker', label: 'Speaker Registration', early: applyDiscount(749), standard: applyDiscount(849), onspot: applyDiscount(949) },
-        { id: 'delegate', label: 'Delegate Registration', early: applyDiscount(899), standard: applyDiscount(999), onspot: applyDiscount(1099) },
-        { id: 'poster', label: 'Poster Registration', early: applyDiscount(449), standard: applyDiscount(549), onspot: applyDiscount(649) },
-        { id: 'student', label: 'Student', early: applyDiscount(299), standard: applyDiscount(399), onspot: applyDiscount(499) },
-    ];
-
-    const accommodationOptions = [
+/* ── Default fallback pricing ── */
+const DEFAULTS = {
+    earlyBirdEndDate: '2026-10-25',
+    standardEndDate: '2027-02-16',
+    onspotEndDate: '2027-04-20',
+    categories: [
+        { id: 'speaker', label: 'Speaker Registration', early: 749, standard: 849, onspot: 949 },
+        { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
+        { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
+        { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+        { id: 'virtual', label: 'Virtual (Online)', early: 199, standard: 299, onspot: 399 },
+    ],
+    sponsorships: [
+        { id: 'platinum', label: 'Platinum Sponsor', price: 4999 },
+        { id: 'diamond', label: 'Diamond Sponsor', price: 3999 },
+        { id: 'gold', label: 'Gold Sponsor', price: 2999 },
+        { id: 'exhibitor', label: 'Exhibitor', price: 1999 },
+    ],
+    accommodation: [
         { nights: 2, single: 360, double: 400, triple: 440 },
         { nights: 3, single: 540, double: 600, triple: 660 },
         { nights: 4, single: 720, double: 800, triple: 880 },
         { nights: 5, single: 900, double: 1000, triple: 1100 },
-    ];
+    ],
+    accompanyingPersonPrice: 249,
+    processingFeePercent: 5,
+};
 
-    const sponsorshipPricing = [
-        { id: 'platinum', label: 'Platinum Sponsor', price: applyDiscount(4999) },
-        { id: 'diamond', label: 'Diamond Sponsor', price: applyDiscount(3999) },
-        { id: 'gold', label: 'Gold Sponsor', price: applyDiscount(2999) },
-        { id: 'exhibitor', label: 'Exhibitor', price: applyDiscount(1999) },
-    ];
+const Register = ({ isDiscounted = false }) => {
+    const [regPricing, setRegPricing] = useState(DEFAULTS);
 
-    // Helper to calculate total
+    useEffect(() => {
+        siteApi.fetchContent('registration-prices')
+            .then(data => { if (data && !data.error) setRegPricing(prev => ({ ...prev, ...data })); })
+            .catch(e => console.warn('[Register-Cyber] Could not load pricing:', e.message));
+    }, []);
+
+    const [formData, setFormData] = useState({
+        designation: '', fullName: '', email: '', telephone: '', country: '', company: '', address: ''
+    });
+    const [selectedAcademicCategory, setSelectedAcademicCategory] = useState(null);
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [includeAccompanying, setIncludeAccompanying] = useState(false);
+    const [selectedAccommodation, setSelectedAccommodation] = useState(null);
+    const [selectedSponsorship, setSelectedSponsorship] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null);
+
+    const discountMultiplier = isDiscounted ? 0.8 : 1;
+    const applyDiscount = (price) => Math.round(Number(price) * discountMultiplier);
+
+    const currentDate = new Date();
+    const earlyBirdEnd = new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate);
+    const standardEnd = new Date(regPricing.standardEndDate || DEFAULTS.standardEndDate);
+    let activePhase = 'early';
+    if (currentDate <= earlyBirdEnd) activePhase = 'early';
+    else if (currentDate <= standardEnd) activePhase = 'standard';
+    else activePhase = 'onspot';
+
+    const pricingData = (regPricing.categories || DEFAULTS.categories).map(cat => ({
+        ...cat,
+        early: applyDiscount(cat.early),
+        standard: applyDiscount(cat.standard),
+        onspot: applyDiscount(cat.onspot),
+    }));
+    const accommodationOptions = regPricing.accommodation || DEFAULTS.accommodation;
+    const sponsorshipPricing = (regPricing.sponsorships || DEFAULTS.sponsorships).map(sp => ({
+        ...sp, price: applyDiscount(sp.price),
+    }));
+    const accompanyingPersonPrice = Number(regPricing.accompanyingPersonPrice ?? DEFAULTS.accompanyingPersonPrice);
+
     const calculateTotal = () => {
         let total = 0;
-
-        // Add Academic Registration
         if (selectedAcademicCategory) {
-            const item = academicPricing.find(p => p.id === selectedAcademicCategory);
-            if (item) {
-                // Use activePhase price
-                total += item[activePhase];
-            }
+            const item = pricingData.find(p => p.id === selectedAcademicCategory);
+            if (item) total += item[activePhase];
         }
-
-        // Add Sponsorship
         if (selectedSponsorship) {
             const item = sponsorshipPricing.find(p => p.id === selectedSponsorship);
-            if (item) {
-                total += item.price;
-            }
+            if (item) total += item.price;
         }
-
-        // Add Accompanying Person
-        if (includeAccompanying) {
-            total += 249;
-        }
-
-        // Add Accommodation
+        if (includeAccompanying) total += accompanyingPersonPrice;
         if (selectedAccommodation) {
             const [nights, type] = selectedAccommodation.split('-');
             const option = accommodationOptions.find(o => o.nights === parseInt(nights));
-            if (option) {
-                total += option[type];
-            }
+            if (option) total += option[type];
         }
-
         return total;
     };
 
@@ -114,39 +98,115 @@ const Register = ({ isDiscounted = false }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const total = calculateTotal();
-        const summary = `
-Registration Summary:
-- Name: ${formData.fullName}
-- Designation: ${formData.designation}
-- Email: ${formData.email}
-- Total Amount: $${total}
-- Accompanying Person: ${includeAccompanying ? 'Yes' : 'No'}
-- Accommodation: ${selectedAccommodation ? selectedAccommodation : 'None'}
-- Sponsorship: ${selectedSponsorship ? sponsorshipPricing.find(s => s.id === selectedSponsorship)?.label : 'None'}
-
-(This is a demo submission)
-        `;
-        alert(summary);
-    };
-
     const handleReset = () => {
-        setFormData({
-            designation: '',
-            fullName: '',
-            email: '',
-            telephone: '',
-            country: '',
-            company: '',
-            address: ''
-        });
+        setFormData({ designation: '', fullName: '', email: '', telephone: '', country: '', company: '', address: '' });
         setSelectedAcademicCategory(null);
         setTermsAccepted(false);
         setIncludeAccompanying(false);
         setSelectedAccommodation(null);
         setSelectedSponsorship(null);
+        setSubmitStatus(null);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.fullName || !formData.email) {
+            alert('Please fill in your Full Name and Email before submitting.');
+            return;
+        }
+
+        const total = calculateTotal();
+        if (total <= 0) {
+            alert('Please select a registration category or sponsorship.');
+            return;
+        }
+
+        const descParts = [];
+        if (selectedAcademicCategory) {
+            const cat = pricingData.find(p => p.id === selectedAcademicCategory);
+            if (cat) descParts.push(`${cat.label} : $${cat[activePhase]}`);
+        }
+        if (selectedSponsorship) {
+            const sp = sponsorshipPricing.find(p => p.id === selectedSponsorship);
+            if (sp) descParts.push(`${sp.label} : $${sp.price}`);
+        }
+        if (includeAccompanying) descParts.push(`Accompanying Person : $${accompanyingPersonPrice}`);
+        if (selectedAccommodation) {
+            const [nights, type] = selectedAccommodation.split('-');
+            const accOpt = accommodationOptions.find(o => o.nights === parseInt(nights));
+            const accPrice = accOpt ? accOpt[type] : '';
+            descParts.push(`Accommodation (${nights} nights, ${type}) : $${accPrice}`);
+        }
+
+        const payload = {
+            title: formData.designation,
+            name: formData.fullName,
+            email: formData.email,
+            phone: formData.telephone,
+            country: formData.country,
+            company: formData.company,
+            address: formData.address,
+            registrationCategory: selectedAcademicCategory
+                ? pricingData.find(p => p.id === selectedAcademicCategory)?.label || '' : '',
+            accommodation: selectedAccommodation || '',
+            sponsorship: selectedSponsorship
+                ? sponsorshipPricing.find(p => p.id === selectedSponsorship)?.label || '' : '',
+            accompanyingPerson: includeAccompanying,
+            totalAmount: total,
+            description: descParts.join('\n'),
+            status: 'Pending',
+        };
+
+        setSubmitting(true);
+        setSubmitStatus(null);
+        try {
+            const registration = await siteApi.submitRegistration(payload);
+            if (!registration || registration.error) throw new Error(registration?.error || 'Failed to save registration.');
+
+            const { key } = await siteApi.fetchPaymentKey();
+            const fullDescription = descParts.length > 0 ? descParts.join(' | ') : 'CyberQuantum Summit Registration';
+            const { order } = await siteApi.createPaymentOrder({
+                amount: total,
+                registrationId: registration._id,
+                description: `CyberQuantum Registration: ${formData.fullName} — ${fullDescription}`
+            });
+
+            const options = {
+                key: key,
+                amount: order.amount,
+                currency: order.currency,
+                name: 'CyberQuantum Summit 2026',
+                description: descParts.length > 0 ? descParts.join(' | ') : `Registration for ${formData.fullName}`,
+                order_id: order.id,
+                prefill: { name: formData.fullName, email: formData.email, contact: formData.telephone },
+                theme: { color: '#2563eb' },
+                handler: async (response) => {
+                    try {
+                        const verifyResult = await siteApi.verifyPayment({
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                            registrationId: registration._id,
+                        });
+                        if (verifyResult.success) { setSubmitStatus('success'); handleReset(); }
+                        else throw new Error(verifyResult.message || 'Payment verification failed.');
+                    } catch (err) {
+                        alert('Payment success but verification failed: ' + err.message);
+                        setSubmitStatus('error');
+                    }
+                },
+                modal: { ondismiss: () => setSubmitting(false) }
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+        } catch (err) {
+            console.error('Registration/Payment error:', err);
+            setSubmitStatus('error');
+            alert(err.message || 'An error occurred during registration.');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -206,14 +266,17 @@ Registration Summary:
                             />
                         </div>
                         <div className="form-row">
-                            <input
-                                type="text"
+                            <select
                                 name="country"
-                                placeholder="Select Country"
                                 className="form-control"
                                 value={formData.country}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="" disabled>Select Country</option>
+                                {countries.map((country) => (
+                                    <option key={country} value={country}>{country}</option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 name="company"
@@ -242,26 +305,26 @@ Registration Summary:
                     <table className="pricing-table">
                         <thead>
                             <tr>
-                                <th className="category-header">ACADEMIC</th>
+                                <th className="category-header">Types of Participation</th>
                                 <th className={activePhase === 'early' ? 'active-header-early' : ''}>
                                     Early Bird Registration<br />
-                                    <span className="date">October 25, 2025</span>
+                                    <span className="date">{new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     {activePhase === 'early' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'standard' ? 'active-header-standard' : ''}>
                                     Standard Registration<br />
-                                    <span className="date">February 16, 2026</span>
+                                    <span className="date">{new Date(regPricing.standardEndDate || DEFAULTS.standardEndDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     {activePhase === 'standard' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                                 <th className={activePhase === 'onspot' ? 'active-header-onspot' : ''}>
                                     OnSpot Registration<br />
-                                    <span className="date">April 20, 2026</span>
+                                    <span className="date">{new Date(regPricing.onspotEndDate || DEFAULTS.onspotEndDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                                     {activePhase === 'onspot' && <span className="badge-active">ACTIVE</span>}
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {academicPricing.map(item => (
+                            {pricingData.map(item => (
                                 <tr key={item.id} className={selectedAcademicCategory === item.id ? 'selected-row' : ''}>
                                     <td className="item-cell">
                                         <label className="radio-label">
@@ -274,13 +337,13 @@ Registration Summary:
                                             {item.label}
                                         </label>
                                     </td>
-                                    <td className={`${activePhase === 'early' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}`}>
+                                    <td className={activePhase === 'early' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}>
                                         <span className={activePhase === 'early' ? 'price-active' : ''}>$ {item.early}</span>
                                     </td>
-                                    <td className={`${activePhase === 'standard' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}`}>
+                                    <td className={activePhase === 'standard' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}>
                                         <span className={activePhase === 'standard' ? 'price-active' : ''}>$ {item.standard}</span>
                                     </td>
-                                    <td className={`${activePhase === 'onspot' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}`}>
+                                    <td className={activePhase === 'onspot' && selectedAcademicCategory === item.id ? 'selected-active-cell' : ''}>
                                         <span className={activePhase === 'onspot' ? 'price-active' : ''}>$ {item.onspot}</span>
                                     </td>
                                 </tr>
@@ -288,7 +351,7 @@ Registration Summary:
                         </tbody>
                     </table>
 
-                    {/* New Sponsorship Section matching layout */}
+                    <h2 className="pricing-title" style={{ marginTop: '3rem' }}>SPONSORSHIP OPPORTUNITIES</h2>
                     <table className="pricing-table sponsorship-table">
                         <thead>
                             <tr>
@@ -326,7 +389,7 @@ Registration Summary:
                                 checked={includeAccompanying}
                                 onChange={(e) => setIncludeAccompanying(e.target.checked)}
                             />
-                            <strong>Include Accompanying Person ( $249 Extra)</strong>
+                            <strong>{`Include Accompanying Person ( $${accompanyingPersonPrice} Extra)`}</strong>
                         </label>
                     </div>
 
@@ -395,14 +458,32 @@ Registration Summary:
                                 checked={termsAccepted}
                                 onChange={(e) => setTermsAccepted(e.target.checked)}
                             />
-                            I've read and accept the <span className="terms-link">terms & conditions</span>.
+                            I've read and accept the <span className="terms-link">terms &amp; conditions</span>.
                         </label>
                     </div>
 
-                    <p className="processing-fee">Note: 5% of processing charges will be applicable.</p>
+                    <p className="processing-fee">Note: {regPricing.processingFeePercent ?? 5}% of processing charges will be applicable.</p>
+
+                    {submitStatus === 'success' && (
+                        <div style={{ padding: '14px 20px', background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '10px', color: '#15803d', fontWeight: 600, marginBottom: '16px', textAlign: 'center' }}>
+                            ✅ Registration submitted successfully! We will contact you shortly.
+                        </div>
+                    )}
+                    {submitStatus === 'error' && (
+                        <div style={{ padding: '14px 20px', background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '10px', color: '#dc2626', fontWeight: 600, marginBottom: '16px', textAlign: 'center' }}>
+                            ❌ Submission failed. Please check your connection and try again.
+                        </div>
+                    )}
 
                     <div className="action-buttons">
-                        <button className="btn-register" onClick={handleSubmit}>REGISTER NOW</button>
+                        <button
+                            className="btn-register"
+                            onClick={handleSubmit}
+                            disabled={submitting}
+                            style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+                        >
+                            {submitting ? 'Submitting…' : 'REGISTER NOW'}
+                        </button>
                         <button className="btn-reset" onClick={handleReset}>RESET</button>
                     </div>
                 </div>
