@@ -28,7 +28,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Address</h4>
-                                <p> Outram, Singapore</p>
+                                <p>Munich, Germany</p>
                             </div>
                         </div>
 
@@ -48,7 +48,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>contact@liutexvortexsummit.com</p>
+                                <p>contact@foodagrisummit.com</p>
                             </div>
                         </div>
 
@@ -87,8 +87,8 @@ const Contact = () => {
                                 <label>Message</label>
                                 <textarea rows="5" className="form-control" placeholder="How can we help you?" required></textarea>
                             </div>
-                            <Button type="submit" className="w-100" style={{ marginTop: '1rem' }}>
-                                <Send size={18} style={{ marginRight: '8px' }} /> SEND MESSAGE
+                            <Button type="submit" className="btn-submit-custom">
+                                <Send size={18} /> SEND MESSAGE
                             </Button>
                         </form>
                     </div>

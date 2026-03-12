@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
-import * as siteApi from '../../api/siteApi';
+import { fetchContent } from '../../api/siteApi';
 import './FAQ.css';
 
 /* ── Default fallback data ── */
@@ -15,12 +15,12 @@ const DEFAULTS = {
             category: 'Registration',
             items: [
                 {
-                    question: 'How can I register for the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics?',
+                    question: 'How can I register for the International Conference On RENEWABLE ENERGY & CLIMATE CHANGE?',
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline.",
                 },
                 {
                     question: 'Is there a discount for group registrations?',
-                    answer: 'Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team at contact@liutexvortexsummit.com for more details.',
+                    answer: 'Yes, we offer group discounts for groups larger than 5 attendees. Please contact our support team for more details.',
                 },
                 {
                     question: 'What is included in the registration fee?',
@@ -45,10 +45,6 @@ const DEFAULTS = {
                     answer: 'Notifications of acceptance will be sent via email within 2-3 weeks after the submission deadline.',
                 },
                 {
-                    question: 'Can I present more than one abstract?',
-                    answer: 'Yes, you can submit multiple abstracts. However, please ensure that each abstract presents distinct research findings.',
-                },
-                {
                     question: 'What form of presentation is available?',
                     answer: 'Presentations can be in the form of oral presentations or poster displays. You can select your preference during submission, but the final decision rests with the Scientific Committee.',
                 },
@@ -60,15 +56,11 @@ const DEFAULTS = {
             items: [
                 {
                     question: 'Where is the congress taking place?',
-                    answer: 'The congress will be held in Outram, Singapore. Detailed venue information and maps are available on the Venue page.',
+                    answer: 'Detailed venue information and maps are available on the Venue page.',
                 },
                 {
                     question: 'Are there recommended hotels nearby?',
-                    answer: 'Yes, we have partnered with several hotels near the venue to offer discounted rates for attendees. Please check the Venue page for a list of recommended accommodations.',
-                },
-                {
-                    question: 'Is there parking available at the venue?',
-                    answer: 'Yes, the venue offers ample parking space for attendees. Valet services are also available upon request.',
+                    answer: 'Yes, we have partnered with several hotels near the venue to offer discounted rates for attendees. Please check the Venue page.',
                 },
             ],
         },
@@ -78,11 +70,11 @@ const DEFAULTS = {
             items: [
                 {
                     question: 'Do I need a visa to attend the conference?',
-                    answer: 'Visa requirements depend on your country of citizenship. Please check with your local embassy or consulate. We can provide an invitation letter to support your visa application upon successful registration.',
+                    answer: 'Visa requirements depend on your country of citizenship. We can provide an invitation letter to support your visa application upon successful registration.',
                 },
                 {
                     question: 'How do I request an invitation letter?',
-                    answer: 'Invitation letters can be requested via email after your registration is confirmed. Please send your request along with your registration ID to our support team.',
+                    answer: 'Invitation letters can be requested via email after your registration is confirmed.',
                 },
             ],
         },
@@ -95,7 +87,7 @@ const FAQ = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        siteApi.fetchContent('faq')
+        fetchContent('faq')
             .then(data => { if (data && !data.error) setFaqData(prev => ({ ...prev, ...data })); })
             .catch(e => console.warn('[FAQ] Could not load content:', e.message));
     }, []);
@@ -108,7 +100,6 @@ const FAQ = () => {
         setSearchTerm(e.target.value.toLowerCase());
     };
 
-    // Filter FAQs based on search
     const filteredFaqs = (faqData.categories || []).map(cat => ({
         ...cat,
         items: (cat.items || []).filter(item =>
