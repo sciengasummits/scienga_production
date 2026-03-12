@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../../components/common/Button/Button';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { fetchContent } from '../../api/siteApi';
 import './Contact.css';
 
 const Contact = () => {
+    const [contactInfo, setContactInfo] = useState({
+        email: 'contact@healthmedsummit.com',
+        phone: '+91 7842090097',
+        whatsapp: '+91 7842090097',
+    });
+
+    useEffect(() => {
+        fetchContent('contact').then((data) => {
+            if (data) {
+                setContactInfo({
+                    email: data.email || 'contact@healthmedsummit.com',
+                    phone: data.phone || '+91 7842090097',
+                    whatsapp: data.whatsapp || '+91 7842090097',
+                });
+            }
+        });
+    }, []);
+
     return (
         <div className="contact-page">
             <div className="page-header">
@@ -38,7 +57,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Phone</h4>
-                                <p>+91 7842090097</p>
+                                <p>{contactInfo.phone}</p>
                             </div>
                         </div>
 
@@ -48,7 +67,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>contact@renewableenergyconf.com</p>
+                                <p>{contactInfo.email}</p>
                             </div>
                         </div>
 

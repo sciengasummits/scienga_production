@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User } from 'lucide-react';
-import { speakers } from '../../../data/speakersData';
+import { speakers as staticSpeakers } from '../../../data/speakersData';
+import { fetchSpeakers } from '../../../api/siteApi';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
     const location = useLocation();
     const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+    const [speakers, setSpeakers] = useState(staticSpeakers);
+
+    useEffect(() => {
+        fetchSpeakers().then(data => {
+            if (data && data.length > 0) {
+                // Map backend speaker fields to the format expected by the UI
+                const mapped = data.filter(s => s.visible !== false).map(s => ({
+                    id: s._id,
+                    name: s.name,
+                    title: s.designation || s.title || '',
+                    affiliation: s.affiliation || s.institution || '',
+                    category: s.category || 'Speakers',
+                    image: s.image || s.photo || '',
+                    bio: s.bio || '',
+                }));
+                if (mapped.length > 0) setSpeakers(mapped);
+            }
+        });
+    }, []);
 
     const getDisplayCategory = (category) => {
         if (category === 'Student') return 'Student Speaker';
@@ -26,12 +46,12 @@ const SpeakersSection = ({ showViewAll }) => {
 
     const openModal = (speaker) => {
         setSelectedSpeaker(speaker);
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setSelectedSpeaker(null);
-        document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.style.overflow = 'auto';
     };
 
     return (
@@ -59,9 +79,7 @@ const SpeakersSection = ({ showViewAll }) => {
                         <div className="speaker-card" key={speaker.id}>
                             <div className="speaker-img-wrapper">
                                 <img src={speaker.image} alt={speaker.name} className="speaker-img" />
-                                <div className="speaker-overlay">
-                                    {/* Social icons could go here */}
-                                </div>
+                                <div className="speaker-overlay"></div>
                             </div>
                             <div className="speaker-info">
                                 {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
@@ -90,24 +108,21 @@ const SpeakersSection = ({ showViewAll }) => {
             </div>
 
             {/* Speaker Modal */}
-            {
-                selectedSpeaker && (
-                    <div className="modal-overlay" onClick={closeModal}>
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
-                            <button className="modal-close" onClick={closeModal}>&times;</button>
-
-                            <div className="modal-body">
-                                {selectedSpeaker.category && <p className="modal-category">{getDisplayCategory(selectedSpeaker.category)}</p>}
-                                <h3 className="modal-title">{selectedSpeaker.name}</h3>
-                                <span className="modal-type">{selectedSpeaker.title}</span>
-                                <p className="modal-affiliation-highlight">{selectedSpeaker.affiliation}</p>
-                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of general medicine, contributing significantly to research and clinical practice. With years of experience leading healthcare initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing medical standards globally. Their work focuses on innovative treatment methodologies and improving patient outcomes through evidence-based medicine."}</p>
-                            </div>
+            {selectedSpeaker && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close" onClick={closeModal}>&times;</button>
+                        <div className="modal-body">
+                            {selectedSpeaker.category && <p className="modal-category">{getDisplayCategory(selectedSpeaker.category)}</p>}
+                            <h3 className="modal-title">{selectedSpeaker.name}</h3>
+                            <span className="modal-type">{selectedSpeaker.title}</span>
+                            <p className="modal-affiliation-highlight">{selectedSpeaker.affiliation}</p>
+                            <p className="modal-desc">{selectedSpeaker.bio || 'A distinguished expert in the field of public health and preventive medicine, contributing significantly to research and clinical practice. With years of experience leading healthcare initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing medical standards globally. Their work focuses on innovative treatment methodologies and improving patient outcomes through evidence-based medicine.'}</p>
                         </div>
                     </div>
-                )
-            }
-        </section >
+                </div>
+            )}
+        </section>
     );
 };
 
