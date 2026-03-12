@@ -1,56 +1,90 @@
-import React from 'react';
-import { CalendarDays, CheckCircle, Clock, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './AboutSection.css';
+import { fetchContent } from '../../../api/siteApi';
+
+const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
+
+const DEFAULT_ABOUT = {
+    subtitle: 'Welcome to Our Summit',
+    title: 'About The Conference',
+    paragraph1: 'We are truly delighted to welcome you to the Annual International Conference on Astronomy, Astrophysics and Space Science, scheduled to take place from April 12-14, 2027, in the vibrant city of Tokyo, Japan. This premier international conference brings together top minds from academia, research institutions, and space agencies to explore groundbreaking discoveries in astronomy, astrophysics, and space exploration.',
+    paragraph2: 'The conference is designed to bridge the gap between theoretical research and observational discoveries, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The conference aims to accelerate progress across disciplines and foster impactful connections that will advance our understanding of the cosmos.',
+    objectives: [
+        'Advance Global Knowledge Exchange in astronomy and astrophysics',
+        'Foster Interdisciplinary Collaboration between academia and space agencies',
+        'Showcase Innovative Research in cosmic phenomena and space exploration',
+        'Promote Scientific Development and collaborative frameworks',
+        'Empower Future Astronomers through workshops and networking',
+    ],
+    keyThemes: [
+        'Observational Astronomy & Telescopes',
+        'Exoplanets & Planetary Systems',
+        'Stellar Evolution & Supernovae',
+        'Galaxies & Cosmology',
+        'Dark Matter & Dark Energy',
+        'Black Holes & Neutron Stars',
+        'Space Missions & Exploration',
+        'Astrobiology & Search for Life',
+    ],
+};
+
+const DEFAULT_DATES = {
+    dates: [
+        { month: 'SEP', day: '15', year: '2026', event: 'Abstract Submission Opens', icon: 'CalendarDays' },
+        { month: 'NOV', day: '25', year: '2026', event: 'Early Bird Deadline', icon: 'CheckCircle' },
+        { month: 'JAN', day: '25', year: '2027', event: 'Submission Deadline', icon: 'Clock' },
+        { month: 'APR', day: '12', year: '2027', event: 'Conference Date', icon: 'Star', sub: 'April 12-14, 2027, Tokyo' },
+    ],
+};
 
 const AboutSection = () => {
+    const navigate = useNavigate();
+    const [about, setAbout] = useState(DEFAULT_ABOUT);
+    const [datesData, setDatesData] = useState(DEFAULT_DATES);
+
+    useEffect(() => {
+        fetchContent('about').then(d => { if (d) setAbout(prev => ({ ...prev, ...d })); });
+        fetchContent('importantDates').then(d => { if (d) setDatesData(prev => ({ ...prev, ...d })); });
+    }, []);
+
+    const isHighlight = (idx, total) => idx === total - 1;
+
     return (
         <section className="about section-padding" id="about">
             <div className="container about__container">
                 {/* Left Side: Content */}
                 <div className="about__content">
-                    <h4 className="section-subtitle">Welcome To Our Summit</h4>
-                    <h2 className="section-title">About The Conference</h2>
+                    <h4 className="section-subtitle">{about.subtitle}</h4>
+                    <h2 className="section-title">{about.title}</h2>
                     <div className="about__scroll-content">
-                        <p className="about__text">
-                            We are truly delighted to welcome you to the <strong>Annual International Conference on Astronomy, Astrophysics and Space Science</strong>, scheduled to take place from <strong>April 12-14, 2027</strong>, in the vibrant city of <strong>Tokyo, Japan</strong>. This premier international conference brings together top minds from academia, research institutions, and space agencies to explore groundbreaking discoveries in astronomy, astrophysics, and space exploration.
-                        </p>
-                        <p className="about__text">
-                            The conference is designed to bridge the gap between theoretical research and observational discoveries, serving as a dynamic platform for collaboration, knowledge exchange, and future-focused thinking. The conference aims to accelerate progress across disciplines and foster impactful connections that will advance our understanding of the cosmos.
-                        </p>
-                        <p className="about__text">
-                            Join us in <strong>Japan</strong> for three impactful days of insight, innovation, and connection at the forefront of astronomical research and space science!
-                        </p>
-                        <p className="about__text">
-                            Innovation Hub: Tokyo is a global leader in space technology and astronomical research, home to cutting-edge observatories and institutions pioneering our exploration of the universe.
-                            State-of-the-Art Infrastructure: The summit will leverage Munich’s advanced conference facilities, such as the Messe München or ICM, known for hosting premier international trade shows.
-                            Sustainability Leadership: Germany’s "Energiewende" (Energy Transition) policy makes Munich an inspiring location to witness real-world implementations of renewable energy at scale.
-                        </p>
+                        <p className="about__text">{about.paragraph1}</p>
+                        {about.paragraph2 && <p className="about__text">{about.paragraph2}</p>}
 
-                        <div className="about__objectives" style={{ marginTop: '2rem' }}>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--color-text-header)' }}>Conference Objectives</h3>
-                            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: 'var(--color-text-body)' }}>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Advance Global Knowledge Exchange:</strong> To facilitate a premier platform for astronomers, astrophysicists, and space scientists to exchange groundbreaking ideas and research in cosmic phenomena and space exploration.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Foster Interdisciplinary Collaboration:</strong> To encourage cross-sector partnerships between academia, space agencies, and research institutions for accelerating astronomical discoveries.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Showcase Innovative Research:</strong> To present state-of-the-art research and methodologies that address the fundamental questions about the universe, from exoplanets to dark matter.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Promote Scientific Development:</strong> To discuss and formulate collaborative frameworks that support global space exploration goals and astronomical research.</li>
-                                <li style={{ marginBottom: '0.5rem' }}><strong>Empower Future Astronomers:</strong> To mentor and inspire young scientists and researchers through workshops, networking, and exposure to cutting-edge astronomical research.</li>
-                            </ul>
-                        </div>
+                        {about.objectives?.length > 0 && (
+                            <div className="about__objectives" style={{ marginTop: '2rem' }}>
+                                <h3 className="section-title-sm">Conference Objectives</h3>
+                                <ul className="about__list">
+                                    {about.objectives.map((obj, i) => <li key={i}>{obj}</li>)}
+                                </ul>
+                            </div>
+                        )}
 
-                        <div className="about__themes" style={{ marginTop: '2rem' }}>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1rem', color: 'var(--color-text-header)' }}>Key Themes & Topics</h3>
-                            <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', color: 'var(--color-text-body)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.5rem' }}>
-                                <li>Observational Astronomy & Telescopes</li>
-                                <li>Exoplanets & Planetary Systems</li>
-                                <li>Stellar Evolution & Supernovae</li>
-                                <li>Galaxies & Cosmology</li>
-                                <li>Dark Matter & Dark Energy</li>
-                                <li>Black Holes & Neutron Stars</li>
-                                <li>Space Missions & Exploration</li>
-                                <li>Astrobiology & Search for Life</li>
-                            </ul>
-                        </div>
+                        {about.keyThemes?.length > 0 && (
+                            <div className="about__themes" style={{ marginTop: '2rem' }}>
+                                <h3 className="section-title-sm">Key Themes &amp; Topics</h3>
+                                <ul className="about__list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '0.5rem' }}>
+                                    {about.keyThemes.map((t, i) => <li key={i}>{t}</li>)}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="about__actions" style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
+                        <Button onClick={() => navigate('/program')}>LEARN MORE</Button>
+                        <Button variant="secondary" onClick={() => navigate('/register')}>REGISTER NOW</Button>
                     </div>
                 </div>
 
@@ -63,66 +97,26 @@ const AboutSection = () => {
                         </div>
 
                         <div className="premium-dates-list">
-                            {/* Card 1 */}
-                            <div className="premium-date-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">SEP</span>
-                                    <span className="pd-day">15</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2026</span>
-                                    <h4 className="pd-event">Abstract Submission Opens</h4>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <CalendarDays size={40} />
-                                </div>
-                            </div>
-
-                            {/* Card 2 */}
-                            <div className="premium-date-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">NOV</span>
-                                    <span className="pd-day">25</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2026</span>
-                                    <h4 className="pd-event">Early Bird Deadline</h4>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <CheckCircle size={40} />
-                                </div>
-                            </div>
-
-                            {/* Card 3 */}
-                            <div className="premium-date-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">JAN</span>
-                                    <span className="pd-day">25</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2027</span>
-                                    <h4 className="pd-event">Submission Deadline</h4>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <Clock size={40} />
-                                </div>
-                            </div>
-
-                            {/* Card 4 - Highlight */}
-                            <div className="premium-date-card highlight-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">APR</span>
-                                    <span className="pd-day">12</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2027</span>
-                                    <h4 className="pd-event">Conference Date</h4>
-                                    <span className="pd-sub">April 12-14, Tokyo</span>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <Star size={40} />
-                                </div>
-                            </div>
+                            {(datesData.dates || []).map((d, idx) => {
+                                const IconComp = ICON_MAP[d.icon] || CalendarDays;
+                                const highlight = isHighlight(idx, datesData.dates.length);
+                                return (
+                                    <div className={`premium-date-card${highlight ? ' highlight-card' : ''}`} key={idx}>
+                                        <div className="pd-date-box">
+                                            <span className="pd-month">{d.month}</span>
+                                            <span className="pd-day">{d.day}</span>
+                                        </div>
+                                        <div className="pd-content">
+                                            <span className="pd-year">{d.year}</span>
+                                            <h4 className="pd-event">{d.event}</h4>
+                                            {d.sub && <span className="pd-sub">{d.sub}</span>}
+                                        </div>
+                                        <div className="pd-icon-bg">
+                                            <IconComp size={40} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
