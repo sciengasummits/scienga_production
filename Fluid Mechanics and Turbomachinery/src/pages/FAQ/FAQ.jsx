@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Plus, Minus, Search } from 'lucide-react';
+import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
 import './FAQ.css';
-
 const FAQ = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
@@ -169,7 +168,9 @@ const FAQ = () => {
                             <h3>Still have questions?</h3>
                             <p>Can't find the answer you're looking for? Please chat to our friendly team.</p>
                             <Link to="/contact">
-                                <Button variant="primary">Contact Support</Button>
+                                <Button>
+                                    <MessageCircle size={18} style={{ marginRight: '8px' }} /> Contact Support
+                                </Button>
                             </Link>
                         </div>
                     </div>

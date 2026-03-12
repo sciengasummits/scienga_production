@@ -5,6 +5,7 @@ import Logo from '../Logo/Logo';
 import './Footer.css';
 
 const Footer = () => {
+
     return (
         <footer className="footer">
             <div className="container">
@@ -43,7 +44,7 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span>Marina Bay, Singapore</span>
+                                    <span>Marina Bay Sands, Singapore</span>
                                 </div>
                             </li>
 
