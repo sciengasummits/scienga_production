@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { User, MapPin } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import { fetchContent, fetchSpeakers } from '../../../api/siteApi';
+import { fetchContent } from '../../../api/siteApi';
 
-const DEFAULT = {
+const DEFAULTS = {
     subtitle: 'International Conference on',
     title: 'Liutex Theory and Applications\nin Vortex Identification and Vortex Dynamics',
     description: 'International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.',
@@ -18,46 +19,62 @@ const DEFAULT = {
 
 const HeroSection = () => {
     const navigate = useNavigate();
-    const [data, setData] = useState(DEFAULT);
+    const [hero, setHero] = useState(DEFAULTS);
+    const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-    const [chairmen, setChairmen] = useState([]);
 
-    // Fetch live data from backend + poll every 15 s for dashboard changes
+    const resolveUrl = (url) => {
+        if (!url) return '';
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        if (url.startsWith('/')) return `http://localhost:5050${url}`;
+        return `http://localhost:5050/${url}`;
+    };
+
+    // Fetch dynamic content from backend
     useEffect(() => {
         let cancelled = false;
 
         const load = () => {
-            fetchContent('hero').then(d => {
-                if (!cancelled && d) setData(prev => ({ ...prev, ...d }));
+            fetchContent('hero').then(data => {
+                if (!cancelled && data) setHero(prev => ({ ...prev, ...data }));
             });
-            fetchSpeakers().then(speakersData => {
-                if (!cancelled) {
-                    let comm = [];
-                    if (speakersData && speakersData.length > 0) {
-                        comm = speakersData.filter(s => s.category && s.category.toLowerCase().includes('comm') && s.visible !== false);
-                    }
-                    
-                    // Fallback to dummy data if no chairman exists in the database
-                    if (comm.length === 0) {
-                        comm = [
-                            { _id: 'dummy1', name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80' },
-                            { _id: 'dummy2', name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80' },
-                            { _id: 'dummy3', name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80' }
-                        ];
-                    }
 
-                    setChairmen(comm.slice(0, 3));
+            // Fetch individual chairman keys as saved by the workflow dashboard
+            Promise.all([
+                fetchContent('chairman-main'),
+                fetchContent('chairman-1'),
+                fetchContent('chairman-2')
+            ]).then(([main, c1, c2]) => {
+                if (!cancelled) {
+                    if (main || c1 || c2) {
+                        setChairs({
+                            chair: main,
+                            viceChair: c1,
+                            coChair: c2
+                        });
+                    } else {
+                        // Fallback dummy data if nothing is saved yet
+                        setChairs({
+                            chair: { name: 'Dr. Chaoqun Liu', affiliation: 'University of Texas at Arlington', country: 'USA', title: 'Conference Chairman' },
+                            viceChair: { name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', title: 'Conference Co-chairman' },
+                            coChair: { name: 'Dr. James Chen', affiliation: 'Singapore Food Agency', country: 'Singapore', title: 'Conference Co-chairman' }
+                        });
+                    }
                 }
+            }).catch(err => {
+                console.error('Failed to fetch chairman cards:', err);
             });
         };
 
-        load(); // initial fetch
+        load();
 
-        // Poll every 15 seconds so dashboard edits appear without a page reload
+        // Polling every 15s to reflect dashboard changes live
         const interval = setInterval(load, 15000);
 
-        // Also re-fetch immediately when the visitor switches back to this tab
-        const onVisible = () => { if (document.visibilityState === 'visible') load(); };
+        // Also refresh when tab becomes visible
+        const onVisible = () => {
+            if (document.visibilityState === 'visible') load();
+        };
         document.addEventListener('visibilitychange', onVisible);
 
         return () => {
@@ -67,32 +84,46 @@ const HeroSection = () => {
         };
     }, []);
 
-    // Countdown
     useEffect(() => {
-        const targetDate = new Date(data.countdownTarget).getTime();
+        const targetDate = new Date(hero.countdownTarget || DEFAULTS.countdownTarget).getTime();
+
         const interval = setInterval(() => {
             const now = new Date().getTime();
-            const diff = targetDate - now;
-            if (diff > 0) {
-                setTimeLeft({
-                    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-                    hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-                    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-                    seconds: Math.floor((diff % (1000 * 60)) / 1000),
-                });
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                setTimeLeft({ days, hours, minutes, seconds });
             } else {
                 clearInterval(interval);
             }
         }, 1000);
+
         return () => clearInterval(interval);
-    }, [data.countdownTarget]);
+    }, [hero.countdownTarget]);
 
-    // Parse multiline title (split on \n)
-    const titleLines = (data.title || '').split('\n');
+    // Parse date for info-card (expects "Month Day-Day, Year" or similar)
+    const monthStr = hero.conferenceDate?.split(' ')[0] || 'December';
+    const daysStr = hero.conferenceDate?.split(' ').slice(1).join(' ') || '14-16, 2026';
 
-    // If a custom background was uploaded via the dashboard, override the CSS bg
-    const heroBgStyle = data.bgImage
-        ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${data.bgImage}')` }
+    // Support multiline title via backend \n
+    const renderTitle = () => {
+        if (!hero.title) return DEFAULTS.title;
+        return hero.title.split('\n').map((line, i) => (
+            <React.Fragment key={i}>
+                {line}
+                {i !== hero.title.split('\n').length - 1 && <br />}
+            </React.Fragment>
+        ));
+    };
+
+    const bgUrl = resolveUrl(hero.bgImage);
+    const heroBgStyle = bgUrl 
+        ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${bgUrl}')` }
         : {};
 
     return (
@@ -101,34 +132,44 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">{data.subtitle}</span>
-                        {titleLines.map((line, i) => (
-                            <React.Fragment key={i}>{line}{i < titleLines.length - 1 && <br />}</React.Fragment>
-                        ))}
+                        <span className="hero__title-sub">{hero.subtitle}</span> <br />
+                        {renderTitle()}
                     </h1>
 
-                    <div className="hero__countdown-header">Days To Go</div>
-                    <div className="hero__countdown">
-                        {[['Days', timeLeft.days], ['Hours', timeLeft.hours], ['Minutes', timeLeft.minutes], ['Seconds', timeLeft.seconds]].map(([label, val]) => (
-                            <div className="countdown-item" key={label}>
-                                <span className="countdown-value">{val}</span>
-                                <span className="countdown-label">{label}</span>
+                    <div className="hero__countdown-wrapper">
+                        <span className="days-to-go-label" style={{ display: 'block', fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.5rem', color: '#4da3ff', textTransform: 'uppercase', letterSpacing: '1px' }}>Days To Go</span>
+                        <div className="hero__countdown">
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.days}</span>
+                                <span className="countdown-label">Days</span>
                             </div>
-                        ))}
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.hours}</span>
+                                <span className="countdown-label">Hours</span>
+                            </div>
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.minutes}</span>
+                                <span className="countdown-label">Minutes</span>
+                            </div>
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.seconds}</span>
+                                <span className="countdown-label">Seconds</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <p className="hero__desc">{data.description}</p>
-
+                    <p className="hero__desc">{hero.description}</p>
+                    
                     <div className="hero-actions-container">
                         <div className="hero__actions">
-                            {data.showBrochure !== false && (
+                            {hero.showBrochure !== false && (
                                 <Button onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
                             )}
-                            {data.showAbstract !== false && (
+                            {hero.showAbstract !== false && (
                                 <Button onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
                             )}
                         </div>
-                        {data.showRegister !== false && (
+                        {hero.showRegister !== false && (
                             <div className="hero__actions-bottom">
                                 <Button className="btn-elevate" onClick={() => navigate('/register')}>REGISTER NOW</Button>
                             </div>
@@ -136,45 +177,71 @@ const HeroSection = () => {
                     </div>
                 </div>
 
-                <div className="hero__right-content">
+                <div className="hero__right">
                     <div className="hero__info-cards">
                         <div className="info-card date-card">
-                            <h3>{(() => {
-                                const parts = (data.conferenceDate || 'December 14-16, 2026').trim().split(' ');
-                                return parts[0]; // Month
-                            })()}</h3>
-                            <p>{(() => {
-                                const parts = (data.conferenceDate || 'December 14-16, 2026').trim().split(' ');
-                                return parts.slice(1).join(' '); // Date + Year
-                            })()}</p>
+                            <h3>{monthStr}</h3>
+                            <p>{daysStr}</p>
                         </div>
                         <div className="info-card venue-card">
                             <h3>Venue</h3>
-                            <p>Event Venue: {data.venue}</p>
+                            <p>Event Venue: {hero.venue}</p>
                         </div>
                     </div>
 
-                    {chairmen.length > 0 && (
-                        <div className="hero__chairmen-cards">
-                            {chairmen.map((chairman, idx) => (
-                                <div className="chairman-card" key={chairman._id || idx}>
-                                    <div className="chairman-badge">CONFERENCE CHAIRMAN</div>
-                                    <div className="chairman-img-wrapper">
-                                        <img src={chairman.image || chairman.photo || 'https://via.placeholder.com/200'} alt={chairman.name} />
-                                    </div>
-                                    <div className="chairman-info">
-                                        <h4>{chairman.name}</h4>
-                                        <p className="chairman-affiliation">{chairman.affiliation || chairman.institution}</p>
-                                        <p className="chairman-location">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '4px', verticalAlign: 'middle', marginTop: '-2px'}}>
-                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                                <circle cx="12" cy="10" r="3"></circle>
-                                            </svg>
-                                            {chairman.country || 'China'}
-                                        </p>
+                    {chairs && (chairs.chair?.name || chairs.viceChair?.name || chairs.coChair?.name) && (
+                        <div className="hero__chairs-row">
+                            {chairs.chair?.name && (
+                                <div className="chair-card-v">
+                                    <div className="chair-badge-v">{chairs.chair.title || 'Conference Chairman'}</div>
+                                    {chairs.chair.image ? (
+                                        <img src={resolveUrl(chairs.chair.image)} alt={chairs.chair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chairs.chair.name}</h4>
+                                        <p className="chair-aff-v">{chairs.chair.affiliation}</p>
+                                        {chairs.chair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.chair.country}</p>
+                                        )}
                                     </div>
                                 </div>
-                            ))}
+                            )}
+                            {chairs.viceChair?.name && (
+                                <div className="chair-card-v">
+                                    <div className="chair-badge-v">{chairs.viceChair.title || 'Conference Co-chair'}</div>
+                                    {chairs.viceChair.image ? (
+                                        <img src={resolveUrl(chairs.viceChair.image)} alt={chairs.viceChair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chairs.viceChair.name}</h4>
+                                        <p className="chair-aff-v">{chairs.viceChair.affiliation}</p>
+                                        {chairs.viceChair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.viceChair.country}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            {chairs.coChair?.name && (
+                                <div className="chair-card-v">
+                                    <div className="chair-badge-v">{chairs.coChair.title || 'Conference Co-chair'}</div>
+                                    {chairs.coChair.image ? (
+                                        <img src={resolveUrl(chairs.coChair.image)} alt={chairs.coChair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chairs.coChair.name}</h4>
+                                        <p className="chair-aff-v">{chairs.coChair.affiliation}</p>
+                                        {chairs.coChair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.coChair.country}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

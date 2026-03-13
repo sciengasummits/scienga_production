@@ -40,7 +40,7 @@ const AbstractSubmission = () => {
 
     // Live-fetch Important Dates from backend; silently fall back to defaults
     useEffect(() => {
-        fetch('http://localhost:5000/api/content/importantDates?conference=liutex')
+        fetch('http://localhost:5050/api/content/importantDates?conference=liutex')
             .then(r => r.ok ? r.json() : null)
             .then(data => { if (data?.dates?.length) setImportantDates(data.dates); })
             .catch(() => { });
