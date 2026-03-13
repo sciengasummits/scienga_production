@@ -121,8 +121,9 @@
 .hero__info-cards {
     position: relative;
     width: 400px;
-    height: 380px;
+    height: 400px;
     margin-right: -1rem;
+    margin-top: 3rem;
 }
 
 .info-card {
@@ -137,7 +138,7 @@
 }
 
 .date-card {
-    top: 0;
+    top: 40px;
     left: 0;
     background: var(--color-secondary-blue);
     width: 240px;
@@ -206,7 +207,7 @@
 }
 
 .venue-card {
-    bottom: 60px;
+    bottom: 20px;
     right: 0;
     background: var(--color-dark-void);
     width: 260px;
