@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    position: relative;
 }
 
 /* TOP ROW */
@@ -102,7 +103,13 @@ a.contact-item:active {
     text-decoration: none;
 }
 
-.navbar--scrolled .contact-item {
+.navbar--scrolled .contact-item,
+.navbar--scrolled .contact-item .contact-label,
+.navbar--scrolled .contact-item .contact-value,
+.navbar--scrolled a.contact-item,
+.navbar--scrolled a.contact-item:visited,
+.navbar--scrolled a.contact-item:hover,
+.navbar--scrolled a.contact-item:active {
     color: var(--color-text-dark);
 }
 
@@ -358,5 +365,27 @@ a.contact-item:active {
     .navbar__dropdown-item:hover {
         padding-left: 10px;
         background: transparent;
+    }
+}
+
+/* Floating badge under right side of navbar */
+.navbar__cpd-badge {
+    position: absolute;
+    right: -100px; /* Pushed further to the right */
+    top: calc(100% + 15px);
+    width: 250px;
+    z-index: 1000;
+}
+
+.navbar__cpd-badge img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 992px) {
+    .navbar__cpd-badge {
+        display: none;
     }
 }

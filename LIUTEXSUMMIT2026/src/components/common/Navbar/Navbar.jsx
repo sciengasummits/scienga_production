@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Mail, Phone, MessageCircle, ChevronDown } from 'lucide-react';
+import { Menu, X, Mail, Phone, MessageCircle } from 'lucide-react';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
 import { fetchContent } from '../../../api/siteApi';
+import mediaImage from '../../../assets/images/Media.jpg';
 import './Navbar.css';
 
 
@@ -58,6 +59,7 @@ const Navbar = () => {
         { name: 'SPEAKERS', path: '/speakers' },
         { name: 'SPONSORSHIP', path: '/sponsors' },
         { name: 'REGISTER', path: '/register' },
+        { name: 'CONTACT', path: '/contact' },
         {
             name: 'MORE',
             path: '#',
@@ -67,7 +69,7 @@ const Navbar = () => {
                 { name: 'Visa Info', path: '/visa-info' }
             ]
         },
-        { name: 'CONTACT', path: '/contact' },
+
     ];
 
     return (
@@ -127,7 +129,7 @@ const Navbar = () => {
                             link.dropdown ? (
                                 <div className="navbar__dropdown" key={link.name}>
                                     <span className={`navbar__link ${location.pathname === link.path ? 'active' : ''}`}>
-                                        {link.name} <ChevronDown size={13} style={{ marginLeft: 2, verticalAlign: 'middle' }} />
+                                        {link.name}
                                     </span>
                                     <div className="navbar__dropdown-menu">
                                         {link.dropdown.map((subLink) => (
@@ -154,6 +156,10 @@ const Navbar = () => {
                             )
                         ))}
                     </div>
+                </div>
+
+                <div className="navbar__cpd-badge">
+                    <img src={mediaImage} alt="CPD Accredited Provider" className="blinking-image" />
                 </div>
             </div>
         </nav>
