@@ -99,15 +99,19 @@ const HeroSection = () => {
 
                     <p className="hero__desc">{data.description}</p>
 
-                    <div className="hero__actions">
-                        {data.showBrochure !== false && (
-                            <Button onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
-                        )}
+                    <div className="hero-actions-container">
+                        <div className="hero__actions">
+                            {data.showBrochure !== false && (
+                                <Button onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
+                            )}
+                            {data.showAbstract !== false && (
+                                <Button onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
+                            )}
+                        </div>
                         {data.showRegister !== false && (
-                            <Button onClick={() => navigate('/register')}>REGISTER NOW</Button>
-                        )}
-                        {data.showAbstract !== false && (
-                            <Button onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
+                            <div className="hero__actions-bottom">
+                                <Button className="btn-elevate" onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                            </div>
                         )}
                     </div>
                 </div>
