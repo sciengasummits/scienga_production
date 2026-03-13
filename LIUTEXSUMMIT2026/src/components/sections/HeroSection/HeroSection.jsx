@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import { fetchContent } from '../../../api/siteApi';
+import { fetchContent, fetchSpeakers } from '../../../api/siteApi';
 
 const DEFAULT = {
     subtitle: 'International Conference on',
@@ -20,6 +20,7 @@ const HeroSection = () => {
     const navigate = useNavigate();
     const [data, setData] = useState(DEFAULT);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [chairmen, setChairmen] = useState([]);
 
     // Fetch live data from backend + poll every 15 s for dashboard changes
     useEffect(() => {
@@ -28,6 +29,25 @@ const HeroSection = () => {
         const load = () => {
             fetchContent('hero').then(d => {
                 if (!cancelled && d) setData(prev => ({ ...prev, ...d }));
+            });
+            fetchSpeakers().then(speakersData => {
+                if (!cancelled) {
+                    let comm = [];
+                    if (speakersData && speakersData.length > 0) {
+                        comm = speakersData.filter(s => s.category && s.category.toLowerCase().includes('comm') && s.visible !== false);
+                    }
+                    
+                    // Fallback to dummy data if no chairman exists in the database
+                    if (comm.length === 0) {
+                        comm = [
+                            { _id: 'dummy1', name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80' },
+                            { _id: 'dummy2', name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80' },
+                            { _id: 'dummy3', name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80' }
+                        ];
+                    }
+
+                    setChairmen(comm.slice(0, 3));
+                }
             });
         };
 
@@ -116,21 +136,47 @@ const HeroSection = () => {
                     </div>
                 </div>
 
-                <div className="hero__info-cards">
-                    <div className="info-card date-card">
-                        <h3>{(() => {
-                            const parts = (data.conferenceDate || 'December 14-16, 2026').trim().split(' ');
-                            return parts[0]; // Month
-                        })()}</h3>
-                        <p>{(() => {
-                            const parts = (data.conferenceDate || 'December 14-16, 2026').trim().split(' ');
-                            return parts.slice(1).join(' '); // Date + Year
-                        })()}</p>
+                <div className="hero__right-content">
+                    <div className="hero__info-cards">
+                        <div className="info-card date-card">
+                            <h3>{(() => {
+                                const parts = (data.conferenceDate || 'December 14-16, 2026').trim().split(' ');
+                                return parts[0]; // Month
+                            })()}</h3>
+                            <p>{(() => {
+                                const parts = (data.conferenceDate || 'December 14-16, 2026').trim().split(' ');
+                                return parts.slice(1).join(' '); // Date + Year
+                            })()}</p>
+                        </div>
+                        <div className="info-card venue-card">
+                            <h3>Venue</h3>
+                            <p>Event Venue: {data.venue}</p>
+                        </div>
                     </div>
-                    <div className="info-card venue-card">
-                        <h3>Venue</h3>
-                        <p>Event Venue: {data.venue}</p>
-                    </div>
+
+                    {chairmen.length > 0 && (
+                        <div className="hero__chairmen-cards">
+                            {chairmen.map((chairman, idx) => (
+                                <div className="chairman-card" key={chairman._id || idx}>
+                                    <div className="chairman-badge">CONFERENCE CHAIRMAN</div>
+                                    <div className="chairman-img-wrapper">
+                                        <img src={chairman.image || chairman.photo || 'https://via.placeholder.com/200'} alt={chairman.name} />
+                                    </div>
+                                    <div className="chairman-info">
+                                        <h4>{chairman.name}</h4>
+                                        <p className="chairman-affiliation">{chairman.affiliation || chairman.institution}</p>
+                                        <p className="chairman-location">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '4px', verticalAlign: 'middle', marginTop: '-2px'}}>
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                                <circle cx="12" cy="10" r="3"></circle>
+                                            </svg>
+                                            {chairman.country || 'China'}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
