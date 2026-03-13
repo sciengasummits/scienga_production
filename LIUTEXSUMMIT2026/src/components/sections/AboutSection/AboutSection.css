@@ -44,7 +44,7 @@
 }
 
 .about__list li::before {
-    content: 'â†’';
+    content: '\27A4';
     position: absolute;
     left: 0;
     color: var(--color-primary-start);
