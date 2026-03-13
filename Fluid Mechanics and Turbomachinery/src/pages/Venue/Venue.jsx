@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
+import { fetchContent } from '../../api/siteApi';
 import './Venue.css';
 
-const Venue = () => {
-    const navigate = useNavigate();
-    const venueFeatures = [
+const DEFAULTS = {
+    venueFeatures: [
         {
             title: 'World-Class Facilities',
             description: 'State-of-the-art conference halls equipped with the latest audio-visual technology'
@@ -31,9 +31,8 @@ const Venue = () => {
             title: 'Accessibility',
             description: 'Fully accessible facilities for all participants'
         }
-    ];
-
-    const nearbyAttractions = [
+    ],
+    nearbyAttractions: [
         {
             name: 'Marina Bay Sands',
             distance: '10 mins',
@@ -49,7 +48,34 @@ const Venue = () => {
             distance: '25 mins',
             image: "https://www.bing.com/th/id/OIP.ueYJWhmh593wEqTL3tHVLQHaFU?w=228&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
         }
-    ];
+    ],
+    cityAbout: {
+        title: 'About the Host City',
+        subtitle: 'Discover Singapore',
+        description1: 'Singapore is a global financial center and a tropical city-state located at the southern tip of the Malay Peninsula. It is a city where colonial history meets futuristic architecture and lush green spaces.',
+        description2: 'As a premier global hub for technology, aerospace engineering, and trade, Singapore provides state-of-the-art conference facilities and unparalleled connectivity. Participants can experience a unique blend of cultures, world-class dining, and innovative urban solutions.',
+        image: "https://as2.ftcdn.net/v2/jpg/02/09/82/45/1000_F_209824591_K05Tob490TmBlTekkPlNrxh1Hy7IKMTU.jpg",
+        stats: [
+            { label: 'Population', value: '5.9M+' },
+            { label: 'Avg. Temperature', value: '31°C' },
+            { label: 'Time Zone', value: 'GMT+8' }
+        ]
+    }
+};
+
+const Venue = () => {
+    const navigate = useNavigate();
+    const [venueData, setVenueData] = useState(DEFAULTS);
+
+    useEffect(() => {
+        fetchContent('venue-page').then(data => {
+            if (data && !data.error) {
+                setVenueData(prev => ({ ...prev, ...data }));
+            }
+        }).catch(err => console.warn('[Venue] Could not load venue content:', err));
+    }, []);
+
+    const { venueFeatures, nearbyAttractions, cityAbout } = venueData;
 
     return (
         <div className="venue-page">
@@ -89,51 +115,34 @@ const Venue = () => {
                 <div className="container">
                     <div className="about-city-content">
                         <div className="about-city-text">
-                            <h4 className="section-subtitle">Discover Singapore</h4>
-                            <h2 className="section-title">About the Host City</h2>
-                            <p className="city-description">
-                                Singapore is a global financial center and a tropical city-state located at the southern tip of the Malay Peninsula. It is a city where
-                                colonial history meets futuristic architecture and lush green spaces.
-                            </p>
-                            <p className="city-description">
-                                As a premier global hub for technology, aerospace engineering, and trade, Singapore provides state-of-the-art
-                                conference facilities and unparalleled connectivity. Participants can experience a unique blend of
-                                cultures, world-class dining, and innovative urban solutions.
-                            </p>
+                            <h4 className="section-subtitle">{cityAbout.subtitle}</h4>
+                            <h2 className="section-title">{cityAbout.title}</h2>
+                            <p className="city-description">{cityAbout.description1}</p>
+                            <p className="city-description">{cityAbout.description2}</p>
                             <div className="city-stats">
-                                <div className="stat-box">
-                                    <h3>5.9M+</h3>
-                                    <p>Population</p>
-                                </div>
-                                <div className="stat-box">
-                                    <h3>31°C</h3>
-                                    <p>Avg. Temperature</p>
-                                </div>
-                                <div className="stat-box">
-                                    <h3>GMT+8</h3>
-                                    <p>Time Zone</p>
-                                </div>
+                                {cityAbout.stats.map((stat, idx) => (
+                                    <div className="stat-box" key={idx}>
+                                        <h3>{stat.value}</h3>
+                                        <p>{stat.label}</p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className="about-city-image">
-                            <img
-                                src="https://as2.ftcdn.net/v2/jpg/02/09/82/45/1000_F_209824591_K05Tob490TmBlTekkPlNrxh1Hy7IKMTU.jpg"
-                            />
+                            <img src={cityAbout.image} alt="City" />
                         </div>
                     </div>
                 </div>
             </section>
 
-
-
             {/* Nearby Attractions */}
             <section className="nearby-attractions section-padding">
                 <div className="container">
                     <div className="text-center mb-5">
-                        <h4 className="section-subtitle">Explore Singapore</h4>
+                        <h4 className="section-subtitle">Explore {cityAbout.subtitle.replace('Discover ', '')}</h4>
                         <h2 className="section-title">Nearby Attractions</h2>
                         <p className="section-desc">
-                            Make the most of your visit with these iconic Singapore destinations
+                            Make the most of your visit with these iconic destinations
                         </p>
                     </div>
 
@@ -160,7 +169,7 @@ const Venue = () => {
                         Ready to Join Us?
                     </h2>
                     <p className="cta-desc" style={{ color: 'rgba(255,255,255,0.9)', marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-                        Secure your spot at the INTERNATIONAL CONFERENCE ON FLUID MECHANICS & TURBOMACHINERY and be part of this transformative event
+                        Secure your spot at the conference and be part of this transformative event
                     </p>
                     <Button
                         variant="outline"
@@ -176,3 +185,4 @@ const Venue = () => {
 };
 
 export default Venue;
+

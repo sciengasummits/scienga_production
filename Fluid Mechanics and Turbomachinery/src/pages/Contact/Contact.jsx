@@ -4,11 +4,6 @@ import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 import './Contact.css';
 
 const Contact = () => {
-    const contactInfo = {
-        email: 'info@fluidmechsummit.com',
-        phone: '+65 0000 0000'
-    };
-
     return (
         <div className="contact-page">
             <div className="page-header">
@@ -33,7 +28,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Address</h4>
-                                <p> Outram, Singapore</p>
+                                <p>Outram,Singapore</p>
                             </div>
                         </div>
 
@@ -43,7 +38,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Phone</h4>
-                                <p>{contactInfo.phone}</p>
+                                <p>+91 7842090097</p>
                             </div>
                         </div>
 
@@ -53,7 +48,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>{contactInfo.email}</p>
+                                <p>contact@fluidturbosummit.com</p>
                             </div>
                         </div>
 
@@ -92,8 +87,8 @@ const Contact = () => {
                                 <label>Message</label>
                                 <textarea rows="5" className="form-control" placeholder="How can we help you?" required></textarea>
                             </div>
-                            <Button type="submit" className="w-100" style={{ marginTop: '1rem' }}>
-                                <Send size={18} style={{ marginRight: '8px' }} /> SEND MESSAGE
+                            <Button type="submit" className="btn-submit-custom">
+                                <Send size={18} /> SEND MESSAGE
                             </Button>
                         </form>
                     </div>

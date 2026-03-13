@@ -17,15 +17,22 @@ const SpeakersSection = ({ showViewAll }) => {
         const load = () => {
             fetchSpeakers().then(data => {
                 if (!cancelled && data && data.length > 0) {
-                    const mapped = data.filter(s => s.visible !== false).map(s => ({
-                        id: s._id,
-                        name: s.name,
-                        title: s.designation || s.title || '',
-                        affiliation: s.affiliation || s.institution || '',
-                        category: s.category || 'Speakers',
-                        image: s.image || s.photo || '',
-                        bio: s.bio || '',
-                    }));
+                    const mapped = data.filter(s => s.visible !== false).map(s => {
+                        let imageUrl = s.image || s.photo || '';
+                        // If URL is relative, prepend the backend URL
+                        if (imageUrl && imageUrl.startsWith('/')) {
+                            imageUrl = `http://localhost:5000${imageUrl}`;
+                        }
+                        return {
+                            id: s._id,
+                            name: s.name,
+                            title: s.designation || s.title || '',
+                            affiliation: s.affiliation || s.institution || '',
+                            category: s.category || 'Speakers',
+                            image: imageUrl,
+                            bio: s.bio || '',
+                        };
+                    });
                     if (mapped.length > 0) setSpeakers(mapped);
                 }
             });
@@ -52,10 +59,14 @@ const SpeakersSection = ({ showViewAll }) => {
 
     const filteredSpeakers = speakers.filter(speaker => {
         if (activeCategory === 'Committee') return speaker.category === 'Committee';
-        if (activeCategory === 'Speakers') return true;
-        if (activeCategory === 'Posters') return speaker.category === 'Poster Presenter';
-        if (activeCategory === 'Students') return speaker.category === 'Student';
-        if (activeCategory === 'Delegates') return speaker.category === 'Delegate';
+        if (activeCategory === 'Posters') return speaker.category === 'Poster Presenter' || speaker.category === 'Posters';
+        if (activeCategory === 'Students') return speaker.category === 'Student' || speaker.category === 'Students';
+        if (activeCategory === 'Delegates') return speaker.category === 'Delegate' || speaker.category === 'Delegates';
+        // If activeCategory is 'Speakers', we show explicitly named speaker roles, but definitely NOT Committee, Students, Delegates, or Posters
+        if (activeCategory === 'Speakers') {
+            const exclude = ['Committee', 'Poster Presenter', 'Posters', 'Student', 'Students', 'Delegate', 'Delegates'];
+            return !exclude.includes(speaker.category);
+        }
         return true;
     }).slice(0, showViewAll ? 8 : speakers.length);
 

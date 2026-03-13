@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
+import { User, MapPin } from 'lucide-react';
 import './HeroSection.css';
 import mediaImage from '../../../assets/images/Media.jpg';
 import { fetchContent } from '../../../api/siteApi';
@@ -20,12 +21,20 @@ const DEFAULTS = {
 const HeroSection = () => {
     const navigate = useNavigate();
     const [hero, setHero] = useState(DEFAULTS);
+    const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 0,
         minutes: 0,
         seconds: 0
     });
+
+    const resolveUrl = (url) => {
+        if (!url) return '';
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        if (url.startsWith('/')) return `http://localhost:5000${url}`;
+        return `http://localhost:5000/${url}`;
+    };
 
     // Fetch dynamic hero content from backend
     useEffect(() => {
@@ -34,6 +43,9 @@ const HeroSection = () => {
         const load = () => {
             fetchContent('hero').then(data => {
                 if (!cancelled && data) setHero(prev => ({ ...prev, ...data }));
+            });
+            fetchContent('heroChairs').then(data => {
+                if (!cancelled && data) setChairs(data);
             });
         };
 
@@ -96,9 +108,11 @@ const HeroSection = () => {
         ));
     };
 
+    const bgUrl = resolveUrl(hero.bgImage);
+
     const heroBgStyle = {
-        backgroundImage: hero.bgImage
-            ? `linear-gradient(rgba(0, 15, 31, 0.6), rgba(0, 15, 31, 0.6)), url(${hero.bgImage})`
+        backgroundImage: bgUrl
+            ? `linear-gradient(rgba(0, 15, 31, 0.6), rgba(0, 15, 31, 0.6)), url(${bgUrl})`
             : `linear-gradient(rgba(0, 15, 31, 0.6), rgba(0, 15, 31, 0.6)), url('https://5.imimg.com/data5/SELLER/Default/2023/4/304158028/BI/ED/JG/115492319/cryopump-coldhead-and-helium-compressor-repair-services-500x500.jpg')`
     };
 
@@ -138,30 +152,92 @@ const HeroSection = () => {
                         {hero.description}
                     </p>
                     <div className="hero__actions">
-                        {hero.showBrochure !== false && (
-                            <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
-                        )}
-                        {hero.showRegister !== false && (
-                            <Button onClick={() => navigate('/register')}>Register Now</Button>
-                        )}
-                        {hero.showAbstract !== false && (
-                            <Button onClick={() => navigate('/abstract-submission')}>
-                                Submit Abstract
-                            </Button>
-                        )}
+                        <div className="hero__actions-row">
+                            {hero.showAbstract !== false && (
+                                <Button onClick={() => navigate('/abstract-submission')}>
+                                    Submit Abstract
+                                </Button>
+                            )}
+                            {hero.showBrochure !== false && (
+                                <Button onClick={handleDownloadBrochure}>Download Brochure</Button>
+                            )}
+                        </div>
+                        <div className="hero__actions-row">
+                            {hero.showRegister !== false && (
+                                <Button onClick={() => navigate('/register')}>Register Now</Button>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                <div className="hero__info-cards">
-                    <div className="info-card date-card">
-                        <h3>{monthStr}</h3>
-                        <p>{daysStr}</p>
+                <div className="hero__right">
+                    <div className="hero__info-cards">
+                        <div className="info-card date-card">
+                            <h3>{monthStr}</h3>
+                            <p>{daysStr}</p>
+                        </div>
+
+                        <div className="info-card venue-card">
+                            <h3>Venue</h3>
+                            <p>Event Venue: {hero.venue}</p>
+                        </div>
                     </div>
 
-                    <div className="info-card venue-card">
-                        <h3>Venue</h3>
-                        <p>Event Venue: {hero.venue}</p>
-                    </div>
+                    {chairs && (chairs.chair.name || chairs.viceChair.name || chairs.coChair?.name) && (
+                        <div className="hero__chairs-row">
+                            {chairs.chair.name && (
+                                <div className="chair-card-v">
+                                    <div className="chair-badge-v">{chairs.chair.title || 'Conference Chairman'}</div>
+                                    {chairs.chair.image ? (
+                                        <img src={resolveUrl(chairs.chair.image)} alt={chairs.chair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chairs.chair.name}</h4>
+                                        <p className="chair-aff-v">{chairs.chair.affiliation}</p>
+                                        {chairs.chair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.chair.country}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            {chairs.viceChair.name && (
+                                <div className="chair-card-v">
+                                    <div className="chair-badge-v">{chairs.viceChair.title || 'Conference Co-chair'}</div>
+                                    {chairs.viceChair.image ? (
+                                        <img src={resolveUrl(chairs.viceChair.image)} alt={chairs.viceChair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chairs.viceChair.name}</h4>
+                                        <p className="chair-aff-v">{chairs.viceChair.affiliation}</p>
+                                        {chairs.viceChair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.viceChair.country}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                            {chairs.coChair?.name && (
+                                <div className="chair-card-v">
+                                    <div className="chair-badge-v">{chairs.coChair.title || 'Conference Co-chair'}</div>
+                                    {chairs.coChair.image ? (
+                                        <img src={resolveUrl(chairs.coChair.image)} alt={chairs.coChair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chairs.coChair.name}</h4>
+                                        <p className="chair-aff-v">{chairs.coChair.affiliation}</p>
+                                        {chairs.coChair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.coChair.country}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 

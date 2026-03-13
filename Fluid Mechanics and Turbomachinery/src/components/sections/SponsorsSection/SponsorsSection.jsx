@@ -69,7 +69,13 @@ export default function SponsorsSection() {
         const load = () => {
             fetchSponsors('media partner').then(data => {
                 if (!cancelled && data && Array.isArray(data) && data.length > 0) {
-                    const mapped = data.map(s => ({ name: s.name, logo: s.image || s.logoUrl || s.logo }));
+                    const mapped = data.map(s => {
+                        let logoUrl = s.image || s.logoUrl || s.logo;
+                        if (logoUrl && (typeof logoUrl === 'string') && logoUrl.startsWith('/')) {
+                            logoUrl = `http://localhost:5000${logoUrl}`;
+                        }
+                        return { name: s.name, logo: logoUrl };
+                    });
                     setSponsorsData(mapped);
                 }
             });

@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
+import { fetchContent } from '../../../api/siteApi';
 import './Footer.css';
 
 const Footer = () => {
+    const [contact, setContact] = useState({
+        email: 'info@fluidmechsummit.com',
+        phone: '+65 0000 0000',
+        address: 'Singapore',
+        socialLinks: { facebook: '', twitter: '', linkedin: '', instagram: '' }
+    });
+
+    const [venue, setVenue] = useState({
+        name: 'Outram, Singapore'
+    });
+
+    useEffect(() => {
+        const load = async () => {
+            try {
+                const contactData = await fetchContent('contact');
+                if (contactData) setContact(contactData);
+                
+                const venueData = await fetchContent('venue');
+                if (venueData && venueData.name) setVenue(venueData);
+            } catch (err) {
+                console.error("Failed to load footer data", err);
+            }
+        };
+        load();
+    }, []);
+
     return (
         <footer className="footer">
             <div className="container">
@@ -17,9 +44,15 @@ const Footer = () => {
                             International Conference on Fluid Mechanics & Turbomachinery, where global experts unite to shape the future of engineering dynamics and turbomachinery innovation.
                         </p>
                         <div className="footer__socials">
-                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
-                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
+                            {contact.socialLinks?.facebook && (
+                                <a href={contact.socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
+                            )}
+                            {contact.socialLinks?.linkedin && (
+                                <a href={contact.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
+                            )}
+                            {contact.socialLinks?.instagram && (
+                                <a href={contact.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
+                            )}
                         </div>
                     </div>
 
@@ -43,17 +76,17 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span>Outram, Singapore</span>
+                                    <span>{venue.name || contact.address}</span>
                                 </div>
                             </li>
 
                             <li>
                                 <Mail size={18} />
-                                <span>info@fluidmechsummit.com</span>
+                                <span>{contact.email}</span>
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+65 0000 0000</span>
+                                <span>{contact.phone}</span>
                             </li>
                         </ul>
                     </div>

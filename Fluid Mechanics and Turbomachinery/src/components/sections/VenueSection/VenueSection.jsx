@@ -44,10 +44,16 @@ const VenueSection = () => {
         const load = () => {
             fetchContent('venue').then(data => {
                 if (!cancelled && data && data.images && Array.isArray(data.images) && data.images.length > 0) {
-                    const venueImages = data.images.map((image, index) => ({
-                        id: index + 1,
-                        image: image
-                    }));
+                    const venueImages = data.images.map((image, index) => {
+                        let imageUrl = image;
+                        if (imageUrl && imageUrl.startsWith('/')) {
+                            imageUrl = `http://localhost:5000${imageUrl}`;
+                        }
+                        return {
+                            id: index + 1,
+                            image: imageUrl
+                        };
+                    });
                     setVenues(venueImages);
                 }
             });
