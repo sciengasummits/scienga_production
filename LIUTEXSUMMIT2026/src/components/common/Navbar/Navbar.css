@@ -367,25 +367,3 @@ a.contact-item:active {
         background: transparent;
     }
 }
-
-/* Floating badge under right side of navbar */
-.navbar__cpd-badge {
-    position: absolute;
-    right: -100px; /* Pushed further to the right */
-    top: calc(100% + 15px);
-    width: 250px;
-    z-index: 1000;
-}
-
-.navbar__cpd-badge img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-@media (max-width: 992px) {
-    .navbar__cpd-badge {
-        display: none;
-    }
-}

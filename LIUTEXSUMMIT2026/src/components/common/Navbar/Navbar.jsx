@@ -4,7 +4,6 @@ import { Menu, X, Mail, Phone, MessageCircle } from 'lucide-react';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
 import { fetchContent } from '../../../api/siteApi';
-import mediaImage from '../../../assets/images/Media.jpg';
 import './Navbar.css';
 
 
@@ -156,10 +155,6 @@ const Navbar = () => {
                             )
                         ))}
                     </div>
-                </div>
-
-                <div className="navbar__cpd-badge">
-                    <img src={mediaImage} alt="CPD Accredited Provider" className="blinking-image" />
                 </div>
             </div>
         </nav>

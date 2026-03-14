@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SponsorsSection.css';
-import { fetchSponsors } from '../../../api/siteApi';
+import { fetchSponsors, resolveImageUrl } from '../../../api/siteApi';
 
 // Static fallback imports — kept as default partners
 import partner1 from '../../../assets/images/media/486-Mediapartner-Photo.png';
@@ -44,7 +44,7 @@ const MarqueeRow = ({ items, direction }) => (
         {[...items, ...items].map((sponsor, index) => (
             <div key={index} className="marquee-item">
                 <img
-                    src={sponsor.logo}
+                    src={typeof sponsor.logo === 'string' && !sponsor.logo.startsWith('static/') ? resolveImageUrl(sponsor.logo) : sponsor.logo}
                     alt={`${sponsor.name} logo`}
                     style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'none' }}
                     onError={(e) => { e.target.style.display = 'none'; }}

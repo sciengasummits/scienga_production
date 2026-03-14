@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { speakers as staticSpeakers } from '../../../data/speakersData';
-import { fetchSpeakers } from '../../../api/siteApi';
+import { fetchSpeakers, resolveImageUrl } from '../../../api/siteApi';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
@@ -78,7 +78,7 @@ const SpeakersSection = ({ showViewAll }) => {
                     {filteredSpeakers.map((speaker) => (
                         <div className="speaker-card" key={speaker.id}>
                             <div className="speaker-img-wrapper">
-                                <img src={speaker.image} alt={speaker.name} className="speaker-img" />
+                                <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
                                 <div className="speaker-overlay">
                                     {/* Social icons could go here */}
                                 </div>

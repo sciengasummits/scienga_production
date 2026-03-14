@@ -1,6 +1,5 @@
 .hero {
     position: relative;
-    min-height: 100vh;
     display: flex;
     align-items: center;
     background-color: var(--color-dark-void);
@@ -9,7 +8,8 @@
     background-position: center;
     color: var(--color-white);
     padding-top: 120px;
-    padding-bottom: 120px;
+    padding-bottom: 90px;
+    min-height: 80vh;
     overflow: hidden;
 }
 
@@ -49,13 +49,13 @@
 
 .hero__content {
     max-width: 800px;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .hero__title {
     font-size: 2.8rem;
     line-height: 1.1;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-weight: 900;
     color: var(--color-white);
     text-transform: uppercase;
@@ -80,7 +80,7 @@
 
 .hero__desc {
     font-size: 1.1rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     opacity: 0.9;
     line-height: 1.6;
     max-width: 500px;
@@ -120,14 +120,14 @@
 
 .hero__info-cards {
     position: relative;
-    width: 400px;
-    height: 300px;
+    width: 340px;
+    height: 250px;
     transform: translate(-40px, 40px);
 }
 
 .info-card {
     position: absolute;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -140,24 +140,24 @@
     top: 0;
     left: 0;
     background: var(--color-secondary-blue);
-    width: 280px;
+    width: 240px;
     text-align: center;
     z-index: 2;
-    padding: 2.5rem 1.5rem;
+    padding: 1.5rem 1rem;
     border: 1px solid rgba(52, 120, 223, 0.3);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(52, 120, 223, 0.2);
 }
 
 .date-card h3 {
-    font-size: 2.4rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
     color: var(--color-white);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     font-weight: 800;
 }
 
 .date-card p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     opacity: 0.95;
     letter-spacing: 1px;
@@ -167,7 +167,7 @@
 .hero__countdown {
     display: flex;
     gap: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .countdown-item {
@@ -196,27 +196,27 @@
     bottom: 0;
     right: 0;
     background: var(--color-dark-void);
-    width: 260px;
+    width: 220px;
     z-index: 1;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
     border: 1px solid rgba(52, 120, 223, 0.3);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(52, 120, 223, 0.2);
 }
 
 .venue-card h3 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 2.1rem;
+    margin-bottom: 0.1rem;
     color: var(--color-white);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     font-weight: 800;
-    text-align: right;
+    text-align: relative;
 }
 
 .venue-card p {
-    font-size: 1rem;
+    font-size: 0.95rem;
     opacity: 0.95;
     font-weight: 700;
-    line-height: 1.5;
+    line-height: 1.4;
     color: var(--color-white);
 }
 

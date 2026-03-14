@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { User, MapPin } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import { fetchContent } from '../../../api/siteApi';
+import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
 
 const DEFAULTS = {
     subtitle: 'International Conference on',
-    title: 'Liutex Theory and Applications\nin Vortex Identification and Vortex Dynamics',
+    title: 'Liutex Theory and Applications',
     description: 'International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.',
     conferenceDate: 'December 14-16, 2026',
     venue: 'Outram, Singapore',
@@ -23,12 +23,7 @@ const HeroSection = () => {
     const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-    const resolveUrl = (url) => {
-        if (!url) return '';
-        if (url.startsWith('http://') || url.startsWith('https://')) return url;
-        if (url.startsWith('/')) return `http://localhost:5050${url}`;
-        return `http://localhost:5050/${url}`;
-    };
+    const resolveUrl = resolveImageUrl;
 
     // Fetch dynamic content from backend
     useEffect(() => {
@@ -39,19 +34,10 @@ const HeroSection = () => {
                 if (!cancelled && data) setHero(prev => ({ ...prev, ...data }));
             });
 
-            // Fetch individual chairman keys as saved by the workflow dashboard
-            Promise.all([
-                fetchContent('chairman-main'),
-                fetchContent('chairman-1'),
-                fetchContent('chairman-2')
-            ]).then(([main, c1, c2]) => {
+            fetchContent('heroChairs').then(data => {
                 if (!cancelled) {
-                    if (main || c1 || c2) {
-                        setChairs({
-                            chair: main,
-                            viceChair: c1,
-                            coChair: c2
-                        });
+                    if (data && (data.chair?.name || data.viceChair?.name || data.coChair?.name)) {
+                        setChairs(data);
                     } else {
                         // Fallback dummy data if nothing is saved yet
                         setChairs({
@@ -62,7 +48,7 @@ const HeroSection = () => {
                     }
                 }
             }).catch(err => {
-                console.error('Failed to fetch chairman cards:', err);
+                console.error('Failed to fetch heroChairs:', err);
             });
         };
 
@@ -110,13 +96,13 @@ const HeroSection = () => {
     const monthStr = hero.conferenceDate?.split(' ')[0] || 'December';
     const daysStr = hero.conferenceDate?.split(' ').slice(1).join(' ') || '14-16, 2026';
 
-    // Support multiline title via backend \n
     const renderTitle = () => {
         if (!hero.title) return DEFAULTS.title;
-        return hero.title.split('\n').map((line, i) => (
+        const lines = hero.title.trim().split('\n');
+        return lines.map((line, i) => (
             <React.Fragment key={i}>
                 {line}
-                {i !== hero.title.split('\n').length - 1 && <br />}
+                {i !== lines.length - 1 && <br />}
             </React.Fragment>
         ));
     };
@@ -132,7 +118,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">{hero.subtitle}</span> <br />
+                        <span className="hero__title-sub">{hero.subtitle}</span> 
                         {renderTitle()}
                     </h1>
 
