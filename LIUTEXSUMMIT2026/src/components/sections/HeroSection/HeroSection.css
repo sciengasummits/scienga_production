@@ -7,7 +7,7 @@
     background-size: cover;
     background-position: center;
     color: var(--color-white);
-    padding-top: 120px;
+    padding-top: 100px;
     padding-bottom: 90px;
     min-height: 80vh;
     overflow: hidden;
@@ -53,9 +53,9 @@
 }
 
 .hero__title {
-    font-size: 3.1rem;
+    font-size: 3.5rem;
     line-height: 1.1;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     font-weight: 900;
     color: var(--color-white);
     text-transform: uppercase;
@@ -71,14 +71,14 @@
     font-weight: 800;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
     line-height: 1.2;
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .hero__desc {
     font-size: 1.25rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     opacity: 0.9;
     line-height: 1.7;
     max-width: 650px;
@@ -227,6 +227,7 @@
     font-weight: 700;
     line-height: 1.4;
     color: var(--color-white);
+    text-align: center;
 }
 
 .hero__right {
