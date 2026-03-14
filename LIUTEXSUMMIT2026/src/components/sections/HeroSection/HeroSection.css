@@ -53,7 +53,7 @@
 }
 
 .hero__title {
-    font-size: 2.8rem;
+    font-size: 3.5rem;
     line-height: 1.1;
     margin-bottom: 1.5rem;
     font-weight: 900;
@@ -79,11 +79,11 @@
 }
 
 .hero__desc {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     margin-bottom: 2rem;
-    opacity: 0.9;
+    opacity: 0.95;
     line-height: 1.6;
-    max-width: 500px;
+    max-width: 600px;
     color: var(--color-white);
 }
 
@@ -358,8 +358,9 @@
 
     .hero__desc {
         margin: 0 auto 2rem;
-        text-align: left;
-        display: inline-block;
+        text-align: center;
+        display: block;
+        max-width: 90%;
     }
 
     .hero__actions {
@@ -402,48 +403,99 @@
 }
 
 @media (max-width: 576px) {
+    .hero {
+        padding-top: 100px;
+        padding-bottom: 60px;
+    }
+
     .hero__title {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .hero__title-sub {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    .hero__desc {
+        font-size: 1rem;
+        line-height: 1.5;
     }
 
     .countdown-value {
-        font-size: 1.8rem;
+        font-size: 2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.7rem;
     }
 
     .hero__countdown {
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
+        gap: 0.8rem;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto 2rem;
+    }
+
+    .countdown-item {
+        flex: 1;
     }
 
     .hero-actions-container {
         width: 100%;
         display: flex;
         flex-direction: column;
+        gap: 1rem;
     }
 
     .hero__actions {
         flex-direction: column;
         width: 100%;
+        gap: 0.75rem;
+    }
+
+    .hero__actions-bottom {
+        margin-top: 0;
     }
 
     .hero__actions button,
     .btn-elevate {
-        width: 100%;
+        width: 100% !important;
+        margin: 0;
+        transform: none !important;
+    }
+
+    .hero__info-cards {
+        gap: 15px;
     }
 
     .hero__chairs-row {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 20px;
+        width: 100vw;
+        margin-left: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Hide scrollbar Firefox */
+    }
+
+    .hero__chairs-row::-webkit-scrollbar {
+        display: none; /* Hide scrollbar Chrome/Safari */
     }
 
     .chair-card-v {
-        width: 100%;
-        max-width: 250px;
-        height: 350px;
+        width: 240px;
+        height: 360px;
+        flex-shrink: 0;
+    }
+
+    .days-to-go-label {
+        font-size: 1rem !important;
     }
 }

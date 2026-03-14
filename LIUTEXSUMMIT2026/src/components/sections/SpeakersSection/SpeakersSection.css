@@ -16,6 +16,30 @@
     flex-wrap: wrap;
 }
 
+@media (max-width: 576px) {
+    .speakers__filters {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 10px;
+        margin-left: -15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .speakers__filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+}
+
 .filter-btn {
     padding: 10px 24px;
     border-radius: 50px;
@@ -247,6 +271,21 @@
     color: var(--color-text-body);
     line-height: 1.8;
     text-align: justify;
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        padding: 1.5rem;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-desc {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
 }
 
 /* Loading Spinner */

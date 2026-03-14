@@ -209,9 +209,14 @@ a.contact-item:active {
 .navbar__toggle {
     display: none;
     background: none;
-    color: var(--color-text-dark);
+    color: var(--color-white);
     border: none;
     cursor: pointer;
+    z-index: 1001;
+}
+
+.navbar--scrolled .navbar__toggle {
+    color: var(--color-text-dark);
 }
 
 .navbar__mobile-cta {
@@ -326,6 +331,12 @@ a.contact-item:active {
         font-size: 1.1rem;
         padding: 10px 0;
         text-shadow: none;
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar__link:last-child {
+        border-bottom: none;
     }
 
     .navbar__mobile-cta {

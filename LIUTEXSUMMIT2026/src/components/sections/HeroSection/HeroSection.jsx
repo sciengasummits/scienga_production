@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { User, MapPin } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
+import { fetchContent } from '../../../api/siteApi';
 
 const DEFAULTS = {
     subtitle: 'International Conference on',
@@ -23,7 +23,13 @@ const HeroSection = () => {
     const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-    const resolveUrl = resolveImageUrl;
+    const resolveUrl = (url) => {
+        if (!url) return '';
+        if (url.startsWith('http://') || url.startsWith('https://')) return url;
+        // Dashboard serves uploaded images at /uploads locally
+        if (url.startsWith('/')) return `http://localhost:3000${url}`;
+        return `http://localhost:3000/${url}`;
+    };
 
     // Fetch dynamic content from backend
     useEffect(() => {
@@ -108,7 +114,7 @@ const HeroSection = () => {
     };
 
     const bgUrl = resolveUrl(hero.bgImage);
-    const heroBgStyle = bgUrl 
+    const heroBgStyle = bgUrl
         ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${bgUrl}')` }
         : {};
 
@@ -118,7 +124,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">{hero.subtitle}</span> 
+                        <span className="hero__title-sub">{hero.subtitle}</span>
                         {renderTitle()}
                     </h1>
 
@@ -145,7 +151,7 @@ const HeroSection = () => {
                     </div>
 
                     <p className="hero__desc">{hero.description}</p>
-                    
+
                     <div className="hero-actions-container">
                         <div className="hero__actions">
                             {hero.showBrochure !== false && (
