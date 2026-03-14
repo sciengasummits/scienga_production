@@ -9,39 +9,56 @@ const SpeakersSection = ({ showViewAll }) => {
     const location = useLocation();
     const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
-    const [speakers, setSpeakers] = useState(staticSpeakers);
+    const [speakers, setSpeakers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         fetchSpeakers().then(data => {
-            if (data && data.length > 0) {
+            if (data) {
                 // Map backend speaker fields to the format expected by the UI
                 const mapped = data.filter(s => s.visible !== false).map(s => ({
-                    id: s._id,
+                    id: s._id || s.id,
                     name: s.name,
-                    title: s.designation || s.title || '',
+                    title: s.title || s.designation || '',
                     affiliation: s.affiliation || s.institution || '',
                     category: s.category || 'Speakers',
                     image: s.image || s.photo || '',
                     bio: s.bio || '',
                 }));
-                if (mapped.length > 0) setSpeakers(mapped);
+                setSpeakers(mapped);
             }
-        });
+        }).finally(() => setLoading(false));
     }, []);
 
 
     const getDisplayCategory = (category) => {
-        if (category === 'Student') return 'Student Speaker';
+        if (category === 'Student' || category === 'Students') return 'Student Speaker';
         if (category === 'Committee') return 'Committee';
+        if (category === 'Keynote' || category === 'Keynote Speaker') return 'Keynote Speaker';
+        if (category === 'Plenary' || category === 'Plenary Speaker') return 'Plenary Speaker';
         return category;
     };
+
     const filteredSpeakers = speakers.filter(speaker => {
-        if (activeCategory === 'Committee') return speaker.category === 'Committee';
-        if (activeCategory === 'Speakers') return true;
-        if (activeCategory === 'Posters') return speaker.category === 'Poster Presenter';
-        if (activeCategory === 'Students') return speaker.category === 'Student';
-        if (activeCategory === 'Delegates') return speaker.category === 'Delegate';
-        return true;
+        const cat = (speaker.category || '').toLowerCase();
+        
+        if (activeCategory === 'Committee') {
+            return cat === 'committee';
+        }
+        if (activeCategory === 'Speakers') {
+            return ['keynote', 'plenary', 'speakers', 'keynote speaker', 'plenary speaker'].includes(cat);
+        }
+        if (activeCategory === 'Posters') {
+            return ['poster presenter', 'posters', 'poster'].includes(cat);
+        }
+        if (activeCategory === 'Students') {
+            return ['student', 'students'].includes(cat);
+        }
+        if (activeCategory === 'Delegates') {
+            return ['delegate', 'delegates'].includes(cat);
+        }
+        return false;
     }).slice(0, showViewAll ? 8 : speakers.length);
 
     const openModal = (speaker) => {
@@ -75,25 +92,36 @@ const SpeakersSection = ({ showViewAll }) => {
                 </div>
 
                 <div className="speakers__grid">
-                    {filteredSpeakers.map((speaker) => (
-                        <div className="speaker-card" key={speaker.id}>
-                            <div className="speaker-img-wrapper">
-                                <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
-                                <div className="speaker-overlay">
-                                    {/* Social icons could go here */}
+                    {loading ? (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#666' }}>
+                            <div className="loading-spinner" style={{ marginBottom: '1rem' }}></div>
+                            <p>Loading global participants details...</p>
+                        </div>
+                    ) : filteredSpeakers.length > 0 ? (
+                        filteredSpeakers.map((speaker) => (
+                            <div className="speaker-card" key={speaker.id}>
+                                <div className="speaker-img-wrapper">
+                                    <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
+                                    <div className="speaker-overlay">
+                                        {/* Social icons could go here */}
+                                    </div>
+                                </div>
+                                <div className="speaker-info">
+                                    {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
+                                    <h3 className="speaker-name">{speaker.name}</h3>
+                                    <p className="speaker-title">{speaker.title}</p>
+                                    <p className="speaker-affiliation">{speaker.affiliation}</p>
+                                    <button className="btn-biograph" onClick={() => openModal(speaker)}>
+                                        <User size={16} /> Biography
+                                    </button>
                                 </div>
                             </div>
-                            <div className="speaker-info">
-                                {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
-                                <h3 className="speaker-name">{speaker.name}</h3>
-                                <p className="speaker-title">{speaker.title}</p>
-                                <p className="speaker-affiliation">{speaker.affiliation}</p>
-                                <button className="btn-biograph" onClick={() => openModal(speaker)}>
-                                    <User size={16} /> Biography
-                                </button>
-                            </div>
+                        ))
+                    ) : (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#666' }}>
+                            <p>No {activeCategory.toLowerCase()} found at the moment.</p>
                         </div>
-                    ))}
+                    )}
                 </div>
                 {showViewAll && (
                     <div className="text-center mt-5">
