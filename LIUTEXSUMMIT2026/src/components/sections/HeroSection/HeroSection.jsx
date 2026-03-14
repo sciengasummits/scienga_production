@@ -129,7 +129,7 @@ const HeroSection = () => {
                     </h1>
 
                     <div className="hero__countdown-wrapper">
-                        <span className="days-to-go-label" style={{ display: 'block', fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.5rem', color: '#4da3ff', textTransform: 'uppercase', letterSpacing: '1px' }}>Days To Go</span>
+                        <span className="days-to-go-label">Days To Go</span>
                         <div className="hero__countdown">
                             <div className="countdown-item">
                                 <span className="countdown-value">{timeLeft.days}</span>
