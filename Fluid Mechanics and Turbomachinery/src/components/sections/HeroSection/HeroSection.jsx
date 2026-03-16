@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import { User, MapPin } from 'lucide-react';
 import './HeroSection.css';
-import mediaImage from '../../../assets/images/Media.jpg';
-import { fetchContent } from '../../../api/siteApi';
+
+import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
 
 const DEFAULTS = {
     subtitle: 'INTERNATIONAL CONFERENCE ON',
@@ -29,12 +29,7 @@ const HeroSection = () => {
         seconds: 0
     });
 
-    const resolveUrl = (url) => {
-        if (!url) return '';
-        if (url.startsWith('http://') || url.startsWith('https://')) return url;
-        if (url.startsWith('/')) return `http://localhost:5000${url}`;
-        return `http://localhost:5000/${url}`;
-    };
+
 
     // Fetch dynamic hero content from backend
     useEffect(() => {
@@ -45,7 +40,20 @@ const HeroSection = () => {
                 if (!cancelled && data) setHero(prev => ({ ...prev, ...data }));
             });
             fetchContent('heroChairs').then(data => {
-                if (!cancelled && data) setChairs(data);
+                if (!cancelled) {
+                    if (data && (data.list?.length > 0 || data.chair?.name || data.viceChair?.name || data.coChair?.name)) {
+                        setChairs(data);
+                    } else {
+                        // Fallback data for Fluid Mechanics
+                        setChairs({
+                            list: [
+                                { name: 'Prof. Yiqian Wang', affiliation: 'Soochow University', country: 'China', title: 'Conference Chairman' },
+                                { name: 'Prof. Chaoqun Liu', affiliation: 'University of Texas at Arlington', country: 'USA', title: 'Conference Co-Chairman' },
+                                { name: 'Prof. Pushkar Raj Pokharel', affiliation: 'Kathmandu University', country: 'Nepal', title: 'Conference Co-Chairman' },
+                            ]
+                        });
+                    }
+                }
             });
         };
 
@@ -108,7 +116,7 @@ const HeroSection = () => {
         ));
     };
 
-    const bgUrl = resolveUrl(hero.bgImage);
+    const bgUrl = resolveImageUrl(hero.bgImage);
 
     const heroBgStyle = {
         backgroundImage: bgUrl
@@ -183,65 +191,88 @@ const HeroSection = () => {
                         </div>
                     </div>
 
-                    {chairs && (chairs.chair.name || chairs.viceChair.name || chairs.coChair?.name) && (
+                    {chairs && (
                         <div className="hero__chairs-row">
-                            {chairs.chair.name && (
-                                <div className="chair-card-v">
-                                    <div className="chair-badge-v">{chairs.chair.title || 'Conference Chairman'}</div>
-                                    {chairs.chair.image ? (
-                                        <img src={resolveUrl(chairs.chair.image)} alt={chairs.chair.name} className="chair-card-bg" />
-                                    ) : (
-                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
-                                    )}
-                                    <div className="chair-card-overlay">
-                                        <h4 className="chair-name-v">{chairs.chair.name}</h4>
-                                        <p className="chair-aff-v">{chairs.chair.affiliation}</p>
-                                        {chairs.chair.country && (
-                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.chair.country}</p>
+                            {chairs.list && chairs.list.length > 0 ? (
+                                // New dynamic format
+                                chairs.list.map((c, i) => c.name && (
+                                    <div key={i} className="chair-card-v">
+                                        <div className="chair-badge-v">{c.title || 'Conference Chairman'}</div>
+                                        {c.image ? (
+                                            <img src={resolveImageUrl(c.image)} alt={c.name} className="chair-card-bg" />
+                                        ) : (
+                                            <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
                                         )}
+                                        <div className="chair-card-overlay">
+                                            <h4 className="chair-name-v">{c.name}</h4>
+                                            <p className="chair-aff-v">{c.affiliation}</p>
+                                            {c.country && (
+                                                <p className="chair-country-v"><MapPin size={12} /> {c.country}</p>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
-                            {chairs.viceChair.name && (
-                                <div className="chair-card-v">
-                                    <div className="chair-badge-v">{chairs.viceChair.title || 'Conference Co-chair'}</div>
-                                    {chairs.viceChair.image ? (
-                                        <img src={resolveUrl(chairs.viceChair.image)} alt={chairs.viceChair.name} className="chair-card-bg" />
-                                    ) : (
-                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                ))
+                            ) : (
+                                // Old fixed keys format (fallback)
+                                <>
+                                    {chairs.chair?.name && (
+                                        <div className="chair-card-v">
+                                            <div className="chair-badge-v">{chairs.chair.title || 'Conference Chairman'}</div>
+                                            {chairs.chair.image ? (
+                                                <img src={resolveImageUrl(chairs.chair.image)} alt={chairs.chair.name} className="chair-card-bg" />
+                                            ) : (
+                                                <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                            )}
+                                            <div className="chair-card-overlay">
+                                                <h4 className="chair-name-v">{chairs.chair.name}</h4>
+                                                <p className="chair-aff-v">{chairs.chair.affiliation}</p>
+                                                {chairs.chair.country && (
+                                                    <p className="chair-country-v"><MapPin size={12} /> {chairs.chair.country}</p>
+                                                )}
+                                            </div>
+                                        </div>
                                     )}
-                                    <div className="chair-card-overlay">
-                                        <h4 className="chair-name-v">{chairs.viceChair.name}</h4>
-                                        <p className="chair-aff-v">{chairs.viceChair.affiliation}</p>
-                                        {chairs.viceChair.country && (
-                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.viceChair.country}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                            {chairs.coChair?.name && (
-                                <div className="chair-card-v">
-                                    <div className="chair-badge-v">{chairs.coChair.title || 'Conference Co-chair'}</div>
-                                    {chairs.coChair.image ? (
-                                        <img src={resolveUrl(chairs.coChair.image)} alt={chairs.coChair.name} className="chair-card-bg" />
-                                    ) : (
-                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    {chairs.viceChair?.name && (
+                                        <div className="chair-card-v">
+                                            <div className="chair-badge-v">{chairs.viceChair.title || 'Conference Co-chair'}</div>
+                                            {chairs.viceChair.image ? (
+                                                <img src={resolveImageUrl(chairs.viceChair.image)} alt={chairs.viceChair.name} className="chair-card-bg" />
+                                            ) : (
+                                                <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                            )}
+                                            <div className="chair-card-overlay">
+                                                <h4 className="chair-name-v">{chairs.viceChair.name}</h4>
+                                                <p className="chair-aff-v">{chairs.viceChair.affiliation}</p>
+                                                {chairs.viceChair.country && (
+                                                    <p className="chair-country-v"><MapPin size={12} /> {chairs.viceChair.country}</p>
+                                                )}
+                                            </div>
+                                        </div>
                                     )}
-                                    <div className="chair-card-overlay">
-                                        <h4 className="chair-name-v">{chairs.coChair.name}</h4>
-                                        <p className="chair-aff-v">{chairs.coChair.affiliation}</p>
-                                        {chairs.coChair.country && (
-                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.coChair.country}</p>
-                                        )}
-                                    </div>
-                                </div>
+                                    {chairs.coChair?.name && (
+                                        <div className="chair-card-v">
+                                            <div className="chair-badge-v">{chairs.coChair.title || 'Conference Co-chair'}</div>
+                                            {chairs.coChair.image ? (
+                                                <img src={resolveImageUrl(chairs.coChair.image)} alt={chairs.coChair.name} className="chair-card-bg" />
+                                            ) : (
+                                                <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                            )}
+                                            <div className="chair-card-overlay">
+                                                <h4 className="chair-name-v">{chairs.coChair.name}</h4>
+                                                <p className="chair-aff-v">{chairs.coChair.affiliation}</p>
+                                                {chairs.coChair.country && (
+                                                    <p className="chair-country-v"><MapPin size={12} /> {chairs.coChair.country}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     )}
                 </div>
             </div>
 
-            <img src={mediaImage} alt="Media Partner" className="hero__cpd-image" />
         </section>
     );
 };

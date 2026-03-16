@@ -15,7 +15,7 @@ import VisaInfo from '../pages/VisaInfo/VisaInfo';
 import Brochure from '../pages/Brochure/Brochure';
 import DigitalBrochure from '../pages/Brochure/DigitalBrochure';
 import Program from '../pages/Program/Program';
-import DiscountRegistration from '../pages/DiscountRegistration/DiscountRegistration';
+import OnlineRegistration from '../pages/OnlineRegistration/OnlineRegistration';
 import Unsubscribe from '../pages/Unsubscribe/Unsubscribe';
 
 const ScrollToTop = () => {
@@ -46,10 +46,9 @@ const AppRoutes = () => {
                     <Route path="visa-info" element={<VisaInfo />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="register" element={<Register />} />
-                    <Route path="discount-registration" element={<DiscountRegistration />} />
-                    <Route path="online-registration" element={<DiscountRegistration />} />
+                    <Route path="register/discount" element={<OnlineRegistration />} />
+                    <Route path="online-registration" element={<OnlineRegistration />} />
                     <Route path="unsubscribe" element={<Unsubscribe />} />
-                    <Route path="register/onlineregistration" element={<Register isDiscounted={true} />} />
                     <Route path="brochure" element={<Brochure />} />
                     <Route path="online-brochure" element={<DigitalBrochure />} />
                     <Route path="*" element={<div className="section-padding text-center"><h1>404 Not Found</h1></div>} />

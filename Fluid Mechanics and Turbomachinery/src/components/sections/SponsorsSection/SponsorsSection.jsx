@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SponsorsSection.css';
-import { fetchSponsors } from '../../../api/siteApi';
+import { fetchSponsors, resolveImageUrl } from '../../../api/siteApi';
 
 // Import static partner images as fallback
 import partner1 from '../../../assets/images/media/486-Mediapartner-Photo.png';
@@ -42,21 +42,24 @@ const staticSponsorsData = [
 const MarqueeRow = ({ items, direction }) => (
     <div className={`marquee-row ${direction}`}>
         {/* Duplicate items for seamless loop */}
-        {[...items, ...items].map((sponsor, index) => (
-            <div key={index} className="marquee-item">
-                <img
-                    src={sponsor.logo || sponsor.image || sponsor.logoUrl}
-                    alt={`${sponsor.name} logo`}
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                        filter: 'none'
-                    }}
-                    onError={e => { e.target.style.display = 'none'; }}
-                />
-            </div>
-        ))}
+        {[...items, ...items].map((sponsor, index) => {
+            const imgSrc = typeof sponsor.logo === 'string' && !sponsor.logo.startsWith('static/') ? resolveImageUrl(sponsor.logo) : sponsor.logo || sponsor.image || sponsor.logoUrl;
+            return (
+                <div key={index} className="marquee-item">
+                    <img
+                        src={imgSrc}
+                        alt={`${sponsor.name} logo`}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                            filter: 'none'
+                        }}
+                        onError={e => { e.target.style.display = 'none'; }}
+                    />
+                </div>
+            );
+        })}
     </div>
 );
 
@@ -71,9 +74,6 @@ export default function SponsorsSection() {
                 if (!cancelled && data && Array.isArray(data) && data.length > 0) {
                     const mapped = data.map(s => {
                         let logoUrl = s.image || s.logoUrl || s.logo;
-                        if (logoUrl && (typeof logoUrl === 'string') && logoUrl.startsWith('/')) {
-                            logoUrl = `http://localhost:5000${logoUrl}`;
-                        }
                         return { name: s.name, logo: logoUrl };
                     });
                     setSponsorsData(mapped);

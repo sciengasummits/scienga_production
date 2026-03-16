@@ -1,16 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { Tag, CheckCircle, XCircle, Loader, ShieldCheck, AlertCircle } from 'lucide-react';
-import './DiscountRegistration.css';
+import './OnlineRegistration.css';
 import { countries } from '../../data/countriesData';
 import * as siteApi from '../../api/siteApi';
 
 /* ── Pricing base values (USD) ─────────────────────────────── */
 const BASE_PRICING = [
-    { id: 'speaker', label: 'Speaker Registration', early: 799, standard: 899, onspot: 949 },
-    { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
-    { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
-    { id: 'student', label: 'Student Registration', early: 499, standard: 599, onspot: 699 },
-    { id: 'virtual', label: 'Virtual(Online)', early: 199, standard: 249, onspot: 299 },
+    { id: 'speaker', label: 'Speaker Registration', early: 599, standard: 699, onspot: 799 },
+    { id: 'delegate', label: 'Delegate Registration', early: 699, standard: 799, onspot: 899 },
+    { id: 'poster', label: 'Poster Registration', early: 399, standard: 499, onspot: 599 },
+    { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+    { id: 'virtual', label: 'Virtual (Online)', early: 200, standard: 300, onspot: 400 },
 ];
 
 const ACCOMMODATION_OPTIONS = [
@@ -30,7 +30,7 @@ const SPONSORSHIP_BASE = [
 /* ── Date logic ─────────────────────────────────────────────── */
 const getActivePhase = () => {
     const now = new Date();
-    if (now <= new Date('2026-09-29')) return 'early';
+    if (now <= new Date('2026-09-25')) return 'early';
     if (now <= new Date('2026-10-30')) return 'standard';
     return 'onspot';
 };
@@ -38,7 +38,7 @@ const getActivePhase = () => {
 /* ── Apply discount to a price ──────────────────────────────── */
 const applyPct = (price, pct) => Math.round(price * (1 - pct / 100));
 
-const DiscountRegistration = () => {
+const OnlineRegistration = () => {
     const activePhase = getActivePhase();
 
     /* ── Discount state ──────────────────────────────────────── */
@@ -167,11 +167,11 @@ const DiscountRegistration = () => {
         const descParts = [];
         if (selectedCategory) {
             const cat = pricingData.find(p => p.id === selectedCategory);
-            if (cat) descParts.push(`${cat.label} : ${cat[activePhase]}`);
+            if (cat) descParts.push(`${cat.label} : $${cat[activePhase]}`);
         }
         if (selectedSponsorship) {
             const sp = sponsorshipPricing.find(p => p.id === selectedSponsorship);
-            if (sp) descParts.push(`${sp.label} : ${sp.price}`);
+            if (sp) descParts.push(`${sp.label} : $${sp.price}`);
         }
         if (includeAccompanying) descParts.push('Accompanying Person : $249');
         if (selectedAccommodation) descParts.push(`Accommodation : ${selectedAccommodation}`);
@@ -208,7 +208,7 @@ const DiscountRegistration = () => {
             const { order } = await siteApi.createPaymentOrder({
                 amount: total,
                 registrationId: registration._id,
-                description: `Fluid Discount Reg: ${formData.fullName}`
+                description: `Fluid Mechanics Online Reg: ${formData.fullName}`
             });
 
             // 3. Open Razorpay Checkout
@@ -216,7 +216,7 @@ const DiscountRegistration = () => {
                 key: key,
                 amount: order.amount,
                 currency: order.currency,
-                name: 'Fluid Mechanics Summit 2026',
+                name: 'Fluid Mechanics and Turbomachinery 2026',
                 description: `Payment for ${formData.fullName}`,
                 order_id: order.id,
                 prefill: {
@@ -224,7 +224,7 @@ const DiscountRegistration = () => {
                     email: formData.email,
                     contact: formData.telephone,
                 },
-                theme: { color: '#0369a1' },
+                theme: { color: '#2563eb' },
                 handler: async (response) => {
                     // 4. Verify Payment
                     try {
@@ -267,16 +267,16 @@ const DiscountRegistration = () => {
 
     /* ── Render ──────────────────────────────────────────────── */
     return (
-        <div className="discount-registration">
+        <div className="online-reg-page">
             <div className="page-header">
                 <div className="container">
                     <h1 className="page-title">Discount Registration</h1>
-                    <p className="page-breadcrumb">HOME /Discount Registration</p>
+                    <p className="page-breadcrumb">Home / Register / Discount</p>
                 </div>
             </div>
 
-            <div className="container">
-                <div className="discount-registration__content">
+            <div className="container section-padding">
+                <div className="online-reg-container">
 
                     {/* ── Stripe Badge ── */}
                     <div className="stripe-badge-wrapper">
@@ -339,12 +339,12 @@ const DiscountRegistration = () => {
                     </div>
 
                     {/* ── Personal Details Form ── */}
-                    <form className="registration-form" onSubmit={handleSubmit}>
+                    <form className="online-reg-form" onSubmit={handleSubmit}>
 
-                        <div className="section-label">Personal Details</div>
-                        <div className="form-grid">
+                        <div className="or-section-label">Personal Details</div>
+                        <div className="reg-form-grid">
                             <div className="form-group">
-                                <select name="designation" value={formData.designation} onChange={handleChange} className="form-control">
+                                <select name="designation" value={formData.designation} onChange={handleChange} className="reg-control">
                                     <option value="">Select Title</option>
                                     <option value="Mr">Mr.</option>
                                     <option value="Mrs">Mrs.</option>
@@ -358,25 +358,25 @@ const DiscountRegistration = () => {
                                 <input
                                     type="text" name="fullName" placeholder="Full Name *"
                                     value={formData.fullName} onChange={handleChange}
-                                    className="form-control" required
+                                    className="reg-control" required
                                 />
                             </div>
                             <div className="form-group">
                                 <input
                                     type="email" name="email" placeholder="Email Address *"
                                     value={formData.email} onChange={handleChange}
-                                    className="form-control" required
+                                    className="reg-control" required
                                 />
                             </div>
                             <div className="form-group">
                                 <input
                                     type="tel" name="telephone" placeholder="Phone Number *"
                                     value={formData.telephone} onChange={handleChange}
-                                    className="form-control" required
+                                    className="reg-control" required
                                 />
                             </div>
                             <div className="form-group">
-                                <select name="country" value={formData.country} onChange={handleChange} className="form-control">
+                                <select name="country" value={formData.country} onChange={handleChange} className="reg-control">
                                     <option value="">Select Country</option>
                                     {countries.map(c => <option key={c} value={c}>{c}</option>)}
                                 </select>
@@ -385,44 +385,44 @@ const DiscountRegistration = () => {
                                 <input
                                     type="text" name="company" placeholder="Company / University"
                                     value={formData.company} onChange={handleChange}
-                                    className="form-control"
+                                    className="reg-control"
                                 />
                             </div>
                             <div className="form-group" style={{ gridColumn: '1 / -1' }}>
                                 <textarea
                                     name="address" placeholder="Address"
                                     value={formData.address} onChange={handleChange}
-                                    className="form-control" rows="3"
+                                    className="reg-control" rows="3"
                                     style={{ resize: 'vertical' }}
                                 />
                             </div>
                         </div>
 
                         {/* ── Registration Category Table ── */}
-                        <div className="section-label" style={{ marginTop: '2rem' }}>
+                        <div className="or-section-label" style={{ marginTop: '2rem' }}>
                             Select Registration Category
                             {discount && regDiscount > 0 && (
-                                <span className="discount-badge">
+                                <span className="or-discount-badge">
                                     {discount.percentage}% OFF applied
                                 </span>
                             )}
                         </div>
 
-                        <table className="pricing-table">
+                        <table className="or-pricing-table">
                             <thead>
                                 <tr>
                                     <th>Category</th>
-                                    <th className={activePhase === 'early' ? 'active-col' : ''}>
-                                        Early Bird<br /><span className="date">Sep 29, 2026</span>
-                                        {activePhase === 'early' && <span className="active-badge">ACTIVE</span>}
+                                    <th className={activePhase === 'early' ? 'or-active-col' : ''}>
+                                        Early Bird<br /><span className="or-date">Sep 25, 2026</span>
+                                        {activePhase === 'early' && <span className="or-active-badge">ACTIVE</span>}
                                     </th>
-                                    <th className={activePhase === 'standard' ? 'active-col' : ''}>
-                                        Standard<br /><span className="date">Oct 30, 2026</span>
-                                        {activePhase === 'standard' && <span className="active-badge">ACTIVE</span>}
+                                    <th className={activePhase === 'standard' ? 'or-active-col' : ''}>
+                                        Standard<br /><span className="or-date">Oct 30, 2026</span>
+                                        {activePhase === 'standard' && <span className="or-active-badge">ACTIVE</span>}
                                     </th>
-                                    <th className={activePhase === 'onspot' ? 'active-col' : ''}>
-                                        On-Spot<br /><span className="date">Dec 14, 2026</span>
-                                        {activePhase === 'onspot' && <span className="active-badge">ACTIVE</span>}
+                                    <th className={activePhase === 'onspot' ? 'or-active-col' : ''}>
+                                        On-Spot<br /><span className="or-date">Dec 14, 2026</span>
+                                        {activePhase === 'onspot' && <span className="or-active-badge">ACTIVE</span>}
                                     </th>
                                 </tr>
                             </thead>
@@ -430,12 +430,12 @@ const DiscountRegistration = () => {
                                 {pricingData.map(item => (
                                     <tr
                                         key={item.id}
-                                        className={selectedCategory === item.id ? 'selected-row' : ''}
+                                        className={selectedCategory === item.id ? 'or-selected-row' : ''}
                                         onClick={() => setSelectedCategory(item.id)}
                                         style={{ cursor: 'pointer' }}
                                     >
                                         <td>
-                                            <label className="radio-label">
+                                            <label className="or-radio-label">
                                                 <input
                                                     type="radio"
                                                     name="category"
@@ -445,27 +445,27 @@ const DiscountRegistration = () => {
                                                 {item.label}
                                             </label>
                                         </td>
-                                        <td className={activePhase === 'early' && selectedCategory === item.id ? 'selected-price' : ''}>
-                                            <span className={activePhase === 'early' ? 'price-active' : ''}>
+                                        <td className={activePhase === 'early' && selectedCategory === item.id ? 'or-selected-price' : ''}>
+                                            <span className={activePhase === 'early' ? 'or-price-active' : ''}>
                                                 ${item.early}
                                                 {regDiscount > 0 && (
-                                                    <span className="original-price">${BASE_PRICING.find(b => b.id === item.id).early}</span>
+                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).early}</span>
                                                 )}
                                             </span>
                                         </td>
-                                        <td className={activePhase === 'standard' && selectedCategory === item.id ? 'selected-price' : ''}>
-                                            <span className={activePhase === 'standard' ? 'price-active' : ''}>
+                                        <td className={activePhase === 'standard' && selectedCategory === item.id ? 'or-selected-price' : ''}>
+                                            <span className={activePhase === 'standard' ? 'or-price-active' : ''}>
                                                 ${item.standard}
                                                 {regDiscount > 0 && (
-                                                    <span className="original-price">${BASE_PRICING.find(b => b.id === item.id).standard}</span>
+                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).standard}</span>
                                                 )}
                                             </span>
                                         </td>
-                                        <td className={activePhase === 'onspot' && selectedCategory === item.id ? 'selected-price' : ''}>
-                                            <span className={activePhase === 'onspot' ? 'price-active' : ''}>
+                                        <td className={activePhase === 'onspot' && selectedCategory === item.id ? 'or-selected-price' : ''}>
+                                            <span className={activePhase === 'onspot' ? 'or-price-active' : ''}>
                                                 ${item.onspot}
                                                 {regDiscount > 0 && (
-                                                    <span className="original-price">${BASE_PRICING.find(b => b.id === item.id).onspot}</span>
+                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).onspot}</span>
                                                 )}
                                             </span>
                                         </td>
@@ -475,8 +475,8 @@ const DiscountRegistration = () => {
                         </table>
 
                         {/* ── Sponsorship Table ── */}
-                        <div className="section-label" style={{ marginTop: '2rem' }}>Sponsorship Opportunities</div>
-                        <table className="pricing-table sponsorship-table">
+                        <div className="or-section-label" style={{ marginTop: '2rem' }}>Sponsorship Opportunities</div>
+                        <table className="or-pricing-table or-sponsorship-table">
                             <thead>
                                 <tr>
                                     {sponsorshipPricing.map(item => <th key={item.id}>{item.label}</th>)}
@@ -486,7 +486,7 @@ const DiscountRegistration = () => {
                                 <tr>
                                     {sponsorshipPricing.map(item => (
                                         <td key={item.id}>
-                                            <label className="radio-label" style={{ justifyContent: 'center' }}>
+                                            <label className="or-radio-label" style={{ justifyContent: 'center' }}>
                                                 <input
                                                     type="radio"
                                                     name="sponsorship"
@@ -495,7 +495,7 @@ const DiscountRegistration = () => {
                                                 />
                                                 ${item.price}
                                                 {regDiscount > 0 && (
-                                                    <span className="original-price">${SPONSORSHIP_BASE.find(b => b.id === item.id).price}</span>
+                                                    <span className="or-original-price">${SPONSORSHIP_BASE.find(b => b.id === item.id).price}</span>
                                                 )}
                                             </label>
                                         </td>
@@ -505,14 +505,14 @@ const DiscountRegistration = () => {
                         </table>
 
                         {/* ── Accommodation ── */}
-                        <div className="section-label" style={{ marginTop: '2rem' }}>
+                        <div className="or-section-label" style={{ marginTop: '2rem' }}>
                             Accommodation
                             {discount && accomDiscount > 0 && (
-                                <span className="discount-badge">{discount.percentage}% OFF applied</span>
+                                <span className="or-discount-badge">{discount.percentage}% OFF applied</span>
                             )}
                         </div>
                         <div className="accompanying-check">
-                            <label className="check-label">
+                            <label className="or-check-label">
                                 <input
                                     type="checkbox"
                                     checked={includeAccompanying}
@@ -521,7 +521,7 @@ const DiscountRegistration = () => {
                                 <strong>Include Accompanying Person ($249 extra)</strong>
                             </label>
                         </div>
-                        <table className="pricing-table">
+                        <table className="or-pricing-table">
                             <thead>
                                 <tr>
                                     <th>Nights</th>
@@ -539,7 +539,7 @@ const DiscountRegistration = () => {
                                             const discountedPrice = accomDiscount > 0 ? applyPct(basePrice, accomDiscount) : basePrice;
                                             return (
                                                 <td key={type}>
-                                                    <label className="radio-label">
+                                                    <label className="or-radio-label">
                                                         <input
                                                             type="radio"
                                                             name="accommodation"
@@ -548,7 +548,7 @@ const DiscountRegistration = () => {
                                                         />
                                                         ${discountedPrice}
                                                         {accomDiscount > 0 && (
-                                                            <span className="original-price">${basePrice}</span>
+                                                            <span className="or-original-price">${basePrice}</span>
                                                         )}
                                                     </label>
                                                 </td>
@@ -560,48 +560,49 @@ const DiscountRegistration = () => {
                         </table>
 
                         {/* ── Total & Submit ── */}
-                        <div className="summary-section">
-                            <div className="total-display">
-                                <span className="total-label">TOTAL AMOUNT (USD):</span>
-                                <span className="total-amount">${calculateTotal()}</span>
+                        <div className="or-summary">
+                            <div className="or-total-row">
+                                <span className="or-total-label">TOTAL AMOUNT (USD):</span>
+                                <span className="or-total-value">${calculateTotal()}</span>
                             </div>
                             {discount && (
-                                <div className="savings-note">
+                                <div className="or-savings-note">
                                     🎉 You're saving with code <strong>{discount.coupon}</strong> — {discount.percentage}% discount applied!
                                 </div>
                             )}
-                            <div className="terms-checkbox">
-                                <label className="check-label">
+                            <div className="or-terms">
+                                <label className="or-check-label">
                                     <input
                                         type="checkbox"
                                         checked={termsAccepted}
                                         onChange={e => setTermsAccepted(e.target.checked)}
                                     />
-                                    I've read and accept the <span className="terms-link">terms &amp; conditions</span>.
+                                    I've read and accept the <span className="or-terms-link">terms &amp; conditions</span>.
                                 </label>
                             </div>
-                            <p className="processing-fee">Note: 5% processing charges will be applicable.</p>
+                            <p className="or-processing-note">Note: 5% processing charges will be applicable.</p>
 
                             {submitStatus === 'success' && (
-                                <div className="status status--success">
+                                <div className="or-status or-status--success">
                                     ✅ Registration submitted successfully! We will contact you shortly.
                                 </div>
                             )}
                             {submitStatus === 'error' && (
-                                <div className="status status--error">
+                                <div className="or-status or-status--error">
                                     ❌ Submission failed. Please check your connection and try again.
                                 </div>
                             )}
 
-                            <div className="form-actions">
+                            <div className="or-action-buttons">
                                 <button
-                                    className="submit-btn"
+                                    type="submit"
+                                    className="btn-online-register"
                                     disabled={submitting}
                                     style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
                                 >
-                                    {submitting ? 'Submitting…' : 'SECURELY PAY NOW'}
+                                    {submitting ? 'Submitting…' : 'REGISTER NOW'}
                                 </button>
-                                <button type="button" className="reset-btn" onClick={handleReset}>RESET</button>
+                                <button type="button" className="btn-or-reset" onClick={handleReset}>RESET</button>
                             </div>
                         </div>
                     </form>
@@ -611,4 +612,4 @@ const DiscountRegistration = () => {
     );
 };
 
-export default DiscountRegistration;
+export default OnlineRegistration;

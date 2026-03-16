@@ -1,8 +1,33 @@
 // API service for Fluid Mechanics & Turbomachinery 2026 website
-// Fetches live data from the shared dashboard backend (port 5000)
+// Fetches live data from the shared dashboard backend (port 5050)
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
 const CONFERENCE = 'fluid';
+
+export const resolveImageUrl = (url) => {
+    if (!url) return '';
+    
+    // Convert e.g., 'https://backend.com/api' to 'https://backend.com'
+    const backendOrigin = BASE_URL.replace(/\/api$/, '');
+
+    // Replace any saved localhost URLs from DB with actual backend origin
+    let secureUrl = url;
+    if (secureUrl.includes('localhost:5050') || secureUrl.includes('localhost:3000')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|3000)/g, backendOrigin);
+    }
+
+    if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
+        return secureUrl;
+    }
+    
+    // If it's a relative URL to an uploaded file, prepend the backend origin
+    if (secureUrl.startsWith('/uploads') || secureUrl.startsWith('uploads/')) {
+        return secureUrl.startsWith('/') ? `${backendOrigin}${secureUrl}` : `${backendOrigin}/${secureUrl}`;
+    }
+    
+    // Otherwise (e.g. frontend static assets from Vite imports like /assets/...), leave as is
+    return secureUrl;
+};
 
 async function get(endpoint) {
     try {

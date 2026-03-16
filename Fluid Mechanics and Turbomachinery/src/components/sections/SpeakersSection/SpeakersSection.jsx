@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { speakers as staticSpeakers } from '../../../data/speakersData';
-import { fetchSpeakers } from '../../../api/siteApi';
+import { fetchSpeakers, resolveImageUrl } from '../../../api/siteApi';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
@@ -19,10 +19,7 @@ const SpeakersSection = ({ showViewAll }) => {
                 if (!cancelled && data && data.length > 0) {
                     const mapped = data.filter(s => s.visible !== false).map(s => {
                         let imageUrl = s.image || s.photo || '';
-                        // If URL is relative, prepend the backend URL
-                        if (imageUrl && imageUrl.startsWith('/')) {
-                            imageUrl = `http://localhost:5000${imageUrl}`;
-                        }
+                        imageUrl = resolveImageUrl(imageUrl);
                         return {
                             id: s._id,
                             name: s.name,
