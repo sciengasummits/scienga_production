@@ -64,6 +64,8 @@
     font-size: 1.8rem;
     font-weight: 700;
     white-space: nowrap;
+    display: block;
+    margin-bottom: 0.3rem;
 }
 
 .hero__desc {

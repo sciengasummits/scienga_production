@@ -78,7 +78,7 @@ const HeroSection = () => {
             <div className="container hero__container">
                 <div className="hero__content">
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">{hero.subtitle}</span>{' '}
+                        <span className="hero__title-sub">{hero.subtitle}</span>
                         {titleLines.map((line, i) => (
                             <React.Fragment key={i}>{line}{i < titleLines.length - 1 && <br />}</React.Fragment>
                         ))}

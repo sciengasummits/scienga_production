@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
+import { fetchContent } from '../../../api/siteApi';
 import './Footer.css';
 
 const Footer = () => {
+    const [contactInfo, setContactInfo] = useState({ email: 'contact@foodagrisummit.com', phone: '+91 7842090097' });
+
+    useEffect(() => {
+        fetchContent('contact').then(data => {
+            if (data) {
+                setContactInfo(prev => ({
+                    email: data.email || prev.email,
+                    phone: data.phone || prev.phone,
+                }));
+            }
+        }).catch(() => {});
+    }, []);
+
     return (
         <footer className="footer">
             <div className="container">
@@ -49,11 +63,11 @@ const Footer = () => {
 
                             <li>
                                 <Mail size={18} />
-                                <span>contact@foodagrisummit.com</span>
+                                <span>{contactInfo.email}</span>
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+91 7842090097</span>
+                                <span>{contactInfo.phone}</span>
                             </li>
                         </ul>
                     </div>
