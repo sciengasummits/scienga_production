@@ -60,12 +60,12 @@
 
 .hero__title-sub {
     color: #C8E6C9;
-    /* Light blue accent */
-    font-size: 1.8rem;
+    font-size: 1.1rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
     white-space: nowrap;
-    display: block;
-    margin-bottom: 0.3rem;
 }
 
 .hero__desc {
@@ -176,39 +176,6 @@
     font-size: 0.9rem;
     opacity: 0.9;
     font-weight: 700;
-}
-
-.hero__cpd-image {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 280px;
-    height: auto;
-    padding: 0;
-    background: transparent;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: blink 0.6s infinite ease-in-out;
-}
-
-@keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.3;
-    }
-}
-
-.hero__cpd-image img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
 }
 
 /* Responsive */

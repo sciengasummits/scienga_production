@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import cpdImage from '../../../assets/images/Media.jpg';
 import { fetchContent } from '../../../api/siteApi';
 
 const DEFAULTS = {
@@ -77,8 +76,8 @@ const HeroSection = () => {
             <div className="hero__overlay"></div>
             <div className="container hero__container">
                 <div className="hero__content">
+                    <p className="hero__title-sub">{hero.subtitle}</p>
                     <h1 className="hero__title">
-                        <span className="hero__title-sub">{hero.subtitle}</span>
                         {titleLines.map((line, i) => (
                             <React.Fragment key={i}>{line}{i < titleLines.length - 1 && <br />}</React.Fragment>
                         ))}
@@ -123,9 +122,6 @@ const HeroSection = () => {
                 </div>
             </div>
 
-            <div className="hero__cpd-image">
-                <img src={cpdImage} alt="CPD Certification" />
-            </div>
         </section>
     );
 };
