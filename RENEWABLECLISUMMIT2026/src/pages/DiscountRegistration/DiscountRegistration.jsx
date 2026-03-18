@@ -1,33 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../../components/common/Button/Button';
 import * as siteApi from '../../api/siteApi';
+import { countries } from '../../data/countriesData';
 import './DiscountRegistration.css';
 
-// Comprehensive list of all countries
-const countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
-    "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
-    "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
-    "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
-    "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
-    "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
-    "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
-    "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-    "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan",
-    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
-    "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
-    "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
-    "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
-    "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
-    "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
-    "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
-    "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
-    "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
-    "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
-    "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-];
+const DEFAULTS = {
+    earlyBirdEndDate: '2026-11-25',
+    standardEndDate:  '2027-01-25',
+    onspotEndDate:    '2027-03-23',
+    categories: [
+        { id: 'speaker', label: 'Speaker Registration', early: 749, standard: 849, onspot: 949 },
+        { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
+        { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
+        { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
+        { id: 'virtual', label: 'Virtual (Online)', early: 199, standard: 249, onspot: 299 },
+    ],
+    sponsorships: [
+        { id: 'platinum', label: 'Platinum Sponsor', price: 4999 },
+        { id: 'diamond', label: 'Diamond Sponsor', price: 3999 },
+        { id: 'gold', label: 'Gold Sponsor', price: 2999 },
+        { id: 'exhibitor', label: 'Exhibitor', price: 1999 },
+    ],
+    accommodation: [
+        { nights: 2, single: 360, double: 400, triple: 440 },
+        { nights: 3, single: 540, double: 600, triple: 660 },
+        { nights: 4, single: 720, double: 800, triple: 880 },
+        { nights: 5, single: 900, double: 1000, triple: 1100 },
+    ],
+    accompanyingPersonPrice: 249,
+    processingFeePercent: 5,
+};
 
 const DiscountRegistration = () => {
+    const [regPricing, setRegPricing] = useState(DEFAULTS);
+
+    useEffect(() => {
+        siteApi.fetchContent('registration-prices')
+            .then(data => { if (data && !data.error) setRegPricing(prev => ({ ...prev, ...data })); })
+            .catch(e => console.warn('[DiscountReg] Could not load pricing:', e.message));
+    }, []);
+
+    // Compute active phase from backend dates
+    const now = new Date();
+    const earlyEnd = new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate);
+    const stdEnd   = new Date(regPricing.standardEndDate  || DEFAULTS.standardEndDate);
+    const activePhase = now <= earlyEnd ? 'early' : now <= stdEnd ? 'standard' : 'onspot';
+    const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+    // ── Derived pricing arrays from backend data ──
+    const registrationCategories = (regPricing.categories || DEFAULTS.categories);
+    const sponsorshipOptions = (regPricing.sponsorships || DEFAULTS.sponsorships);
+    const accommodationOptions = (regPricing.accommodation || DEFAULTS.accommodation);
+    const accompanyingPersonPrice = Number(regPricing.accompanyingPersonPrice ?? DEFAULTS.accompanyingPersonPrice);
+
     const [discountCode, setDiscountCode] = useState('');
     const [formData, setFormData] = useState({
         title: '',
@@ -49,30 +74,6 @@ const DiscountRegistration = () => {
     const [submitting, setSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
 
-    const registrationCategories = [
-        { id: 'speaker', label: 'Speaker Registration', early: 749, standard: 849, onspot: 949 },
-        { id: 'delegate', label: 'Delegate Registration', early: 899, standard: 999, onspot: 1099 },
-        { id: 'poster', label: 'Poster Registration', early: 449, standard: 549, onspot: 649 },
-        { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
-        { id: 'virtual', label: 'Virtual (Online)', early: 199, standard: 249, onspot: 299 }
-    ];
-
-    const sponsorshipOptions = [
-        { id: 'platinum', label: 'Platinum Sponsor', price: 4999 },
-        { id: 'diamond', label: 'Diamond Sponsor', price: 3999 },
-        { id: 'gold', label: 'Gold Sponsor', price: 2999 },
-        { id: 'exhibitor', label: 'Exhibitor', price: 1999 }
-    ];
-
-    const accommodationOptions = [
-        { nights: 2, single: 360, double: 400, triple: 440 },
-        { nights: 3, single: 540, double: 600, triple: 660 },
-        { nights: 4, single: 720, double: 800, triple: 880 },
-        { nights: 5, single: 900, double: 1000, triple: 1100 }
-    ];
-
-    const activePhase = 'early';
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -85,14 +86,11 @@ const DiscountRegistration = () => {
             const category = registrationCategories.find(c => c.id === selectedCategory);
             if (category) total += category[activePhase];
         }
-
         if (selectedSponsorship) {
             const sponsor = sponsorshipOptions.find(s => s.id === selectedSponsorship);
             if (sponsor) total += sponsor.price;
         }
-
-        if (includeAccompanying) total += 249;
-
+        if (includeAccompanying) total += accompanyingPersonPrice;
         if (selectedAccommodation) {
             const [nights, type] = selectedAccommodation.split('-');
             const option = accommodationOptions.find(o => o.nights === parseInt(nights));
@@ -131,8 +129,13 @@ const DiscountRegistration = () => {
             const sp = sponsorshipOptions.find(p => p.id === selectedSponsorship);
             if (sp) descParts.push(`${sp.label} : $${sp.price}`);
         }
-        if (includeAccompanying) descParts.push('Accompanying Person : $249');
-        if (selectedAccommodation) descParts.push(`Accommodation : ${selectedAccommodation}`);
+        if (includeAccompanying) descParts.push(`Accompanying Person : $${accompanyingPersonPrice}`);
+        if (selectedAccommodation) {
+            const [nights, type] = selectedAccommodation.split('-');
+            const accOpt = accommodationOptions.find(o => o.nights === parseInt(nights));
+            const accPrice = accOpt ? accOpt[type] : '';
+            descParts.push(`Accommodation (${nights} nights, ${type}) : $${accPrice}`);
+        }
         if (discountCode) descParts.push(`Discount Code: ${discountCode}`);
 
         const payload = {
@@ -304,16 +307,18 @@ const DiscountRegistration = () => {
                                 <div className="category-col category-label">Category</div>
                                 <div className="category-col category-early active">
                                     <span className="phase-title">Early Bird</span>
-                                    <span className="phase-date">Sep 15, 2026</span>
-                                    <span className="phase-badge">ACTIVE</span>
+                                    <span className="phase-date">{fmtDate(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate)}</span>
+                                    {activePhase === 'early' && <span className="phase-badge">ACTIVE</span>}
                                 </div>
-                                <div className="category-col category-standard">
+                                <div className={`category-col category-standard${activePhase === 'standard' ? ' active' : ''}`}>
                                     <span className="phase-title">Standard</span>
-                                    <span className="phase-date">DEC 30, 2026</span>
+                                    <span className="phase-date">{fmtDate(regPricing.standardEndDate || DEFAULTS.standardEndDate)}</span>
+                                    {activePhase === 'standard' && <span className="phase-badge">ACTIVE</span>}
                                 </div>
-                                <div className="category-col category-onspot">
+                                <div className={`category-col category-onspot${activePhase === 'onspot' ? ' active' : ''}`}>
                                     <span className="phase-title">On-Spot</span>
-                                    <span className="phase-date">March 23, 2027</span>
+                                    <span className="phase-date">{fmtDate(regPricing.onspotEndDate || DEFAULTS.onspotEndDate)}</span>
+                                    {activePhase === 'onspot' && <span className="phase-badge">ACTIVE</span>}
                                 </div>
                             </div>
                             {registrationCategories.map((cat) => (
@@ -354,7 +359,7 @@ const DiscountRegistration = () => {
                         <div className="accompanying-checkbox">
                             <label>
                                 <input type="checkbox" checked={includeAccompanying} onChange={(e) => setIncludeAccompanying(e.target.checked)} />
-                                Include Accompanying Person ($249 extra)
+                                Include Accompanying Person (${accompanyingPersonPrice} extra)
                             </label>
                         </div>
                         <div className="accommodation-table">
@@ -384,10 +389,10 @@ const DiscountRegistration = () => {
                         <div className="terms-checkbox">
                             <label>
                                 <input type="checkbox" checked={termsAccepted} onChange={(e) => setTermsAccepted(e.target.checked)} required />
-                                I've read and accept the <a href="#">terms & conditions</a>
+                                I've read and accept the <a href="#">terms &amp; conditions</a>
                             </label>
                         </div>
-                        <p className="processing-note">Note: 5% processing charges will be applicable.</p>
+                        <p className="processing-note">Note: {regPricing.processingFeePercent ?? 5}% processing charges will be applicable.</p>
                         <div className="form-actions">
                             <Button
                                 type="submit"

@@ -125,7 +125,7 @@ const HeroSection = () => {
                     </div>
                     <div className="info-card venue-card">
                         <h3>Venue</h3>
-                        <p>Event Venue: {data.venue}</p>
+                        <p>{data.venue}</p>
                     </div>
                 </div>
             </div>

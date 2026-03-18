@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
-import Button from '../../common/Button/Button';
 import './RegistrationPricingSection.css';
 import { fetchContent } from '../../../api/siteApi';
 
@@ -85,7 +84,10 @@ const RegistrationPricingSection = () => {
     return (
         <section className="registration-pricing section-padding">
             <div className="container">
-                <h2 className="section-title text-center">{pricing.title || 'REGISTRATION PRICING'}</h2>
+                <div className="section-header text-center mb-5">
+                    <h2 className="section-title">{pricing.title || 'REGISTRATION PRICING'}</h2>
+                    <div className="section-line"></div>
+                </div>
 
                 <div className="pricing-cards">
                     {packages.map((plan, index) => (
@@ -110,9 +112,9 @@ const RegistrationPricingSection = () => {
                                 ))}
                             </ul>
 
-                            <Button onClick={() => navigate('/register')}>
+                            <button className="pricing-btn" onClick={() => navigate('/register')}>
                                 REGISTER NOW
-                            </Button>
+                            </button>
                         </div>
                     ))}
                 </div>

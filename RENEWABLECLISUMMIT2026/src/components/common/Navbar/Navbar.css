@@ -49,11 +49,6 @@
     transition: color 0.3s ease;
 }
 
-.navbar .app-logo .logo-icon-heart {
-    /* Keep heart red or make it white/accent? Red usually pops on dark too. */
-    /* If it needs to be visible, #e63946 is fine on black. */
-}
-
 .navbar--scrolled .navbar__logo {
     color: var(--color-text-dark);
 }
@@ -84,7 +79,19 @@
     color: var(--color-white);
 }
 
-.navbar--scrolled .contact-item {
+/* Ensure <a> contact items are not overridden by browser link defaults */
+a.contact-item,
+a.contact-item:visited,
+a.contact-item:hover,
+a.contact-item:focus {
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.navbar--scrolled .contact-item,
+.navbar--scrolled a.contact-item,
+.navbar--scrolled a.contact-item:visited,
+.navbar--scrolled a.contact-item:hover {
     color: var(--color-text-dark);
 }
 

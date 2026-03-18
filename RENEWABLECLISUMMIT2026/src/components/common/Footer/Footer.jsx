@@ -6,7 +6,7 @@ import './Footer.css';
 import { fetchContent } from '../../../api/siteApi';
 
 const DEFAULT_CONTACT = {
-    email: 'contact@renewableenergyconf.com',
+    email: 'renewable@sciengasummits.com',
     phone: '+91 7842090097',
     venue: 'Munich, Germany',
     facebook: 'https://www.facebook.com/profile.php?id=61588065033161',

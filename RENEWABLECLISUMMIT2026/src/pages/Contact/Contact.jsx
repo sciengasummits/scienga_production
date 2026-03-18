@@ -9,16 +9,18 @@ const Contact = () => {
         email: 'renewable@sciengasummits.com',
         phone: '+91 7842090097',
         whatsapp: '+91 7842090097',
+        venue: 'Munich, Germany',
     });
 
     // ── Fetch contact info from API (dashboard-driven) ──────────────────────
     useEffect(() => {
         fetchContent('contact').then(data => {
-            if (data) {
+            if (data && !data.error) {
                 setContactInfo(prev => ({
-                    email: data.email || prev.email,
-                    phone: data.phone || prev.phone,
-                    whatsapp: data.whatsapp || prev.whatsapp,
+                    email:     data.email     || prev.email,
+                    phone:     data.phone     || prev.phone,
+                    whatsapp:  data.whatsapp  || prev.whatsapp,
+                    venue:     data.venue     || prev.venue,
                 }));
             }
         }).catch(() => {
@@ -50,7 +52,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4>Address</h4>
-                                <p>Munich, Germany</p>
+                                <p>{contactInfo.venue}</p>
                             </div>
                         </div>
 
