@@ -60,10 +60,9 @@
 }
 
 .currency {
-    font-size: 1.5rem;
-    margin-top: 0.5rem;
+    font-size: 3.5rem;
     margin-right: 0.2rem;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .amount {
