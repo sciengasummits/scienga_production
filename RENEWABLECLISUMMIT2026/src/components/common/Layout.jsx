@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 import { Outlet } from 'react-router-dom';
-import mediaImage from '../../assets/images/Media.jpg';
 import '../../assets/styles/global.css';
 
 const Layout = () => {
@@ -13,7 +12,6 @@ const Layout = () => {
                 <Outlet />
             </main>
             <Footer />
-            <img src={mediaImage} alt="Media Partner" className="global-media-image" />
         </div>
     );
 };
