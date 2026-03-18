@@ -1,32 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Mail, Phone, MessageCircle, ChevronDown } from 'lucide-react';
+import { Menu, X, Mail, Phone, MessageCircle } from 'lucide-react';
 import Button from '../Button/Button';
 import Logo from '../Logo/Logo';
-import { fetchContent } from '../../../api/siteApi';
 import './Navbar.css';
 
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [contactInfo, setContactInfo] = useState({ email: '', phone: '', whatsapp: '' });
     const location = useLocation();
-
-    // ── Fetch contact info from API (dashboard-driven) ──────────────────────
-    useEffect(() => {
-        fetchContent('contact').then(data => {
-            if (data) {
-                setContactInfo({
-                    email: data.email || 'contact@renewableenergyconf.com',
-                    phone: data.phone || '+91 7842090097',
-                    whatsapp: data.whatsapp || '+91 7842090097',
-                });
-            }
-        }).catch(() => {
-            // Keep defaults on failure
-        });
-    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -77,41 +60,27 @@ const Navbar = () => {
                     <Logo onClick={closeMobileMenu} />
 
                     <div className="navbar__contact">
-                        <a
-                            className="contact-item"
-                            href={`mailto:${contactInfo.email}`}
-                            style={{ textDecoration: 'none', color: 'inherit' }}
-                        >
+                        <div className="contact-item">
                             <Mail size={18} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">SEND US AN EMAIL</span>
-                                <span className="contact-value">{contactInfo.email}</span>
+                                <span className="contact-value">contact@renewableenergyconf.com</span>
                             </div>
-                        </a>
-                        <a
-                            className="contact-item"
-                            href={`tel:${contactInfo.phone}`}
-                            style={{ textDecoration: 'none', color: 'inherit' }}
-                        >
+                        </div>
+                        <div className="contact-item">
                             <Phone size={18} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">CALL US NOW</span>
-                                <span className="contact-value">{contactInfo.phone}</span>
+                                <span className="contact-value">+91 7842090097</span>
                             </div>
-                        </a>
-                        <a
-                            className="contact-item"
-                            href={`https://wa.me/${contactInfo.whatsapp.replace(/\D/g, '')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ textDecoration: 'none', color: 'inherit' }}
-                        >
+                        </div>
+                        <div className="contact-item">
                             <MessageCircle size={18} className="contact-icon" />
                             <div className="contact-info">
                                 <span className="contact-label">WHATSAPP</span>
-                                <span className="contact-value">{contactInfo.whatsapp}</span>
+                                <span className="contact-value">+91 7842090097</span>
                             </div>
-                        </a>
+                        </div>
                     </div>
 
                     <button className="navbar__toggle" onClick={toggleMobileMenu}>
@@ -127,7 +96,7 @@ const Navbar = () => {
                             link.dropdown ? (
                                 <div className="navbar__dropdown" key={link.name}>
                                     <span className={`navbar__link ${location.pathname === link.path ? 'active' : ''}`}>
-                                        {link.name} <ChevronDown size={13} style={{ marginLeft: 2, verticalAlign: 'middle' }} />
+                                        {link.name}
                                     </span>
                                     <div className="navbar__dropdown-menu">
                                         {link.dropdown.map((subLink) => (

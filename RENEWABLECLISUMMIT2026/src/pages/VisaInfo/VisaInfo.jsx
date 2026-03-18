@@ -6,20 +6,28 @@ import './VisaInfo.css';
 /* ── Default fallback content ── */
 const DEFAULTS = {
     pageTitle: 'Visa Information',
-    intro: 'The International Conference On RENEWABLE ENERGY & CLIMATE CHANGE welcomes speakers & delegates from all over the world. Below is essential visa-related information to assist with your travel planning.',
+    intro: 'The International Conference On RENEWABLE ENERGY & CLIMATE CHANGE welcomes speakers & delegates from all over the world. Below is essential visa-related information to assist with your travel planning to Munich, Germany.',
     sections: [
         {
             id: 'visa_need',
             title: '1. Do You Need a Visa?',
             points: [
-                'Check if you require a visa to enter the conference country using the official immigration website or your local embassy.',
-                'Nationals of many countries (including USA, UK, Canada, Australia, Japan, and most EU countries) may enter for short-term visits without a visa in advance.',
-                'All visitors must complete the required arrival documentation within 3 days prior to arrival.',
+                'Check if you require a visa to enter Germany using the German Embassy or Consulate website in your country.',
+                'Nationals of many countries (including USA, UK, Canada, Australia, Japan, and most EU countries) may enter Germany for short-term visits without a visa.',
+                'All visitors are advised to check entry requirements well in advance of travel.',
+            ],
+        },
+        {
+            id: 'visa_types',
+            title: '2. Visa Types',
+            points: [
+                'Short-Stay Schengen Visa (Type C): For stays up to 90 days within a 180-day period, suitable for conference attendance.',
+                'National Visa (Type D): Required for stays exceeding 90 days.',
             ],
         },
         {
             id: 'visa_docs',
-            title: '2. Required Documents',
+            title: '3. Required Documents',
             points: [
                 'Valid passport (minimum 6 months validity from your planned date of arrival).',
                 'Proof of onward travel (confirmed return flight ticket).',
@@ -30,13 +38,13 @@ const DEFAULTS = {
         },
         {
             id: 'visa_invite',
-            title: '3. Invitation Letter',
+            title: '4. Invitation Letter',
             points: [
                 'Registered participants can request an official invitation letter to support their visa application. This letter confirms your registration and participation in the congress.',
             ],
         },
     ],
-    contactEmail: 'contact@renewableenergyconf.com',
+    contactEmail: 'renewable@sciengasummits.com',
     note: 'Please ensure you apply for your visa well in advance of the conference date. We recommend applying at least 8 weeks before your intended travel date.',
 };
 
@@ -103,7 +111,7 @@ const VisaInfo = () => {
                         </div>
 
                         {data.note && (
-                            <p className="visa-intro-text" style={{ marginTop: '1.5rem', background: 'rgba(0,0,0,0.04)', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--color-primary, #16a34a)' }}>
+                            <p className="visa-intro-text" style={{ marginTop: '1.5rem', background: 'rgba(0,0,0,0.04)', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--color-primary, #2e7d32)' }}>
                                 <strong>Note:</strong> {data.note}
                             </p>
                         )}
@@ -111,7 +119,7 @@ const VisaInfo = () => {
                         {data.contactEmail && (
                             <p className="visa-intro-text" style={{ marginTop: '1rem' }}>
                                 For visa-related queries, please contact us at:{' '}
-                                <a href={`mailto:${data.contactEmail}`} style={{ color: 'var(--color-primary, #16a34a)', fontWeight: 600 }}>
+                                <a href={`mailto:${data.contactEmail}`} style={{ color: 'var(--color-primary, #2e7d32)', fontWeight: 600 }}>
                                     {data.contactEmail}
                                 </a>
                             </p>

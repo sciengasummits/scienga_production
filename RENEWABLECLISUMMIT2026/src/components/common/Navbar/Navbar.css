@@ -49,8 +49,10 @@
     transition: color 0.3s ease;
 }
 
-
-
+.navbar .app-logo .logo-icon-heart {
+    /* Keep heart red or make it white/accent? Red usually pops on dark too. */
+    /* If it needs to be visible, #e63946 is fine on black. */
+}
 
 .navbar--scrolled .navbar__logo {
     color: var(--color-text-dark);
@@ -79,31 +81,18 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #ffffff;
+    color: var(--color-white);
 }
 
-.contact-item,
-.contact-item .contact-label,
-.contact-item .contact-value {
-    color: #ffffff;
-}
-
-a.contact-item,
-a.contact-item:visited,
-a.contact-item:hover,
-a.contact-item:active {
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.navbar--scrolled .contact-item,
-.navbar--scrolled .contact-item .contact-label,
-.navbar--scrolled .contact-item .contact-value {
+.navbar--scrolled .contact-item {
     color: var(--color-text-dark);
 }
 
 .contact-icon {
-    color: #ffffff;
+    color: var(--color-primary-end);
+    /* Or inherit if you want white on transparent, colored on scroll. 
+       Usually header icons are white on transparent bg. */
+    color: var(--color-white);
 }
 
 .navbar--scrolled .contact-icon {
