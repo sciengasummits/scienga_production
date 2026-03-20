@@ -17,6 +17,7 @@ import meetingCyber from '../../assets/images/meetings/cyber.jpg'
 import meetingPublic from '../../assets/images/meetings/Public.jpg'
 import meetingFluid from '../../assets/images/meetings/Fluid.jpg'
 import meetingShared from '../../assets/images/meetings/shared image.jpg'
+import meetingIQCES from '../../assets/images/meetings/iqces.png'
 
 const meetingsData = {
     2026: [
@@ -79,6 +80,16 @@ const meetingsData = {
             year: "2026",
             image: meetingFoodTech,
             link: "https://foodagrisummit2026.sciengasummits.com/"
+        },
+        {
+            id: 17,
+            title: "IQCES2026",
+            description: "International Conference on Quantum Computing & Engineering",
+            location: "BERN, SWITZERLAND",
+            date: "June 24-26, 2026",
+            year: "2026",
+            image: meetingIQCES,
+            link: "https://quantumengineering.sciengasummits.com/"
         }
     ],
     2027: [
