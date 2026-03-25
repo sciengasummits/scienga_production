@@ -42,15 +42,26 @@ const HeroSection = () => {
 
             fetchContent('heroChairs').then(data => {
                 if (!cancelled) {
-                    if (data && (data.chair?.name || data.viceChair?.name || data.coChair?.name)) {
-                        setChairs(data);
-                    } else {
-                        // Fallback dummy data if nothing is saved yet
-                        setChairs({
-                            chair: { name: 'Dr. Chaoqun Liu', affiliation: 'University of Texas at Arlington', country: 'USA', title: 'Conference Chairman' },
-                            viceChair: { name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', title: 'Conference Co-chairman' },
-                            coChair: { name: 'Dr. James Chen', affiliation: 'Singapore Food Agency', country: 'Singapore', title: 'Conference Co-chairman' }
+                    if (data && Array.isArray(data)) {
+                        const validChairs = data.filter(c => c && c.name);
+                        setChairs(validChairs);
+                    } else if (data && (data.chair?.name || data.viceChair?.name || data.coChair?.name)) {
+                        const migrated = [];
+                        ['chair', 'viceChair', 'coChair'].forEach(k => {
+                            if (data[k] && data[k].name) {
+                                migrated.push({ id: k, ...data[k] });
+                            }
                         });
+                        setChairs(migrated);
+                    } else if (data === null || data === undefined) {
+                        // Fallback dummy data if nothing is saved yet
+                        setChairs([
+                            { id: 1, name: 'Dr. Chaoqun Liu', affiliation: 'University of Texas at Arlington', country: 'USA', title: 'Conference Chairman' },
+                            { id: 2, name: 'Dr. Yiqian Wang', affiliation: 'Soochow University', country: 'China', title: 'Conference Co-chairman' },
+                            { id: 3, name: 'Dr. James Chen', affiliation: 'Singapore Food Agency', country: 'Singapore', title: 'Conference Co-chairman' }
+                        ]);
+                    } else {
+                        setChairs([]);
                     }
                 }
             }).catch(err => {
@@ -181,59 +192,25 @@ const HeroSection = () => {
                         </div>
                     </div>
 
-                    {chairs && (chairs.chair?.name || chairs.viceChair?.name || chairs.coChair?.name) && (
+                    {chairs && chairs.length > 0 && (
                         <div className="hero__chairs-row">
-                            {chairs.chair?.name && (
-                                <div className="chair-card-v">
-                                    <div className="chair-badge-v">{chairs.chair.title || 'Conference Chairman'}</div>
-                                    {chairs.chair.image ? (
-                                        <img src={resolveUrl(chairs.chair.image)} alt={chairs.chair.name} className="chair-card-bg" />
+                            {chairs.map((chair, idx) => (
+                                <div className="chair-card-v" key={chair.id || idx}>
+                                    <div className="chair-badge-v">{chair.title || 'Conference Chairman'}</div>
+                                    {chair.image ? (
+                                        <img src={resolveUrl(chair.image)} alt={chair.name} className="chair-card-bg" />
                                     ) : (
                                         <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
                                     )}
                                     <div className="chair-card-overlay">
-                                        <h4 className="chair-name-v">{chairs.chair.name}</h4>
-                                        <p className="chair-aff-v">{chairs.chair.affiliation}</p>
-                                        {chairs.chair.country && (
-                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.chair.country}</p>
+                                        <h4 className="chair-name-v">{chair.name}</h4>
+                                        <p className="chair-aff-v">{chair.affiliation}</p>
+                                        {chair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chair.country}</p>
                                         )}
                                     </div>
                                 </div>
-                            )}
-                            {chairs.viceChair?.name && (
-                                <div className="chair-card-v">
-                                    <div className="chair-badge-v">{chairs.viceChair.title || 'Conference Co-chair'}</div>
-                                    {chairs.viceChair.image ? (
-                                        <img src={resolveUrl(chairs.viceChair.image)} alt={chairs.viceChair.name} className="chair-card-bg" />
-                                    ) : (
-                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
-                                    )}
-                                    <div className="chair-card-overlay">
-                                        <h4 className="chair-name-v">{chairs.viceChair.name}</h4>
-                                        <p className="chair-aff-v">{chairs.viceChair.affiliation}</p>
-                                        {chairs.viceChair.country && (
-                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.viceChair.country}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                            {chairs.coChair?.name && (
-                                <div className="chair-card-v">
-                                    <div className="chair-badge-v">{chairs.coChair.title || 'Conference Co-chair'}</div>
-                                    {chairs.coChair.image ? (
-                                        <img src={resolveUrl(chairs.coChair.image)} alt={chairs.coChair.name} className="chair-card-bg" />
-                                    ) : (
-                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
-                                    )}
-                                    <div className="chair-card-overlay">
-                                        <h4 className="chair-name-v">{chairs.coChair.name}</h4>
-                                        <p className="chair-aff-v">{chairs.coChair.affiliation}</p>
-                                        {chairs.coChair.country && (
-                                            <p className="chair-country-v"><MapPin size={12} /> {chairs.coChair.country}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
+                            ))}
                         </div>
                     )}
                 </div>

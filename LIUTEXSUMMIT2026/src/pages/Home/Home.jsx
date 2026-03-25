@@ -7,12 +7,14 @@ import SpeakersSection from '../../components/sections/SpeakersSection/SpeakersS
 import PricingSection from '../../components/sections/PricingSection/PricingSection';
 import SponsorsSection from '../../components/sections/SponsorsSection/SponsorsSection';
 import PreviousConferenceSection from '../../components/sections/PreviousConferenceSection/PreviousConferenceSection';
+import UniversitiesMarquee from '../../components/sections/UniversitiesMarquee/UniversitiesMarquee';
 import './Home.css';
 
 const Home = () => {
     return (
         <div className="home-page">
             <HeroSection />
+            <UniversitiesMarquee />
             <AboutSection />
             <StatsSection />
             <SpeakersSection showViewAll={true} />

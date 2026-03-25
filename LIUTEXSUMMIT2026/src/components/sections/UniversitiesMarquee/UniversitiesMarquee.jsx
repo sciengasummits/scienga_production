@@ -22,6 +22,24 @@ const universities = [
 const UniversitiesMarquee = () => {
     return (
         <section className="universities-marquee">
+            <div className="container" style={{ marginBottom: '2rem' }}>
+                <div style={{ textAlign: 'center' }}>
+                    <h2 style={{
+                        fontSize: 'clamp(1.8rem, 4vw, 2.25rem)',
+                        fontWeight: '800',
+                        color: '#1e293b',
+                        marginBottom: '1rem',
+                        textAlign: 'center',
+                    }}>
+                        Supporting Universities &amp; Institutions
+                    </h2>
+                    <div style={{
+                        width: '60px', height: '4px',
+                        background: 'var(--brand-gradient, linear-gradient(135deg, #0F172A 0%, #1E40AF 100%))',
+                        margin: '0 auto', borderRadius: '2px',
+                    }}></div>
+                </div>
+            </div>
             <div className="marquee-track">
                 {/* Original Set */}
                 {universities.map((uni) => (
