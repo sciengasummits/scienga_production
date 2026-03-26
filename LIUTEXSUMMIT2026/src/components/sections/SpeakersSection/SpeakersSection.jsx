@@ -12,54 +12,64 @@ const SpeakersSection = ({ showViewAll }) => {
     const [speakers, setSpeakers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setLoading(true);
-        fetchSpeakers().then(data => {
-            if (data) {
-                // Map backend speaker fields to the format expected by the UI
-                const mapped = data.filter(s => s.visible !== false).map(s => ({
-                    id: s._id || s.id,
-                    name: s.name,
-                    title: s.title || s.designation || '',
-                    affiliation: s.affiliation || s.institution || '',
-                    category: s.category || 'Speakers',
-                    image: s.image || s.photo || '',
-                    bio: s.bio || '',
-                }));
-                setSpeakers(mapped);
-            }
-        }).finally(() => setLoading(false));
-    }, []);
-
-
     const getDisplayCategory = (category) => {
         if (category === 'Student' || category === 'Students') return 'Student Speaker';
         if (category === 'Committee') return 'Committee';
+        if (category === 'Poster Presenter') return 'Poster Presenter';
         if (category === 'Keynote' || category === 'Keynote Speaker') return 'Keynote Speaker';
         if (category === 'Plenary' || category === 'Plenary Speaker') return 'Plenary Speaker';
+        if (category === 'Featured') return 'Featured Speaker';
+        if (category === 'Invited') return 'Invited Speaker';
         return category;
     };
 
+    useEffect(() => {
+        let mounted = true;
+
+        async function load() {
+            try {
+                const data = await fetchSpeakers(); // Fetches all visible speakers
+                if (data && mounted) {
+                    const mapped = data.filter(s => s.visible !== false).map(s => ({
+                        id: s._id || s.id,
+                        name: s.name,
+                        title: s.title || s.designation || '',
+                        affiliation: s.affiliation || s.institution || '',
+                        category: s.category || 'Speakers',
+                        image: s.image || s.photo || '',
+                        bio: s.bio || '',
+                    }));
+                    setSpeakers(mapped);
+                }
+            } catch (err) {
+                console.error('Failed to load speakers:', err);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        }
+
+        setLoading(true);
+        load();
+
+        const interval = setInterval(load, 15000);
+
+        return () => {
+            mounted = false;
+            clearInterval(interval);
+        };
+    }, []);
+
     const filteredSpeakers = speakers.filter(speaker => {
         const cat = (speaker.category || '').toLowerCase();
-        
-        if (activeCategory === 'Committee') {
-            return cat === 'committee';
-        }
-        if (activeCategory === 'Speakers') {
-            return ['keynote', 'plenary', 'speakers', 'keynote speaker', 'plenary speaker'].includes(cat);
-        }
-        if (activeCategory === 'Posters') {
-            return ['poster presenter', 'posters', 'poster'].includes(cat);
-        }
-        if (activeCategory === 'Students') {
-            return ['student', 'students'].includes(cat);
-        }
-        if (activeCategory === 'Delegates') {
-            return ['delegate', 'delegates'].includes(cat);
-        }
+        if (activeCategory === 'Committee') return cat === 'committee';
+        if (activeCategory === 'Speakers') return ['keynote', 'plenary', 'speakers', 'keynote speaker', 'plenary speaker', 'featured', 'invited'].includes(cat);
+        if (activeCategory === 'Posters') return ['poster presenter', 'posters', 'poster'].includes(cat);
+        if (activeCategory === 'Students') return ['student', 'students'].includes(cat);
+        if (activeCategory === 'Delegates') return ['delegate', 'delegates'].includes(cat);
         return false;
-    }).slice(0, showViewAll ? 8 : speakers.length);
+    });
+
+    const displaySpeakers = filteredSpeakers.slice(0, showViewAll ? 8 : filteredSpeakers.length);
 
     const openModal = (speaker) => {
         setSelectedSpeaker(speaker);
@@ -97,11 +107,18 @@ const SpeakersSection = ({ showViewAll }) => {
                             <div className="loading-spinner" style={{ marginBottom: '1rem' }}></div>
                             <p>Loading global participants details...</p>
                         </div>
-                    ) : filteredSpeakers.length > 0 ? (
-                        filteredSpeakers.map((speaker) => (
+                    ) : displaySpeakers.length > 0 ? (
+                        displaySpeakers.map((speaker) => (
                             <div className="speaker-card" key={speaker.id}>
                                 <div className="speaker-img-wrapper">
-                                    <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
+                                    {speaker.image ? (
+                                        <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
+                                    ) : (
+                                        <div className="speaker-img-placeholder" style={{ width: '100%', height: '100%', minHeight: '300px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                            <User size={64} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
+                                            <span style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 500 }}>No Photo</span>
+                                        </div>
+                                    )}
                                     <div className="speaker-overlay">
                                         {/* Social icons could go here */}
                                     </div>

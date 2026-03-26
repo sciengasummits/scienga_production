@@ -70,7 +70,7 @@
     border: 1px solid #eee;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    /* Removed fixed height constraint to let grid naturally stretch all cards identically */
 }
 
 .speaker-card:hover {
@@ -81,14 +81,15 @@
 .speaker-img-wrapper {
     position: relative;
     overflow: hidden;
-    height: 220px;
+    height: 280px; /* Increased from 220px to better accommodate portrait headshots */
+    background-color: #f8fafc;
 }
 
 .speaker-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
+    object-position: center 15%; /* Focuses slightly above center, perfect alignment for faces */
     transition: transform 0.5s ease;
 }
 
@@ -99,10 +100,11 @@
 .speaker-info {
     padding: 1.5rem;
     text-align: center;
-    flex: 1;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
 }
 
 
@@ -120,24 +122,27 @@
 
 .speaker-name {
     font-size: 1.25rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: var(--color-black);
     font-weight: 700;
+    line-height: 1.3;
 }
 
 .speaker-title {
-    font-weight: 400;
-    /* Removed bold styling */
-    font-size: 0.9rem;
-    margin-bottom: 0.1rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
     margin-top: 0;
     color: var(--color-text-dark);
+    line-height: 1.4;
 }
 
 .speaker-affiliation {
     font-size: 0.85rem;
     color: var(--color-text-body);
     margin-top: 0;
+    margin-bottom: 1.25rem; /* Ensure minimum gap before the biography button */
+    line-height: 1.5;
 }
 
 .btn-biograph {

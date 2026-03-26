@@ -43,9 +43,15 @@ const HeroSection = () => {
             fetchContent('heroChairs').then(data => {
                 if (!cancelled) {
                     if (data && Array.isArray(data)) {
+                        // Top-level array (ideal case)
                         const validChairs = data.filter(c => c && c.name);
                         setChairs(validChairs);
+                    } else if (data && data._items && Array.isArray(data._items)) {
+                        // ✅ Deployed backend stores array as data._items — most recent save wins
+                        const validChairs = data._items.filter(c => c && c.name);
+                        setChairs(validChairs);
                     } else if (data && (data.chair?.name || data.viceChair?.name || data.coChair?.name)) {
+                        // Legacy schema migration
                         const migrated = [];
                         ['chair', 'viceChair', 'coChair'].forEach(k => {
                             if (data[k] && data[k].name) {
@@ -53,6 +59,17 @@ const HeroSection = () => {
                             }
                         });
                         setChairs(migrated);
+                    } else if (data && typeof data === 'object') {
+                        // Recover from corrupted save: { "0":{...}, "1":{...} }
+                        const numKeys = Object.keys(data)
+                            .filter(k => !isNaN(k))
+                            .sort((a, b) => Number(a) - Number(b));
+                        if (numKeys.length > 0) {
+                            const recovered = numKeys.map(k => data[k]).filter(c => c && c.name);
+                            setChairs(recovered);
+                        } else {
+                            setChairs([]);
+                        }
                     } else if (data === null || data === undefined) {
                         // Fallback dummy data if nothing is saved yet
                         setChairs([
