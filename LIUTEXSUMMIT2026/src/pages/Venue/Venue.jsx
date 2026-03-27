@@ -1,10 +1,16 @@
 import { useNavigate } from 'react-router-dom';
+import usePageSEO from '../../hooks/usePageSEO';
 import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
 import './Venue.css';
 import vortexImg from '../../assets/images/vortex.jpg';
 
 const Venue = () => {
+    usePageSEO({
+        title: 'Event Venue – Outram, Singapore',
+        description: 'LIUTEX2026 takes place in Outram, Singapore on December 14–16, 2026. Explore the world-class venue facilities, nearby attractions, and travel information.',
+        canonical: 'https://liutex2026.com/venue',
+    });
     const navigate = useNavigate();
     const venueFeatures = [
         {

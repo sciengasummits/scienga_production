@@ -1,0 +1,17 @@
+{
+  "name": "LIUTEX2026 – International Conference on Liutex Theory & Vortex Dynamics",
+  "short_name": "LIUTEX2026",
+  "description": "International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics – December 14-16, 2026, Outram, Singapore.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f2e",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/liutex-favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

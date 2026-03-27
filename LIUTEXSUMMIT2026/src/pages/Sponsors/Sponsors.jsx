@@ -1,9 +1,15 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import './Sponsors.css';
 import Button from '../../components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 
 const Sponsors = () => {
+    usePageSEO({
+        title: 'Sponsorship Opportunities',
+        description: 'Sponsor LIUTEX2026 – Platinum, Gold, Silver, and Exhibitor packages available. Showcase your brand to global fluid mechanics researchers and engineers in Singapore, December 2026.',
+        canonical: 'https://liutex2026.com/sponsors',
+    });
     const navigate = useNavigate();
     const packages = [
         {

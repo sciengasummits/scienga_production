@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
 import './AbstractSubmission.css';
 import { countries } from '../../assets/constants/countries';
@@ -20,6 +21,11 @@ const DEFAULT_DATES = [
 const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
 
 const AbstractSubmission = () => {
+    usePageSEO({
+        title: 'Abstract Submission',
+        description: 'Submit your research abstract for LIUTEX2026. Topics include Liutex Theory, Vortex Identification, Turbulence Modeling, CFD, and AI in flow field analysis. Deadline: October 30, 2026.',
+        canonical: 'https://liutex2026.com/abstract-submission',
+    });
     const [formData, setFormData] = useState({
         title: '',
         name: '',

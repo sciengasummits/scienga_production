@@ -1,7 +1,13 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import KeyThemesSection from '../../components/sections/KeyThemesSection/KeyThemesSection';
 
 const Sessions = () => {
+    usePageSEO({
+        title: 'Sessions & Key Themes',
+        description: 'Explore LIUTEX2026 technical sessions covering Liutex Theory fundamentals, Vortex Identification Methods (Q, λ2, Ω, Liutex), Turbulence Modeling, CFD Applications, Aerospace Vortex Dynamics, and AI in Flow Field Analysis.',
+        canonical: 'https://liutex2026.com/sessions',
+    });
     return (
         <div className="pt-5">
             <div className="page-header" style={{ marginTop: '0' }}>

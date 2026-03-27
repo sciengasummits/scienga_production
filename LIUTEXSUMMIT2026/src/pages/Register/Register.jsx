@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import './Register.css';
 import { countries } from '../../assets/constants/countries';
 import * as siteApi from '../../api/siteApi';
@@ -32,6 +33,11 @@ const DEFAULTS = {
 };
 
 const Register = ({ isDiscounted = false }) => {
+    usePageSEO({
+        title: 'Registration',
+        description: 'Register for LIUTEX2026 – International Conference on Liutex Theory & Vortex Dynamics, Singapore. Early bird, standard, and on-spot rates available for speakers, delegates, students, and virtual attendees.',
+        canonical: 'https://liutex2026.com/register',
+    });
     // ── Pricing state loaded from backend ──
     const [regPricing, setRegPricing] = useState(DEFAULTS);
 

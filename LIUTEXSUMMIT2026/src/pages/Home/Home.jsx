@@ -1,4 +1,5 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import HeroSection from '../../components/sections/HeroSection/HeroSection';
 import AboutSection from '../../components/sections/AboutSection/AboutSection';
 import StatsSection from '../../components/sections/StatsSection/StatsSection';
@@ -11,6 +12,11 @@ import UniversitiesMarquee from '../../components/sections/UniversitiesMarquee/U
 import './Home.css';
 
 const Home = () => {
+    usePageSEO({
+        title: 'Home',
+        description: 'LIUTEX2026 – International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. December 14–16, 2026, Outram, Singapore. Submit abstracts and register now.',
+        canonical: 'https://liutex2026.com/',
+    });
     return (
         <div className="home-page">
             <HeroSection />

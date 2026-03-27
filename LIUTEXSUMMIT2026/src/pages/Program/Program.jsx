@@ -1,9 +1,15 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import { Calendar, Clock, Bell } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import './Program.css';
 
 const Program = () => {
+    usePageSEO({
+        title: 'Program Schedule',
+        description: 'LIUTEX2026 conference program – keynote sessions, technical presentations, and workshops on Liutex Theory, Vortex Dynamics, and CFD. Full schedule to be announced May 2026.',
+        canonical: 'https://liutex2026.com/program',
+    });
     return (
         <div className="program-page">
             <div className="page-header">

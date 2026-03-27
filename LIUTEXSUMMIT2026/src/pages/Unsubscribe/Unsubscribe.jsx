@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import Button from '../../components/common/Button/Button';
 import './Unsubscribe.css';
 
 const Unsubscribe = () => {
+    usePageSEO({
+        title: 'Unsubscribe',
+        description: 'Unsubscribe from LIUTEX2026 mailing list.',
+        canonical: 'https://liutex2026.com/unsubscribe',
+    });
+
+    // noindex for utility page
+    useEffect(() => {
+        const el = document.querySelector('meta[name="robots"]');
+        if (el) el.setAttribute('content', 'noindex, nofollow');
+        return () => { if (el) el.setAttribute('content', 'index, follow'); };
+    }, []);
+
     const [email, setEmail] = useState('');
     const [submitted, setSubmitted] = useState(false);
 

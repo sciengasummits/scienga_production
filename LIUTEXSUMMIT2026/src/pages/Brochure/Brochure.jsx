@@ -1,10 +1,16 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import './Brochure.css';
 import { useNavigate } from 'react-router-dom';
 import { Download, FileText, CheckCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 
 const Brochure = () => {
+    usePageSEO({
+        title: 'Conference Brochure',
+        description: 'Download the official LIUTEX2026 conference brochure – program schedule, keynote speaker profiles, workshop details, venue maps, and sponsorship opportunities.',
+        canonical: 'https://liutex2026.com/brochure',
+    });
     const navigate = useNavigate();
 
     const handleDownloadClick = (e) => {

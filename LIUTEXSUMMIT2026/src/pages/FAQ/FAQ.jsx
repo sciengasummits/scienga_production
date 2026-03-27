@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
@@ -90,6 +91,11 @@ const DEFAULTS = {
 };
 
 const FAQ = () => {
+    usePageSEO({
+        title: 'Frequently Asked Questions',
+        description: 'Find answers to common questions about LIUTEX2026 – registration, abstract submission, visa & travel, accommodation, and the conference program. Contact us for further help.',
+        canonical: 'https://liutex2026.com/faqs',
+    });
     const [faqData, setFaqData] = useState(DEFAULTS);
     const [activeIndex, setActiveIndex] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');

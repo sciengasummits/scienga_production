@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import Button from '../../components/common/Button/Button';
 import * as siteApi from '../../api/siteApi';
 import './VisaInfo.css';
@@ -49,6 +50,11 @@ const DEFAULTS = {
 };
 
 const VisaInfo = () => {
+    usePageSEO({
+        title: 'Visa Information',
+        description: 'Visa information for international participants attending LIUTEX2026 in Singapore. Learn about visa requirements, required documents, and how to request an official invitation letter.',
+        canonical: 'https://liutex2026.com/visa-info',
+    });
     const [visaData, setVisaData] = useState(DEFAULTS);
     const [email, setEmail] = useState('');
     const [submitMsg, setSubmitMsg] = useState(null);

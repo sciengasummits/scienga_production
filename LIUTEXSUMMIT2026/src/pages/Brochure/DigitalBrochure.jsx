@@ -1,8 +1,14 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import { Download, CheckCircle, Calendar, MapPin, Users, Award, FileText } from 'lucide-react';
 import './DigitalBrochure.css';
 
 const DigitalBrochure = () => {
+    usePageSEO({
+        title: 'Digital Brochure',
+        description: 'View the LIUTEX2026 digital brochure online – conference overview, core objectives, key themes including Liutex Fundamentals, Vortex Dynamics, CFD, and AI in Flow Analysis.',
+        canonical: 'https://liutex2026.com/digital-brochure',
+    });
     return (
         <div className="digital-brochure">
             <div className="brochure-page-container">

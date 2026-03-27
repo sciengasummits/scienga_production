@@ -1,4 +1,5 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import { useParams, Link } from 'react-router-dom';
 import { Compass, Target, Layers, Wind, Cpu, Terminal, ArrowLeft } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
@@ -57,6 +58,14 @@ const themesData = {
 const ThemeDetail = () => {
     const { themeId } = useParams();
     const theme = themesData[themeId];
+
+    usePageSEO({
+        title: theme ? `${theme.title} – Sessions` : 'Session Theme',
+        description: theme
+            ? `LIUTEX2026 session: ${theme.title}. ${theme.description} Topics include: ${(theme.topics || []).slice(0, 3).join(', ')}.`
+            : 'LIUTEX2026 conference session on Liutex Theory, Vortex Dynamics, and CFD.',
+        canonical: `https://liutex2026.com/sessions/${themeId || ''}`,
+    });
 
     if (!theme) {
         return (

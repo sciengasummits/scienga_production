@@ -1,7 +1,13 @@
 import React from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import SpeakersSection from '../../components/sections/SpeakersSection/SpeakersSection';
 
 const Speakers = () => {
+    usePageSEO({
+        title: 'Speakers',
+        description: 'Meet the world-class keynote speakers and invited experts at LIUTEX2026 – International Conference on Liutex Theory & Vortex Dynamics, Singapore, December 2026.',
+        canonical: 'https://liutex2026.com/speakers',
+    });
     return (
         <div className="pt-5">
             <div className="page-header" style={{ marginTop: '0' }}>

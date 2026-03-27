@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import usePageSEO from '../../hooks/usePageSEO';
 import Button from '../../components/common/Button/Button';
 import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
 import { fetchContent } from '../../api/siteApi';
 import './Contact.css';
 
 const Contact = () => {
+    usePageSEO({
+        title: 'Contact Us',
+        description: 'Get in touch with the LIUTEX2026 organizing committee for questions on registration, abstract submission, visa, or the conference schedule.',
+        canonical: 'https://liutex2026.com/contact',
+    });
     const [contactInfo, setContactInfo] = useState({
         email: 'contact@liutexvortexsummit.com',
         phone: '+91 7842090097',
