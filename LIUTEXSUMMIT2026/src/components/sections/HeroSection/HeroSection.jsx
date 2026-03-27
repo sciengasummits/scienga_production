@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { User, MapPin } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import { fetchContent } from '../../../api/siteApi';
+import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
 
 const DEFAULTS = {
     subtitle: 'International Conference on',
@@ -23,13 +23,9 @@ const HeroSection = () => {
     const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-    const resolveUrl = (url) => {
-        if (!url) return '';
-        if (url.startsWith('http://') || url.startsWith('https://')) return url;
-        // Dashboard serves uploaded images at /uploads locally
-        if (url.startsWith('/')) return `http://localhost:3000${url}`;
-        return `http://localhost:3000/${url}`;
-    };
+    // resolveImageUrl from siteApi.js handles both local (localhost:5050) and
+    // production (VITE_API_URL) — never hardcodes localhost for image paths.
+    const resolveUrl = resolveImageUrl;
 
     // Fetch dynamic content from backend
     useEffect(() => {
