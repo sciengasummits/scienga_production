@@ -1,44 +1,37 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Tag, CheckCircle, XCircle, Loader, ShieldCheck, AlertCircle } from 'lucide-react';
 import './OnlineRegistration.css';
 import { countries } from '../../assets/constants/countries';
 import * as siteApi from '../../api/siteApi';
 
-/* ── Pricing base values (USD) ─────────────────────────────── */
-const BASE_PRICING = [
-    { id: 'speaker', label: 'Speaker Registration', early: 599, standard: 699, onspot: 799 },
-    { id: 'delegate', label: 'Delegate Registration', early: 699, standard: 799, onspot: 899 },
-    { id: 'poster', label: 'Poster Registration', early: 399, standard: 499, onspot: 599 },
-    { id: 'student', label: 'Student', early: 299, standard: 399, onspot: 499 },
-    { id: 'virtual', label: 'Virtual (Online)', early: 200, standard: 300, onspot: 400 },
-];
+import { PRICING_DEFAULTS as DEFAULTS } from '../../data/registrationPricing';
 
-const ACCOMMODATION_OPTIONS = [
-    { nights: 2, single: 360, double: 400, triple: 440 },
-    { nights: 3, single: 540, double: 600, triple: 660 },
-    { nights: 4, single: 720, double: 800, triple: 880 },
-    { nights: 5, single: 900, double: 1000, triple: 1100 },
-];
-
-const SPONSORSHIP_BASE = [
-    { id: 'platinum', label: 'Platinum Sponsor', price: 4999 },
-    { id: 'diamond', label: 'Diamond Sponsor', price: 3999 },
-    { id: 'gold', label: 'Gold Sponsor', price: 2999 },
-    { id: 'exhibitor', label: 'Exhibitor', price: 1999 },
-];
-
-/* ── Date logic ─────────────────────────────────────────────── */
-const getActivePhase = () => {
-    const now = new Date();
-    if (now <= new Date('2026-09-25')) return 'early';
-    if (now <= new Date('2026-10-30')) return 'standard';
-    return 'onspot';
-};
-
-/* ── Apply discount to a price ──────────────────────────────── */
+/* ── Apply discount % to a price ────────────────────────────── */
 const applyPct = (price, pct) => Math.round(price * (1 - pct / 100));
 
 const OnlineRegistration = () => {
+    /* ── Live pricing loaded from backend (same source as Register page) ── */
+    const [regPricing, setRegPricing] = useState(DEFAULTS);
+
+    useEffect(() => {
+        siteApi.fetchContent('registration-prices')
+            .then(data => {
+                if (data && !data.error) {
+                    setRegPricing(prev => ({ ...prev, ...data }));
+                }
+            })
+            .catch(e => console.warn('[OnlineRegistration] Could not load pricing:', e.message));
+    }, []);
+
+    /* ── Derive active phase from live backend dates ─────────── */
+    const getActivePhase = () => {
+        const now = new Date();
+        const earlyBirdEnd = new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate);
+        const standardEnd = new Date(regPricing.standardEndDate || DEFAULTS.standardEndDate);
+        if (now <= earlyBirdEnd) return 'early';
+        if (now <= standardEnd) return 'standard';
+        return 'onspot';
+    };
     const activePhase = getActivePhase();
 
     /* ── Discount state ──────────────────────────────────────── */
@@ -65,23 +58,29 @@ const OnlineRegistration = () => {
     const [submitting, setSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
 
-    /* ── Derived pricing with discount applied ───────────────── */
+    /* ── Derived pricing with discount applied (base from live backend) ── */
     const regDiscount = discount && (discount.category === 'registration' || discount.category === 'both')
         ? discount.percentage : 0;
     const accomDiscount = discount && (discount.category === 'accommodation' || discount.category === 'both')
         ? discount.percentage : 0;
 
-    const pricingData = BASE_PRICING.map(item => ({
+    // Use live backend categories as the base — same source as Register page
+    const basePricing = regPricing.categories || DEFAULTS.categories;
+    const pricingData = basePricing.map(item => ({
         ...item,
-        early: applyPct(item.early, regDiscount),
-        standard: applyPct(item.standard, regDiscount),
-        onspot: applyPct(item.onspot, regDiscount),
+        early: applyPct(Number(item.early), regDiscount),
+        standard: applyPct(Number(item.standard), regDiscount),
+        onspot: applyPct(Number(item.onspot), regDiscount),
     }));
 
-    const sponsorshipPricing = SPONSORSHIP_BASE.map(item => ({
+    const baseSponsorships = regPricing.sponsorships || DEFAULTS.sponsorships;
+    const sponsorshipPricing = baseSponsorships.map(item => ({
         ...item,
-        price: applyPct(item.price, regDiscount),
+        price: applyPct(Number(item.price), regDiscount),
     }));
+
+    const accommodationOptions = regPricing.accommodation || DEFAULTS.accommodation;
+    const accompanyingPersonPrice = Number(regPricing.accompanyingPersonPrice ?? DEFAULTS.accompanyingPersonPrice);
 
     /* ── Validate coupon ─────────────────────────────────────── */
     const handleValidateCoupon = useCallback(async () => {
@@ -115,7 +114,7 @@ const OnlineRegistration = () => {
         setCouponMsg('');
     };
 
-    /* ── Total calculation ───────────────────────────────────── */
+    /* ── Total calculation (uses live backend prices) ──────── */
     const calculateTotal = () => {
         let total = 0;
         if (selectedCategory) {
@@ -126,11 +125,11 @@ const OnlineRegistration = () => {
             const item = sponsorshipPricing.find(p => p.id === selectedSponsorship);
             if (item) total += item.price;
         }
-        if (includeAccompanying) total += 249;
+        if (includeAccompanying) total += accompanyingPersonPrice;
         if (selectedAccommodation) {
             const [nights, type] = selectedAccommodation.split('-');
-            const opt = ACCOMMODATION_OPTIONS.find(o => o.nights === parseInt(nights));
-            if (opt) total += accomDiscount > 0 ? applyPct(opt[type], accomDiscount) : opt[type];
+            const opt = accommodationOptions.find(o => o.nights === parseInt(nights));
+            if (opt) total += accomDiscount > 0 ? applyPct(Number(opt[type]), accomDiscount) : Number(opt[type]);
         }
         return total;
     };
@@ -173,7 +172,7 @@ const OnlineRegistration = () => {
             const sp = sponsorshipPricing.find(p => p.id === selectedSponsorship);
             if (sp) descParts.push(`${sp.label} : $${sp.price}`);
         }
-        if (includeAccompanying) descParts.push('Accompanying Person : $249');
+        if (includeAccompanying) descParts.push(`Accompanying Person : $${accompanyingPersonPrice}`);
         if (selectedAccommodation) descParts.push(`Accommodation : ${selectedAccommodation}`);
         if (discount) descParts.push(`Discount Code: ${discount.coupon} (${discount.percentage}% off)`);
 
@@ -413,15 +412,15 @@ const OnlineRegistration = () => {
                                 <tr>
                                     <th>Category</th>
                                     <th className={activePhase === 'early' ? 'or-active-col' : ''}>
-                                        Early Bird<br /><span className="or-date">Sep 25, 2026</span>
+                                        Early Bird<br /><span className="or-date">{new Date(regPricing.earlyBirdEndDate || DEFAULTS.earlyBirdEndDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                                         {activePhase === 'early' && <span className="or-active-badge">ACTIVE</span>}
                                     </th>
                                     <th className={activePhase === 'standard' ? 'or-active-col' : ''}>
-                                        Standard<br /><span className="or-date">Oct 30, 2026</span>
+                                        Standard<br /><span className="or-date">{new Date(regPricing.standardEndDate || DEFAULTS.standardEndDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                                         {activePhase === 'standard' && <span className="or-active-badge">ACTIVE</span>}
                                     </th>
                                     <th className={activePhase === 'onspot' ? 'or-active-col' : ''}>
-                                        On-Spot<br /><span className="or-date">Dec 14, 2026</span>
+                                        On-Spot<br /><span className="or-date">{new Date(regPricing.onspotEndDate || DEFAULTS.onspotEndDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                                         {activePhase === 'onspot' && <span className="or-active-badge">ACTIVE</span>}
                                     </th>
                                 </tr>
@@ -449,7 +448,7 @@ const OnlineRegistration = () => {
                                             <span className={activePhase === 'early' ? 'or-price-active' : ''}>
                                                 ${item.early}
                                                 {regDiscount > 0 && (
-                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).early}</span>
+                                                    <span className="or-original-price">${basePricing.find(b => b.id === item.id)?.early}</span>
                                                 )}
                                             </span>
                                         </td>
@@ -457,7 +456,7 @@ const OnlineRegistration = () => {
                                             <span className={activePhase === 'standard' ? 'or-price-active' : ''}>
                                                 ${item.standard}
                                                 {regDiscount > 0 && (
-                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).standard}</span>
+                                                    <span className="or-original-price">${basePricing.find(b => b.id === item.id)?.standard}</span>
                                                 )}
                                             </span>
                                         </td>
@@ -465,7 +464,7 @@ const OnlineRegistration = () => {
                                             <span className={activePhase === 'onspot' ? 'or-price-active' : ''}>
                                                 ${item.onspot}
                                                 {regDiscount > 0 && (
-                                                    <span className="or-original-price">${BASE_PRICING.find(b => b.id === item.id).onspot}</span>
+                                                    <span className="or-original-price">${basePricing.find(b => b.id === item.id)?.onspot}</span>
                                                 )}
                                             </span>
                                         </td>
@@ -495,7 +494,7 @@ const OnlineRegistration = () => {
                                                 />
                                                 ${item.price}
                                                 {regDiscount > 0 && (
-                                                    <span className="or-original-price">${SPONSORSHIP_BASE.find(b => b.id === item.id).price}</span>
+                                                    <span className="or-original-price">${baseSponsorships.find(b => b.id === item.id)?.price}</span>
                                                 )}
                                             </label>
                                         </td>
@@ -518,7 +517,7 @@ const OnlineRegistration = () => {
                                     checked={includeAccompanying}
                                     onChange={e => setIncludeAccompanying(e.target.checked)}
                                 />
-                                <strong>Include Accompanying Person ($249 extra)</strong>
+                                <strong>{`Include Accompanying Person ($${accompanyingPersonPrice} extra)`}</strong>
                             </label>
                         </div>
                         <table className="or-pricing-table">
@@ -531,7 +530,7 @@ const OnlineRegistration = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {ACCOMMODATION_OPTIONS.map(opt => (
+                                {accommodationOptions.map(opt => (
                                     <tr key={opt.nights}>
                                         <td><strong>{opt.nights} Nights</strong></td>
                                         {['single', 'double', 'triple'].map(type => {
@@ -580,7 +579,7 @@ const OnlineRegistration = () => {
                                     I've read and accept the <span className="or-terms-link">terms &amp; conditions</span>.
                                 </label>
                             </div>
-                            <p className="or-processing-note">Note: 5% processing charges will be applicable.</p>
+                            <p className="or-processing-note">Note: {regPricing.processingFeePercent ?? 5}% processing charges will be applicable.</p>
 
                             {submitStatus === 'success' && (
                                 <div className="or-status or-status--success">
