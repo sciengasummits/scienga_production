@@ -114,9 +114,9 @@ const SpeakersSection = ({ showViewAll }) => {
                                     {speaker.image ? (
                                         <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
                                     ) : (
-                                        <div className="speaker-img-placeholder" style={{ width: '100%', height: '100%', minHeight: '300px', backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                                            <User size={64} color="#cbd5e1" style={{ marginBottom: '1rem' }} />
-                                            <span style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 500 }}>No Photo</span>
+                                        <div className="speaker-img-placeholder">
+                                            <User size={48} color="#cbd5e1" />
+                                            <span style={{ color: '#94a3b8', fontSize: '0.8rem', fontWeight: 500, marginTop: '0.5rem' }}>No Photo</span>
                                         </div>
                                     )}
                                     <div className="speaker-overlay">
