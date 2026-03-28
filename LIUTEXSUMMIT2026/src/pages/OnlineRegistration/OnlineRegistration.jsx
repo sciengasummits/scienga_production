@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Tag, CheckCircle, XCircle, Loader, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Tag, CheckCircle, XCircle, Loader, ShieldCheck, AlertCircle, PartyPopper } from 'lucide-react';
 import './OnlineRegistration.css';
 import { countries } from '../../assets/constants/countries';
 import * as siteApi from '../../api/siteApi';
@@ -57,6 +57,7 @@ const OnlineRegistration = () => {
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
+    const [successInfo, setSuccessInfo] = useState(null); // { name, email, category, total }
 
     /* ── Derived pricing with discount applied (base from live backend) ── */
     const regDiscount = discount && (discount.category === 'registration' || discount.category === 'both')
@@ -235,6 +236,15 @@ const OnlineRegistration = () => {
                         });
 
                         if (verifyResult.success) {
+                            // Capture details BEFORE handleReset() wipes form state
+                            const catLabel = pricingData.find(p => p.id === selectedCategory)?.label || selectedCategory || 'N/A';
+                            setSuccessInfo({
+                                name: formData.fullName,
+                                email: formData.email,
+                                category: catLabel,
+                                total,
+                                paymentId: response.razorpay_payment_id,
+                            });
                             setSubmitStatus('success');
                             handleReset();
                         } else {
@@ -265,6 +275,76 @@ const OnlineRegistration = () => {
     };
 
     /* ── Render ──────────────────────────────────────────────── */
+
+    /* ── Full-page Success Screen ────────────────────────────── */
+    if (submitStatus === 'success') {
+        return (
+            <div className="online-reg-page">
+                <div className="page-header">
+                    <div className="container">
+                        <h1 className="page-title">Registration Complete</h1>
+                        <p className="page-breadcrumb">Home / Register / Discount / Confirmed</p>
+                    </div>
+                </div>
+                <div className="container section-padding">
+                    <div className="or-success-screen">
+                        {/* Animated checkmark */}
+                        <div className="or-success-icon-wrap">
+                            <div className="or-success-circle">
+                                <CheckCircle size={56} className="or-success-check" />
+                            </div>
+                        </div>
+
+                        <h2 className="or-success-headline">Registration Confirmed! 🎉</h2>
+                        <p className="or-success-sub">
+                            Thank you, <strong>{successInfo?.name}</strong>. Your payment was verified
+                            and your registration is now <span className="or-success-badge">PAID</span>.
+                        </p>
+
+                        {/* Summary card */}
+                        <div className="or-success-card">
+                            <div className="or-success-row">
+                                <span className="or-success-label">Name</span>
+                                <span className="or-success-value">{successInfo?.name}</span>
+                            </div>
+                            <div className="or-success-row">
+                                <span className="or-success-label">Email</span>
+                                <span className="or-success-value">{successInfo?.email}</span>
+                            </div>
+                            <div className="or-success-row">
+                                <span className="or-success-label">Category</span>
+                                <span className="or-success-value">{successInfo?.category}</span>
+                            </div>
+                            <div className="or-success-row or-success-row--total">
+                                <span className="or-success-label">Total Paid</span>
+                                <span className="or-success-value or-success-amount">${successInfo?.total} USD</span>
+                            </div>
+                            {successInfo?.paymentId && (
+                                <div className="or-success-row">
+                                    <span className="or-success-label">Payment ID</span>
+                                    <span className="or-success-value or-success-pid">{successInfo.paymentId}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* What's next */}
+                        <div className="or-success-next">
+                            <h3 className="or-success-next-title">What happens next?</h3>
+                            <ul className="or-success-steps">
+                                <li>📧 A confirmation email will be sent to <strong>{successInfo?.email}</strong></li>
+                                <li>📋 Your registration details are being processed by the organizing team</li>
+                                <li>🗓️ You'll receive agenda and venue details closer to the event</li>
+                                <li>❓ Questions? Contact us at <a href="mailto:liutex@sciengasummits.com">liutex@sciengasummits.com</a></li>
+                            </ul>
+                        </div>
+
+                        <a href="/" className="or-success-home-btn">← Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="online-reg-page">
             <div className="page-header">
