@@ -18,9 +18,9 @@ export const resolveImageUrl = (url) => {
         secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|5000)/g, backendOrigin);
     }
 
-    // Replace any saved frontend localhost URLs with actual frontend origin
-    if (typeof window !== 'undefined' && (secureUrl.includes('localhost:3000') || secureUrl.includes('localhost:5173'))) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:(3000|5173)/g, window.location.origin);
+    // Replace any saved frontend localhost URLs with actual frontend origin (Vite dev = 5173)
+    if (typeof window !== 'undefined' && secureUrl.includes('localhost:5173')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:5173/g, window.location.origin);
     }
 
     if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
