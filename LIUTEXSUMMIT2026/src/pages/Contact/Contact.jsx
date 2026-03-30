@@ -7,6 +7,7 @@ import './Contact.css';
 
 const Contact = () => {
     usePageSEO({
+        pageKey: 'contact',
         title: 'Contact Us',
         description: 'Get in touch with the LIUTEX2026 organizing committee for questions on registration, abstract submission, visa, or the conference schedule.',
         canonical: 'https://liutex2026.com/contact',
@@ -106,24 +107,30 @@ const Contact = () => {
                             <h3>Send Us a Message</h3>
                             <p>We'd love to hear from you!</p>
                         </div>
-                        <form className="contact__form">
+                        <form className="contact__form" onSubmit={(e) => {
+                            e.preventDefault();
+                            const formData = new FormData(e.target);
+                            const body = `Name: ${formData.get('name')}%0AEmail: ${formData.get('email')}%0A%0A${formData.get('message')}`;
+                            window.location.href = `mailto:${contactInfo.email}?subject=${encodeURIComponent(formData.get('subject'))}&body=${body}`;
+                            e.target.reset();
+                        }}>
                             <div className="form-row">
                                 <div className="form-group">
                                     <label>Full Name</label>
-                                    <input type="text" className="form-control" placeholder="John Doe" required />
+                                    <input type="text" name="name" className="form-control" placeholder="John Doe" required />
                                 </div>
                                 <div className="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" className="form-control" placeholder="john@example.com" required />
+                                    <input type="email" name="email" className="form-control" placeholder="john@example.com" required />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label>Subject</label>
-                                <input type="text" className="form-control" placeholder="Inquiry about..." required />
+                                <input type="text" name="subject" className="form-control" placeholder="Inquiry about..." required />
                             </div>
                             <div className="form-group">
                                 <label>Message</label>
-                                <textarea rows="5" className="form-control" placeholder="How can we help you?" required></textarea>
+                                <textarea name="message" rows="5" className="form-control" placeholder="How can we help you?" required></textarea>
                             </div>
                             <Button type="submit" className="w-100" style={{ marginTop: '1rem' }}>
                                 <Send size={18} style={{ marginRight: '8px' }} /> SEND MESSAGE

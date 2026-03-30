@@ -93,9 +93,15 @@
 
 .hero__actions {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
     justify-content: flex-start;
+    align-items: center;
+}
+
+.hero-btn-small {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.8rem !important;
 }
 
 .hero__actions-bottom {
@@ -106,15 +112,14 @@
 }
 
 .btn-elevate {
-    transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 15px 30px rgba(52, 120, 223, 0.5);
+    box-shadow: 0 10px 20px rgba(52, 120, 223, 0.4);
     z-index: 10;
     transition: all 0.3s ease;
 }
 
 .btn-elevate:hover {
-    transform: scale(1.15) translateY(-8px);
-    box-shadow: 0 20px 40px rgba(99, 155, 239, 0.7);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(99, 155, 239, 0.6);
 }
 
 .hero__info-cards {

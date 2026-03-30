@@ -272,6 +272,17 @@
     flex-direction: column;
 }
 
+.or-required-star {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ef4444;
+    font-weight: 800;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
 .reg-control {
     width: 100%;
     padding: 12px 15px;

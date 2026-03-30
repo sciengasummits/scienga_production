@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { fetchContent } from '../api/siteApi';
 
 const SITE_NAME = 'LIUTEX2026';
 const BASE_URL = 'https://liutex2026.com';
@@ -6,58 +7,87 @@ const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 const DEFAULT_DESC =
   'International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. December 14–16, 2026 · Outram, Singapore.';
 
+// Cache so we only fetch once per session
+let _metaCache = null;
+let _metaFetch = null;
+
+function getMetaTags() {
+    if (_metaCache) return Promise.resolve(_metaCache);
+    if (_metaFetch) return _metaFetch;
+    _metaFetch = fetchContent('meta_tags')
+        .then(data => { _metaCache = data || {}; return _metaCache; })
+        .catch(() => { _metaCache = {}; return _metaCache; });
+    return _metaFetch;
+}
+
 /**
- * usePageSEO – sets <title>, meta description, and Open Graph / Twitter
- * tags dynamically for each page via DOM mutation.
+ * usePageSEO – sets <title>, meta description, Open Graph and Twitter
+ * tags dynamically per page. Pulls values from the dashboard DB first,
+ * falling back to the provided props, then site-wide defaults.
  *
- * @param {{ title?: string, description?: string, image?: string, canonical?: string }} options
+ * @param {{ pageKey?: string, title?: string, description?: string, image?: string, canonical?: string }} options
+ *   pageKey – matches the key used in the workflow MetaTags page (e.g. 'home', 'contact', 'registration', 'speakers', 'venue', 'abstract')
  */
-const usePageSEO = ({ title, description, image, canonical } = {}) => {
+const usePageSEO = ({ pageKey, title, description, image, canonical } = {}) => {
     useEffect(() => {
-        const fullTitle = title
-            ? `${title} | ${SITE_NAME}`
-            : `${SITE_NAME} | International Conference on Liutex Theory & Vortex Dynamics – Singapore`;
-        const desc = description || DEFAULT_DESC;
-        const img = image || DEFAULT_IMAGE;
-        const canon = canonical || BASE_URL + '/';
+        const apply = (dbData) => {
+            const db = (pageKey && dbData?.[pageKey]) || {};
 
-        // ── <title>
-        document.title = fullTitle;
+            const rawTitle = db.title || title;
+            const fullTitle = rawTitle
+                ? (rawTitle.includes(SITE_NAME) ? rawTitle : `${rawTitle} | ${SITE_NAME}`)
+                : `${SITE_NAME} | International Conference on Liutex Theory & Vortex Dynamics – Singapore`;
 
-        const setMeta = (selector, attr, value) => {
-            let el = document.querySelector(selector);
-            if (!el) {
-                el = document.createElement('meta');
-                const [key, val] = selector.replace(/[\[\]]/g, '').split('=');
-                el.setAttribute(key, val.replace(/"/g, ''));
-                document.head.appendChild(el);
+            const desc = db.description || description || DEFAULT_DESC;
+            const keywords = db.keywords || '';
+            const img = image || DEFAULT_IMAGE;
+            const canon = canonical || BASE_URL + '/';
+
+            // ── <title>
+            document.title = fullTitle;
+
+            const setMeta = (selector, attr, value) => {
+                let el = document.querySelector(selector);
+                if (!el) {
+                    el = document.createElement('meta');
+                    const [key, val] = selector.replace(/[\[\]]/g, '').split('=');
+                    el.setAttribute(key, val.replace(/"/g, ''));
+                    document.head.appendChild(el);
+                }
+                el.setAttribute(attr, value);
+            };
+
+            // ── Primary
+            setMeta('meta[name="description"]', 'content', desc);
+            if (keywords) setMeta('meta[name="keywords"]', 'content', keywords);
+
+            // ── Open Graph
+            setMeta('meta[property="og:title"]', 'content', fullTitle);
+            setMeta('meta[property="og:description"]', 'content', desc);
+            setMeta('meta[property="og:image"]', 'content', img);
+            setMeta('meta[property="og:url"]', 'content', canon);
+
+            // ── Twitter
+            setMeta('meta[name="twitter:title"]', 'content', fullTitle);
+            setMeta('meta[name="twitter:description"]', 'content', desc);
+            setMeta('meta[name="twitter:image"]', 'content', img);
+
+            // ── Canonical
+            let canonEl = document.querySelector('link[rel="canonical"]');
+            if (!canonEl) {
+                canonEl = document.createElement('link');
+                canonEl.setAttribute('rel', 'canonical');
+                document.head.appendChild(canonEl);
             }
-            el.setAttribute(attr, value);
+            canonEl.setAttribute('href', canon);
         };
 
-        // ── Primary
-        setMeta('meta[name="description"]', 'content', desc);
+        // Apply static props immediately so the page title is never blank
+        apply({});
 
-        // ── Open Graph
-        setMeta('meta[property="og:title"]', 'content', fullTitle);
-        setMeta('meta[property="og:description"]', 'content', desc);
-        setMeta('meta[property="og:image"]', 'content', img);
-        setMeta('meta[property="og:url"]', 'content', canon);
-
-        // ── Twitter
-        setMeta('meta[name="twitter:title"]', 'content', fullTitle);
-        setMeta('meta[name="twitter:description"]', 'content', desc);
-        setMeta('meta[name="twitter:image"]', 'content', img);
-
-        // ── Canonical
-        let canonEl = document.querySelector('link[rel="canonical"]');
-        if (!canonEl) {
-            canonEl = document.createElement('link');
-            canonEl.setAttribute('rel', 'canonical');
-            document.head.appendChild(canonEl);
-        }
-        canonEl.setAttribute('href', canon);
-    }, [title, description, image, canonical]);
+        // Then fetch from DB and override if data exists
+        getMetaTags().then(apply);
+    }, [pageKey, title, description, image, canonical]);
 };
 
 export default usePageSEO;

@@ -13,6 +13,7 @@ import './Home.css';
 
 const Home = () => {
     usePageSEO({
+        pageKey: 'home',
         title: 'Home',
         description: 'LIUTEX2026 – International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. December 14–16, 2026, Outram, Singapore. Submit abstracts and register now.',
         canonical: 'https://liutex2026.com/',

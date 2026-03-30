@@ -8,7 +8,8 @@ import { PRICING_DEFAULTS as DEFAULTS } from '../../data/registrationPricing';
 
 const Register = ({ isDiscounted = false }) => {
     usePageSEO({
-        title: 'Registration',
+        pageKey: 'registration',
+        title: 'Register Online',
         description: 'Register for LIUTEX2026 – International Conference on Liutex Theory & Vortex Dynamics, Singapore. Early bird, standard, and on-spot rates available for speakers, delegates, students, and virtual attendees.',
         canonical: 'https://liutex2026.com/register',
     });
@@ -265,67 +266,85 @@ const Register = ({ isDiscounted = false }) => {
                 <div className="registration-form-container">
                     <div className="form-section full-width-form">
                         <div className="form-row">
-                            <select
-                                name="designation"
-                                className="form-control"
-                                value={formData.designation}
-                                onChange={handleInputChange}
-                            >
-                                <option value="" disabled>Select Designation</option>
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Ms">Ms</option>
-                                <option value="Dr">Dr</option>
-                                <option value="Prof">Prof</option>
-                                <option value="PhD">PhD</option>
-                            </select>
-                            <input
-                                type="text"
-                                name="fullName"
-                                placeholder="Full Name"
-                                className="form-control"
-                                value={formData.fullName}
-                                onChange={handleInputChange}
-                            />
+                            <div className="input-wrapper">
+                                <select
+                                    name="designation"
+                                    className="form-control"
+                                    value={formData.designation}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="" disabled>Select Designation</option>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Ms">Ms</option>
+                                    <option value="Dr">Dr</option>
+                                    <option value="Prof">Prof</option>
+                                    <option value="PhD">PhD</option>
+                                </select>
+                                <span className="required-star">*</span>
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    placeholder="Full Name"
+                                    className="form-control"
+                                    value={formData.fullName}
+                                    onChange={handleInputChange}
+                                />
+                                <span className="required-star">*</span>
+                            </div>
                         </div>
                         <div className="form-row">
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                className="form-control"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                            />
-                            <input
-                                type="tel"
-                                name="telephone"
-                                placeholder="Telephone Number"
-                                className="form-control"
-                                value={formData.telephone}
-                                onChange={handleInputChange}
-                            />
+                            <div className="input-wrapper">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    className="form-control"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                />
+                                <span className="required-star">*</span>
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="tel"
+                                    name="telephone"
+                                    placeholder="Telephone Number"
+                                    className="form-control"
+                                    value={formData.telephone}
+                                    onChange={handleInputChange}
+                                />
+                                <span className="required-star">*</span>
+                            </div>
                         </div>
                         <div className="form-row">
-                            <select
-                                name="country"
-                                className="form-control"
-                                value={formData.country}
-                                onChange={handleInputChange}
-                            >
-                                <option value="" disabled>Select Country</option>
-                                {countries.map((country) => (
-                                    <option key={country} value={country}>{country}</option>
-                                ))}
-                            </select>
-                            <input
-                                type="text"
-                                name="company"
-                                placeholder="Company/University"
-                                className="form-control"
-                                value={formData.company}
-                                onChange={handleInputChange}
-                            />
+                            <div className="input-wrapper">
+                                <select
+                                    name="country"
+                                    className="form-control"
+                                    value={formData.country}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="" disabled>Select Country</option>
+                                    {countries.map((country) => (
+                                        <option key={country} value={country}>{country}</option>
+                                    ))}
+                                </select>
+                                <span className="required-star">*</span>
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    name="company"
+                                    placeholder="Company/University"
+                                    className="form-control"
+                                    value={formData.company}
+                                    onChange={handleInputChange}
+                                />
+                                <span className="required-star">*</span>
+                            </div>
                         </div>
                         <div className="form-row full-width">
                             <textarea
@@ -391,34 +410,6 @@ const Register = ({ isDiscounted = false }) => {
                             ))}
                         </tbody>
                     </table>
-
-                    <h2 className="pricing-title" style={{ marginTop: '3rem' }}>SPONSORSHIP OPPORTUNITIES</h2>
-                    <table className="pricing-table sponsorship-table">
-                        <thead>
-                            <tr>
-                                {sponsorshipPricing.map(item => (
-                                    <th key={item.id}>{item.label}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {sponsorshipPricing.map(item => (
-                                    <td key={item.id}>
-                                        <label className="radio-label" style={{ justifyContent: 'center' }}>
-                                            <input
-                                                type="radio"
-                                                name="sponsorship"
-                                                checked={selectedSponsorship === item.id}
-                                                onChange={() => setSelectedSponsorship(item.id)}
-                                            />
-                                            ${item.price}
-                                        </label>
-                                    </td>
-                                ))}
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
                 {/* Accommodation Section */}
@@ -482,6 +473,36 @@ const Register = ({ isDiscounted = false }) => {
                                     </td>
                                 </tr>
                             ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="sponsorship-section" style={{ marginTop: '2rem' }}>
+                    <h2 className="pricing-title">SPONSORSHIP OPPORTUNITIES</h2>
+                    <table className="pricing-table sponsorship-table">
+                        <thead>
+                            <tr>
+                                {sponsorshipPricing.map(item => (
+                                    <th key={item.id}>{item.label}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {sponsorshipPricing.map(item => (
+                                    <td key={item.id}>
+                                        <label className="radio-label" style={{ justifyContent: 'center' }}>
+                                            <input
+                                                type="radio"
+                                                name="sponsorship"
+                                                checked={selectedSponsorship === item.id}
+                                                onChange={() => setSelectedSponsorship(item.id)}
+                                            />
+                                            ${item.price}
+                                        </label>
+                                    </td>
+                                ))}
+                            </tr>
                         </tbody>
                     </table>
                 </div>

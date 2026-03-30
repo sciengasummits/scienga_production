@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, MapPin } from 'lucide-react';
+import { User, MapPin, Calendar } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
 import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
@@ -179,17 +179,15 @@ const HeroSection = () => {
                     <div className="hero-actions-container">
                         <div className="hero__actions">
                             {hero.showBrochure !== false && (
-                                <Button onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
+                                <Button className="hero-btn-small" onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
                             )}
                             {hero.showAbstract !== false && (
-                                <Button onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
+                                <Button className="hero-btn-small" onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
+                            )}
+                            {hero.showRegister !== false && (
+                                <Button className="btn-elevate hero-btn-small" onClick={() => navigate('/register')}>REGISTER NOW</Button>
                             )}
                         </div>
-                        {hero.showRegister !== false && (
-                            <div className="hero__actions-bottom">
-                                <Button className="btn-elevate" onClick={() => navigate('/register')}>REGISTER NOW</Button>
-                            </div>
-                        )}
                     </div>
                 </div>
 
@@ -197,11 +195,11 @@ const HeroSection = () => {
                     <div className="hero__info-cards">
                         <div className="info-card date-card">
                             <h3>{monthStr}</h3>
-                            <p>{daysStr}</p>
+                            <p><Calendar size={18} style={{marginRight: '4px', verticalAlign: 'middle', display: 'inline-block', marginBottom: '2px'}}/> {daysStr}</p>
                         </div>
                         <div className="info-card venue-card">
                             <h3>Venue</h3>
-                            <p>Event Venue: {hero.venue}</p>
+                            <p><MapPin size={18} style={{marginRight: '4px', verticalAlign: 'middle', display: 'inline-block', marginBottom: '2px'}}/> {hero.venue}</p>
                         </div>
                     </div>
 

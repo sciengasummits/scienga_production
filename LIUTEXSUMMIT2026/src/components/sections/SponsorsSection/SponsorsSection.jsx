@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SponsorsSection.css';
-import { fetchSponsors, resolveImageUrl } from '../../../api/siteApi';
+import { fetchSponsors, fetchContent, resolveImageUrl } from '../../../api/siteApi';
 
 // Static fallback imports — kept as default partners
 import partner1 from '../../../assets/images/media/486-Mediapartner-Photo.png';
@@ -39,30 +39,58 @@ const STATIC_SPONSORS = [
     { name: 'Global Conferencing', logo: partner16 },
 ];
 
-const MarqueeRow = ({ items, direction }) => (
-    <div className={`marquee-row ${direction}`}>
-        {[...items, ...items].map((sponsor, index) => (
-            <div key={index} className="marquee-item">
-                <img
-                    src={typeof sponsor.logo === 'string' && !sponsor.logo.startsWith('static/') ? resolveImageUrl(sponsor.logo) : sponsor.logo}
-                    alt={`${sponsor.name} logo`}
-                    style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'none' }}
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                />
-            </div>
-        ))}
-    </div>
-);
+const MarqueeRow = ({ items, direction }) => {
+    // Repeat items until we have at least 8 to fill the marquee track
+    const MIN_ITEMS = 8;
+    const repeated = items.length === 0 ? [] : Array.from(
+        { length: Math.ceil(MIN_ITEMS / items.length) },
+        () => items
+    ).flat();
+
+    return (
+        <div className={`marquee-row ${direction}`}>
+            {[...repeated, ...repeated].map((sponsor, index) => (
+                <div key={index} className="marquee-item">
+                    <img
+                        src={typeof sponsor.logo === 'string' && !sponsor.logo.startsWith('static/') ? resolveImageUrl(sponsor.logo) : sponsor.logo}
+                        alt={`${sponsor.name} logo`}
+                        style={{ width: '100%', height: '100%', objectFit: 'contain', filter: 'none' }}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                </div>
+            ))}
+        </div>
+    );
+};
 
 export default function SponsorsSection() {
     const [sponsors, setSponsors] = useState(STATIC_SPONSORS);
 
     useEffect(() => {
-        fetchSponsors('media_partner').then(data => {
-            if (data && data.length > 0) {
-                // Use API data if available, otherwise keep static
-                setSponsors(data.map(s => ({ name: s.name, logo: s.logo })));
+        // First try to load logos uploaded from the workflow dashboard (partners_logos content key)
+        fetchContent('partners_logos').then(data => {
+            if (data && data.items && data.items.length > 0) {
+                // Use dashboard-uploaded logos — convert URL strings to sponsor objects
+                setSponsors(data.items
+                    .filter(url => url && url.trim() !== '')
+                    .map((url, i) => ({ name: `Partner ${i + 1}`, logo: url }))
+                );
+            } else {
+                // Fall back to sponsors API, then static
+                fetchSponsors('media_partner').then(apiData => {
+                    if (apiData && apiData.length > 0) {
+                        setSponsors(apiData.map(s => ({ name: s.name, logo: s.logo, link: s.link })));
+                    }
+                    // else keep STATIC_SPONSORS default
+                }).catch(() => {});
             }
+        }).catch(() => {
+            // If content fetch fails, fall back to sponsors API
+            fetchSponsors('media_partner').then(apiData => {
+                if (apiData && apiData.length > 0) {
+                    setSponsors(apiData.map(s => ({ name: s.name, logo: s.logo, link: s.link })));
+                }
+            }).catch(() => {});
         });
     }, []);
 

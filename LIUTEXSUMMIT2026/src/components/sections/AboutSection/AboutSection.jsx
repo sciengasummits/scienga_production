@@ -34,7 +34,7 @@ const DEFAULT_DATES = {
         { month: 'JUN', day: '15', year: '2026', event: 'Abstract Submission Opens', icon: 'CalendarDays' },
         { month: 'SEP', day: '25', year: '2026', event: 'Early Bird Deadline', icon: 'CheckCircle' },
         { month: 'OCT', day: '30', year: '2026', event: 'Submission Deadline', icon: 'Clock' },
-        { month: 'DEC', day: '14', year: '2026', event: 'Conference Date', icon: 'Star', sub: 'December 14-16, 2026, Singapore' },
+        { month: 'DEC', day: '14', year: '2026', event: 'Conference Date', icon: 'Star', sub: 'December 14-17, 2026, Singapore' },
     ],
 };
 
@@ -55,7 +55,6 @@ const AboutSection = () => {
             <div className="container about__container">
                 {/* Left Side: Content */}
                 <div className="about__content">
-                    <h4 className="section-subtitle">{about.subtitle}</h4>
                     <h2 className="section-title">{about.title}</h2>
                     <p className="about__text">{about.paragraph1}</p>
                     {about.paragraph2 && <p className="about__text">{about.paragraph2}</p>}
@@ -79,8 +78,8 @@ const AboutSection = () => {
                     )}
 
                     <div className="about__actions" style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-                        <Button onClick={() => navigate('/program')}>LEARN MORE</Button>
-                        <Button variant="secondary" onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                        <Button onClick={() => navigate('/abstract-submission')}>ABSTRACT SUBMISSION</Button>
+                        <Button onClick={() => navigate('/register')}>REGISTER NOW</Button>
                     </div>
                 </div>
 
@@ -101,9 +100,9 @@ const AboutSection = () => {
                                         <div className="pd-date-box">
                                             <span className="pd-month">{d.month}</span>
                                             <span className="pd-day">{d.day}</span>
+                                            <span className="pd-year-box">{d.year}</span>
                                         </div>
                                         <div className="pd-content">
-                                            <span className="pd-year">{d.year}</span>
                                             <h4 className="pd-event">{d.event}</h4>
                                             {d.sub && <span className="pd-sub">{d.sub}</span>}
                                         </div>

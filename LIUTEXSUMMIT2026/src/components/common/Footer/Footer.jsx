@@ -45,8 +45,6 @@ const Footer = () => {
                             <li><Link to="/sessions">Sessions</Link></li>
                             <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/online-registration">Discount Registration</Link></li>
-                            <li><Link to="/unsubscribe">Unsubscribe</Link></li>
                         </ul>
                     </div>
 
@@ -75,9 +73,11 @@ const Footer = () => {
                     <div className="footer__col">
                         <h4>Subscribe</h4>
                         <p>Get the latest updates and news.</p>
-                        <form className="footer__form">
-                            <input type="email" placeholder="Your Email" />
-                            <button type="submit">Go</button>
+                        <form className="footer__form-vertical" onSubmit={(e) => { e.preventDefault(); alert("Subscribed successfully!"); e.target.reset(); }}>
+                            <input type="text" placeholder="Your Name" required />
+                            <input type="email" placeholder="Your Email" required />
+                            <input type="tel" placeholder="Your Number" required />
+                            <button type="submit">Subscribe</button>
                         </form>
                     </div>
                 </div>

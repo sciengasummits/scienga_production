@@ -433,26 +433,29 @@ const OnlineRegistration = () => {
                                     <option value="PhD">PhD</option>
                                 </select>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" style={{ position: 'relative' }}>
                                 <input
-                                    type="text" name="fullName" placeholder="Full Name *"
+                                    type="text" name="fullName" placeholder="Full Name"
                                     value={formData.fullName} onChange={handleChange}
                                     className="reg-control" required
                                 />
+                                <span className="or-required-star">*</span>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" style={{ position: 'relative' }}>
                                 <input
-                                    type="email" name="email" placeholder="Email Address *"
+                                    type="email" name="email" placeholder="Email Address"
                                     value={formData.email} onChange={handleChange}
                                     className="reg-control" required
                                 />
+                                <span className="or-required-star">*</span>
                             </div>
-                            <div className="form-group">
+                            <div className="form-group" style={{ position: 'relative' }}>
                                 <input
-                                    type="tel" name="telephone" placeholder="Phone Number *"
+                                    type="tel" name="telephone" placeholder="Phone Number"
                                     value={formData.telephone} onChange={handleChange}
                                     className="reg-control" required
                                 />
+                                <span className="or-required-star">*</span>
                             </div>
                             <div className="form-group">
                                 <select name="country" value={formData.country} onChange={handleChange} className="reg-control">

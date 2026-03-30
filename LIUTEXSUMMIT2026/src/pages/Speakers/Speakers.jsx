@@ -4,6 +4,7 @@ import SpeakersSection from '../../components/sections/SpeakersSection/SpeakersS
 
 const Speakers = () => {
     usePageSEO({
+        pageKey: 'speakers',
         title: 'Speakers',
         description: 'Meet the world-class keynote speakers and invited experts at LIUTEX2026 – International Conference on Liutex Theory & Vortex Dynamics, Singapore, December 2026.',
         canonical: 'https://liutex2026.com/speakers',

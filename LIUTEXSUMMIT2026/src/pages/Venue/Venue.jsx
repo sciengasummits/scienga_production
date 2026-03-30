@@ -1,17 +1,27 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import usePageSEO from '../../hooks/usePageSEO';
-import VenueSection from '../../components/sections/VenueSection/VenueSection';
 import Button from '../../components/common/Button/Button';
+import { fetchContent } from '../../api/siteApi';
 import './Venue.css';
 import vortexImg from '../../assets/images/vortex.jpg';
 
 const Venue = () => {
     usePageSEO({
+        pageKey: 'venue',
         title: 'Event Venue – Outram, Singapore',
         description: 'LIUTEX2026 takes place in Outram, Singapore on December 14–16, 2026. Explore the world-class venue facilities, nearby attractions, and travel information.',
         canonical: 'https://liutex2026.com/venue',
     });
     const navigate = useNavigate();
+    const [venueHtml, setVenueHtml] = useState('');
+
+    useEffect(() => {
+        fetchContent('venueContent').then(data => {
+            if (data && data.html) setVenueHtml(data.html);
+        }).catch(() => { });
+    }, []);
+
     const venueFeatures = [
         {
             title: 'World-Class Facilities',
@@ -66,49 +76,31 @@ const Venue = () => {
                 </div>
             </div>
 
-            <VenueSection />
-
-            {/* Venue Features Section */}
-            <section className="venue-features section-padding">
-                <div className="container">
-                    <div className="text-center mb-5">
-                        <h4 className="section-subtitle">Venue Amenities</h4>
-                        <h2 className="section-title">Why Choose Our Venue</h2>
-                        <p className="section-desc">
-                            Experience world-class facilities designed for international conferences
-                        </p>
-                    </div>
-
-                    <div className="features-grid">
-                        {venueFeatures.map((feature, index) => (
-                            <div className="feature-card" key={index}>
-                                <h3 className="feature-title">{feature.title}</h3>
-                                <p className="feature-desc">{feature.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* About the City Section */}
             <section className="about-city section-padding" style={{ background: 'var(--color-bg-light)' }}>
                 <div className="container">
                     <div className="about-city-content">
                         <div className="about-city-text">
-                            <h4 className="section-subtitle">Discover Singapore</h4>
+
                             <h2 className="section-title">About the Host City</h2>
-                            <p className="city-description">
-                                Singapore is a global hub for education, innovation, and technology. Known for its
-                                stunning skyline, lush green spaces, and diverse cultural heritage, it offers a
-                                unique blend of tradition and modernity.
-                            </p>
-                            <p className="city-description">
-                                As one of the world's leading conference destinations, Singapore provides
-                                state-of-the-art facilities and world-class infrastructure. Outram, located in the
-                                historical heart of the city, offers easy access to major business districts and
-                                iconic landmarks.
-                            </p>
-                            <div className="city-stats">
+                            {venueHtml ? (
+                                <div className="city-description" dangerouslySetInnerHTML={{ __html: venueHtml }} />
+                            ) : (
+                                <>
+                                    <p className="city-description">
+                                        Singapore is a global hub for education, innovation, and technology. Known for its
+                                        stunning skyline, lush green spaces, and diverse cultural heritage, it offers a
+                                        unique blend of tradition and modernity.
+                                    </p>
+                                    <p className="city-description">
+                                        As one of the world's leading conference destinations, Singapore provides
+                                        state-of-the-art facilities and world-class infrastructure. Outram, located in the
+                                        historical heart of the city, offers easy access to major business districts and
+                                        iconic landmarks.
+                                    </p>
+                                </>
+                            )}
+                            <div className="city-stats" style={{ marginTop: '2rem' }}>
                                 <div className="stat-box">
                                     <h3>5.6M+</h3>
                                     <p>Population</p>
@@ -141,7 +133,7 @@ const Venue = () => {
             <section className="nearby-attractions section-padding">
                 <div className="container">
                     <div className="text-center mb-5">
-                        <h4 className="section-subtitle">Explore Singapore</h4>
+                        <h4 className="section-subtitle">Explore</h4>
                         <h2 className="section-title">Nearby Attractions</h2>
                         <p className="section-desc">
                             Make the most of your visit with these must-see destinations
@@ -165,6 +157,28 @@ const Venue = () => {
                                 <div className="attraction-info">
                                     <h3>{attraction.name}</h3>
                                 </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Venue Features Section */}
+            <section className="venue-features section-padding">
+                <div className="container">
+                    <div className="text-center mb-5">
+                        <h4 className="section-subtitle">Venue Amenities</h4>
+                        <h2 className="section-title">Why Choose Our Venue</h2>
+                        <p className="section-desc">
+                            Experience world-class facilities designed for international conferences
+                        </p>
+                    </div>
+
+                    <div className="features-grid">
+                        {venueFeatures.map((feature, index) => (
+                            <div className="feature-card" key={index}>
+                                <h3 className="feature-title">{feature.title}</h3>
+                                <p className="feature-desc">{feature.description}</p>
                             </div>
                         ))}
                     </div>

@@ -18,10 +18,18 @@ const DEFAULT_DATES = [
     },
 ];
 
+const DEFAULT_SESSIONS = [
+    'Fundamentals of Liutex Theory',
+    'Vortex Identification Methods',
+    'Vector & Tensor Decompositions',
+    'Omega (Ω) Method Applications',
+];
+
 const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
 
 const AbstractSubmission = () => {
     usePageSEO({
+        pageKey: 'abstract',
         title: 'Abstract Submission',
         description: 'Submit your research abstract for LIUTEX2026. Topics include Liutex Theory, Vortex Identification, Turbulence Modeling, CFD, and AI in flow field analysis. Deadline: October 30, 2026.',
         canonical: 'https://liutex2026.com/abstract-submission',
@@ -43,11 +51,15 @@ const AbstractSubmission = () => {
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
 
     const [importantDates, setImportantDates] = useState(DEFAULT_DATES);
+    const [sessions, setSessions] = useState(DEFAULT_SESSIONS);
 
     // Live-fetch Important Dates from backend; silently fall back to defaults
     useEffect(() => {
         fetchContent('importantDates')
             .then(data => { if (data?.dates?.length) setImportantDates(data.dates); })
+            .catch(() => { });
+        fetchContent('sessions')
+            .then(data => { if (data?.sessions?.length) setSessions(data.sessions); })
             .catch(() => { });
     }, []);
 
@@ -240,12 +252,9 @@ const AbstractSubmission = () => {
                                         className="form-control"
                                     >
                                         <option value="" disabled>- Select Topics of Discussion: -</option>
-                                        <option value="fundamentals">Fundamentals of Liutex Theory</option>
-                                        <option value="identification">Vortex Identification Methods (Q, λ2, Ω, Liutex)</option>
-                                        <option value="turbulence">Turbulence Modeling and Analysis</option>
-                                        <option value="cfd">Computational Fluid Dynamics (CFD) Applications</option>
-                                        <option value="aerospace">Vortex Dynamics in Aerospace Engineering</option>
-                                        <option value="ai">AI Approaches in Flow Field Identification</option>
+                                        {sessions.map((sess, idx) => (
+                                            <option key={idx} value={sess.title || sess}>{sess.title || sess}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
@@ -267,11 +276,11 @@ const AbstractSubmission = () => {
                                         type="file"
                                         name="file"
                                         className="form-control-file"
-                                        accept=".doc,.docx,.pdf,.zip"
+                                        accept=".doc,.docx,.pdf"
                                         onChange={handleChange}
                                     />
                                     <p className="file-upload-note">
-                                        Note: (.doc), (.docx), (.pdf) and (.zip) files only.
+                                        Note: (.doc), (.docx), and (.pdf) files only.
                                     </p>
                                 </div>
                             </div>

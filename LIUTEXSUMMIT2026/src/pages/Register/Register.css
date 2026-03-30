@@ -63,6 +63,27 @@ textarea.form-control {
     resize: vertical;
 }
 
+.input-wrapper {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.required-star {
+    position: absolute;
+    right: 1rem;
+    color: #ef4444; /* bright red */
+    font-weight: 800;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+/* Adjust star position specifically for select fields to not overlap the chevron */
+select.form-control + .required-star {
+    right: 2.2rem;
+}
+
 /* Pricing Table */
 .pricing-section {
     margin-bottom: 3rem;

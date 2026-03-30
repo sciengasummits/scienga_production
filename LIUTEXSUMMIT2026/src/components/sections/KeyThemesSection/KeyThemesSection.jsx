@@ -159,11 +159,10 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                         <div className="sessions-list-container">
                             <ul className="sessions-list-clean">
                                 {displaySessions.map((session, index) => {
-                                    const Icon = session.icon || Activity;
                                     return (
                                         <li key={index} className="session-item-clean">
-                                            <span className="session-icon-small">
-                                                <Icon size={18} />
+                                            <span className="session-icon-small" style={{ fontSize: '18px' }}>
+                                                &#10148;
                                             </span>
                                             <span className="session-text">{session.title}</span>
                                         </li>

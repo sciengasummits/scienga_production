@@ -3,6 +3,7 @@ import usePageSEO from '../../hooks/usePageSEO';
 import './Sponsors.css';
 import Button from '../../components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import '../../components/sections/PricingSection/PricingSection.css';
 
 const Sponsors = () => {
     usePageSEO({
@@ -13,8 +14,8 @@ const Sponsors = () => {
     const navigate = useNavigate();
     const packages = [
         {
-            title: "Platinum Sponsorship",
-            price: "$5000",
+            title: "Platinum Sponsor",
+            price: "$4999",
             features: [
                 "4 Complimentary registrations",
                 "Complementary workshop",
@@ -29,8 +30,8 @@ const Sponsors = () => {
             ]
         },
         {
-            title: "Gold Sponsorship",
-            price: "$4000",
+            title: "Diamond Sponsor",
+            price: "$3999",
             features: [
                 "3 Complimentary registrations",
                 "Complimentary Lunch and Coffee Break",
@@ -43,8 +44,8 @@ const Sponsors = () => {
             ]
         },
         {
-            title: "Silver Sponsorship",
-            price: "$3000",
+            title: "Gold Sponsor",
+            price: "$2999",
             features: [
                 "2 Complimentary registrations",
                 "Complimentary Lunch and Coffee Break",
@@ -57,8 +58,8 @@ const Sponsors = () => {
             ]
         },
         {
-            title: "Exhibitor / Table exhibit",
-            price: "$2500",
+            title: "Exhibitor",
+            price: "$1999",
             features: [
                 "1 Table in exhibition area",
                 "2 Complimentary conference registrations",
@@ -84,16 +85,26 @@ const Sponsors = () => {
             </div>
 
             <div className="container section-padding sponsorship-packages">
-                <div className="packages-grid">
+                <div className="pricing-cards-container" style={{ marginTop: '2rem' }}>
                     {packages.map((pkg, index) => (
-                        <div className="package-card" key={index}>
-                            <h3 className="package-title">{pkg.title}</h3>
-                            <span className="package-price">{pkg.price}</span>
-                            <ul className="package-features">
-                                {pkg.features.map((feature, idx) => (
-                                    <li key={idx}><span className="check-icon">✓</span> {feature}</li>
-                                ))}
-                            </ul>
+                        <div className="pricing-card-home" key={index}>
+                            <div className="pricing-card-header">
+                                <h3 className="pkg-title">{pkg.title}</h3>
+                                <div className="pkg-price">
+                                    <span className="currency">$</span>
+                                    <span className="amount">{pkg.price.replace('$', '')}</span>
+                                </div>
+                            </div>
+                            <div className="pricing-card-body">
+                                <ul className="pkg-features">
+                                    {pkg.features.map((feature, idx) => (
+                                        <li key={idx}>
+                                            <span style={{ color: 'var(--color-primary-start)', marginRight: '10px' }}>✓</span>
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     ))}
                 </div>

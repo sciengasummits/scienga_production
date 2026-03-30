@@ -7,7 +7,7 @@ import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
     const location = useLocation();
-    const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
+    const [activeCategory, setActiveCategory] = useState(location.state?.category || 'All');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
     const [speakers, setSpeakers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -60,6 +60,7 @@ const SpeakersSection = ({ showViewAll }) => {
     }, []);
 
     const filteredSpeakers = speakers.filter(speaker => {
+        if (activeCategory === 'All') return true;
         const cat = (speaker.category || '').toLowerCase();
         if (activeCategory === 'Committee') return cat === 'committee';
         if (activeCategory === 'Speakers') return ['keynote', 'plenary', 'speakers', 'keynote speaker', 'plenary speaker', 'featured', 'invited'].includes(cat);
@@ -90,7 +91,7 @@ const SpeakersSection = ({ showViewAll }) => {
                 </div>
 
                 <div className="speakers__filters">
-                    {['Committee', 'Speakers', 'Posters', 'Students', 'Delegates'].map((category) => (
+                    {['All', 'Committee', 'Speakers', 'Posters', 'Students', 'Delegates'].map((category) => (
                         <button
                             key={category}
                             className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
