@@ -4,31 +4,35 @@
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
 
-// Export a smart image resolver that seamlessly converts stored localhost URLs 
-// into production endpoint URLs, fixing Mixed Content errors on Vercel.
 export const resolveImageUrl = (url) => {
     if (!url) return '';
 
     // Convert e.g., 'https://backend.com/api' to 'https://backend.com'
     const backendOrigin = BASE_URL.replace(/\/api$/, '');
 
-    // Replace any saved backend localhost URLs with actual backend origin
     let secureUrl = url;
-    if (secureUrl.includes('localhost:5050') || secureUrl.includes('localhost:5000')) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|5000)/g, backendOrigin);
-    }
 
-    // ── OLD WORKFLOW UPLOAD FIX ──
-    // Some old images were uploaded from the workflow dashboard, and their URLs got saved
-    // into the DB as http://localhost:3000/api/media/<id>. The frontend gets Mixed Content
-    // trying to fetch them. We simply redirect them to our new backend proxy endpoint.
-    if (secureUrl.includes('localhost:3000/api/media/')) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:3000/g, backendOrigin);
+    // Replace any backend localhost URLs with actual backend origin
+    // This aggressively targets all localhost ports (3000, 5000, 5050) EXCEPT frontend Vite port 5173
+    if (secureUrl.includes('localhost:') && !secureUrl.includes('localhost:5173')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:\d+/g, backendOrigin);
+    } else if (secureUrl.includes('localhost/')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost/g, backendOrigin);
     }
 
     // Replace any saved frontend localhost URLs with actual frontend origin (Vite dev = 5173)
     if (typeof window !== 'undefined' && secureUrl.includes('localhost:5173')) {
         secureUrl = secureUrl.replace(/https?:\/\/localhost:5173/g, window.location.origin);
+    }
+
+    // Force HTTPS if in production to prevent Mixed Content
+    if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
+        if (secureUrl.startsWith('http://')) {
+            // Only upgrade securely for known domains to prevent breaking pure-HTTP external links
+            if (secureUrl.includes('localhost') || secureUrl.includes(backendOrigin.replace(/^https?:\/\//, '')) || secureUrl.includes('onrender.com') || secureUrl.includes('.up.railway.app') || secureUrl.includes('sciengasummits')) {
+                 secureUrl = secureUrl.replace(/^http:\/\//i, 'https://');
+            }
+        }
     }
 
     if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
