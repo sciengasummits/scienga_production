@@ -12,10 +12,15 @@ export const resolveImageUrl = (url) => {
     // Convert e.g., 'https://backend.com/api' to 'https://backend.com'
     const backendOrigin = BASE_URL.replace(/\/api$/, '');
 
-    // Replace any saved localhost URLs from DB with actual backend origin
+    // Replace any saved backend localhost URLs with actual backend origin
     let secureUrl = url;
-    if (secureUrl.includes('localhost:5050') || secureUrl.includes('localhost:3000')) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|3000)/g, backendOrigin);
+    if (secureUrl.includes('localhost:5050') || secureUrl.includes('localhost:5000')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|5000)/g, backendOrigin);
+    }
+
+    // Replace any saved frontend localhost URLs with actual frontend origin
+    if (typeof window !== 'undefined' && (secureUrl.includes('localhost:3000') || secureUrl.includes('localhost:5173'))) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:(3000|5173)/g, window.location.origin);
     }
 
     if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
