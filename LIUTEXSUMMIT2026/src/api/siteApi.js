@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
 // into production endpoint URLs, fixing Mixed Content errors on Vercel.
 export const resolveImageUrl = (url) => {
     if (!url) return '';
-    
+
     // Convert e.g., 'https://backend.com/api' to 'https://backend.com'
     const backendOrigin = BASE_URL.replace(/\/api$/, '');
 
@@ -18,20 +18,20 @@ export const resolveImageUrl = (url) => {
         secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|5000)/g, backendOrigin);
     }
 
-    // Replace any saved frontend localhost URLs with actual frontend origin
-    if (typeof window !== 'undefined' && (secureUrl.includes('localhost:3000') || secureUrl.includes('localhost:5173'))) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:(3000|5173)/g, window.location.origin);
+    // Replace any saved frontend localhost URLs with actual frontend origin (Vite dev = 5173)
+    if (typeof window !== 'undefined' && secureUrl.includes('localhost:5173')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:5173/g, window.location.origin);
     }
 
     if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
         return secureUrl;
     }
-    
+
     // If it's a relative URL to an uploaded file, prepend the backend origin
     if (secureUrl.startsWith('/uploads') || secureUrl.startsWith('uploads/')) {
         return secureUrl.startsWith('/') ? `${backendOrigin}${secureUrl}` : `${backendOrigin}/${secureUrl}`;
     }
-    
+
     // Otherwise (e.g. frontend static assets from Vite imports like /assets/...), leave as is
     return secureUrl;
 };
@@ -145,4 +145,3 @@ export async function verifyPayment(payload) {
     }
     return res.json();
 }
-

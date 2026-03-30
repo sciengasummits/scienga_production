@@ -10,7 +10,7 @@ const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
 const DEFAULT_ABOUT = {
 
     title: 'About The Conference',
-    paragraph1: 'The International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics is a premier international platform dedicated to advancing the understanding of Liutex theory and its transformative applications in vortex identification and vortex dynamics.',
+    paragraph1: 'The INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM is a premier international platform dedicated to advancing the understanding of Liutex theory and its transformative applications in turbulence mechanisms.',
     paragraph2: 'This conference brings together leading researchers, academicians, computational scientists, engineers, and industry professionals to explore recent developments, theoretical foundations, numerical methods, and real-world applications of Liutex-based vortex analysis.',
     objectives: [
         'Promote advancements in Liutex theory',

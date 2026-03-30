@@ -16,7 +16,7 @@ const DEFAULTS = {
             category: 'Registration',
             items: [
                 {
-                    question: 'How can I register for the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics?',
+                    question: 'How can I register for the INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM?',
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline.",
                 },
                 {

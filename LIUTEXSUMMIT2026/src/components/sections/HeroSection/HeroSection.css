@@ -9,7 +9,8 @@
     color: var(--color-white);
     padding-top: 100px;
     padding-bottom: 90px;
-    min-height: 80vh;
+    min-height: 100vh;
+    padding-bottom: 380px; /* Increased space to match slightly larger collaborations banner */
     overflow: hidden;
 }
 
@@ -48,7 +49,7 @@
 }
 
 .hero__content {
-    max-width: 800px;
+    max-width: 950px;
     margin-top: 1rem;
 }
 
@@ -93,15 +94,15 @@
 
 .hero__actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.8rem;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
 }
 
 .hero-btn-small {
-    padding: 0.6rem 1rem !important;
-    font-size: 0.8rem !important;
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.75rem !important;
 }
 
 .hero__actions-bottom {
@@ -596,3 +597,104 @@
 .hero__countdown-wrapper { animation-delay: 0.3s; }
 .hero__desc { animation-delay: 0.5s; }
 .hero-actions-container { animation-delay: 0.7s; }
+
+/* Collaborations Section */
+.hero__collaborations {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    padding: 1.25rem 0;
+    z-index: 10;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease backwards;
+    animation-delay: 1s;
+}
+
+.collab-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.collab-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+}
+
+.collab-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #475569;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.collab-logos {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.collab-logo-item {
+    width: 100%;
+    height: auto;
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 0.5rem;
+}
+
+.collab-logo-item img {
+    width: auto;
+    max-width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+}
+
+.media-logo-item {
+    height: 40px;
+}
+
+.media-logo-item img {
+    max-height: 100%;
+    max-width: 120px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-bottom: 440px;
+    }
+    
+    .collab-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .collab-group {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .collab-logos {
+        justify-content: center;
+    }
+}

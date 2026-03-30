@@ -45,6 +45,7 @@ const Footer = () => {
                             <li><Link to="/sessions">Sessions</Link></li>
                             <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
+                            <li><a href="https://www.sciengasummits.com/" target="_blank" rel="noopener noreferrer">Policies</a></li>
                         </ul>
                     </div>
 
@@ -83,7 +84,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. All Rights Reserved by SCIENGA SUMMITS</p>
+                    <p>&copy; {new Date().getFullYear()} INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM. All Rights Reserved by SCIENGA SUMMITS</p>
                 </div>
             </div>
         </footer>

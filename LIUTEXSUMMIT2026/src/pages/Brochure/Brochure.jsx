@@ -48,7 +48,7 @@ const Brochure = () => {
                                 </div>
                                 <div className="preview-main">
                                     <div className="vortex-accent"></div>
-                                    <h3 className="preview-title">International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</h3>
+                                    <h3 className="preview-title">INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM</h3>
                                     <div className="preview-divider"></div>
                                     <p className="preview-subtitle">Official Conference Brochure</p>
                                 </div>
@@ -62,7 +62,7 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics.
+                                Download the official conference brochure to get comprehensive information about the INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM.
                                 It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
                             </p>
 
