@@ -18,6 +18,14 @@ export const resolveImageUrl = (url) => {
         secureUrl = secureUrl.replace(/https?:\/\/localhost:(5050|5000)/g, backendOrigin);
     }
 
+    // ── OLD WORKFLOW UPLOAD FIX ──
+    // Some old images were uploaded from the workflow dashboard, and their URLs got saved
+    // into the DB as http://localhost:3000/api/media/<id>. The frontend gets Mixed Content
+    // trying to fetch them. We simply redirect them to our new backend proxy endpoint.
+    if (secureUrl.includes('localhost:3000/api/media/')) {
+        secureUrl = secureUrl.replace(/https?:\/\/localhost:3000/g, backendOrigin);
+    }
+
     // Replace any saved frontend localhost URLs with actual frontend origin (Vite dev = 5173)
     if (typeof window !== 'undefined' && secureUrl.includes('localhost:5173')) {
         secureUrl = secureUrl.replace(/https?:\/\/localhost:5173/g, window.location.origin);
