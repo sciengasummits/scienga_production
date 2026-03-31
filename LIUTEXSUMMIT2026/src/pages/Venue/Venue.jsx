@@ -192,7 +192,7 @@ const Venue = () => {
                         Ready to Join Us?
                     </h2>
                     <p className="cta-desc">
-                        Secure your spot at the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics and be part of this transformative event
+                        Secure your spot at the International Conference on LIUTEX THEORY AND TURBULENCE MECHANISMS and be part of this transformative event
                     </p>
                     <div className="cta-action">
                         <Button

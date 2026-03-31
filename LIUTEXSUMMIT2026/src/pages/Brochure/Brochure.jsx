@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import usePageSEO from '../../hooks/usePageSEO';
 import './Brochure.css';
 import { useNavigate } from 'react-router-dom';
 import { Download, FileText, CheckCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
+import { fetchContent } from '../../api/siteApi';
+
+const DEFAULTS = {
+    pdfUrl: '',
+    title: 'International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics',
+    description: 'Download the official conference brochure to get comprehensive information about the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.',
+    note: '* PDF will be available soon. Format: PDF',
+    features: [
+        'Complete 3-Day Program Schedule',
+        'Keynote Speaker Biographies & Topics',
+        'Workshop & Breakout Session Details',
+        'Venue Maps & Accommodation Guide',
+        'Sponsorship & Exhibition Opportunities',
+    ],
+};
 
 const Brochure = () => {
     usePageSEO({
@@ -13,13 +28,31 @@ const Brochure = () => {
     });
     const navigate = useNavigate();
 
-    const handleDownloadClick = (e) => {
-        e.preventDefault();
-        alert("The full PDF brochure is currently being updated for the 2026 Edition. Please use the 'View Online' button to see the digital version.");
-    };
-
+    const [brochureData, setBrochureData] = useState(DEFAULTS);
     const [formFilled, setFormFilled] = useState(false);
     const [formData, setFormData] = useState({ name: '', email: '', number: '' });
+
+    /* ── Load from backend ── */
+    useEffect(() => {
+        fetchContent('brochure').then(data => {
+            if (data) {
+                setBrochureData(prev => ({
+                    ...DEFAULTS,
+                    ...data,
+                    features: (data.features && data.features.length > 0) ? data.features : DEFAULTS.features,
+                }));
+            }
+        }).catch(() => { /* Keep defaults on error */ });
+    }, []);
+
+    const handleDownloadClick = (e) => {
+        e.preventDefault();
+        if (brochureData.pdfUrl) {
+            window.open(brochureData.pdfUrl, '_blank', 'noreferrer');
+        } else {
+            alert("The full PDF brochure is currently being updated for the 2026 Edition. Please use the 'View Online' button to see the digital version.");
+        }
+    };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -48,7 +81,7 @@ const Brochure = () => {
                                 </div>
                                 <div className="preview-main">
                                     <div className="vortex-accent"></div>
-                                    <h3 className="preview-title">International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics</h3>
+                                    <h3 className="preview-title">{brochureData.title}</h3>
                                     <div className="preview-divider"></div>
                                     <p className="preview-subtitle">Official Conference Brochure</p>
                                 </div>
@@ -62,31 +95,16 @@ const Brochure = () => {
                         <div className="brochure-details">
                             <h2 className="mb-4">Inside the Brochure</h2>
                             <p className="mb-4 text-muted">
-                                Download the official conference brochure to get comprehensive information about the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics.
-                                It serves as your complete guide to the event, featuring detailed schedules, speaker profiles, and venue information.
+                                {brochureData.description}
                             </p>
 
                             <ul className="brochure-features mb-5">
-                                <li>
-                                    <CheckCircle size={20} className="feature-icon" />
-                                    <span>Complete 3-Day Program Schedule</span>
-                                </li>
-                                <li>
-                                    <CheckCircle size={20} className="feature-icon" />
-                                    <span>Keynote Speaker Biographies & Topics</span>
-                                </li>
-                                <li>
-                                    <CheckCircle size={20} className="feature-icon" />
-                                    <span>Workshop & Breakout Session Details</span>
-                                </li>
-                                <li>
-                                    <CheckCircle size={20} className="feature-icon" />
-                                    <span>Venue Maps & Accommodation Guide</span>
-                                </li>
-                                <li>
-                                    <CheckCircle size={20} className="feature-icon" />
-                                    <span>Sponsorship & Exhibition Opportunities</span>
-                                </li>
+                                {(brochureData.features || []).map((feat, i) => (
+                                    <li key={i}>
+                                        <CheckCircle size={20} className="feature-icon" />
+                                        <span>{feat}</span>
+                                    </li>
+                                ))}
                             </ul>
 
                             <div className="brochure-actions">
@@ -101,7 +119,7 @@ const Brochure = () => {
                                     <>
                                         <Button onClick={handleDownloadClick}>
                                             <Download size={20} style={{ marginRight: '8px' }} />
-                                            Download Brochure
+                                            {brochureData.pdfUrl ? 'Download Brochure' : 'PDF Coming Soon'}
                                         </Button>
                                         <Button variant="secondary" onClick={() => navigate('/digital-brochure')}>
                                             <FileText size={20} style={{ marginRight: '8px' }} />
@@ -110,9 +128,7 @@ const Brochure = () => {
                                     </>
                                 )}
                             </div>
-                            <p className="download-note mt-3">
-                                * File size: 2.5 MB • Format: PDF • Updated: February 2026
-                            </p>
+                            <p className="download-note mt-3">{brochureData.note}</p>
                         </div>
                     </div>
                 </div>

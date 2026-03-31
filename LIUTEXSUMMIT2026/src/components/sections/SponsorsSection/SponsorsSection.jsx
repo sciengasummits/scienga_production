@@ -67,30 +67,21 @@ export default function SponsorsSection() {
     const [sponsors, setSponsors] = useState(STATIC_SPONSORS);
 
     useEffect(() => {
-        // First try to load logos uploaded from the workflow dashboard (partners_logos content key)
-        fetchContent('partners_logos').then(data => {
-            if (data && data.items && data.items.length > 0) {
-                // Use dashboard-uploaded logos — convert URL strings to sponsor objects
-                setSponsors(data.items
-                    .filter(url => url && url.trim() !== '')
-                    .map((url, i) => ({ name: `Partner ${i + 1}`, logo: url }))
-                );
+        // Fetch promoters and media partners from backend
+        fetchSponsors('media_partner').then(apiData => {
+            if (apiData && apiData.length > 0) {
+                // filter visible ones
+                const visible = apiData.filter(s => s.visible !== false);
+                if (visible.length > 0) {
+                    setSponsors(visible.map(s => ({ name: s.name, logo: s.logo, link: s.link })));
+                } else {
+                    setSponsors(STATIC_SPONSORS);
+                }
             } else {
-                // Fall back to sponsors API, then static
-                fetchSponsors('media_partner').then(apiData => {
-                    if (apiData && apiData.length > 0) {
-                        setSponsors(apiData.map(s => ({ name: s.name, logo: s.logo, link: s.link })));
-                    }
-                    // else keep STATIC_SPONSORS default
-                }).catch(() => {});
+                setSponsors(STATIC_SPONSORS);
             }
         }).catch(() => {
-            // If content fetch fails, fall back to sponsors API
-            fetchSponsors('media_partner').then(apiData => {
-                if (apiData && apiData.length > 0) {
-                    setSponsors(apiData.map(s => ({ name: s.name, logo: s.logo, link: s.link })));
-                }
-            }).catch(() => {});
+            setSponsors(STATIC_SPONSORS);
         });
     }, []);
 

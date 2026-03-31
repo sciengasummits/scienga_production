@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
+import { fetchContent, fetchUniversities, resolveImageUrl } from '../../../api/siteApi';
 import './UniversitiesMarquee.css';
 
 const UniversitiesMarquee = () => {
@@ -7,32 +7,37 @@ const UniversitiesMarquee = () => {
     const [universities, setUniversities] = useState([]);
 
     useEffect(() => {
+        // Fetch Title
         fetchContent('marquee').then(data => {
-            if (data && data.items && data.items.length > 0) {
-                setTitle(data.title || 'Supporting Universities & Institutions');
-                // items can be image URLs or plain text names
-                setUniversities(data.items.map((item, i) => ({ id: i, value: item })));
+            if (data && data.title) setTitle(data.title);
+        }).catch(() => {});
+
+        // Fetch Universities dynamically like Speakers
+        fetchUniversities().then(data => {
+            if (data && Array.isArray(data)) {
+                // filter visible ones (visible is true by default, but double-check)
+                const visible = data.filter(u => u.visible !== false);
+                setUniversities(visible);
             }
         }).catch(() => {});
     }, []);
 
     if (universities.length === 0) return null;
 
-    const renderItem = (uni, keyPrefix) => {
-        const value = uni.value || '';
-        const isImage = value.startsWith('http') || value.startsWith('/') || value.startsWith('uploads');
-        const resolvedUrl = isImage ? resolveImageUrl(value) : null;
+    const renderItem = (uni, uniqueKey) => {
+        // uni now has .name and .image
+        const resolvedUrl = uni.image ? resolveImageUrl(uni.image) : null;
         return (
-            <div key={`${keyPrefix}-${uni.id}`} className="university-item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2rem' }}>
-                {isImage ? (
+            <div key={uniqueKey} className="university-item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2rem' }}>
+                {resolvedUrl ? (
                     <img
                         src={resolvedUrl}
-                        alt="University Logo"
-                        style={{ height: '110px', objectFit: 'contain', maxWidth: '220px', display: 'block' }}
+                        alt={uni.name}
+                        style={{ height: '110px', objectFit: 'contain', maxWidth: '220px', display: 'block', background: 'transparent' }}
                         onError={e => { e.target.style.display = 'none'; }}
                     />
                 ) : (
-                    <h4 style={{ margin: 0, whiteSpace: 'nowrap', color: '#1e293b', fontSize: '1.2rem', fontWeight: 'bold' }}>{value}</h4>
+                    <h4 style={{ margin: 0, whiteSpace: 'nowrap', color: '#1e293b', fontSize: '1.2rem', fontWeight: 'bold' }}>{uni.name}</h4>
                 )}
             </div>
         );
@@ -55,7 +60,7 @@ const UniversitiesMarquee = () => {
                         marginBottom: '1rem',
                         textAlign: 'center',
                     }}>
-                        Supporting Universities &amp; Institutions
+                        {title}
                     </h2>
                     <div style={{
                         width: '60px', height: '4px',
@@ -66,9 +71,9 @@ const UniversitiesMarquee = () => {
             </div>
             <div className="marquee-track">
                 {/* Original Set */}
-                {repeated.map(uni => renderItem(uni, 'orig'))}
+                {repeated.map((uni, idx) => renderItem(uni, `orig-${idx}`))}
                 {/* Duplicate Set for Seamless Loop */}
-                {repeated.map(uni => renderItem(uni, 'dup'))}
+                {repeated.map((uni, idx) => renderItem(uni, `dup-${idx}`))}
             </div>
         </section>
     );
