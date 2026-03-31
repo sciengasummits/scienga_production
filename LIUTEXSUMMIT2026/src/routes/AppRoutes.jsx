@@ -17,6 +17,7 @@ import DigitalBrochure from '../pages/Brochure/DigitalBrochure';
 import Program from '../pages/Program/Program';
 
 import Unsubscribe from '../pages/Unsubscribe/Unsubscribe';
+import Subscribe from '../pages/Subscribe/Subscribe';
 import OnlineRegistration from '../pages/OnlineRegistration/OnlineRegistration';
 
 const ScrollToTop = () => {
@@ -49,6 +50,7 @@ const AppRoutes = () => {
                     <Route path="register" element={<Register />} />
                     <Route path="register/discount" element={<OnlineRegistration />} />
                     <Route path="online-registration" element={<OnlineRegistration />} />
+                    <Route path="subscribe" element={<Subscribe />} />
                     <Route path="unsubscribe" element={<Unsubscribe />} />
                     <Route path="brochure" element={<Brochure />} />
                     <Route path="digital-brochure" element={<DigitalBrochure />} />

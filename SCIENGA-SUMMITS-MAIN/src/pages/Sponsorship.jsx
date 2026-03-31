@@ -137,7 +137,7 @@ const Sponsorship = () => {
                     </p>
                     <p style={{ color: '#475569', marginBottom: '1.5rem', lineHeight: '1.6' }}>
                         For more information about sponsorship/exhibitor click here. <br />
-                        If you are interested in sponsoring this event, please write an email to: <a href="mailto:sciengasummits@gmail.com" style={{ color: 'var(--primary, #2563eb)', fontWeight: '600' }}>sciengasummits@gmail.com</a>
+                        If you are interested in sponsoring this event, please write an email to: <a href="mailto:contact@sciengasummits.org" style={{ color: 'var(--primary, #2563eb)', fontWeight: '600' }}>contact@sciengasummits.org</a>
                     </p>
 
                     <div style={{ marginTop: '2rem', textAlign: 'center' }}>

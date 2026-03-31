@@ -163,7 +163,7 @@ export default function TermsAndConditions() {
                         <h3 style={headingStyle}><span style={accentBar}></span>8. Company Details</h3>
                         <p style={paragraphStyle}>This website is owned and operated by Scienga Meetings.</p>
                         <p style={paragraphStyle}><strong>Registered Address:</strong> Jain Sadguru Image's Capital Park, Hyderabad, India</p>
-                        <p style={paragraphStyle}><strong>Contact Email:</strong> sciengasummits@gmail.com</p>
+                        <p style={paragraphStyle}><strong>Contact Email:</strong> contact@sciengasummits.org</p>
                     </section>
 
                 </div>
