@@ -2,7 +2,7 @@
 // Fetches live data from the dashboard backend (port 5000)
 
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
+const BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5050/api' : 'https://backend-phi-ivory-81.vercel.app/api');
 
 export const resolveImageUrl = (url) => {
     if (!url) return '';
@@ -28,8 +28,7 @@ export const resolveImageUrl = (url) => {
     // Force HTTPS if in production to prevent Mixed Content
     if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
         if (secureUrl.startsWith('http://')) {
-            // Only upgrade securely for known domains to prevent breaking pure-HTTP external links
-            if (secureUrl.includes('localhost') || secureUrl.includes(backendOrigin.replace(/^https?:\/\//, '')) || secureUrl.includes('onrender.com') || secureUrl.includes('.up.railway.app') || secureUrl.includes('sciengasummits')) {
+            if (secureUrl.includes('localhost') || secureUrl.includes(backendOrigin.replace(/^https?:\/\//, '')) || secureUrl.includes('onrender.com') || secureUrl.includes('.up.railway.app') || secureUrl.includes('sciengasummits') || secureUrl.includes('.vercel.app')) {
                  secureUrl = secureUrl.replace(/^http:\/\//i, 'https://');
             }
         }
