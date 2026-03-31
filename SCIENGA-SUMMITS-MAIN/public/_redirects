@@ -1,0 +1,10 @@
+# Netlify Redirects File
+# This file handles the Single Page Application (SPA) routing 
+# and proxies API requests to the backend server on Render.
+
+# 1. Proxy API requests to Render backend
+# REPLACE the URL below with your actual Render backend URL once deployed
+/api/*  https://YOUR-BACKEND-URL.onrender.com/api/:splat  200
+
+# 2. Redirect all other routes to index.html for React Router
+/*      /index.html  200

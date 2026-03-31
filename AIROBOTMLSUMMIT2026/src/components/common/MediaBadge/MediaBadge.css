@@ -1,0 +1,54 @@
+.media-badge-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.media-badge {
+    width: 220px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+    animation: blink 2s ease-in-out infinite;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+.media-badge:hover {
+    transform: scale(1.1);
+    animation: none;
+}
+
+@media (max-width: 992px) {
+    .media-badge-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .media-badge {
+        width: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .media-badge-container {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .media-badge {
+        width: 130px;
+    }
+}

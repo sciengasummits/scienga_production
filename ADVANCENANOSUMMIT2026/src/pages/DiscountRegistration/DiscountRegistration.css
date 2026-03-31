@@ -1,0 +1,100 @@
+.discount-registration-page {
+    min-height: 100vh;
+}
+
+.registration-layout {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.registration-form-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    margin-bottom: 2rem;
+}
+
+.registration-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.registration-form .form-control {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+.registration-form .form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.registration-form select.form-control {
+    cursor: pointer;
+    background-color: white;
+}
+
+.register-submit-btn {
+    background: var(--color-primary-gradient);
+    color: white;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.register-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.stripe-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stripe-badge img {
+    height: 30px;
+    width: auto;
+}
+
+.stripe-badge span {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .registration-form-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .registration-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stripe-badge {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

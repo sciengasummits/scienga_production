@@ -1,0 +1,5 @@
+
+/* small responsive helpers */
+@media (max-width:600px){
+  .topnav{flex-wrap:wrap}
+}

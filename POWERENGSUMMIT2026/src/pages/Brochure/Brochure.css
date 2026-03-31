@@ -1,0 +1,223 @@
+.page-header {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.page-header .page-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.page-header .breadcrumb {
+    font-size: 1.1rem;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.page-header .breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.page-header .breadcrumb a:hover {
+    color: #2e7d32;
+}
+
+.page-header .breadcrumb span {
+    color: #ccc;
+}
+
+.brochure-section {
+    background-color: #fff;
+}
+
+.brochure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: flex-start;
+}
+
+.brochure-preview {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.preview-card {
+    background: linear-gradient(135deg, #1a2b5b 0%, #004e92 100%);
+    width: 320px;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.preview-badge {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background: #ffc107;
+    color: #000;
+    padding: 5px 15px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 4px 0 0 4px;
+}
+
+.preview-icon-wrapper {
+    background: rgba(255, 255, 255, 0.2);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.preview-subtitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.preview-main-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.preview-platform {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.details-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 1.5rem;
+}
+
+.details-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.05rem;
+    color: #444;
+}
+
+.check-icon {
+    color: var(--color-primary-end);
+    flex-shrink: 0;
+}
+
+.brochure-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn-download,
+.btn-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-download {
+    background: var(--color-primary-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 78, 146, 0.4);
+}
+
+.btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 4, 40, 0.6);
+}
+
+.btn-view {
+    background-color: #fff;
+    color: var(--color-text-dark);
+    border: 1px solid #ddd;
+}
+
+.btn-view:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+    color: var(--color-primary-end);
+    transform: translateY(-2px);
+}
+
+.update-note {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+}
+
+@media (max-width: 992px) {
+    .brochure-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .brochure-preview {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header .page-title {
+        font-size: 2.5rem;
+    }
+
+    .brochure-actions {
+        flex-direction: column;
+    }
+
+    .btn-download,
+    .btn-view {
+        width: 100%;
+    }
+}

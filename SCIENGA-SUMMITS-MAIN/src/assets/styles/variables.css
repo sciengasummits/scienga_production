@@ -1,0 +1,17 @@
+:root {
+  --primary: #1E40AF;
+  /* Deep Royal Blue - Professional & Trustworthy */
+  --secondary: #1E3A8A;
+  /* Dark Navy - Authority */
+  --bg: #F8FAFC;
+  /* Clean Slate Background */
+  --text: #0F172A;
+  /* Specific Dark Slate for high contrast text */
+  --light-text: #64748B;
+  /* Muted Slate for secondary text */
+  /* Professional Gradient: Dark Navy to Vibrant Royal Blue */
+  --brand-gradient: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%);
+  --brand: #1E40AF;
+  /* Alias for compatibility */
+  --muted: #64748B;
+}
