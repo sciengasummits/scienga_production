@@ -21,12 +21,13 @@ const Program = () => {
         setIsLoading(true);
         setError(null);
         try {
-            await submitProgramRequest(formData);
+            const result = await submitProgramRequest(formData);
+            console.log('✅ Program request sent successfully:', result);
             setFormData({ name: '', email: '', number: '' });
             setIsSubmitted(true);
         } catch (err) {
+            console.error('❌ Program request failed:', err);
             setError('Failed to submit request. Please try again later.');
-            console.error(err);
         } finally {
             setIsLoading(false);
         }

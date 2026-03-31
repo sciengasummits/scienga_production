@@ -120,7 +120,7 @@ const Sponsors = () => {
                             For more information about sponsorship/exhibitor <a href="#" className="info-link">click here</a>.
                         </p>
                         <p>
-                            If you are interested in sponsoring this event, please write an email to: <strong>contact@sciengasummits.org</strong>
+                            If you are interested in sponsoring this event, please write an email to: <strong>sciengasummits@gmail.com</strong>
                         </p>
                     </div>
                     <div style={{ textAlign: 'center', marginTop: '2rem' }}>
