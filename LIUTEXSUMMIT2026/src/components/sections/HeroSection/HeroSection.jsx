@@ -189,7 +189,7 @@ const HeroSection = () => {
                     <div className="hero-actions-container">
                         <div className="hero__actions">
                             {hero.showBrochure !== false && (
-                                <Button className="hero-btn-small" onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
+                                <Button className="hero-btn-small" onClick={() => navigate('/brochure')}>DOWNLOAD BROCHURE</Button>
                             )}
                             {hero.showAbstract !== false && (
                                 <Button className="hero-btn-small" onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>

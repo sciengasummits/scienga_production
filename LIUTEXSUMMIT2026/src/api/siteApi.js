@@ -156,3 +156,48 @@ export async function verifyPayment(payload) {
     }
     return res.json();
 }
+
+// Submit a program schedule request
+export async function submitProgramRequest(payload) {
+    const res = await fetch(`${BASE_URL}/program-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Server error');
+    return res.json();
+}
+
+// Submit a newsletter subscription
+export async function submitSubscribe(payload) {
+    const res = await fetch(`${BASE_URL}/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Server error');
+    return res.json();
+}
+
+// Submit a brochure request
+export async function submitBrochureRequest(payload) {
+    const res = await fetch(`${BASE_URL}/brochure`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Server error');
+    return res.json();
+}
+
+// Submit a contact message
+export async function submitContactMessage(payload) {
+    const res = await fetch(`${BASE_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Server error');
+    return res.json();
+}
+
