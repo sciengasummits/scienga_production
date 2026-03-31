@@ -12,17 +12,17 @@ export const resolveImageUrl = (url) => {
 
     let secureUrl = url;
 
-    // Replace any backend localhost URLs with actual backend origin
-    // This aggressively targets all localhost ports (3000, 5000, 5050) EXCEPT frontend Vite port 5173
-    if (secureUrl.includes('localhost:') && !secureUrl.includes('localhost:5173')) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:\d+/g, backendOrigin);
-    } else if (secureUrl.includes('localhost/')) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost/g, backendOrigin);
+    // Replace any backend localhost or IP address URLs with actual backend origin
+    // This aggressively targets all matching local IPs or localhost ports EXCEPT frontend Vite port 5173
+    if ((secureUrl.includes('localhost:') || secureUrl.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+/)) && !secureUrl.includes('localhost:5173') && !secureUrl.includes(':5173')) {
+        secureUrl = secureUrl.replace(/https?:\/\/(localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):\d+/g, backendOrigin);
+    } else if (secureUrl.includes('localhost/') || secureUrl.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\//)) {
+        secureUrl = secureUrl.replace(/https?:\/\/(localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?=\/)/g, backendOrigin);
     }
 
     // Replace any saved frontend localhost URLs with actual frontend origin (Vite dev = 5173)
-    if (typeof window !== 'undefined' && secureUrl.includes('localhost:5173')) {
-        secureUrl = secureUrl.replace(/https?:\/\/localhost:5173/g, window.location.origin);
+    if (typeof window !== 'undefined' && (secureUrl.includes('localhost:5173') || secureUrl.includes(':5173'))) {
+        secureUrl = secureUrl.replace(/https?:\/\/(localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):5173/g, window.location.origin);
     }
 
     // Force HTTPS if in production to prevent Mixed Content
