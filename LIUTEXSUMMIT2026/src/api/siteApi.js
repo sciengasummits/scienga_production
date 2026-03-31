@@ -35,12 +35,12 @@ export const resolveImageUrl = (url) => {
         }
     }
 
-    if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
+    if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://') || secureUrl.startsWith('data:image')) {
         return secureUrl;
     }
 
     // If it's a relative URL to an uploaded file, prepend the backend origin
-    if (secureUrl.startsWith('/uploads') || secureUrl.startsWith('uploads/')) {
+    if (secureUrl.startsWith('/uploads') || secureUrl.startsWith('uploads/') || secureUrl.startsWith('/api') || secureUrl.startsWith('api/')) {
         return secureUrl.startsWith('/') ? `${backendOrigin}${secureUrl}` : `${backendOrigin}/${secureUrl}`;
     }
 
