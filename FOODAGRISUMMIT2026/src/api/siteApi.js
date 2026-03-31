@@ -139,3 +139,34 @@ export async function verifyPayment(payload) {
     }
     return res.json();
 }
+// ─── Form Submissions ────────────────────────────────────────
+
+export async function submitSubscribe(payload) {
+    const res = await fetch(`${BASE_URL}/newsletter/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: CONFERENCE_ID }),
+    });
+    if (!res.ok) throw new Error('Failed to subscribe');
+    return res.json();
+}
+
+export async function submitContactMessage(payload) {
+    const res = await fetch(`${BASE_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: CONFERENCE_ID }),
+    });
+    if (!res.ok) throw new Error('Failed to send message');
+    return res.json();
+}
+
+export async function submitProgramRequest(payload) {
+    const res = await fetch(`${BASE_URL}/program-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: CONFERENCE_ID }),
+    });
+    if (!res.ok) throw new Error('Failed to request program');
+    return res.json();
+}

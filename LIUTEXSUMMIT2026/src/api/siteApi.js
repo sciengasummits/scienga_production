@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5050/api';
 // into production endpoint URLs, fixing Mixed Content errors on Vercel.
 export const resolveImageUrl = (url) => {
     if (!url) return '';
-    
+
     // Convert e.g., 'https://backend.com/api' to 'https://backend.com'
     const backendOrigin = BASE_URL.replace(/\/api$/, '');
 
@@ -26,12 +26,12 @@ export const resolveImageUrl = (url) => {
     if (secureUrl.startsWith('http://') || secureUrl.startsWith('https://')) {
         return secureUrl;
     }
-    
+
     // If it's a relative URL to an uploaded file, prepend the backend origin
     if (secureUrl.startsWith('/uploads') || secureUrl.startsWith('uploads/')) {
         return secureUrl.startsWith('/') ? `${backendOrigin}${secureUrl}` : `${backendOrigin}/${secureUrl}`;
     }
-    
+
     // Otherwise (e.g. frontend static assets from Vite imports like /assets/...), leave as is
     return secureUrl;
 };
@@ -148,3 +148,37 @@ export async function verifyPayment(payload) {
     return res.json();
 }
 
+// ─── Form Submissions ────────────────────────────────────────
+
+// Submit newsletter subscription
+export async function submitSubscribe(payload) {
+    const res = await fetch(`${BASE_URL}/newsletter/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Failed to subscribe');
+    return res.json();
+}
+
+// Submit contact form message
+export async function submitContactMessage(payload) {
+    const res = await fetch(`${BASE_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Failed to send message');
+    return res.json();
+}
+
+// Submit program schedule request
+export async function submitProgramRequest(payload) {
+    const res = await fetch(`${BASE_URL}/program-request`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...payload, conference: 'liutex' }),
+    });
+    if (!res.ok) throw new Error('Failed to request program');
+    return res.json();
+}
