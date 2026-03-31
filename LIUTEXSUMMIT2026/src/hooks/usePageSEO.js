@@ -5,7 +5,7 @@ const SITE_NAME = 'LIUTEX2026';
 const BASE_URL = 'https://liutex2026.com';
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 const DEFAULT_DESC =
-  'INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM. December 14–16, 2026 · Outram, Singapore.';
+  'International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. December 14–16, 2026 · Outram, Singapore.';
 
 // Cache so we only fetch once per session
 let _metaCache = null;
@@ -36,7 +36,7 @@ const usePageSEO = ({ pageKey, title, description, image, canonical } = {}) => {
             const rawTitle = db.title || title;
             const fullTitle = rawTitle
                 ? (rawTitle.includes(SITE_NAME) ? rawTitle : `${rawTitle} | ${SITE_NAME}`)
-                : `${SITE_NAME} | INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM – Singapore`;
+                : `${SITE_NAME} | International Conference on Liutex Theory & Vortex Dynamics – Singapore`;
 
             const desc = db.description || description || DEFAULT_DESC;
             const keywords = db.keywords || '';

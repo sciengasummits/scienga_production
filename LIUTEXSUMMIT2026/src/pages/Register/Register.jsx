@@ -10,7 +10,7 @@ const Register = ({ isDiscounted = false }) => {
     usePageSEO({
         pageKey: 'registration',
         title: 'Register Online',
-        description: 'Register for LIUTEX2026 – INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM, Singapore. Early bird, standard, and on-spot rates available for speakers, delegates, students, and virtual attendees.',
+        description: 'Register for LIUTEX2026 – International Conference on Liutex Theory & Vortex Dynamics, Singapore. Early bird, standard, and on-spot rates available for speakers, delegates, students, and virtual attendees.',
         canonical: 'https://liutex2026.com/register',
     });
     // ── Pricing state loaded from backend ──

@@ -7,7 +7,7 @@ import './VisaInfo.css';
 /* ── Default fallback content ── */
 const DEFAULTS = {
     pageTitle: 'Visa Information',
-    intro: 'The INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM welcomes speakers & delegates from all over the world. Below is essential visa-related information to assist with your travel planning.',
+    intro: 'The International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics welcomes speakers & delegates from all over the world. Below is essential visa-related information to assist with your travel planning.',
     sections: [
         {
             id: 'visa_need',

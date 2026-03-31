@@ -1,35 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import usePageSEO from '../../hooks/usePageSEO';
-import { Bell, CheckCircle, Loader2 } from 'lucide-react';
+import { Bell, CheckCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
-import { submitProgramRequest } from '../../api/siteApi';
+import { fetchContent } from '../../api/siteApi';
 import './Program.css';
 
 const Program = () => {
     usePageSEO({
         title: 'Program Schedule',
-        description: 'LIUTEX2026 conference program – keynote sessions, technical presentations, and workshops on Liutex Theory, Turbulence Mechanism, and CFD. Full schedule to be announced May 2026.',
+        description: 'LIUTEX2026 conference program – keynote sessions, technical presentations, and workshops on Liutex Theory, Vortex Dynamics, and CFD. Full schedule to be announced May 2026.',
         canonical: 'https://liutex2026.com/program',
     });
+    const [contactEmail, setContactEmail] = useState('contact@liutexvortexsummit.com');
     const [formData, setFormData] = useState({ name: '', email: '', number: '' });
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
 
-    const handleSubmit = async (e) => {
+    useEffect(() => {
+        fetchContent('contact').then(data => {
+            if (data && data.email) setContactEmail(data.email);
+        }).catch(() => {});
+    }, []);
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setIsLoading(true);
-        setError(null);
-        try {
-            await submitProgramRequest(formData);
-            setFormData({ name: '', email: '', number: '' });
-            setIsSubmitted(true);
-        } catch (err) {
-            setError('Failed to submit request. Please try again later.');
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
+        const body = `Name: ${formData.name}%0AEmail: ${formData.email}%0ANumber: ${formData.number}`;
+        window.location.href = `mailto:${contactEmail}?subject=Requesting%20Program%20Updates&body=${body}`;
+        setFormData({ name: '', email: '', number: '' });
+        setIsSubmitted(true);
     };
 
     return (
@@ -71,22 +68,16 @@ const Program = () => {
                                     </div>
                                     <div className="form-group">
                                         <label style={{ display: 'block', marginBottom: '0.5rem' }}>Email Address</label>
-                                        <input type="email" className="form-control" placeholder="john@example.com" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} disabled={isLoading} />
+                                        <input type="email" className="form-control" placeholder="john@example.com" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
                                     </div>
                                 </div>
                                 <div className="form-group" style={{ marginBottom: '1.5rem' }}>
                                     <label style={{ display: 'block', marginBottom: '0.5rem' }}>Contact Number</label>
-                                    <input type="tel" className="form-control" placeholder="+1 234 567 8900" required value={formData.number} onChange={e => setFormData({...formData, number: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} disabled={isLoading} />
+                                    <input type="tel" className="form-control" placeholder="+1 234 567 8900" required value={formData.number} onChange={e => setFormData({...formData, number: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
                                 </div>
-                                {error && (
-                                    <div style={{ color: '#ef4444', marginBottom: '1rem', textAlign: 'center', fontSize: '0.9rem' }}>
-                                        {error}
-                                    </div>
-                                )}
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <Button type="submit" className="w-100" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} disabled={isLoading}>
-                                        {isLoading ? <Loader2 size={18} className="animate-spin" style={{ marginRight: '8px' }} /> : <Bell size={18} style={{ marginRight: '8px' }} />} 
-                                        {isLoading ? 'SUBMITTING...' : 'NOTIFY ME ON UPDATE'}
+                                    <Button type="submit" className="w-100" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Bell size={18} style={{ marginRight: '8px' }} /> NOTIFY ME ON UPDATE
                                     </Button>
                                 </div>
                             </form>

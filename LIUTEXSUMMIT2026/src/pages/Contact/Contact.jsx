@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import usePageSEO from '../../hooks/usePageSEO';
 import Button from '../../components/common/Button/Button';
-import { Mail, Phone, MapPin, Clock, MessageCircle, Send, Loader2 } from 'lucide-react';
-import { fetchContent, submitContactMessage } from '../../api/siteApi';
+import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
+import { fetchContent } from '../../api/siteApi';
 import './Contact.css';
 
 const Contact = () => {
@@ -17,8 +17,6 @@ const Contact = () => {
         phone: '+91 7842090097',
         whatsapp: '+91 7842090097',
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null);
 
     // ── Fetch contact info from API (dashboard-driven) ──────────────────────
     useEffect(() => {
@@ -109,49 +107,33 @@ const Contact = () => {
                             <h3>Send Us a Message</h3>
                             <p>We'd love to hear from you!</p>
                         </div>
-                        <form className="contact__form" onSubmit={async (e) => {
+                        <form className="contact__form" onSubmit={(e) => {
                             e.preventDefault();
-                            setIsSubmitting(true);
-                            setSubmitStatus(null);
                             const formData = new FormData(e.target);
-                            try {
-                                await submitContactMessage({
-                                    name: formData.get('name'),
-                                    email: formData.get('email'),
-                                    subject: formData.get('subject'),
-                                    message: formData.get('message'),
-                                });
-                                setSubmitStatus('success');
-                                e.target.reset();
-                            } catch (err) {
-                                setSubmitStatus('error');
-                            } finally {
-                                setIsSubmitting(false);
-                            }
+                            const body = `Name: ${formData.get('name')}%0AEmail: ${formData.get('email')}%0A%0A${formData.get('message')}`;
+                            window.location.href = `mailto:${contactInfo.email}?subject=${encodeURIComponent(formData.get('subject'))}&body=${body}`;
+                            e.target.reset();
                         }}>
-                            {submitStatus === 'success' && <p style={{ color: 'green', fontSize: '0.9rem', marginBottom: '10px' }}>Your message was sent successfully!</p>}
-                            {submitStatus === 'error' && <p style={{ color: 'red', fontSize: '0.9rem', marginBottom: '10px' }}>Failed to send message. Please try again later.</p>}
                             <div className="form-row">
                                 <div className="form-group">
                                     <label>Full Name</label>
-                                    <input type="text" name="name" className="form-control" placeholder="John Doe" required disabled={isSubmitting} />
+                                    <input type="text" name="name" className="form-control" placeholder="John Doe" required />
                                 </div>
                                 <div className="form-group">
                                     <label>Email Address</label>
-                                    <input type="email" name="email" className="form-control" placeholder="john@example.com" required disabled={isSubmitting} />
+                                    <input type="email" name="email" className="form-control" placeholder="john@example.com" required />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label>Subject</label>
-                                <input type="text" name="subject" className="form-control" placeholder="Inquiry about..." required disabled={isSubmitting} />
+                                <input type="text" name="subject" className="form-control" placeholder="Inquiry about..." required />
                             </div>
                             <div className="form-group">
                                 <label>Message</label>
-                                <textarea name="message" rows="5" className="form-control" placeholder="How can we help you?" required disabled={isSubmitting}></textarea>
+                                <textarea name="message" rows="5" className="form-control" placeholder="How can we help you?" required></textarea>
                             </div>
-                            <Button type="submit" className="w-100" style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }} disabled={isSubmitting}>
-                                {isSubmitting ? <Loader2 size={18} className="animate-spin" style={{ marginRight: '8px' }} /> : <Send size={18} style={{ marginRight: '8px' }} />}
-                                {isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}
+                            <Button type="submit" className="w-100" style={{ marginTop: '1rem' }}>
+                                <Send size={18} style={{ marginRight: '8px' }} /> SEND MESSAGE
                             </Button>
                         </form>
                     </div>

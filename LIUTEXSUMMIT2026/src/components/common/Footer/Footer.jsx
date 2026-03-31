@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram, Loader2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
 import Logo from '../Logo/Logo';
-import { fetchContent, submitSubscribe } from '../../../api/siteApi';
+import { fetchContent } from '../../../api/siteApi';
 import './Footer.css';
 
 const Footer = () => {
     const [contactInfo, setContactInfo] = useState({ email: 'contact@liutexvortexsummit.com', phone: '+91 7842090097' });
-    const [subscribing, setSubscribing] = useState(false);
 
     useEffect(() => {
         fetchContent('contact').then(data => {
@@ -19,25 +18,6 @@ const Footer = () => {
             }
         }).catch(() => {});
     }, []);
-
-    const handleSubscribe = async (e) => {
-        e.preventDefault();
-        setSubscribing(true);
-        const formData = new FormData(e.target);
-        try {
-            await submitSubscribe({
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('number')
-            });
-            alert("Subscribed successfully!");
-            e.target.reset();
-        } catch (error) {
-            alert("Failed to subscribe. Please try again later.");
-        } finally {
-            setSubscribing(false);
-        }
-    };
 
     return (
         <footer className="footer">
@@ -65,7 +45,6 @@ const Footer = () => {
                             <li><Link to="/sessions">Sessions</Link></li>
                             <li><Link to="/program">Program</Link></li>
                             <li><Link to="/speakers">Speakers</Link></li>
-                            <li><a href="https://www.sciengasummits.com/" target="_blank" rel="noopener noreferrer">Policies</a></li>
                         </ul>
                     </div>
 
@@ -94,20 +73,17 @@ const Footer = () => {
                     <div className="footer__col">
                         <h4>Subscribe</h4>
                         <p>Get the latest updates and news.</p>
-                        <form className="footer__form-vertical" onSubmit={handleSubscribe}>
-                            <input type="text" name="name" placeholder="Your Name" required disabled={subscribing} />
-                            <input type="email" name="email" placeholder="Your Email" required disabled={subscribing} />
-                            <input type="tel" name="number" placeholder="Your Number" required disabled={subscribing} />
-                            <button type="submit" disabled={subscribing} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                {subscribing ? <Loader2 size={16} className="animate-spin" style={{ marginRight: '6px' }} /> : null}
-                                {subscribing ? 'Subscribing...' : 'Subscribe'}
-                            </button>
+                        <form className="footer__form-vertical" onSubmit={(e) => { e.preventDefault(); alert("Subscribed successfully!"); e.target.reset(); }}>
+                            <input type="text" placeholder="Your Name" required />
+                            <input type="email" placeholder="Your Email" required />
+                            <input type="tel" placeholder="Your Number" required />
+                            <button type="submit">Subscribe</button>
                         </form>
                     </div>
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM. All Rights Reserved by SCIENGA SUMMITS</p>
+                    <p>&copy; {new Date().getFullYear()} International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. All Rights Reserved by SCIENGA SUMMITS</p>
                 </div>
             </div>
         </footer>

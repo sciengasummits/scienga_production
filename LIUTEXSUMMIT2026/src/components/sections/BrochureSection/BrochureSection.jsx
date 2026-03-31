@@ -1,12 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import Button from '../../common/Button/Button';
 import './BrochureSection.css';
 
 const BrochureSection = () => {
-    const navigate = useNavigate();
     const handleDownload = () => {
-        navigate('/brochure');
+        window.open('/brochure.pdf', '_blank');
     };
 
     return (
@@ -34,8 +32,8 @@ const BrochureSection = () => {
                     {/* Placeholder for brochure preview image */}
                     <div className="preview-card">
                         <div className="preview-page">
-                            <h3>LIUTEX THEORY & TURBULENCE MECHANISM</h3>
-                            <p>2026 EDITION</p>
+                            <h3>WORLD GENERAL MEDICINE CONGRESS</h3>
+                            <p>2026</p>
                             <div className="preview-lines"></div>
                         </div>
                     </div>

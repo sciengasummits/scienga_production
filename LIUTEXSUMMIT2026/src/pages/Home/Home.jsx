@@ -15,7 +15,7 @@ const Home = () => {
     usePageSEO({
         pageKey: 'home',
         title: 'Home',
-        description: 'LIUTEX2026 – INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM. December 14–16, 2026, Outram, Singapore. Submit abstracts and register now.',
+        description: 'LIUTEX2026 – International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. December 14–16, 2026, Outram, Singapore. Submit abstracts and register now.',
         canonical: 'https://liutex2026.com/',
     });
     return (
