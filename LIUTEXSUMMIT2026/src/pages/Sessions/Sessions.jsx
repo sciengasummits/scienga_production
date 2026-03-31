@@ -5,7 +5,7 @@ import KeyThemesSection from '../../components/sections/KeyThemesSection/KeyThem
 const Sessions = () => {
     usePageSEO({
         title: 'Sessions & Key Themes',
-        description: 'Explore LIUTEX2026 technical sessions covering Liutex Theory fundamentals, Vortex Identification Methods (Q, λ2, Ω, Liutex), Turbulence Modeling, CFD Applications, Aerospace Vortex Dynamics, and AI in Flow Field Analysis.',
+        description: 'Explore LIUTEX2026 technical sessions covering Liutex Theory and Turbulence Mechanism, Vortex Identification Methods (Q, λ2, Ω, Liutex), CFD Applications, Aerospace Vortex Dynamics, and AI in Flow Field Analysis.',
         canonical: 'https://liutex2026.com/sessions',
     });
     return (

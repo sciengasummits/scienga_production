@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import usePageSEO from '../../hooks/usePageSEO';
-import { Plus, Minus, Search, MessageCircle } from 'lucide-react';
+import { Plus, Minus, MessageCircle } from 'lucide-react';
 import Button from '../../components/common/Button/Button';
 import { Link } from 'react-router-dom';
 import * as siteApi from '../../api/siteApi';
@@ -16,7 +16,7 @@ const DEFAULTS = {
             category: 'Registration',
             items: [
                 {
-                    question: 'How can I register for the International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics?',
+                    question: 'How can I register for the INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM?',
                     answer: "You can register online through our website by visiting the 'Register' page. Early bird registration is available until the specified deadline.",
                 },
                 {
@@ -98,7 +98,6 @@ const FAQ = () => {
     });
     const [faqData, setFaqData] = useState(DEFAULTS);
     const [activeIndex, setActiveIndex] = useState(null);
-    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         siteApi.fetchContent('faq')
@@ -109,19 +108,6 @@ const FAQ = () => {
     const toggleAccordion = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
-
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value.toLowerCase());
-    };
-
-    // Filter FAQs based on search
-    const filteredFaqs = (faqData.categories || []).map(cat => ({
-        ...cat,
-        items: (cat.items || []).filter(item =>
-            item.question.toLowerCase().includes(searchTerm) ||
-            item.answer.toLowerCase().includes(searchTerm)
-        ),
-    })).filter(cat => cat.items.length > 0);
 
     return (
         <div className="faq-page">
@@ -134,21 +120,9 @@ const FAQ = () => {
 
             <section className="section-padding">
                 <div className="container">
-                    <div className="faq-search-wrapper">
-                        <div className="faq-search-box">
-                            <Search className="search-icon" size={20} />
-                            <input
-                                type="text"
-                                placeholder="Search for questions (e.g., Registration, Abstract, Venue...)"
-                                className="faq-search-input"
-                                onChange={handleSearch}
-                            />
-                        </div>
-                    </div>
-
                     <div className="faq-content">
-                        {filteredFaqs.length > 0 ? (
-                            filteredFaqs.map((category, catIndex) => (
+                        {(faqData.categories || []).length > 0 ? (
+                            (faqData.categories || []).map((category, catIndex) => (
                                 <div key={category.id || catIndex} className="faq-category">
                                     <h2 className="category-title">{category.category}</h2>
                                     <div className="faq-list">
@@ -181,8 +155,8 @@ const FAQ = () => {
                             ))
                         ) : (
                             <div className="no-results text-center">
-                                <h3>No results found for "{searchTerm}"</h3>
-                                <p>Please try a different keyword or contact us directly.</p>
+                                <h3>No FAQs available</h3>
+                                <p>Please check back later or contact us directly.</p>
                             </div>
                         )}
                     </div>

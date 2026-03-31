@@ -6,15 +6,17 @@ import './HeroSection.css';
 import { fetchContent, resolveImageUrl } from '../../../api/siteApi';
 
 const DEFAULTS = {
-    subtitle: 'International Conference on',
-    title: 'Liutex Theory and Applications',
-    description: 'International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics. where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.',
+    subtitle: 'INTERNATIONAL CONFERENCE ON',
+    title: 'LIUTEX THEORY AND\nTURBULENCE MECHANISM',
+    description: 'INTERNATIONAL CONFERENCE ON LIUTEX THEORY AND TURBULENCE MECHANISM where global experts unite to shape the future of fluid mechanics. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.',
     conferenceDate: 'December 14-16, 2026',
     venue: 'Outram, Singapore',
     countdownTarget: '2026-12-14T09:00:00+01:00',
     showRegister: true,
     showAbstract: true,
     showBrochure: true,
+    showAnnouncement: false,
+    announcementUrl: '/pdfs/announcement.pdf',
 };
 
 const HeroSection = () => {
@@ -22,6 +24,7 @@ const HeroSection = () => {
     const [hero, setHero] = useState(DEFAULTS);
     const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [collaborations, setCollaborations] = useState([]);
 
     // resolveImageUrl from siteApi.js handles both local (localhost:5050) and
     // production (VITE_API_URL) — never hardcodes localhost for image paths.
@@ -58,8 +61,8 @@ const HeroSection = () => {
                     } else if (data && typeof data === 'object') {
                         // Recover from corrupted save: { "0":{...}, "1":{...} }
                         const numKeys = Object.keys(data)
-                            .filter(k => !isNaN(k))
-                            .sort((a, b) => Number(a) - Number(b));
+                                .filter(k => !isNaN(k))
+                                .sort((a, b) => Number(a) - Number(b));
                         if (numKeys.length > 0) {
                             const recovered = numKeys.map(k => data[k]).filter(c => c && c.name);
                             setChairs(recovered);
@@ -79,6 +82,13 @@ const HeroSection = () => {
                 }
             }).catch(err => {
                 console.error('Failed to fetch heroChairs:', err);
+            });
+
+            // Fetch Collaborations
+            import('../../../api/siteApi').then(api => {
+                api.fetchSponsors('collaboration').then(data => {
+                    if (!cancelled && data) setCollaborations(data);
+                });
             });
         };
 
@@ -179,13 +189,16 @@ const HeroSection = () => {
                     <div className="hero-actions-container">
                         <div className="hero__actions">
                             {hero.showBrochure !== false && (
-                                <Button className="hero-btn-small" onClick={() => navigate('/digital-brochure')}>DOWNLOAD BROCHURE</Button>
+                                <Button className="hero-btn-small" onClick={() => navigate('/brochure')}>DOWNLOAD BROCHURE</Button>
                             )}
                             {hero.showAbstract !== false && (
                                 <Button className="hero-btn-small" onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
                             )}
                             {hero.showRegister !== false && (
                                 <Button className="btn-elevate hero-btn-small" onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                            )}
+                            {hero.showAnnouncement && (
+                                <Button className="btn-elevate hero-btn-small" onClick={() => window.open(resolveUrl(hero.announcementUrl || '/pdfs/announcement.pdf'), '_blank')}>CONFERENCE ANNOUNCEMENT</Button>
                             )}
                         </div>
                     </div>
@@ -226,6 +239,23 @@ const HeroSection = () => {
                     )}
                 </div>
             </div>
+
+            {collaborations.length > 0 && (
+                <div className="hero__collaborations">
+                    <div className="collab-container">
+                        <div className="collab-group">
+                            <span className="collab-label">Collaborations</span>
+                            <div className="collab-logos">
+                                {collaborations.map(c => (
+                                    <div key={c._id} className="collab-logo-item">
+                                        <img src={resolveUrl(c.logo)} alt={c.name} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };

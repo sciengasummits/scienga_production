@@ -31,7 +31,7 @@ const AbstractSubmission = () => {
     usePageSEO({
         pageKey: 'abstract',
         title: 'Abstract Submission',
-        description: 'Submit your research abstract for LIUTEX2026. Topics include Liutex Theory, Vortex Identification, Turbulence Modeling, CFD, and AI in flow field analysis. Deadline: October 30, 2026.',
+        description: 'Submit your research abstract for LIUTEX2026. Topics include Liutex Theory, Turbulence Mechanism, CFD, and AI in flow field analysis. Deadline: October 30, 2026.',
         canonical: 'https://liutex2026.com/abstract-submission',
     });
     const [formData, setFormData] = useState({
