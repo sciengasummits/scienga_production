@@ -135,8 +135,8 @@ const meetingsData = {
         },
         {
             id: 11,
-            title: "International Conference on Liutex Theory and Turbulence Mechanism",
-            description: "International Conference on Liutex Theory and Applications in Vortex Identification and Vortex Dynamics",
+            title: "LIUTEX2026",
+            description: "International Conference on Liutex Theory and Turbulence Mechanism",
             location: "OUTRAM, SINGAPORE",
             date: "December 14-17, 2026",
             year: "2026",
