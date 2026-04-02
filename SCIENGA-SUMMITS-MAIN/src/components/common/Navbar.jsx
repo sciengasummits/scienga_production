@@ -212,32 +212,34 @@ export default function Navbar() {
                       border: '1px solid #f1f5f9'
                     }}>
                       {link.subLinks.map((subLink, subIndex) => (
-                        <Link
-                          key={subIndex}
-                          to={subLink.path}
-                          style={{
-                            padding: '10px 16px',
-                            textDecoration: 'none',
-                            color: '#475569',
-                            fontSize: '0.9rem',
-                            fontWeight: '500',
-                            transition: 'all 0.2s',
-                            borderRadius: '8px',
-                            display: 'block'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.background = '#F8FAFC';
-                            e.target.style.color = primaryColor;
-                            e.target.style.transform = 'translateX(2px)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.background = 'transparent';
-                            e.target.style.color = '#475569';
-                            e.target.style.transform = 'translateX(0)';
-                          }}
-                        >
-                          {subLink.name}
-                        </Link>
+                          <Link
+                            key={subIndex}
+                            to={subLink.path}
+                            target={subLink.path.startsWith('/') ? "_blank" : undefined}
+                            rel={subLink.path.startsWith('/') ? "noopener noreferrer" : undefined}
+                            style={{
+                              padding: '10px 16px',
+                              textDecoration: 'none',
+                              color: '#475569',
+                              fontSize: '0.9rem',
+                              fontWeight: '500',
+                              transition: 'all 0.2s',
+                              borderRadius: '8px',
+                              display: 'block'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.target.style.background = '#F8FAFC';
+                              e.target.style.color = primaryColor;
+                              e.target.style.transform = 'translateX(2px)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.target.style.background = 'transparent';
+                              e.target.style.color = '#475569';
+                              e.target.style.transform = 'translateX(0)';
+                            }}
+                          >
+                            {subLink.name}
+                          </Link>
                       ))}
                     </div>
                   </div>
@@ -382,6 +384,8 @@ export default function Navbar() {
                       key={subIndex}
                       to={subLink.path}
                       onClick={toggleMenu}
+                      target={subLink.path.startsWith('/') ? "_blank" : undefined}
+                      rel={subLink.path.startsWith('/') ? "noopener noreferrer" : undefined}
                       style={{
                         textDecoration: 'none',
                         fontSize: '1rem',

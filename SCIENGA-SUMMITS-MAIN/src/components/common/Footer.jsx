@@ -163,7 +163,11 @@ export default function Footer() {
               { name: 'Contact Us', path: '/contact' }
             ].map((item, index) => (
               <li key={index}>
-                <Link to={item.path} style={{ textDecoration: 'none', color: '#94a3b8', transition: 'all 0.2s', fontSize: '0.85rem', display: 'block' }}
+                <Link 
+                  to={item.path} 
+                  target={item.path.startsWith('/') && !item.path.includes('#') && (item.path === '/terms' || item.path === '/privacy' || item.path === '/refund-cancellation') ? "_blank" : undefined}
+                  rel={item.path.startsWith('/') && !item.path.includes('#') && (item.path === '/terms' || item.path === '/privacy' || item.path === '/refund-cancellation') ? "noopener noreferrer" : undefined}
+                  style={{ textDecoration: 'none', color: '#94a3b8', transition: 'all 0.2s', fontSize: '0.85rem', display: 'block' }}
                   onMouseEnter={(e) => { e.target.style.color = primaryColor; }}
                   onMouseLeave={(e) => { e.target.style.color = '#94a3b8'; }}
                 >
@@ -394,8 +398,9 @@ export default function Footer() {
           © {new Date().getFullYear()} Scienga Summits. All Rights Reserved.
         </p>
         <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <Link to="/privacy" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Privacy Policy</Link>
-          <Link to="/terms" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Terms of Use</Link>
+          <Link to="/privacy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Privacy Policy</Link>
+          <Link to="/terms" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Terms of Use</Link>
+          <Link to="/refund-cancellation" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Refund Policy</Link>
         </div>
       </div>
     </footer>
