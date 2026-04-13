@@ -81,18 +81,18 @@ const meetingsData = {
             image: meetingFoodTech,
             link: "https://foodagrisummit2026.sciengasummits.com/"
         },
-        {
-            id: 17,
-            title: "IQCES2026",
-            description: "International Conference on Quantum Computing & Engineering",
-            location: "BERN, SWITZERLAND",
-            date: "June 24-26, 2026",
-            year: "2026",
-            image: meetingIQCES,
-            link: "https://quantumengineering.sciengasummits.com/"
-        }
     ],
     2027: [
+        {
+            id: 17,
+            title: "IQCES2027",
+            description: "International Quantum Computing & Engineering Summit",
+            location: "MUNICH, GERMANY",
+            date: "March 15-17, 2027",
+            year: "2027",
+            image: meetingIQCES,
+            link: "https://quantumengineering.sciengasummits.com/"
+        },
         {
             id: 7,
             title: "RENECLIMSUMMIT2026",
