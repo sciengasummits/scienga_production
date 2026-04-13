@@ -13,7 +13,7 @@ import meetingPowerEng from '../../assets/images/meetings/POWERENGSUMMIT2026.jpg
 import meetingCleanEngTech from '../../assets/images/meetings/CLEANENGTECHSUMMIT2026.jpg'
 import meetingCondensedPhys from '../../assets/images/meetings/CONDENSEDPHYSSUMMIT2026.jpg'
 import meetingAstroPhysics from '../../assets/images/meetings/Astro physcis.jpg'
-import meetingCyber from '../../assets/images/meetings/cyber.jpg'
+import meetingCyber from '../../assets/images/meetings/cyber1.png'
 import meetingPublic from '../../assets/images/meetings/Public.jpg'
 import meetingFluid from '../../assets/images/meetings/Fluid.jpg'
 import meetingShared from '../../assets/images/meetings/shared image.jpg'
