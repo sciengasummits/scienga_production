@@ -18,6 +18,7 @@ import meetingPublic from '../../assets/images/meetings/Public.jpg'
 import meetingFluid from '../../assets/images/meetings/Fluid.jpg'
 import meetingShared from '../../assets/images/meetings/shared image.jpg'
 import meetingIQCES from '../../assets/images/meetings/iqces.png'
+import meetingICEMMAE from '../../assets/images/meetings/icemmae2027.jpg'
 
 const meetingsData = {
     2026: [
@@ -83,6 +84,16 @@ const meetingsData = {
         },
     ],
     2027: [
+        {
+            id: 18,
+            title: "ICEMMAE2027",
+            description: "International Conference and Expo on Mechanical, Mechatronics and Aerospace Engineering",
+            location: "MUNICH, GERMANY",
+            date: "February 11-13, 2027",
+            year: "2027",
+            image: meetingICEMMAE,
+            link: "https://icemmae2027.sciengasummits.com/"
+        },
         {
             id: 17,
             title: "IQCES2027",
