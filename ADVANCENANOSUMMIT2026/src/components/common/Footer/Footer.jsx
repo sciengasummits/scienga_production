@@ -1,10 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
+'use client';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import Logo from '../Logo/Logo';
+import { fetchContent } from '../../../api/contentApi';
 import './Footer.css';
 
 const Footer = () => {
+    const [contactInfo, setContactInfo] = useState({ email: 'contact@advancematerialssummit.com', phone: '+91 7842090097' });
+
+    useEffect(() => {
+        fetchContent('contact').then(data => {
+            if (data) {
+                setContactInfo(prev => ({
+                    email: data.email || prev.email,
+                    phone: data.phone || prev.phone
+                }));
+            }
+        }).catch(() => {});
+    }, []);
+
     return (
         <footer className="footer">
             <div className="container">
@@ -14,26 +29,33 @@ const Footer = () => {
                             <Logo />
                         </div>
                         <p className="footer__desc">
-                            Global experts unite to shape the future of material science and nanotechnology.
-                            Discover ground-breaking technologies and connect with top researchers and professionals.
+                            Global experts unite to shape the future of material science and nanotechnology. Discover ground-breaking technologies and connect with top researchers and professionals.
                         </p>
                         <div className="footer__socials">
-                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
-                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon">FB</a>
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon">IN</a>
+                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon">IG</a>
                         </div>
                     </div>
 
                     <div className="footer__col">
                         <h4>Important Links</h4>
                         <ul className="footer__links">
-                            <li><Link to="/abstract-submission">Abstract Submission</Link></li>
-                            <li><Link to="/register">Registration</Link></li>
-                            <li><Link to="/sessions">Sessions</Link></li>
-                            <li><Link to="/program">Program</Link></li>
-                            <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/discount-registration">Discount Registration</Link></li>
-                            <li><Link to="/unsubscribe">Unsubscribe</Link></li>
+                            <li><Link href="/abstract-submission">Abstract Submission</Link></li>
+                            <li><Link href="/register">Registration</Link></li>
+                            <li><Link href="/sessions">Sessions</Link></li>
+                            <li><Link href="/program">Program</Link></li>
+                            <li><Link href="/speakers">Speakers</Link></li>
+                            <li><Link href="/subscribe">Subscribe</Link></li>
+                        </ul>
+                    </div>
+
+                    <div className="footer__col">
+                        <h4>Policies</h4>
+                        <ul className="footer__links">
+                            <li><a href="https://www.sciengasummits.com/terms" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a></li>
+                            <li><a href="https://www.sciengasummits.com/refund-cancellation" target="_blank" rel="noopener noreferrer">Refund &amp; Cancellations</a></li>
+                            <li><a href="https://www.sciengasummits.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
                         </ul>
                     </div>
 
@@ -44,33 +66,24 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span>Amsterdam, Netherlands</span>
+                                    <span> Amsterdam, Netherlands</span>
                                 </div>
                             </li>
 
                             <li>
                                 <Mail size={18} />
-                                <span>contact@advancematerialssummit.com</span>
+                                <span>{contactInfo.email}</span>
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+91 7842090097</span>
+                                <span>{contactInfo.phone}</span>
                             </li>
                         </ul>
-                    </div>
-
-                    <div className="footer__col">
-                        <h4>Subscribe</h4>
-                        <p>Get the latest updates and news.</p>
-                        <form className="footer__form">
-                            <input type="email" placeholder="Your Email" />
-                            <button type="submit">Go</button>
-                        </form>
                     </div>
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} Annual International Conference on Advanced Materials & Nanotechnology. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Annual International Conference on Advanced Materials & Nanotechnology. All Rights Reserved by SCIENGA SUMMITS</p>
                 </div>
             </div>
         </footer>

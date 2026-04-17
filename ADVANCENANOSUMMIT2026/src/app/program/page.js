@@ -1,0 +1,13 @@
+import Program from '../../pages_orig/Program/Program';
+
+export const metadata = {
+    title: 'Program | LIUTEX2026',
+    description: 'Conference program and schedule for LIUTEX2026.',
+    alternates: {
+        canonical: 'https://liutex2026.com/program',
+    }
+};
+
+export default function Page() {
+    return <Program />;
+}

@@ -257,7 +257,7 @@
 
 .btn-view-schedule:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(46, 125, 50, 0.4);
+    box-shadow: 0 8px 25px rgba(248, 168, 8, 0.939);
 }
 
 @media (max-width: 768px) {

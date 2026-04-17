@@ -1,44 +1,90 @@
-import React from 'react';
-import { CalendarDays, CheckCircle, Clock, Star } from 'lucide-react';
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './AboutSection.css';
+import { fetchContent } from '../../../api/contentApi';
+
+const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
+
+const DEFAULT_ABOUT = {
+
+    title: 'About The Conference',
+    paragraph1: 'The Annual International Conference on Advanced Materials & Nanotechnology is a premier global platform dedicated to advancing the understanding of cutting-edge materials science and nanotechnology applications that are transforming industries worldwide.',
+    paragraph2: 'This conference brings together leading researchers, academicians, scientists, engineers, and industry professionals to explore recent developments, theoretical foundations, innovative applications, and real-world implementations of advanced materials and nanotechnology solutions.',
+    objectives: [
+        'Promote advancements in advanced materials research',
+        'Explore innovations in nanotechnology applications',
+        'Discuss computational and experimental approaches in material characterization',
+        'Bridge academia and industry in materials science research',
+        'Encourage collaboration across engineering, physics, chemistry, and biotechnology domains',
+    ],
+    keyThemes: [
+        'Nanomaterials and Nanocomposites',
+        'Smart Materials and Functional Coatings',
+        'Biomaterials and Tissue Engineering',
+        'Energy Storage and Conversion Materials',
+        'Advanced Manufacturing and 3D Printing',
+        'Quantum Materials and Nanotechnology Applications',
+    ],
+};
+
+const DEFAULT_DATES = {
+    dates: [
+        { month: 'JUL', day: '15', year: '2026', event: 'Abstract Submission Opens', icon: 'CalendarDays' },
+        { month: 'SEP', day: '25', year: '2026', event: 'Early Bird Deadline', icon: 'CheckCircle' },
+        { month: 'OCT', day: '25', year: '2026', event: 'Submission Deadline', icon: 'Clock' },
+        { month: 'NOV', day: '16', year: '2026', event: 'Conference Date', icon: 'Star', sub: 'November 16-18, Amsterdam, Netherlands' },
+    ],
+};
 
 const AboutSection = () => {
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
+    const [about, setAbout] = useState(DEFAULT_ABOUT);
+    const [datesData, setDatesData] = useState(DEFAULT_DATES);
+
+    useEffect(() => {
+        fetchContent('about').then(d => { if (d) setAbout(prev => ({ ...prev, ...d })); });
+        fetchContent('importantDates').then(d => { if (d) setDatesData(prev => ({ ...prev, ...d })); });
+    }, []);
+
+    const isHighlight = (idx, total) => idx === total - 1;
+
     return (
         <section className="about section-padding" id="about">
             <div className="container about__container">
                 {/* Left Side: Content */}
                 <div className="about__content">
-                    <h4 className="section-subtitle">Advancing Material Science</h4>
-                    <h2 className="section-title">About The Conference</h2>
-                    <p className="about__text">
-                        The <strong>Annual International Conference on Advanced Materials & Nanotechnology</strong> is a premier global platform dedicated to advancing the understanding of cutting-edge materials science and nanotechnology applications that are transforming industries worldwide.
-                    </p>
-                    <p className="about__text">
-                        This conference brings together leading researchers, academicians, scientists, engineers, and industry professionals to explore recent developments, theoretical foundations, innovative applications, and real-world implementations of advanced materials and nanotechnology solutions.
-                    </p>
+                    <h2 className="section-title">{about.title}</h2>
+                    <p className="about__text">{about.paragraph1}</p>
+                    {about.paragraph2 && <p className="about__text">{about.paragraph2}</p>}
 
-                    <h3 className="section-title-sm">Conference Objectives</h3>
-                    <ul className="about__list">
-                        <li>Promote advancements in <strong>advanced materials research</strong></li>
-                        <li>Explore innovations in <strong>nanotechnology applications</strong></li>
-                        <li>Discuss computational and experimental approaches in <strong>material characterization</strong></li>
-                        <li>Bridge academia and industry in materials science research</li>
-                        <li>Encourage collaboration across engineering, physics, chemistry, and biotechnology domains</li>
-                    </ul>
+                    {about.objectives?.length > 0 && (
+                        <>
+                            <h3 className="section-title-sm">Conference Objectives</h3>
+                            <ul className="about__list">
+                                {about.objectives.map((obj, i) => <li key={i}>{obj}</li>)}
+                            </ul>
+                        </>
+                    )}
 
-                    <h3 className="section-title-sm">Key Themes & Topics</h3>
-                    <ul className="about__list">
-                        <li>Nanomaterials and Nanocomposites</li>
-                        <li>Smart Materials and Functional Coatings</li>
-                        <li>Biomaterials and Tissue Engineering</li>
-                        <li>Energy Storage and Conversion Materials</li>
-                        <li>Advanced Manufacturing and 3D Printing</li>
-                        <li>Quantum Materials and Nanotechnology Applications</li>
-                    </ul>
+                    {about.keyThemes?.length > 0 && (
+                        <>
+                            <h3 className="section-title-sm">Key Themes &amp; Topics</h3>
+                            <ul className="about__list">
+                                {about.keyThemes.map((t, i) => <li key={i}>{t}</li>)}
+                            </ul>
+                        </>
+                    )}
+
+                    <div className="about__actions">
+                        <Button onClick={() => navigate('/abstract-submission')}>ABSTRACT SUBMISSION</Button>
+                        <Button onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                    </div>
                 </div>
 
-                {/* Right Side: Important Dates */}
                 {/* Right Side: Important Dates */}
                 <div className="about__dates-wrapper">
                     <div className="premium-dates-container">
@@ -48,66 +94,26 @@ const AboutSection = () => {
                         </div>
 
                         <div className="premium-dates-list">
-                            {/* Card 1 */}
-                            <div className="premium-date-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">JUL</span>
-                                    <span className="pd-day">15</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2026</span>
-                                    <h4 className="pd-event">Abstract Submission Opens</h4>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <CalendarDays size={40} />
-                                </div>
-                            </div>
-
-                            {/* Card 2 */}
-                            <div className="premium-date-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">SEP</span>
-                                    <span className="pd-day">25</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2026</span>
-                                    <h4 className="pd-event">Early Bird Deadline</h4>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <CheckCircle size={40} />
-                                </div>
-                            </div>
-
-                            {/* Card 3 */}
-                            <div className="premium-date-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">OCT</span>
-                                    <span className="pd-day">25</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2026</span>
-                                    <h4 className="pd-event">Submission Deadline</h4>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <Clock size={40} />
-                                </div>
-                            </div>
-
-                            {/* Card 4 - Highlight */}
-                            <div className="premium-date-card highlight-card">
-                                <div className="pd-date-box">
-                                    <span className="pd-month">NOV</span>
-                                    <span className="pd-day">16</span>
-                                </div>
-                                <div className="pd-content">
-                                    <span className="pd-year">2026</span>
-                                    <h4 className="pd-event">Conference Date</h4>
-                                    <span className="pd-sub">November 16-18, Amsterdam, Netherlands</span>
-                                </div>
-                                <div className="pd-icon-bg">
-                                    <Star size={40} />
-                                </div>
-                            </div>
+                            {(datesData.dates || []).map((d, idx) => {
+                                const IconComp = ICON_MAP[d.icon] || CalendarDays;
+                                const highlight = isHighlight(idx, datesData.dates.length);
+                                return (
+                                    <div className={`premium-date-card${highlight ? ' highlight-card' : ''}`} key={idx}>
+                                        <div className="pd-date-box">
+                                            <span className="pd-month">{d.month}</span>
+                                            <span className="pd-day">{d.day}</span>
+                                            <span className="pd-year-box">{d.year}</span>
+                                        </div>
+                                        <div className="pd-content">
+                                            <h4 className="pd-event">{d.event}</h4>
+                                            {d.sub && <span className="pd-sub">{d.sub}</span>}
+                                        </div>
+                                        <div className="pd-icon-bg">
+                                            <IconComp size={40} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

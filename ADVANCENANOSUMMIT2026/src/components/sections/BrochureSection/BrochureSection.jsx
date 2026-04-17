@@ -1,10 +1,12 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../common/Button/Button';
 import './BrochureSection.css';
 
 const BrochureSection = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     const handleDownload = () => {
         navigate('/brochure');
     };
@@ -14,7 +16,7 @@ const BrochureSection = () => {
             <div className="container brochure__container">
                 <div className="brochure__content">
                     <h2 className="section-title">Conference Brochure</h2>
-                    <div className="brochure__description">
+                    <p className="brochure__description">
                         Download the official conference brochure to get detailed information about:
                         <ul>
                             <li>Comprehensive Tentative Program</li>
@@ -23,7 +25,7 @@ const BrochureSection = () => {
                             <li>Sponsorship Opportunities</li>
                             <li>Registration Packages</li>
                         </ul>
-                    </div>
+                    </p>
                     <div className="brochure__cta">
                         <Button onClick={handleDownload} size="large">
                             Download Brochure (PDF)
@@ -34,8 +36,8 @@ const BrochureSection = () => {
                     {/* Placeholder for brochure preview image */}
                     <div className="preview-card">
                         <div className="preview-page">
-                            <h3>ADVANCED MATERIALS & NANOTECHNOLOGY</h3>
-                            <p>2026</p>
+                            <h3>ADVANCED NANOTECHNOLOGY AND MATERIALS SCIENCE</h3>
+                            <p>2026 EDITION</p>
                             <div className="preview-lines"></div>
                         </div>
                     </div>

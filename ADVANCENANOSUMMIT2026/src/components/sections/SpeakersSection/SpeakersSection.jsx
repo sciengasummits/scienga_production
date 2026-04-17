@@ -1,33 +1,70 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+'use client';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { User } from 'lucide-react';
-import { speakers } from '../../../data/speakersData';
+import { fetchSpeakers } from '../../../api/speakersApi';
+import { resolveImageUrl } from '../../../api/utilsApi';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
-    const location = useLocation();
-    const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
+    const [activeCategory, setActiveCategory] = useState('All');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
+    const [speakers, setSpeakers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const getDisplayCategory = (category) => {
-        if (category === 'Student') return 'Student Speaker';
-        if (category === 'Committee') return 'Committee';
+        if (!category) return '';
+        if (category === 'Student' || category === 'Students') return 'Student';
+        if (category === 'Keynote' || category === 'Keynote Speaker') return 'Keynote Speaker';
+        if (category === 'Plenary' || category === 'Plenary Speaker') return 'Plenary Speaker';
+        if (category === 'Invited' || category === 'Invited Speaker') return 'Invited Speaker';
+        if (category === 'Featured' || category === 'Featured Speaker') return 'Featured';
         return category;
     };
 
-    const filteredSpeakers = speakers.filter(speaker => {
-        if (activeCategory === 'Committee') return speaker.category === 'Committee';
-        if (activeCategory === 'Posters') return speaker.category === 'Poster Speakers';
-        if (activeCategory === 'Students') return speaker.category === 'Student Speakers';
-        if (activeCategory === 'Delegates') return speaker.category === 'Delegates';
+    useEffect(() => {
+        let mounted = true;
 
-        // Logic for 'Speakers' category (approx 80 speakers: Keynote + Plenary + Poster + Delegates)
-        // Excluding Committee and Students
-        if (activeCategory === 'Speakers') {
-            return !['Committee', 'Student Speakers'].includes(speaker.category);
+        async function load() {
+            try {
+                const data = await fetchSpeakers(); // Fetches all visible speakers
+                if (data && mounted) {
+                    const mapped = data.filter(s => s.visible !== false).map(s => ({
+                        id: s._id || s.id,
+                        name: s.name,
+                        title: s.title || s.designation || '',
+                        affiliation: s.affiliation || s.institution || '',
+                        category: s.category || 'Speakers',
+                        image: s.image || s.photo || '',
+                        bio: s.bio || '',
+                    }));
+                    setSpeakers(mapped);
+                }
+            } catch (err) {
+                console.error('Failed to load speakers:', err);
+            } finally {
+                if (mounted) setLoading(false);
+            }
         }
-        return true;
-    }).slice(0, showViewAll ? 8 : speakers.length);
+
+        setLoading(true);
+        load();
+
+        const interval = setInterval(load, 15000);
+
+        return () => {
+            mounted = false;
+            clearInterval(interval);
+        };
+    }, []);
+
+    const filteredSpeakers = speakers.filter(speaker => {
+        if (activeCategory === 'All') return true;
+        const displayCat = getDisplayCategory(speaker.category);
+        return displayCat === activeCategory;
+    });
+
+    const displaySpeakers = filteredSpeakers.slice(0, showViewAll ? 8 : filteredSpeakers.length);
 
     const openModal = (speaker) => {
         setSelectedSpeaker(speaker);
@@ -47,11 +84,11 @@ const SpeakersSection = ({ showViewAll }) => {
                     <h2 className="section-title">Global Participants</h2>
                 </div>
 
-                <div className="speakers-filters">
-                    {['Committee', 'Speakers', 'Posters', 'Students', 'Delegates'].map((category) => (
+                <div className="speakers__filters">
+                    {['All', 'Committee', 'Poster Presenter', 'Student', 'Delegate', 'Plenary Speaker', 'Keynote Speaker', 'Invited Speaker'].map((category) => (
                         <button
                             key={category}
-                            className={`speaker-filter-btn ${activeCategory === category ? 'active' : ''}`}
+                            className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
                             onClick={() => setActiveCategory(category)}
                         >
                             {category}
@@ -60,32 +97,49 @@ const SpeakersSection = ({ showViewAll }) => {
                 </div>
 
                 <div className="speakers__grid">
-                    {filteredSpeakers.map((speaker) => (
-                        <div className="speaker-card" key={speaker.id}>
-                            <div className="speaker-img-wrapper">
-                                <img src={speaker.image} alt={speaker.name} className="speaker-img" />
-                                <div className="speaker-overlay">
-                                    {/* Social icons could go here */}
+                    {loading ? (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#666' }}>
+                            <div className="loading-spinner" style={{ marginBottom: '1rem' }}></div>
+                            <p>Loading global participants details...</p>
+                        </div>
+                    ) : displaySpeakers.length > 0 ? (
+                        displaySpeakers.map((speaker) => (
+                            <div className="speaker-card" key={speaker.id}>
+                                <div className="speaker-img-wrapper">
+                                    {speaker.image ? (
+                                        <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
+                                    ) : (
+                                        <div className="speaker-img-placeholder">
+                                            <User size={48} color="#cbd5e1" />
+                                            <span style={{ color: '#94a3b8', fontSize: '0.8rem', fontWeight: 500, marginTop: '0.5rem' }}>No Photo</span>
+                                        </div>
+                                    )}
+                                    <div className="speaker-overlay">
+                                        {/* Social icons could go here */}
+                                    </div>
+                                </div>
+                                <div className="speaker-info">
+                                    {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
+                                    <h3 className="speaker-name">{speaker.name}</h3>
+                                    <p className="speaker-title">{speaker.title}</p>
+                                    <p className="speaker-affiliation">{speaker.affiliation}</p>
+                                    <button className="btn-biograph" onClick={() => openModal(speaker)}>
+                                        <User size={16} /> Biography
+                                    </button>
                                 </div>
                             </div>
-                            <div className="speaker-info">
-                                {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
-                                <h3 className="speaker-name">{speaker.name}</h3>
-                                <p className="speaker-title">{speaker.title}</p>
-                                <p className="speaker-affiliation">{speaker.affiliation}</p>
-                                <button className="btn-biograph" onClick={() => openModal(speaker)}>
-                                    <User size={16} /> Biography
-                                </button>
-                            </div>
+                        ))
+                    ) : (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#666' }}>
+                            <p>No {activeCategory.toLowerCase()} found at the moment.</p>
                         </div>
-                    ))}
+                    )}
                 </div>
                 {showViewAll && (
                     <div className="text-center mt-5">
                         <Link
-                            to="/speakers"
-                            state={{ category: activeCategory }}
-                            className="btn-view-all"
+                            href="/speakers"
+                            className="btn-biograph"
                             style={{ textDecoration: 'none', display: 'inline-flex', marginTop: '2rem' }}
                         >
                             Show More
@@ -106,13 +160,13 @@ const SpeakersSection = ({ showViewAll }) => {
                                 <h3 className="modal-title">{selectedSpeaker.name}</h3>
                                 <span className="modal-type">{selectedSpeaker.title}</span>
                                 <p className="modal-affiliation-highlight">{selectedSpeaker.affiliation}</p>
-                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of Advanced Materials and Nanotechnology, contributing significantly to research and industrial applications. With years of experience leading material science initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing the standards of nanotechnology globally. Their work focuses on innovative synthesis methodologies and improving material performance through nanoscale engineering."}</p>
+                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of vortex dynamics and fluid mechanics, contributing significantly to research and computational analysis."}</p>
                             </div>
                         </div>
                     </div>
                 )
             }
-        </section >
+        </section>
     );
 };
 

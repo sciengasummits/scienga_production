@@ -1,86 +1,67 @@
+'use client';
 import React, { useState, useEffect } from 'react';
+import { fetchContent } from '../../../api/contentApi';
 import './VenueSection.css';
+import heroImg from '../../../assets/images/Hero.png';
 
-const venues = [
-    {
-        id: 1,
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80"
-    },
-    {
-        id: 2,
-        image: "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80"
-    },
-    {
-        id: 3,
-        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
-    },
-    {
-        id: 4,
-        image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
-    }
+const DEFAULT_IMAGES = [
+    "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80",
+    "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=1920&q=80",
+    "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80",
+    "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1920&q=80"
 ];
 
 const VenueSection = () => {
-    const [activeVenue, setActiveVenue] = useState(0);
-    const [direction, setDirection] = useState('next');
+    const [images, setImages] = useState(DEFAULT_IMAGES);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setDirection('next');
-            setActiveVenue((prev) => (prev + 1) % venues.length);
-        }, 5000);
+        let cancelled = false;
 
-        return () => clearInterval(interval);
+        const load = () => {
+            fetchContent('venue').then(d => {
+                if (!cancelled && d && d.images && d.images.length > 0) {
+                    setImages(d.images);
+                }
+            });
+        };
+
+        load();
+
+        const interval = setInterval(load, 30000);
+        const onVisible = () => { if (document.visibilityState === 'visible') load(); };
+        document.addEventListener('visibilitychange', onVisible);
+
+        return () => {
+            cancelled = true;
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', onVisible);
+        };
     }, []);
 
-    const goToVenue = (index) => {
-        if (index !== activeVenue) {
-            setDirection(index > activeVenue ? 'next' : 'prev');
-            setActiveVenue(index);
-        }
-    };
-
-    const goToPrev = () => {
-        setDirection('prev');
-        setActiveVenue((prev) => (prev - 1 + venues.length) % venues.length);
-    };
-
-    const goToNext = () => {
-        setDirection('next');
-        setActiveVenue((prev) => (prev + 1) % venues.length);
-    };
+    const singleImageUrl = images[0];
 
     return (
-        <section className="venue" id="venue">
+        <section className="venue" id="venue" style={{ backgroundColor: '#083344' }}>
             <div className="venue__slides">
-                {venues.map((venue, index) => (
-                    <div
-                        key={venue.id}
-                        className={`venue__slide ${index === activeVenue ? 'active' : ''} ${index === activeVenue ? direction : ''}`}
-                        style={{ backgroundImage: `url(${venue.image})` }}
-                    >
-                    </div>
-                ))}
-            </div>
-
-            <div className="venue__controls-bottom">
-                <button className="venue__arrow venue__arrow--left" onClick={goToPrev}>
-                    ‹
-                </button>
-
-                <div className="venue__indicators">
-                    {venues.map((_, index) => (
-                        <button
-                            key={index}
-                            className={`venue__indicator ${index === activeVenue ? 'active' : ''}`}
-                            onClick={() => goToVenue(index)}
-                        />
-                    ))}
+                <div className="venue__slide active" style={{ opacity: 1, zIndex: 1 }}>
+                    <img
+                        src={singleImageUrl}
+                        alt="Venue main view"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = heroImg;
+                        }}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            display: 'block',
+                            position: 'relative',
+                            zIndex: 0,
+                        }}
+                    />
+                    <div className="venue__overlay"></div>
                 </div>
-
-                <button className="venue__arrow venue__arrow--right" onClick={goToNext}>
-                    ›
-                </button>
             </div>
         </section>
     );
