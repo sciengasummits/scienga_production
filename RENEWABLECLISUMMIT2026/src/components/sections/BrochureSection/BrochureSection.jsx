@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 import Button from '../../common/Button/Button';
 import './BrochureSection.css';
-import { fetchContent } from '../../../api/siteApi';
 
 const BrochureSection = () => {
-    const [title, setTitle] = useState('RENEWABLE ENERGY & CLIMATE CHANGE');
-
-    useEffect(() => {
-        fetchContent('hero').then(data => {
-            if (data && data.title) {
-                setTitle(data.title.replace('\n', ' '));
-            }
-        }).catch(() => {});
-    }, []);
-
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     const handleDownload = () => {
-        window.open('/brochure.pdf', '_blank');
+        navigate('/brochure');
     };
 
     return (
@@ -23,7 +16,7 @@ const BrochureSection = () => {
             <div className="container brochure__container">
                 <div className="brochure__content">
                     <h2 className="section-title">Conference Brochure</h2>
-                    <div className="brochure__description">
+                    <p className="brochure__description">
                         Download the official conference brochure to get detailed information about:
                         <ul>
                             <li>Comprehensive Tentative Program</li>
@@ -32,7 +25,7 @@ const BrochureSection = () => {
                             <li>Sponsorship Opportunities</li>
                             <li>Registration Packages</li>
                         </ul>
-                    </div>
+                    </p>
                     <div className="brochure__cta">
                         <Button onClick={handleDownload} size="large">
                             Download Brochure (PDF)
@@ -40,11 +33,11 @@ const BrochureSection = () => {
                     </div>
                 </div>
                 <div className="brochure__preview">
-                    {/* Brochure preview card — title loaded from API */}
+                    {/* Placeholder for brochure preview image */}
                     <div className="preview-card">
                         <div className="preview-page">
-                            <h3>{title}</h3>
-                            <p>2027</p>
+                            <h3>Renewable Energy & Climate Change</h3>
+                            <p>2026 EDITION</p>
                             <div className="preview-lines"></div>
                         </div>
                     </div>
