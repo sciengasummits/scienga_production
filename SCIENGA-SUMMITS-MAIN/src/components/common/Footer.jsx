@@ -192,7 +192,8 @@ export default function Footer() {
           <div className="footer-list" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {[
               { title: 'IQCES 2026', date: 'Jun 24-26', loc: 'Bern, Switzerland' },
-              { title: 'POLYMAT 2026', date: 'Nov 16-18', loc: 'Amsterdam, NL' }
+              { title: 'POLYMAT 2026', date: 'Nov 16-18', loc: 'Amsterdam, NL' },
+              { title: 'ICOGWH 2027', date: 'May 26-28', loc: 'Amsterdam, Netherlands' }
             ].map((event, i) => (
               <div key={i} style={{
                 display: 'flex',

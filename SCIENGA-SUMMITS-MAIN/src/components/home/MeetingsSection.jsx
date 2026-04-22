@@ -185,6 +185,16 @@ const meetingsData = {
             link: "https://cyberquantumsummit2026.sciengasummits.com/"
         },
         {
+            id: 19,
+            title: "ICOGWH2027",
+            description: "International Conference on Obstetrics, Gynecology and Women Health",
+            location: "AMSTERDAM, NETHERLANDS",
+            date: "May 26-28, 2027",
+            year: "2027",
+            image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+            link: "https://obestetrics.sciengasummits.com/"
+        },
+        {
             id: 16,
             title: "HEALTHMEDSUMMIT2026/GLOHEALTHSUMMIT2026",
             description: "International Conference on Public Health and Preventive Medicine",
