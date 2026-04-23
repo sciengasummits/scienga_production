@@ -8,7 +8,7 @@ import meeting12 from '../../assets/images/meetings/12.jpg'
 import meeting13 from '../../assets/images/meetings/13.jpg'
 import meetingCropScieng from '../../assets/images/meetings/CROPSCIENGSUMMIT2026.jpg'
 import meetingFoodTech from '../../assets/images/meetings/Food tech.jpg'
-import meetingRenewable from '../../assets/images/meetings/Renewable.jpg'
+import meetingRenewable from '../../assets/images/meetings/recc2027.png'
 import meetingPowerEng from '../../assets/images/meetings/POWERENGSUMMIT2026.jpg'
 import meetingCleanEngTech from '../../assets/images/meetings/CLEANENGTECHSUMMIT2026.jpg'
 import meetingCondensedPhys from '../../assets/images/meetings/CONDENSEDPHYSSUMMIT2026.jpg'
@@ -112,7 +112,7 @@ const meetingsData = {
             date: "March 23-25, 2027",
             year: "2027",
             image: meetingRenewable,
-            link: "https://renewableclisummit2026.sciengasummits.com/"
+            link: "https://renewable2026.sciengasummits.com/"
         },
         {
             id: 8,
