@@ -1,0 +1,77 @@
+﻿
+> frontend_next@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+node.exe : ΓÜá The 
+"middleware" file 
+convention is deprecated. 
+Please use "proxy" 
+instead. Learn more: https
+://nextjs.org/docs/message
+s/middleware-to-proxy
+At C:\nvm4w\nodejs\npm.ps1
+:16 char:5
++     & 
+"$basedir/node$exe"  "$bas
+edir/node_modules/npm/bin/
+npm-cli.js" ...
++     ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (Γ  
+  Üá The "middle...lewa   
+ re-to-proxy:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build 
+failed with 1 errors:
+./src/app/register/discoun
+t/page.js:1:1
+Module not found: Can't 
+resolve '../../pages_orig/
+OnlineRegistration/OnlineR
+egistration'
+[31m[1m>[0m [90m1 
+|[0m [36mimport[0m [33
+mOnlineRegistration[0m 
+[36mfrom[0m [32m'../../
+pages_orig/OnlineRegistrat
+ion/OnlineRegistration'[0
+m;
+  [90m  |[0m [31m[1m^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^[0m
+  [90m2 |[0m
+  [90m3 |[0m 
+[36mexport[0m 
+[36mconst[0m metadata = 
+{
+  [90m4 |[0m     title: 
+[32m'Discount 
+Registration | 
+LIUTEX2026'[0m,
+
+
+
+https://nextjs.org/docs/me
+ssages/module-not-found
+
+
+    at <unknown> (./src/ap
+p/register/discount/page.j
+s:1:1)
+    at <unknown> (https://
+nextjs.org/docs/messages/m
+odule-not-found)

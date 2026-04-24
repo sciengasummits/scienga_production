@@ -67,3 +67,4 @@ const GlobalParticipantsSection = () => {
 };
 
 export default GlobalParticipantsSection;
+

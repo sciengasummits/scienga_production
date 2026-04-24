@@ -1,53 +1,66 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import {
+    Activity,
+    Wind,
     Zap,
     Droplet,
-    Leaf,
+    Globe,
     ShieldCheck,
-    Recycle,
-    CloudRain,
     Cpu,
     Anchor,
-    Activity,
-    Factory,
+    Flame,
     BarChart,
-    TreeDeciduous,
-    Clock,
-    MapPin,
-    Package,
-    FlaskConical
+    Terminal,
+    Layers,
+    Binary,
+    Boxes,
+    Compass,
+    Settings,
+    Unplug,
+    Trello,
+    Smartphone,
+    Share2,
+    Database,
+    LineChart,
+    Layout,
+    Target,
+    Eye,
+    Mic,
+    Factory
 } from 'lucide-react';
+import { fetchContent } from '../../../api/contentApi';
 import './KeyThemesSection.css';
-import { fetchContent } from '../../../api/siteApi';
+import Button from '../../common/Button/Button';
 
 // Cycle through icons for dynamic session lists
 const SESSION_ICONS = [
-    Leaf, Factory, ShieldCheck, FlaskConical, Activity, Cpu, TreeDeciduous,
-    Clock, Recycle, CloudRain, Anchor, Droplet, Zap, BarChart, MapPin, Package
+    Compass, Target, Binary, Settings, Layers, Wind, Cpu, Terminal, Activity, Zap,
+    Droplet, Globe, Factory, Eye, Mic, Activity, Boxes, Share2, Database, Layout,
 ];
 
 const DEFAULT_SESSIONS = [
-    "Food Processing & Engineering",
-    "Sustainable Agriculture",
-    "Food Safety & Quality Control",
-    "Agricultural Biotechnology",
-    "Nutritional Science & Dietetics",
-    "Smart Farming & IoT",
-    "Soil Science & Plant Nutrition",
-    "Post-Harvest Technology",
-    "Food Microbiology",
-    "Animal Science & Husbandry",
-    "Organic Farming",
-    "Food Supply Chain Management",
-    "Precision Agriculture",
-    "Food Waste Management",
-    "Climate-Resilient Agriculture",
-    "Aquaculture & Fisheries",
-    "Dairy Technology",
-    "Functional Foods & Nutraceuticals",
-    "Agricultural Economics",
-    "Food Packaging Innovations",
+    'Sustainable Crop Production',
+    'Precision Agriculture & AI',
+    'Food Security & Policy',
+    'Soil Health & Management',
+    'Water Resource Management in Agriculture',
+    'Climate-Smart Farming',
+    'Post-Harvest Technology',
+    'Agricultural Biotechnology',
+    'Food Safety & Quality Control',
+    'Vertical Farming & Urban Agriculture',
+    'Organic Farming Systems',
+    'Agricultural Economics',
+    'Livestock & Poultry Management',
+    'Aquaculture & Fisheries',
+    'Seed Science & Technology',
+    'Plant Pathology & Pest Management',
+    'Agronomy & Horticulture',
+    'Agri-Food Supply Chain Resilience',
+    'Digital Transformation in Agriculture',
+    'Bio-Fertilizers & Pesticides',
 ];
 
 const DEFAULT_SCHEDULE = {
@@ -78,12 +91,13 @@ const DEFAULT_SCHEDULE = {
         { time: '11.00 – 12.30', program: 'Future Trends Workshop' },
         { time: '12.30 – 13.30', program: 'Lunch' },
         { time: '13.30 – 15.00', program: 'Final Remarks & Departure' },
-    ]
+    ],
 };
 
 const KeyThemesSection = ({ showLearnMore = false }) => {
     const [activeDay, setActiveDay] = useState('day1');
-    const navigate = useNavigate();
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     const [sessions, setSessions] = useState(DEFAULT_SESSIONS);
     const [schedule, setSchedule] = useState(DEFAULT_SCHEDULE);
 
@@ -94,7 +108,15 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
             fetchContent('sessions').then(d => {
                 if (!cancelled && d) {
                     if (d.sessions && d.sessions.length > 0) setSessions(d.sessions);
-                    if (d.schedule) setSchedule(prev => ({ ...prev, ...d.schedule }));
+                    if (d.days && d.days.length > 0) {
+                        const newSchedule = {};
+                        d.days.forEach((day, i) => {
+                            newSchedule[`day${i + 1}`] = day.rows;
+                        });
+                        setSchedule(prev => ({ ...prev, ...newSchedule }));
+                    } else if (d.schedule) {
+                        setSchedule(prev => ({ ...prev, ...d.schedule }));
+                    }
                 }
             });
         };
@@ -139,11 +161,10 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                         <div className="sessions-list-container">
                             <ul className="sessions-list-clean">
                                 {displaySessions.map((session, index) => {
-                                    const Icon = session.icon || Activity;
                                     return (
                                         <li key={index} className="session-item-clean">
-                                            <span className="session-icon-small">
-                                                <Icon size={18} />
+                                            <span className="session-icon-small" style={{ fontSize: '18px' }}>
+                                                &#10148;
                                             </span>
                                             <span className="session-text">{session.title}</span>
                                         </li>
@@ -183,44 +204,81 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
                                     <span className="tab-day">Day 03</span>
                                     <span className="tab-date">Conference</span>
                                 </button>
+                                <button
+                                    className={`schedule__tab ${activeDay === 'day4' ? 'active' : ''}`}
+                                    onClick={() => setActiveDay('day4')}
+                                >
+                                    <span className="tab-day">Day 04</span>
+                                    <span className="tab-date">Conference</span>
+                                </button>
                             </div>
                         </div>
 
                         <div className="schedule__content fade-in">
-                            <div className="schedule__table-container">
-                                <table className="schedule__table">
-                                    <thead>
-                                        <tr>
-                                            <th>TIME</th>
-                                            <th>CONFERENCE SCHEDULE</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {displaySchedule.map((item, index) => (
-                                            <tr key={index}>
-                                                <td className="time-col">
-                                                    <div className="time-badge">{item.time}</div>
-                                                </td>
-                                                <td className="program-col">
-                                                    <div className="program-info">
-                                                        <span className="program-title">{item.program}</span>
-                                                    </div>
-                                                </td>
+                            {activeDay === 'day4' ? (
+                                <div className="schedule__table-container fade-in" style={{ padding: '2rem', backgroundColor: 'transparent', border: 'none', boxShadow: 'none', textAlign: 'left' }}>
+                                    <style>{`
+                                        .hide-scrollbar::-webkit-scrollbar { display: none; }
+                                    `}</style>
+                                    <h2 style={{ textAlign: 'center', color: 'var(--color-primary, #333)', marginBottom: '3rem' }}>Discussion</h2>
+                                    <div className="hide-scrollbar" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                                        {schedule.day4?.length > 0 ? schedule.day4.map((item, index) => (
+                                            <div key={index} style={{ marginBottom: '0.5rem' }}>
+                                                <h4 style={{ margin: '0 0 1rem 0', color: '#000', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                                                    {index + 1}. {item.time}
+                                                </h4>
+                                                <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', margin: 0, color: '#444' }}>
+                                                    {item.program.split(/(?:\n|•)/).filter(Boolean).map((bullet, i) => (
+                                                        <li key={i} style={{ marginBottom: '0.5rem', lineHeight: '1.6' }}>
+                                                            {bullet.trim()}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )) : (
+                                            <div style={{ textAlign: 'center', color: '#64748b', padding: '2rem' }}>Discussion Q&A will be posted here.</div>
+                                        )}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="schedule__table-container">
+                                    <table className="schedule__table">
+                                        <thead>
+                                            <tr>
+                                                <th>TIME</th>
+                                                <th>CONFERENCE SCHEDULE</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            {displaySchedule.map((item, index) => (
+                                                <tr key={index}>
+                                                    <td className="time-col">
+                                                        <div className="time-badge">{item.time}</div>
+                                                    </td>
+                                                    <td className="program-col">
+                                                        <div className="program-info">
+                                                            <span className="program-title">{item.program}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
                         </div>
                     </div>
+
+                    {/* Fade Overlay */}
+                    {showLearnMore && <div className="key-themes-fade-overlay"></div>}
                 </div>
 
                 {/* Learn More Button */}
                 {showLearnMore && (
                     <div className="text-center mt-4">
-                        <button className="btn-learn-more" onClick={() => navigate('/sessions')}>
-                            Learn More
-                        </button>
+                        <Button onClick={() => navigate('/sessions')}>
+                            LEARN MORE
+                        </Button>
                     </div>
                 )}
             </div>
@@ -229,3 +287,4 @@ const KeyThemesSection = ({ showLearnMore = false }) => {
 };
 
 export default KeyThemesSection;
+

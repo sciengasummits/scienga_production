@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 import Button from '../../common/Button/Button';
 import './BrochureSection.css';
-import { fetchContent } from '../../../api/siteApi';
 
 const BrochureSection = () => {
-    const [title, setTitle] = useState('FOOD SCIENCE TECHNOLOGY AND AGRICULTURE');
-
-    useEffect(() => {
-        fetchContent('hero').then(data => {
-            if (data && data.title) {
-                setTitle(data.title.replace('\n', ' '));
-            }
-        });
-    }, []);
-
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     const handleDownload = () => {
-        window.open('/brochure.pdf', '_blank');
+        navigate('/brochure');
     };
 
     return (
@@ -23,7 +16,7 @@ const BrochureSection = () => {
             <div className="container brochure__container">
                 <div className="brochure__content">
                     <h2 className="section-title">Conference Brochure</h2>
-                    <div className="brochure__description">
+                    <p className="brochure__description">
                         Download the official conference brochure to get detailed information about:
                         <ul>
                             <li>Comprehensive Tentative Program</li>
@@ -32,7 +25,7 @@ const BrochureSection = () => {
                             <li>Sponsorship Opportunities</li>
                             <li>Registration Packages</li>
                         </ul>
-                    </div>
+                    </p>
                     <div className="brochure__cta">
                         <Button onClick={handleDownload} size="large">
                             Download Brochure (PDF)
@@ -40,12 +33,14 @@ const BrochureSection = () => {
                     </div>
                 </div>
                 <div className="brochure__preview">
-                    {/* Placeholder for brochure brochure preview image */}
+                    {/* Placeholder for brochure preview image */}
                     <div className="preview-card">
                         <div className="preview-page">
-                            <h3>{title}</h3>
-                            <p>2026</p>
-                            <div className="preview-lines"></div>
+                            <h3>FOOD AND AGRICULTURE SUMMIT 2026</h3>
+                            <p className="brochure-preview-subtitle">Official Conference Guide</p>
+                            <div className="brochure-preview-desc">
+                                Exploring Sustainable Farming, Food Security, and Agri-Tech Innovation.
+                            </div>
                         </div>
                     </div>
                 </div>

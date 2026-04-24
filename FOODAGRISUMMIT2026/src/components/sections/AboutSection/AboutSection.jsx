@@ -1,67 +1,63 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { CalendarDays, CheckCircle, Clock, Star } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin } from 'lucide-react';
+import Button from '../../common/Button/Button';
 import './AboutSection.css';
-import { fetchContent } from '../../../api/siteApi';
+import { fetchContent } from '../../../api/contentApi';
 
-const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star };
+const ICON_MAP = { CalendarDays, CheckCircle, Clock, Star, Calendar, MapPin };
+
+const DEFAULT_ABOUT = {
+    title: 'About The Conference',
+    paragraph1: 'The INTERNATIONAL CONFERENCE ON Food and Agriculture Summit is a premier international platform dedicated to advancing the understanding of sustainable farming practices and agri-tech innovations. This summit serves as a vital bridge between scientific research and practical applications in the agricultural sector.',
+    paragraph2: 'This conference brings together leading researchers, agricultural scientists, policy makers, and industry professionals to explore recent developments, technological foundations, and real-world solutions for global food security and sustainable production.',
+    objectives: [
+        'Promote advancements in sustainable agriculture',
+        'Explore innovations in precision farming and agri-tech',
+        'Discuss solutions for global food security challenges',
+        'Bridge the gap between agricultural research and field implementation',
+        'Encourage collaboration across soil science, biotechnology, and food engineering',
+    ],
+    keyThemes: [
+        'Sustainable Crop Production & Management',
+        'Precision Agriculture & AI in Farming',
+        'Soil Health & Water Resource Management',
+        'Food Security & Global Policy Frameworks',
+        'Agricultural Biotechnology & Genetic Innovation',
+        'Climate-Smart Agriculture & Sustainability',
+    ],
+};
+
+const DEFAULT_DATES = {
+    dates: [
+        { month: 'JUL', day: '15', year: '2026', event: 'Abstract Submission Opens', icon: 'CalendarDays' },
+        { month: 'OCT', day: '25', year: '2026', event: 'Early Bird Deadline', icon: 'CheckCircle' },
+        { month: 'NOV', day: '10', year: '2026', event: 'Submission Deadline', icon: 'Clock' },
+        { month: 'DEC', day: '14', year: '2026', event: 'Conference Date', icon: 'Star', sub: 'December 14-16, 2026, Outram, Singapore' },
+    ],
+};
 
 const AboutSection = () => {
-    const [about, setAbout] = useState({
-        subtitle: 'Advancing Food Innovation',
-        title: 'About The Conference',
-        paragraph1: 'The International Conference on Food Science Technology and Agriculture is a premier international platform dedicated to advancing the understanding of food science, agricultural innovation, and sustainable food systems.',
-        paragraph2: 'This conference brings together leading researchers, academicians, food scientists, agricultural experts, and industry professionals to explore recent developments, innovative technologies, sustainable practices, and real-world applications in food science and agriculture.',
-        objectives: [
-            'Promote advancements in food science and technology',
-            'Explore innovations in sustainable agriculture',
-            'Discuss food safety, quality control, and nutritional science',
-            'Bridge academia and industry in agricultural research',
-            'Encourage collaboration across food processing, biotechnology, and environmental sustainability domains'
-        ],
-        keyThemes: [
-            'Food Processing and Preservation Technologies',
-            'Sustainable Agriculture and Crop Management',
-            'Food Safety and Quality Assurance',
-            'Nutritional Science and Functional Foods',
-            'Agricultural Biotechnology and Genetic Engineering',
-            'Smart Farming and Precision Agriculture',
-        ],
-    });
-
-    const [dates, setDates] = useState([
-        { month: 'JUL', day: '01', year: '2026', event: 'Abstract Submission Opens', icon: 'CalendarDays' },
-        { month: 'SEP', day: '30', year: '2026', event: 'Early Bird Deadline', icon: 'CheckCircle' },
-        { month: 'NOV', day: '15', year: '2026', event: 'Submission Deadline', icon: 'Clock' },
-        { month: 'DEC', day: '07', year: '2026', event: 'Conference Date', icon: 'Star', sub: 'December 07-09, Singapore' },
-    ]);
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
+    const [about, setAbout] = useState(DEFAULT_ABOUT);
+    const [datesData, setDatesData] = useState(DEFAULT_DATES);
 
     useEffect(() => {
-        let cancelled = false;
-        const load = () => {
-            fetchContent('about').then(data => { if (!cancelled && data) setAbout(prev => ({ ...prev, ...data })); });
-            fetchContent('importantDates').then(data => { if (!cancelled && data?.dates) setDates(data.dates); });
-        };
-
-        load();
-        const interval = setInterval(load, 15000);
-        const onVisible = () => { if (document.visibilityState === 'visible') load(); };
-        document.addEventListener('visibilitychange', onVisible);
-
-        return () => {
-            cancelled = true;
-            clearInterval(interval);
-            document.removeEventListener('visibilitychange', onVisible);
-        };
+        fetchContent('about').then(d => { if (d) setAbout(prev => ({ ...prev, ...d })); });
+        fetchContent('importantDates').then(d => { if (d) setDatesData(prev => ({ ...prev, ...d })); });
     }, []);
+
+    const isHighlight = (idx, total) => idx === total - 1;
 
     return (
         <section className="about section-padding" id="about">
             <div className="container about__container">
                 {/* Left Side: Content */}
                 <div className="about__content">
-                    <h4 className="section-subtitle">{about.subtitle}</h4>
                     <h2 className="section-title">{about.title}</h2>
-                    {about.paragraph1 && <p className="about__text">{about.paragraph1}</p>}
+                    <p className="about__text">{about.paragraph1}</p>
                     {about.paragraph2 && <p className="about__text">{about.paragraph2}</p>}
 
                     {about.objectives?.length > 0 && (
@@ -81,6 +77,11 @@ const AboutSection = () => {
                             </ul>
                         </>
                     )}
+
+                    <div className="about__actions">
+                        <Button onClick={() => navigate('/abstract-submission')}>ABSTRACT SUBMISSION</Button>
+                        <Button onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                    </div>
                 </div>
 
                 {/* Right Side: Important Dates */}
@@ -90,21 +91,25 @@ const AboutSection = () => {
                             <h3 className="premium-title">Important Dates</h3>
                             <div className="header-decoration"></div>
                         </div>
+
                         <div className="premium-dates-list">
-                            {dates.map((d, i) => {
+                            {(datesData.dates || []).map((d, idx) => {
                                 const IconComp = ICON_MAP[d.icon] || CalendarDays;
+                                const highlight = isHighlight(idx, datesData.dates.length);
                                 return (
-                                    <div key={i} className={`premium-date-card${d.icon === 'Star' ? ' highlight-card' : ''}`}>
+                                    <div className={`premium-date-card${highlight ? ' highlight-card' : ''}`} key={idx}>
                                         <div className="pd-date-box">
                                             <span className="pd-month">{d.month}</span>
                                             <span className="pd-day">{d.day}</span>
+                                            <span className="pd-year-box">{d.year}</span>
                                         </div>
                                         <div className="pd-content">
-                                            <span className="pd-year">{d.year}</span>
                                             <h4 className="pd-event">{d.event}</h4>
                                             {d.sub && <span className="pd-sub">{d.sub}</span>}
                                         </div>
-                                        <div className="pd-icon-bg"><IconComp size={40} /></div>
+                                        <div className="pd-icon-bg">
+                                            <IconComp size={40} />
+                                        </div>
                                     </div>
                                 );
                             })}

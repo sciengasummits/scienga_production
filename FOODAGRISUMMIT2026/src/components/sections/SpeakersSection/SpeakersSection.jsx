@@ -1,61 +1,70 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
 import { User } from 'lucide-react';
-import { speakers as staticSpeakers } from '../../../data/speakersData';
-import { fetchSpeakers } from '../../../api/siteApi';
+import { fetchSpeakers } from '../../../api/speakersApi';
+import { resolveImageUrl } from '../../../api/utilsApi';
 import './SpeakersSection.css';
 
 const SpeakersSection = ({ showViewAll }) => {
-    const location = useLocation();
-    const [activeCategory, setActiveCategory] = useState(location.state?.category || 'Committee');
+    const [activeCategory, setActiveCategory] = useState('All');
     const [selectedSpeaker, setSelectedSpeaker] = useState(null);
-    const [speakers, setSpeakers] = useState(staticSpeakers);
+    const [speakers, setSpeakers] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const getDisplayCategory = (category) => {
+        if (!category) return '';
+        if (category === 'Student' || category === 'Students') return 'Student';
+        if (category === 'Keynote' || category === 'Keynote Speaker') return 'Keynote Speaker';
+        if (category === 'Plenary' || category === 'Plenary Speaker') return 'Plenary Speaker';
+        if (category === 'Invited' || category === 'Invited Speaker') return 'Invited Speaker';
+        if (category === 'Featured' || category === 'Featured Speaker') return 'Featured';
+        return category;
+    };
 
     useEffect(() => {
-        let cancelled = false;
-        const load = () => {
-            fetchSpeakers().then(data => {
-                if (!cancelled && data && data.length > 0) {
+        let mounted = true;
+
+        async function load() {
+            try {
+                const data = await fetchSpeakers(); // Fetches all visible speakers
+                if (data && mounted) {
                     const mapped = data.filter(s => s.visible !== false).map(s => ({
-                        id: s._id,
+                        id: s._id || s.id,
                         name: s.name,
-                        title: s.designation || s.title || '',
+                        title: s.title || s.designation || '',
                         affiliation: s.affiliation || s.institution || '',
                         category: s.category || 'Speakers',
                         image: s.image || s.photo || '',
                         bio: s.bio || '',
                     }));
-                    if (mapped.length > 0) setSpeakers(mapped);
+                    setSpeakers(mapped);
                 }
-            });
-        };
+            } catch (err) {
+                console.error('Failed to load speakers:', err);
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        }
 
+        setLoading(true);
         load();
-        const interval = setInterval(load, 30000);
-        const onVisible = () => { if (document.visibilityState === 'visible') load(); };
-        document.addEventListener('visibilitychange', onVisible);
+
+        const interval = setInterval(load, 15000);
 
         return () => {
-            cancelled = true;
+            mounted = false;
             clearInterval(interval);
-            document.removeEventListener('visibilitychange', onVisible);
         };
     }, []);
 
-
-    const getDisplayCategory = (category) => {
-        if (category === 'Student') return 'Student Speaker';
-        if (category === 'Committee') return 'Committee';
-        return category;
-    };
     const filteredSpeakers = speakers.filter(speaker => {
-        if (activeCategory === 'Committee') return speaker.category === 'Committee';
-        if (activeCategory === 'Speakers') return true;
-        if (activeCategory === 'Posters') return speaker.category === 'Poster Presenter';
-        if (activeCategory === 'Students') return speaker.category === 'Student';
-        if (activeCategory === 'Delegates') return speaker.category === 'Delegate';
-        return true;
-    }).slice(0, showViewAll ? 8 : speakers.length);
+        if (activeCategory === 'All') return true;
+        const displayCat = getDisplayCategory(speaker.category);
+        return displayCat === activeCategory;
+    });
+
+    const displaySpeakers = filteredSpeakers.slice(0, showViewAll ? 8 : filteredSpeakers.length);
 
     const openModal = (speaker) => {
         setSelectedSpeaker(speaker);
@@ -76,7 +85,7 @@ const SpeakersSection = ({ showViewAll }) => {
                 </div>
 
                 <div className="speakers__filters">
-                    {['Committee', 'Speakers', 'Posters', 'Students', 'Delegates'].map((category) => (
+                    {['All', 'Committee', 'Featured', 'Poster Presenter', 'Student', 'Delegate', 'Plenary Speaker', 'Keynote Speaker', 'Invited Speaker'].map((category) => (
                         <button
                             key={category}
                             className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
@@ -88,31 +97,48 @@ const SpeakersSection = ({ showViewAll }) => {
                 </div>
 
                 <div className="speakers__grid">
-                    {filteredSpeakers.map((speaker) => (
-                        <div className="speaker-card" key={speaker.id}>
-                            <div className="speaker-img-wrapper">
-                                <img src={speaker.image} alt={speaker.name} className="speaker-img" />
-                                <div className="speaker-overlay">
-                                    {/* Social icons could go here */}
+                    {loading ? (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#666' }}>
+                            <div className="loading-spinner" style={{ marginBottom: '1rem' }}></div>
+                            <p>Loading global participants details...</p>
+                        </div>
+                    ) : displaySpeakers.length > 0 ? (
+                        displaySpeakers.map((speaker) => (
+                            <div className="speaker-card" key={speaker.id}>
+                                <div className="speaker-img-wrapper">
+                                    {speaker.image ? (
+                                        <img src={resolveImageUrl(speaker.image)} alt={speaker.name} className="speaker-img" />
+                                    ) : (
+                                        <div className="speaker-img-placeholder">
+                                            <User size={48} color="#cbd5e1" />
+                                            <span style={{ color: '#94a3b8', fontSize: '0.8rem', fontWeight: 500, marginTop: '0.5rem' }}>No Photo</span>
+                                        </div>
+                                    )}
+                                    <div className="speaker-overlay">
+                                        {/* Social icons could go here */}
+                                    </div>
+                                </div>
+                                <div className="speaker-info">
+                                    {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
+                                    <h3 className="speaker-name">{speaker.name}</h3>
+                                    <p className="speaker-title">{speaker.title}</p>
+                                    <p className="speaker-affiliation">{speaker.affiliation}</p>
+                                    <button className="btn-biograph" onClick={() => openModal(speaker)}>
+                                        <User size={16} /> Biography
+                                    </button>
                                 </div>
                             </div>
-                            <div className="speaker-info">
-                                {speaker.category && <span className="speaker-category">{getDisplayCategory(speaker.category)}</span>}
-                                <h3 className="speaker-name">{speaker.name}</h3>
-                                <p className="speaker-title">{speaker.title}</p>
-                                <p className="speaker-affiliation">{speaker.affiliation}</p>
-                                <button className="btn-biograph" onClick={() => openModal(speaker)}>
-                                    <User size={16} /> Biography
-                                </button>
-                            </div>
+                        ))
+                    ) : (
+                        <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem', color: '#666' }}>
+                            <p>No {activeCategory.toLowerCase()} found at the moment.</p>
                         </div>
-                    ))}
+                    )}
                 </div>
                 {showViewAll && (
                     <div className="text-center mt-5">
                         <Link
-                            to="/speakers"
-                            state={{ category: activeCategory }}
+                            href="/speakers"
                             className="btn-biograph"
                             style={{ textDecoration: 'none', display: 'inline-flex', marginTop: '2rem' }}
                         >
@@ -134,14 +160,15 @@ const SpeakersSection = ({ showViewAll }) => {
                                 <h3 className="modal-title">{selectedSpeaker.name}</h3>
                                 <span className="modal-type">{selectedSpeaker.title}</span>
                                 <p className="modal-affiliation-highlight">{selectedSpeaker.affiliation}</p>
-                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of general medicine, contributing significantly to research and clinical practice. With years of experience leading healthcare initiatives and publishing groundbreaking studies, they have become a pivotal figure in advancing medical standards globally. Their work focuses on innovative treatment methodologies and improving patient outcomes through evidence-based medicine."}</p>
+                                <p className="modal-desc">{selectedSpeaker.bio || "A distinguished expert in the field of food science, sustainable agriculture, and agri-technology, contributing significantly to research and innovation in global food security."}</p>
                             </div>
                         </div>
                     </div>
                 )
             }
-        </section >
+        </section>
     );
 };
 
 export default SpeakersSection;
+

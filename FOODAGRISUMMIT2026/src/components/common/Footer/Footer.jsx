@@ -1,8 +1,9 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
+import Link from 'next/link';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import Logo from '../Logo/Logo';
-import { fetchContent } from '../../../api/siteApi';
+import { fetchContent } from '../../../api/contentApi';
 import './Footer.css';
 
 const Footer = () => {
@@ -13,7 +14,7 @@ const Footer = () => {
             if (data) {
                 setContactInfo(prev => ({
                     email: data.email || prev.email,
-                    phone: data.phone || prev.phone,
+                    phone: data.phone || prev.phone
                 }));
             }
         }).catch(() => {});
@@ -28,25 +29,33 @@ const Footer = () => {
                             <Logo />
                         </div>
                         <p className="footer__desc">
-                            International Conference on Food Science Technology and Agriculture, where global experts unite to shape the future of food science and agricultural innovation.
+                            Empowering the global community to build sustainable food systems through innovation, research, and international collaboration in agriculture.
                         </p>
                         <div className="footer__socials">
-                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon"><Facebook size={20} /></a>
-                            <a href="https://www.linkedin.com/company/scienga-summits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Linkedin size={20} /></a>
-                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon"><Instagram size={20} /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61588065033161" target="_blank" rel="noopener noreferrer" className="social-icon">FB</a>
+                            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="social-icon">IN</a>
+                            <a href="https://www.instagram.com/sciengasummits/" target="_blank" rel="noopener noreferrer" className="social-icon">IG</a>
                         </div>
                     </div>
 
                     <div className="footer__col">
                         <h4>Important Links</h4>
                         <ul className="footer__links">
-                            <li><Link to="/abstract-submission">Abstract Submission</Link></li>
-                            <li><Link to="/register">Registration</Link></li>
-                            <li><Link to="/online-registration">Discount Registration</Link></li>
-                            <li><Link to="/sessions">Sessions</Link></li>
-                            <li><Link to="/program">Program</Link></li>
-                            <li><Link to="/speakers">Speakers</Link></li>
-                            <li><Link to="/unsubscribe">Unsubscribe</Link></li>
+                            <li><Link href="/abstract-submission">Abstract Submission</Link></li>
+                            <li><Link href="/register">Registration</Link></li>
+                            <li><Link href="/sessions">Sessions</Link></li>
+                            <li><Link href="/program">Program</Link></li>
+                            <li><Link href="/speakers">Speakers</Link></li>
+                            <li><Link href="/subscribe">Subscribe</Link></li>
+                        </ul>
+                    </div>
+
+                    <div className="footer__col">
+                        <h4>Policies</h4>
+                        <ul className="footer__links">
+                            <li><a href="https://www.sciengasummits.com/terms" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a></li>
+                            <li><a href="https://www.sciengasummits.com/refund-cancellation" target="_blank" rel="noopener noreferrer">Refund &amp; Cancellations</a></li>
+                            <li><a href="https://www.sciengasummits.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
                         </ul>
                     </div>
 
@@ -57,7 +66,7 @@ const Footer = () => {
                                 <MapPin size={18} />
                                 <div>
                                     <span style={{ display: 'block', fontWeight: 'bold', color: 'white' }}>Venue:</span>
-                                    <span>Marina Bay, Singapore</span>
+                                    <span> Outram, Singapore</span>
                                 </div>
                             </li>
 
@@ -71,19 +80,10 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-
-                    <div className="footer__col">
-                        <h4>Subscribe</h4>
-                        <p>Get the latest updates and news.</p>
-                        <form className="footer__form">
-                            <input type="email" placeholder="Your Email" />
-                            <button type="submit">Go</button>
-                        </form>
-                    </div>
                 </div>
 
                 <div className="footer__bottom">
-                    <p>&copy; {new Date().getFullYear()} International Conference on Food Science Technology and Agriculture. All Rights Reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} INTERNATIONAL CONFERENCE ON Food and Agriculture Summit. All Rights Reserved by SCIENGA SUMMITS</p>
                 </div>
             </div>
         </footer>
@@ -91,3 +91,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

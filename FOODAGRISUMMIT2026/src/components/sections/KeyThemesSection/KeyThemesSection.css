@@ -1,6 +1,15 @@
 .sessions-schedule-section {
     background-color: #ffffff;
     min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.sessions-schedule-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 /* Layout Container */
@@ -20,9 +29,10 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 35%;
+    width: calc(38% + 2px);
     display: flex;
     flex-direction: column;
+    z-index: 5;
 }
 
 .column-title {
@@ -37,19 +47,21 @@
     overflow-y: auto;
     padding-right: 1rem;
     max-height: none;
-    scrollbar-width: none;
-    /* Firefox */
-    -ms-overflow-style: none;
-    /* IE/Edge */
+    scrollbar-color: var(--color-primary-start) transparent;
+    scrollbar-width: thin;
 }
 
 .sessions-list-container::-webkit-scrollbar {
-    width: 0;
-    display: none;
+    width: 4px;
+}
+
+.sessions-list-container::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
 }
 
 .sessions-list-container::-webkit-scrollbar-thumb {
-    background-color: #ddd;
+    background-color: var(--color-primary-start);
     border-radius: 4px;
 }
 
@@ -93,9 +105,11 @@
     top: 0;
     bottom: 0;
     left: 38%;
+    margin-left: -1px;
     /* Position between columns */
     width: 2px;
     background-color: #e0e0e0;
+    z-index: 1;
 }
 
 

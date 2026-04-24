@@ -69,8 +69,6 @@ const generateSpeakers = () => {
 
     categories.forEach((cat, catIndex) => {
         for (let i = 0; i < 20; i++) {
-            // Deterministic random generation based on ID to keep data consistent across renders if generated on fly
-            // (Though here it runs once at module load)
             const seed = id * 13579 + catIndex * 2468;
 
             const firstNameIndex = Math.floor(seedRandom(seed) * firstNames.length);
@@ -78,10 +76,6 @@ const generateSpeakers = () => {
             const titleIndex = Math.floor(seedRandom(seed + 2) * titles.length);
             const affIndex = Math.floor(seedRandom(seed + 3) * affiliations.length);
             const imgIndex = Math.floor(seedRandom(seed + 4) * speakerImages.length);
-
-            // Gender-based image approximation (very rough, just for demo to match names if we cared, 
-            // but for now random image is fine as user asked for names)
-            // Let's just use random image from the list
 
             speakers.push({
                 id: id++,
@@ -97,3 +91,4 @@ const generateSpeakers = () => {
 };
 
 export const speakers = generateSpeakers();
+

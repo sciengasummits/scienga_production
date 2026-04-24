@@ -1,40 +1,110 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import { User, MapPin, Calendar } from 'lucide-react';
 import Button from '../../common/Button/Button';
 import './HeroSection.css';
-import { fetchContent } from '../../../api/siteApi';
+import { fetchContent } from '../../../api/contentApi';
+import { resolveImageUrl } from '../../../api/utilsApi';
 
 const DEFAULTS = {
     subtitle: 'INTERNATIONAL CONFERENCE ON',
-    title: 'FOOD SCIENCE TECHNOLOGY AND AGRICULTURE',
-    description: 'International Conference on Food Science Technology and Agriculture, where global experts unite to shape the future of food science and agricultural innovation. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.',
-    conferenceDate: 'December 07-09, 2026',
-    venue: 'Marina Bay, Singapore',
-    countdownTarget: '2026-12-07T09:00:00+08:00',
-    showRegister: true, showAbstract: true, showBrochure: true,
+    title: 'FOOD AND AGRICULTURE\nSUMMIT 2026',
+    description: 'INTERNATIONAL CONFERENCE ON FOOD AND AGRICULTURE SUMMIT where global experts unite to shape the future of sustainable food systems. Discover ground-breaking technologies, connect with top researchers, and explore solutions transforming our world.',
+    conferenceDate: 'December 14-16, 2026',
+    venue: 'Outram, Singapore',
+    countdownTarget: '2026-12-14T09:00:00+08:00',
+    bgImage: '/assets/images/food.gif',
+    showRegister: true,
+    showAbstract: true,
+    showBrochure: true,
+    showAnnouncement: false,
+    announcementUrl: '/pdfs/announcement.pdf',
 };
 
 const HeroSection = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     const [hero, setHero] = useState(DEFAULTS);
+    const [chairs, setChairs] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [collaborations, setCollaborations] = useState([]);
 
-    // Fetch live hero content from backend + polling
+    // resolveImageUrl from siteApi.js handles both local (localhost:5050) and
+    // production (VITE_API_URL) — never hardcodes localhost for image paths.
+    const resolveUrl = resolveImageUrl;
+
+    // Fetch dynamic content from backend
     useEffect(() => {
         let cancelled = false;
+
         const load = () => {
             fetchContent('hero').then(data => {
                 if (!cancelled && data) setHero(prev => ({ ...prev, ...data }));
             });
+
+            fetchContent('heroChairs').then(data => {
+                if (!cancelled) {
+                    if (data && Array.isArray(data)) {
+                        // Top-level array (ideal case)
+                        const validChairs = data.filter(c => c && c.name);
+                        setChairs(validChairs);
+                    } else if (data && data._items && Array.isArray(data._items)) {
+                        // ✅ Deployed backend stores array as data._items — most recent save wins
+                        const validChairs = data._items.filter(c => c && c.name);
+                        setChairs(validChairs);
+                    } else if (data && (data.chair?.name || data.viceChair?.name || data.coChair?.name)) {
+                        // Legacy schema migration
+                        const migrated = [];
+                        ['chair', 'viceChair', 'coChair'].forEach(k => {
+                            if (data[k] && data[k].name) {
+                                migrated.push({ id: k, ...data[k] });
+                            }
+                        });
+                        setChairs(migrated);
+                    } else if (data && typeof data === 'object') {
+                        // Recover from corrupted save: { "0":{...}, "1":{...} }
+                        const numKeys = Object.keys(data)
+                            .filter(k => !isNaN(k))
+                            .sort((a, b) => Number(a) - Number(b));
+                        if (numKeys.length > 0) {
+                            const recovered = numKeys.map(k => data[k]).filter(c => c && c.name);
+                            setChairs(recovered);
+                        } else {
+                            setChairs([]);
+                        }
+                    } else if (data === null || data === undefined) {
+                        // Fallback dummy data if nothing is saved yet
+                        setChairs([
+                            { id: 1, name: 'Dr. Robert Smith', affiliation: 'Wageningen University & Research', country: 'Netherlands', title: 'Conference Chairman' },
+                            { id: 2, name: 'Dr. Maria Garcia', affiliation: 'UC Davis College of Agricultural', country: 'USA', title: 'Conference Co-chairman' },
+                            { id: 3, name: 'Dr. James Chen', affiliation: 'Singapore Food Agency', country: 'Singapore', title: 'Conference Co-chairman' }
+                        ]);
+                    } else {
+                        setChairs([]);
+                    }
+                }
+            }).catch(err => {
+                console.error('Failed to fetch heroChairs:', err);
+            });
+
+            // Fetch Collaborations
+            import('../../../api/index').then(api => {
+                api.fetchSponsors('collaboration').then(data => {
+                    if (!cancelled && data) setCollaborations(data);
+                });
+            });
         };
 
-        load(); // initial fetch
+        load();
 
-        // Poll every 15 seconds so dashboard edits appear without a page reload
+        // Polling every 15s to reflect dashboard changes live
         const interval = setInterval(load, 15000);
 
-        // Also re-fetch immediately when the visitor switches back to this tab
-        const onVisible = () => { if (document.visibilityState === 'visible') load(); };
+        // Also refresh when tab becomes visible
+        const onVisible = () => {
+            if (document.visibilityState === 'visible') load();
+        };
         document.addEventListener('visibilitychange', onVisible);
 
         return () => {
@@ -44,31 +114,46 @@ const HeroSection = () => {
         };
     }, []);
 
-    // Countdown timer
     useEffect(() => {
-        const targetDate = new Date(hero.countdownTarget).getTime();
+        const targetDate = new Date(hero.countdownTarget || DEFAULTS.countdownTarget).getTime();
+
         const interval = setInterval(() => {
-            const diff = targetDate - Date.now();
-            if (diff > 0) {
-                setTimeLeft({
-                    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-                    hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-                    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-                    seconds: Math.floor((diff % (1000 * 60)) / 1000),
-                });
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                setTimeLeft({ days, hours, minutes, seconds });
             } else {
                 clearInterval(interval);
             }
         }, 1000);
+
         return () => clearInterval(interval);
     }, [hero.countdownTarget]);
 
-    // Parse multiline title (split on \n)
-    const titleLines = (hero.title || '').split('\n');
+    // Parse date for info-card (expects "Month Day-Day, Year" or similar)
+    const monthStr = (hero.conferenceDate?.split(' ')[0] || 'December').toUpperCase();
+    const daysStr = hero.conferenceDate?.split(' ').slice(1).join(' ') || '14-16, 2026';
 
-    // If a custom background was uploaded via the dashboard, override the CSS bg
-    const heroBgStyle = hero.bgImage
-        ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${hero.bgImage}')` }
+    const renderTitle = () => {
+        if (!hero.title) return DEFAULTS.title;
+        const lines = hero.title.trim().split('\n');
+        return lines.map((line, i) => (
+            <React.Fragment key={i}>
+                {line}
+                {i !== lines.length - 1 && <br />}
+            </React.Fragment>
+        ));
+    };
+
+    const bgUrl = resolveUrl(hero.bgImage);
+    const heroBgStyle = bgUrl
+        ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${bgUrl}')` }
         : {};
 
     return (
@@ -76,54 +161,110 @@ const HeroSection = () => {
             <div className="hero__overlay"></div>
             <div className="container hero__container">
                 <div className="hero__content">
-                    <p className="hero__title-sub">{hero.subtitle}</p>
                     <h1 className="hero__title">
-                        {titleLines.map((line, i) => (
-                            <React.Fragment key={i}>{line}{i < titleLines.length - 1 && <br />}</React.Fragment>
-                        ))}
+                        <span className="hero__title-sub">{hero.subtitle}</span>
+                        {renderTitle()}
                     </h1>
 
                     <div className="hero__countdown-wrapper">
-                        <p style={{ fontWeight: 800, fontSize: '1.2rem', marginBottom: '0.5rem', color: 'var(--color-white)', textTransform: 'uppercase', letterSpacing: '1px' }}>Days To Go</p>
+                        <span className="days-to-go-label">Days To Go</span>
                         <div className="hero__countdown">
-                            {[['days', 'Days'], ['hours', 'Hours'], ['minutes', 'Minutes'], ['seconds', 'Seconds']].map(([k, l]) => (
-                                <div className="countdown-item" key={k}>
-                                    <span className="countdown-value">{timeLeft[k]}</span>
-                                    <span className="countdown-label">{l}</span>
-                                </div>
-                            ))}
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.days}</span>
+                                <span className="countdown-label">Days</span>
+                            </div>
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.hours}</span>
+                                <span className="countdown-label">Hours</span>
+                            </div>
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.minutes}</span>
+                                <span className="countdown-label">Minutes</span>
+                            </div>
+                            <div className="countdown-item">
+                                <span className="countdown-value">{timeLeft.seconds}</span>
+                                <span className="countdown-label">Seconds</span>
+                            </div>
                         </div>
                     </div>
 
                     <p className="hero__desc">{hero.description}</p>
 
-                    <div className="hero__actions">
-                        {hero.showBrochure !== false && <Button onClick={() => navigate('/brochure')}>Download Brochure</Button>}
-                        {hero.showRegister !== false && <Button onClick={() => navigate('/register')}>Register Now</Button>}
-                        {hero.showAbstract !== false && <Button onClick={() => navigate('/abstract-submission')}>Submit Abstract</Button>}
+                    <div className="hero-actions-container">
+                        <div className="hero__actions">
+                            {hero.showBrochure !== false && (
+                                <Button className="hero-btn-small" onClick={() => navigate('/brochure')}>DOWNLOAD BROCHURE</Button>
+                            )}
+                            {hero.showAbstract !== false && (
+                                <Button className="hero-btn-small" onClick={() => navigate('/abstract-submission')}>SUBMIT ABSTRACT</Button>
+                            )}
+                            {hero.showRegister !== false && (
+                                <Button className="btn-elevate hero-btn-small" onClick={() => navigate('/register')}>REGISTER NOW</Button>
+                            )}
+                            {hero.showAnnouncement && (
+                                <Button className="btn-elevate hero-btn-small" onClick={() => window.open(resolveUrl(hero.announcementUrl || '/pdfs/announcement.pdf'), '_blank')}>CONFERENCE ANNOUNCEMENT</Button>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                <div className="hero__info-cards">
-                    <div className="info-card date-card">
-                        <h3>{(() => {
-                            const parts = (hero.conferenceDate || 'December 07-09, 2026').trim().split(' ');
-                            return parts[0]; // Month
-                        })()}</h3>
-                        <p>{(() => {
-                            const parts = (hero.conferenceDate || 'December 07-09, 2026').trim().split(' ');
-                            return parts.slice(1).join(' '); // Date + Year
-                        })()}</p>
+                <div className="hero__right">
+                    <div className="hero__info-cards">
+                        <div className="info-card date-card">
+                            <h3>{monthStr}</h3>
+                            <p>{daysStr}</p>
+                        </div>
+                        <div className="info-card venue-card">
+                            <h3>Venue</h3>
+                            <p>{hero.venue}</p>
+                        </div>
                     </div>
-                    <div className="info-card venue-card">
-                        <h3>Venue</h3>
-                        <p>{hero.venue}</p>
-                    </div>
+
+                    {chairs && chairs.length > 0 && (
+                        <div className="hero__chairs-row">
+                            {chairs.map((chair, idx) => (
+                                <div className="chair-card-v" key={chair.id || idx}>
+                                    <div className="chair-badge-v">{chair.title || 'Conference Chairman'}</div>
+                                    {chair.image ? (
+                                        <img src={resolveUrl(chair.image)} alt={chair.name} className="chair-card-bg" />
+                                    ) : (
+                                        <div className="chair-placeholder-v"><User size={40} color="#fff" /></div>
+                                    )}
+                                    <div className="chair-card-overlay">
+                                        <h4 className="chair-name-v">{chair.name}</h4>
+                                        <p className="chair-aff-v">{chair.affiliation}</p>
+                                        {chair.country && (
+                                            <p className="chair-country-v"><MapPin size={12} /> {chair.country}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
 
+            {collaborations.length > 0 && (
+                <div className="hero__collaborations">
+                    <div className="collab-container">
+                        <div className="collab-group">
+                            <span className="collab-label">Collaboration / Sponsor</span>
+                            <div className="collab-logos">
+                                {collaborations.map(c => (
+                                    <div key={c._id} className="collab-logo-item">
+                                        <a href={c.link || '/'} target="_blank" rel="noopener noreferrer" className="collab-logo-link">
+                                            <img src={resolveUrl(c.logo)} alt={c.name} />
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };
 
 export default HeroSection;
+

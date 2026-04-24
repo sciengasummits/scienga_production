@@ -1,71 +1,86 @@
+'use client';
 import React, { useState, useEffect } from 'react';
+import { fetchContent } from '../../../api/contentApi';
+import { fetchUniversities } from '../../../api/universitiesApi';
+import { resolveImageUrl } from '../../../api/utilsApi';
 import './UniversitiesMarquee.css';
-import { fetchContent } from '../../../api/siteApi';
-
-// Importing images from the universities folder
-import uni1 from '../../../assets/images/universities/download.png';
-import uni2 from '../../../assets/images/universities/download2.jpg';
-import uni3 from '../../../assets/images/universities/images.png';
-import uni4 from '../../../assets/images/universities/images2.jpg';
-
-const defaultUniversities = [
-    { name: 'University 1', imgUrl: uni1, id: 1 },
-    { name: 'University 2', imgUrl: uni2, id: 2 },
-    { name: 'University 3', imgUrl: uni3, id: 3 },
-    { name: 'University 4', imgUrl: uni4, id: 4 },
-];
 
 const UniversitiesMarquee = () => {
-    const [universities, setUniversities] = useState([...defaultUniversities, ...defaultUniversities]);
-    const [marqueeData, setMarqueeData] = useState({ title: 'Supporting Universities & Institutions' });
+    const [title, setTitle] = useState('Supporting Universities & Institutions');
+    const [universities, setUniversities] = useState([]);
 
     useEffect(() => {
-        let cancelled = false;
-        const load = () => {
-            fetchContent('marquee').then(data => {
-                if (!cancelled && data) {
-                    setMarqueeData(data);
-                    if (data.items && Array.isArray(data.items) && data.items.length > 0) {
-                        const dynamicUniversities = data.items.map((name, index) => ({
-                            name: name,
-                            imgUrl: [uni1, uni2, uni3, uni4][index % 4],
-                            id: index + 1
-                        }));
-                        setUniversities([...dynamicUniversities, ...dynamicUniversities]);
-                    }
-                }
-            });
-        };
+        // Fetch Title
+        fetchContent('marquee').then(data => {
+            if (data && data.title) setTitle(data.title);
+        }).catch(() => {});
 
-        load();
-        const interval = setInterval(load, 15000);
-        const onVisible = () => { if (document.visibilityState === 'visible') load(); };
-        document.addEventListener('visibilitychange', onVisible);
-
-        return () => {
-            cancelled = true;
-            clearInterval(interval);
-            document.removeEventListener('visibilitychange', onVisible);
-        };
+        // Fetch Universities dynamically like Speakers
+        fetchUniversities().then(data => {
+            if (data && Array.isArray(data)) {
+                // filter visible ones (visible is true by default, but double-check)
+                const visible = data.filter(u => u.visible !== false);
+                setUniversities(visible);
+            }
+        }).catch(() => {});
     }, []);
+
+    if (universities.length === 0) return null;
+
+    const renderItem = (uni, uniqueKey) => {
+        // uni now has .name and .image
+        const resolvedUrl = uni.image ? resolveImageUrl(uni.image) : null;
+        return (
+            <div key={uniqueKey} className="university-item" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 2rem' }}>
+                {resolvedUrl ? (
+                    <img
+                        src={resolvedUrl}
+                        alt={uni.name}
+                        style={{ height: '110px', objectFit: 'contain', maxWidth: '220px', display: 'block', background: 'transparent' }}
+                        onError={e => { e.target.style.display = 'none'; }}
+                    />
+                ) : (
+                    <h4 style={{ margin: 0, whiteSpace: 'nowrap', color: '#1e293b', fontSize: '1.2rem', fontWeight: 'bold' }}>{uni.name}</h4>
+                )}
+            </div>
+        );
+    };
+
+    const MIN_ITEMS = 8;
+    const repeated = universities.length === 0 ? [] : Array.from(
+        { length: Math.ceil(MIN_ITEMS / universities.length) },
+        () => universities
+    ).flat();
 
     return (
         <section className="universities-marquee">
-            {marqueeData.title && (
-                <div className="container marquee-header">
-                    <h2 className="marquee-title">{marqueeData.title}</h2>
+            <div className="container" style={{ marginBottom: '2rem' }}>
+                <div style={{ textAlign: 'center' }}>
+                    <h2 style={{
+                        fontSize: 'clamp(1.8rem, 4vw, 2.25rem)',
+                        fontWeight: '800',
+                        color: '#1e293b',
+                        marginBottom: '1rem',
+                        textAlign: 'center',
+                    }}>
+                        {title}
+                    </h2>
+                    <div style={{
+                        width: '60px', height: '4px',
+                        background: 'var(--brand-gradient, linear-gradient(135deg, #0F172A 0%, #1E40AF 100%))',
+                        margin: '0 auto', borderRadius: '2px',
+                    }}></div>
                 </div>
-            )}
+            </div>
             <div className="marquee-track">
-                {universities.map((uni, idx) => (
-                    <div key={`${uni.id}-${idx}`} className="university-item">
-                        <img src={uni.imgUrl} alt={uni.name} className="university-logo" />
-                        <span className="university-name-tag">{uni.name}</span>
-                    </div>
-                ))}
+                {/* Original Set */}
+                {repeated.map((uni, idx) => renderItem(uni, `orig-${idx}`))}
+                {/* Duplicate Set for Seamless Loop */}
+                {repeated.map((uni, idx) => renderItem(uni, `dup-${idx}`))}
             </div>
         </section>
     );
 };
 
 export default UniversitiesMarquee;
+
