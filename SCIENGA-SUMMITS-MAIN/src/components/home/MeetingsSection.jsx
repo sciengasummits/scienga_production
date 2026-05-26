@@ -30,7 +30,7 @@ const meetingsData = {
             date: "November 16-18, 2026",
             year: "2026",
             image: meeting1,
-            link: "https://polymatsummit2026.sciengasummits.com/"
+            link: "https://polymatsummit2027.sciengasummits.com/"
         },
         {
             id: 2,
@@ -40,7 +40,7 @@ const meetingsData = {
             date: "November 16-18, 2026",
             year: "2026",
             image: meeting2,
-            link: "https://advancenanosummit2026.sciengasummits.com/"
+            link: "https://adancenanosummit2027.sciengasummits.com/"
         },
         {
             id: 3,
@@ -50,7 +50,7 @@ const meetingsData = {
             date: "November 16-18, 2026",
             year: "2026",
             image: meeting3,
-            link: "https://opticphotonsummit2026.sciengasummits.com/"
+            link: "https://opticphotonsummit2027.sciengasummits.com/"
         },
         {
             id: 4,
@@ -60,7 +60,7 @@ const meetingsData = {
             date: "December 7-9, 2026",
             year: "2026",
             image: meetingCropScieng,
-            link: "https://cropsciengsummit2026.sciengasummits.com/"
+            link: "https://cropsciengsummit2027.sciengasummits.com/"
         },
         {
             id: 5,
@@ -70,7 +70,7 @@ const meetingsData = {
             date: "December 7-9, 2026",
             year: "2026",
             image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80",
-            link: "https://civilenvsummit2026.sciengasummits.com/"
+            link: "https://civilenvsummit2027.sciengasummits.com/"
         },
         {
             id: 6,
@@ -122,7 +122,7 @@ const meetingsData = {
             date: "March 23-25, 2027",
             year: "2027",
             image: meetingPowerEng,
-            link: "https://powerengsummit2026.sciengasummits.com/"
+            link: "https://powerengsummit2027.sciengasummits.com/"
         },
         {
             id: 9,
@@ -132,7 +132,7 @@ const meetingsData = {
             date: "March 23-25, 2027",
             year: "2027",
             image: meetingCleanEngTech,
-            link: "https://cleanengtechsummit2026.sciengasummits.com/"
+            link: "https://cleanengtechsummit2027.sciengasummits.com/"
         },
         {
             id: 10,
@@ -142,7 +142,7 @@ const meetingsData = {
             date: "April 12-14, 2027",
             year: "2027",
             image: meetingAstroPhysics,
-            link: "https://astrospacesummit2026.sciengasummits.com/"
+            link: "https://astrospacesummit2027.sciengasummits.com/"
         },
         {
             id: 11,
@@ -162,7 +162,7 @@ const meetingsData = {
             date: "May 10-12, 2027",
             year: "2027",
             image: meetingShared,
-            link: "https://airobotmlsummit2026.sciengasummits.com/"
+            link: "https://airobotmlsummit2027.sciengasummits.com/"
         },
         {
             id: 14,
@@ -172,7 +172,7 @@ const meetingsData = {
             date: "May 10-12, 2027",
             year: "2027",
             image: meetingCondensedPhys,
-            link: "https://condensedphyssummit2026.sciengasummits.com/"
+            link: "https://condensedphyssummit2027.sciengasummits.com/"
         },
         {
             id: 15,
@@ -202,7 +202,17 @@ const meetingsData = {
             date: "June 7-9, 2027",
             year: "2027",
             image: meetingPublic,
-            link: "https://healthmedsummit2026.sciengasummits.com/"
+            link: "https://healthmedsummit2027.sciengasummits.com/"
+        },
+        {
+            id: 20,
+            title: "WSCSN2027",
+            description: "World Summit on Cognitive and Social Neuroscience",
+            location: "STOCKHOLM, SWEDEN",
+            date: "August 18-20, 2027",
+            year: "2027",
+            image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=800&q=80",
+            link: "https://wscsn2027.sciengasummits.com/"
         }
     ],
     2028: [
