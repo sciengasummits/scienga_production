@@ -152,7 +152,7 @@ const meetingsData = {
             date: "December 14-17, 2026",
             year: "2026",
             image: "https://events.precision-globe.com/assets/uploads/categoryImages/Precision-Medical-Devices-event-overview-image.jpeg",
-            link: "https://liutexsummit2026.sciengasummits.com/"
+            link: "https://liutex2026.sciengasummits.com/"
         },
         {
             id: 13,
