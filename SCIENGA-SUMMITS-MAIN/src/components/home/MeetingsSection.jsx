@@ -60,7 +60,7 @@ const meetingsData = {
             date: "December 7-9, 2026",
             year: "2026",
             image: meetingCropScieng,
-            link: "https://cropsciengsummit2027.sciengasummits.com/"
+            link: "https://cropsciengasummit2027.sciengasummits.com/"
         },
         {
             id: 5,
