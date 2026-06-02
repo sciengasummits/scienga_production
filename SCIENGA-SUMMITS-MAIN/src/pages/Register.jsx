@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import PageHeader from '../components/common/PageHeader'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
@@ -16,6 +17,8 @@ export default function Register() {
         plan: 'Speaker', // Default plan
         currency: 'USD'
     });
+
+    const [consentChecked, setConsentChecked] = useState(false);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -362,9 +365,44 @@ export default function Register() {
                                     </div>
                                 </div>
 
+                                <div style={{
+                                    marginBottom: '1.5rem',
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    gap: '12px',
+                                    padding: '1rem',
+                                    backgroundColor: '#f0f9ff',
+                                    borderRadius: '10px',
+                                    border: '1px solid #bae6fd'
+                                }}>
+                                    <input
+                                        type="checkbox"
+                                        id="emailConsent"
+                                        checked={consentChecked}
+                                        onChange={(e) => setConsentChecked(e.target.checked)}
+                                        required
+                                        style={{
+                                            marginTop: '4px',
+                                            width: '18px',
+                                            height: '18px',
+                                            cursor: 'pointer',
+                                            flexShrink: 0,
+                                            accentColor: 'var(--primary, #2563eb)'
+                                        }}
+                                    />
+                                    <label htmlFor="emailConsent" style={{
+                                        fontSize: '0.85rem',
+                                        color: '#475569',
+                                        lineHeight: '1.5',
+                                        cursor: 'pointer'
+                                    }}>
+                                        I agree to receive conference updates, event announcements, registration confirmations, and newsletters from Scienga Summits. I understand I can unsubscribe at any time by using the unsubscribe link in emails or by contacting contact@sciengasummits.org.
+                                    </label>
+                                </div>
+
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting || !consentChecked}
                                     style={{
                                         backgroundColor: 'var(--primary, #2563eb)',
                                         color: 'white',
@@ -373,19 +411,19 @@ export default function Register() {
                                         borderRadius: '8px',
                                         fontSize: '1.1rem',
                                         fontWeight: '700',
-                                        cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                                        cursor: (isSubmitting || !consentChecked) ? 'not-allowed' : 'pointer',
                                         width: '100%',
                                         transition: 'all 0.3s',
-                                        opacity: isSubmitting ? 0.8 : 1,
+                                        opacity: (isSubmitting || !consentChecked) ? 0.6 : 1,
                                         boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.3)'
                                     }}
-                                    onMouseEnter={(e) => !isSubmitting && (e.target.style.transform = 'translateY(-2px)')}
-                                    onMouseLeave={(e) => !isSubmitting && (e.target.style.transform = 'translateY(0)')}
+                                    onMouseEnter={(e) => !(isSubmitting || !consentChecked) && (e.target.style.transform = 'translateY(-2px)')}
+                                    onMouseLeave={(e) => !(isSubmitting || !consentChecked) && (e.target.style.transform = 'translateY(0)')}
                                 >
                                     {isSubmitting ? 'Processing...' : 'Proceed to Payment'}
                                 </button>
                                 <p style={{ textAlign: 'center', marginTop: '1.5rem', color: '#94a3b8', fontSize: '0.85rem' }}>
-                                    By registering, you agree to our Terms & Conditions and Privacy Policy.
+                                    By registering, you agree to our <Link to="/terms" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary, #2563eb)', textDecoration: 'underline' }}>Terms & Conditions</Link> and <Link to="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary, #2563eb)', textDecoration: 'underline' }}>Privacy Policy</Link>.
                                 </p>
                             </form>
                         </div>

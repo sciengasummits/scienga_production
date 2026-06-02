@@ -81,7 +81,7 @@ export default function Privacy() {
                             display: 'inline-block',
                             marginBottom: '1rem'
                         }}>
-                            Last Updated: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                            Effective Date: June 1, 2026 · Last Updated: June 1, 2026
                         </span>
                         <h2 style={{
                             fontSize: 'clamp(2rem, 5vw, 2.5rem)',
@@ -95,7 +95,7 @@ export default function Privacy() {
 
                     <section style={sectionStyle}>
                         <p style={paragraphStyle}>
-                            Scienga Summits and its affiliates (collectively “Scienga Summits”, “we” and “us”) respect your privacy. We offer services that enable a platform for sharing ideas and networking among professionals such as Scholars, Students, Business Investigators and others.
+                            Scienga Summits and its affiliates (collectively "Scienga Summits", "we" and "us") respect your privacy. We offer services that enable a platform for sharing ideas and networking among professionals such as Scholars, Students, Business Investigators and others.
                         </p>
                         <p style={paragraphStyle}>
                             This Global Privacy Policy describes the types of Personal Data we collect through our services and via our online presence, which include our main website at sciengasummits.org, as well as services that we enable internet users to access, such as our conferences Scienga Summits. This policy also describes how we use Personal Data, with whom we share it, your rights and choices, and how you can contact us about our privacy practices.
@@ -133,6 +133,38 @@ export default function Privacy() {
                     <section style={sectionStyle}>
                         <h3 style={headingStyle}>
                             <span style={accentBar}></span>
+                            Email Communications & Consent
+                        </h3>
+                        <p style={paragraphStyle}>
+                            We collect email addresses through the following consent-based mechanisms:
+                        </p>
+                        <ul style={listStyle}>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Event Registration:</strong> When you register for a conference or event, you provide your email address and consent to receive event-related communications including confirmations, schedules, updates, and post-event materials.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Newsletter Subscription:</strong> When you voluntarily subscribe to our newsletter through the subscription form on our website, you consent to receive periodic newsletters, event announcements, and promotional communications.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Contact Form Submissions:</strong> When you reach out to us through our contact form, you consent to receiving a response and related follow-up communications.</li>
+                        </ul>
+                        <p style={paragraphStyle}>
+                            <strong>Types of emails we send:</strong>
+                        </p>
+                        <ul style={listStyle}>
+                            <li style={{ marginBottom: '0.5rem' }}>Registration confirmations and payment receipts</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Event schedules, updates, and reminders</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Conference newsletters and industry insights</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Upcoming event announcements and early-bird offers</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Speaker and agenda announcements</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Post-event summaries, certificates, and proceedings</li>
+                        </ul>
+                        <p style={paragraphStyle}>
+                            <strong>Unsubscribe:</strong> Every marketing email we send includes a clearly visible unsubscribe link. You may opt out of marketing communications at any time by clicking the unsubscribe link or by emailing us at <strong>contact@sciengasummits.org</strong>. Unsubscribe requests are processed within 24–48 hours. Please note that transactional emails related to active event registrations may continue as necessary for service delivery.
+                        </p>
+                        <p style={paragraphStyle}>
+                            <strong>Anti-Spam Commitment:</strong> Scienga Summits does not purchase, rent, or use third-party email lists. We send emails only to individuals who have voluntarily opted in through our website forms.
+                        </p>
+                    </section>
+
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}>
+                            <span style={accentBar}></span>
                             How we disclose Personal Data
                         </h3>
                         <p style={paragraphStyle}>Scienga Summits does not sell personal data to marketers. We share your personal data with trusted entities, as outlined below:</p>
@@ -150,19 +182,74 @@ export default function Privacy() {
                         </h3>
                         <p style={paragraphStyle}>You have choices regarding our use and disclosure of your Personal Data:</p>
                         <ul style={listStyle}>
-                            <li style={{ marginBottom: '0.5rem' }}>Opt-out of marketing emails via the unsubscribe link.</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Opt-out of marketing emails via the unsubscribe link included in every email.</li>
                             <li style={{ marginBottom: '0.5rem' }}>Review, correct, or update your Personal Data by contacting us.</li>
                             <li style={{ marginBottom: '0.5rem' }}>Request deletion or restriction of your data where applicable by law.</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Request a copy of the Personal Data we hold about you.</li>
+                            <li style={{ marginBottom: '0.5rem' }}>Withdraw consent for marketing communications at any time without affecting the lawfulness of processing based on consent before withdrawal.</li>
                         </ul>
                     </section>
 
-                    <section style={{ marginBottom: 0 }}>
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}>
+                            <span style={accentBar}></span>
+                            Data Retention
+                        </h3>
+                        <p style={paragraphStyle}>
+                            We retain your Personal Data for as long as necessary to fulfil the purposes for which it was collected, including to satisfy legal, accounting, or reporting requirements. Specifically:
+                        </p>
+                        <ul style={listStyle}>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Event registration data:</strong> Retained for up to 3 years after the event to provide post-event services, certificates, and follow-up communications.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Newsletter subscriber data:</strong> Retained until you unsubscribe or request deletion.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Contact form submissions:</strong> Retained for up to 2 years to manage ongoing communications.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Payment and billing data:</strong> Retained as required by applicable tax and financial regulations.</li>
+                        </ul>
+                        <p style={paragraphStyle}>
+                            You may request deletion of your Personal Data at any time by contacting us at <strong>contact@sciengasummits.org</strong>. We will process your request in accordance with applicable data protection laws.
+                        </p>
+                    </section>
+
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}>
+                            <span style={accentBar}></span>
+                            Cookies & Tracking Technologies
+                        </h3>
+                        <p style={paragraphStyle}>
+                            Our website may use cookies and similar tracking technologies to enhance your browsing experience, analyse website traffic, and understand user behaviour. Types of cookies we may use include:
+                        </p>
+                        <ul style={listStyle}>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Essential Cookies:</strong> Required for the basic functionality of our website, such as navigation and form submissions.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website, allowing us to improve content and user experience.</li>
+                            <li style={{ marginBottom: '0.5rem' }}><strong>Functional Cookies:</strong> Remember your preferences and settings to personalise your experience.</li>
+                        </ul>
+                        <p style={paragraphStyle}>
+                            You can manage cookie preferences through your browser settings. Disabling certain cookies may affect the functionality of our website. For more details, please refer to our <a href="/cookie-policy" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Cookie Policy</a>.
+                        </p>
+                    </section>
+
+                    <section style={sectionStyle}>
                         <h3 style={headingStyle}>
                             <span style={accentBar}></span>
                             Data Security
                         </h3>
                         <p style={paragraphStyle}>
                             We make reasonable efforts to ensure a level of security appropriate to the risk associated with the processing of Personal Data. We maintain organizational, technical and administrative measures designed to protect Personal Data within our organization against unauthorized access, destruction, loss, alteration or misuse.
+                        </p>
+                    </section>
+
+                    <section style={{ marginBottom: 0 }}>
+                        <h3 style={headingStyle}>
+                            <span style={accentBar}></span>
+                            Contact Us
+                        </h3>
+                        <p style={paragraphStyle}>
+                            If you have any questions about this Privacy Policy, your Personal Data, or wish to exercise your data rights, please contact us:
+                        </p>
+                        <p style={paragraphStyle}><strong>Email:</strong> contact@sciengasummits.org</p>
+                        <p style={paragraphStyle}><strong>Phone:</strong> +91 7842090097</p>
+                        <p style={paragraphStyle}><strong>Address:</strong> Jain Sadguru Image's Capital Park, Hyderabad, Telangana, India</p>
+                        <p style={paragraphStyle}>
+                            We will respond to your inquiry within a reasonable timeframe and in accordance with applicable data protection regulations.
                         </p>
                     </section>
 

@@ -160,13 +160,14 @@ export default function Footer() {
               { name: 'Terms of Use', path: '/terms' },
               { name: 'Refund Policy', path: '/refund-cancellation' },
               { name: 'Privacy Policy', path: '/privacy' },
+              { name: 'Cookie Policy', path: '/cookie-policy' },
               { name: 'Contact Us', path: '/contact' }
             ].map((item, index) => (
               <li key={index}>
                 <Link 
                   to={item.path} 
-                  target={item.path.startsWith('/') && !item.path.includes('#') && (item.path === '/terms' || item.path === '/privacy' || item.path === '/refund-cancellation') ? "_blank" : undefined}
-                  rel={item.path.startsWith('/') && !item.path.includes('#') && (item.path === '/terms' || item.path === '/privacy' || item.path === '/refund-cancellation') ? "noopener noreferrer" : undefined}
+                  target={item.path.startsWith('/') && !item.path.includes('#') && (item.path === '/terms' || item.path === '/privacy' || item.path === '/refund-cancellation' || item.path === '/cookie-policy') ? "_blank" : undefined}
+                  rel={item.path.startsWith('/') && !item.path.includes('#') && (item.path === '/terms' || item.path === '/privacy' || item.path === '/refund-cancellation' || item.path === '/cookie-policy') ? "noopener noreferrer" : undefined}
                   style={{ textDecoration: 'none', color: '#94a3b8', transition: 'all 0.2s', fontSize: '0.85rem', display: 'block' }}
                   onMouseEnter={(e) => { e.target.style.color = primaryColor; }}
                   onMouseLeave={(e) => { e.target.style.color = '#94a3b8'; }}
@@ -308,6 +309,9 @@ export default function Footer() {
             >
               {isSubmitting ? '...' : 'Subscribe'}
             </button>
+            <p style={{ fontSize: '0.7rem', lineHeight: '1.4', color: '#64748b', marginTop: '0.5rem' }}>
+              By subscribing, you agree to receive newsletters, event announcements, and promotional communications from Scienga Summits. You may unsubscribe at any time. View our <Link to="/privacy" style={{ color: '#93c5fd', textDecoration: 'underline' }}>Privacy Policy</Link>.
+            </p>
             {message.text && (
               <p style={{
                 color: message.type === 'error' ? '#ef4444' : '#10b981',
@@ -398,10 +402,11 @@ export default function Footer() {
         <p style={{ fontSize: '0.8rem', color: '#64748b', margin: 0 }}>
           © {new Date().getFullYear()} Scienga Summits. All Rights Reserved.
         </p>
-        <div style={{ display: 'flex', gap: '1.5rem' }}>
+        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <Link to="/privacy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Privacy Policy</Link>
           <Link to="/terms" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Terms of Use</Link>
           <Link to="/refund-cancellation" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Refund Policy</Link>
+          <Link to="/cookie-policy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: '#64748b', textDecoration: 'none' }}>Cookie Policy</Link>
         </div>
       </div>
     </footer>

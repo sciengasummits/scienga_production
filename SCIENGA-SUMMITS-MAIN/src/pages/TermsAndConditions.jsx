@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import PageHeader from '../components/common/PageHeader'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
+import { Link } from 'react-router-dom'
 
 export default function TermsAndConditions() {
 
@@ -82,7 +83,7 @@ export default function TermsAndConditions() {
                             display: 'inline-block',
                             marginBottom: '1rem'
                         }}>
-                            Legal Agreement
+                            Effective Date: June 1, 2026 · Last Updated: June 1, 2026
                         </span>
                         <h2 style={{
                             fontSize: 'clamp(2rem, 5vw, 2.5rem)',
@@ -130,7 +131,49 @@ export default function TermsAndConditions() {
                     </section>
 
                     <section style={sectionStyle}>
-                        <h3 style={headingStyle}><span style={accentBar}></span>5. Limited warranties</h3>
+                        <h3 style={headingStyle}><span style={accentBar}></span>5. Email Communications</h3>
+                        <p style={paragraphStyle}>By registering for our events, subscribing to our newsletter, or submitting forms on our website, you consent to receive communications from Scienga Summits, including:</p>
+                        <ul style={listStyle}>
+                            <li>Event announcements and invitations</li>
+                            <li>Registration confirmations and receipts</li>
+                            <li>Conference updates, schedules, and reminders</li>
+                            <li>Newsletters and industry insights</li>
+                            <li>Promotional communications about upcoming conferences</li>
+                        </ul>
+                        <p style={paragraphStyle}>Users may unsubscribe from marketing and promotional emails at any time by using the unsubscribe link included in every email or by contacting us at <strong>contact@sciengasummits.org</strong>.</p>
+                        <p style={paragraphStyle}>Transactional emails related to event registrations, payment confirmations, and account activity may continue to be sent when necessary for service delivery.</p>
+                    </section>
+
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}><span style={accentBar}></span>6. Anti-Spam Policy</h3>
+                        <p style={paragraphStyle}>Scienga Summits is committed to responsible email communication. We adhere to the following anti-spam principles:</p>
+                        <ul style={listStyle}>
+                            <li>We send emails only to individuals who have voluntarily subscribed, registered for an event, or otherwise explicitly requested communication from us.</li>
+                            <li>We do not purchase, rent, or use third-party email lists under any circumstances.</li>
+                            <li>We maintain unsubscribe mechanisms in every marketing email we send.</li>
+                            <li>We honour all unsubscribe requests promptly, typically within 24–48 hours.</li>
+                            <li>We include our physical mailing address and sender identification in all commercial emails.</li>
+                        </ul>
+                    </section>
+
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}><span style={accentBar}></span>7. Event Registration Terms</h3>
+                        <p style={paragraphStyle}>Event registrations are subject to confirmation and availability. By registering for any Scienga Summits event, you agree that:</p>
+                        <ul style={listStyle}>
+                            <li>Communications related to the event — including schedules, updates, reminders, certificates, speaker announcements, and post-event materials — may be sent to you via email.</li>
+                            <li>Your registration information may be used to personalise your conference experience and provide relevant content recommendations.</li>
+                            <li>Cancellation and refund terms as described in our <Link to="/refund-cancellation" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Refund & Cancellation Policy</Link> shall apply.</li>
+                        </ul>
+                    </section>
+
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}><span style={accentBar}></span>8. Personal Data & Privacy</h3>
+                        <p style={paragraphStyle}>Personal information collected through this website is processed in accordance with our <Link to="/privacy" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Privacy Policy</Link>. By using our services, you acknowledge and agree to the collection and use of information as described in our Privacy Policy.</p>
+                        <p style={paragraphStyle}>We are committed to protecting your personal data and ensuring transparency in how it is collected, stored, and used. For full details on data handling practices, please refer to our Privacy Policy.</p>
+                    </section>
+
+                    <section style={sectionStyle}>
+                        <h3 style={headingStyle}><span style={accentBar}></span>9. Limited warranties</h3>
                         <p style={paragraphStyle}>We do not warrant or represent:</p>
                         <ul style={listStyle}>
                             <li>the completeness or accuracy of the information published on our website;</li>
@@ -141,7 +184,7 @@ export default function TermsAndConditions() {
                     </section>
 
                     <section style={sectionStyle}>
-                        <h3 style={headingStyle}><span style={accentBar}></span>6. Breaches of these terms</h3>
+                        <h3 style={headingStyle}><span style={accentBar}></span>10. Breaches of these terms</h3>
                         <p style={paragraphStyle}>Without prejudice to our other rights under these terms and conditions, if you breach these terms and conditions in any way, or if we reasonably suspect that you have breached these terms and conditions in any way, we may:</p>
                         <ul style={listStyle}>
                             <li>Send you one or more formal warnings;</li>
@@ -155,15 +198,16 @@ export default function TermsAndConditions() {
                     </section>
 
                     <section style={sectionStyle}>
-                        <h3 style={headingStyle}><span style={accentBar}></span>7. Law and Jurisdiction</h3>
+                        <h3 style={headingStyle}><span style={accentBar}></span>11. Law and Jurisdiction</h3>
                         <p style={paragraphStyle}>These terms and conditions shall be governed by and construed in accordance with Indian Law. Any disputes relating to these terms and conditions shall be subject to the exclusive jurisdiction of the courts of India.</p>
                     </section>
 
                     <section style={{ marginBottom: 0 }}>
-                        <h3 style={headingStyle}><span style={accentBar}></span>8. Company Details</h3>
-                        <p style={paragraphStyle}>This website is owned and operated by Scienga Summits.</p>
+                        <h3 style={headingStyle}><span style={accentBar}></span>12. Company Details</h3>
+                        <p style={paragraphStyle}>This website is owned and operated by Scienga Summits. Scienga Summits is an organization that manages and promotes scientific, academic, and professional conferences and related events worldwide.</p>
                         <p style={paragraphStyle}><strong>Registered Address:</strong> Jain Sadguru Image's Capital Park, Hyderabad, India</p>
                         <p style={paragraphStyle}><strong>Contact Email:</strong> contact@sciengasummits.org</p>
+                        <p style={paragraphStyle}><strong>Phone:</strong> +91 7842090097</p>
                     </section>
 
                 </div>

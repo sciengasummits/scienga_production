@@ -10,6 +10,7 @@ import Prices from './pages/Prices'
 import FAQs from './pages/FAQs'
 import Register from './pages/Register'
 import Sponsorship from './pages/Sponsorship'
+import CookiePolicy from './pages/CookiePolicy'
 import Navbar from './components/common/Navbar'
 import Footer from './components/common/Footer'
 
@@ -25,7 +26,8 @@ export default function App() {
   const isFaqsPage = location.pathname === '/faqs';
   const isContactPage = location.pathname === '/contact';
   const isRegisterPage = location.pathname === '/register';
-  const hideGlobalLayout = isTermsPage || isRefundPage || isPrivacyPage || isPricesPage || isFaqsPage || isContactPage || isRegisterPage;
+  const isCookiePolicyPage = location.pathname === '/cookie-policy';
+  const hideGlobalLayout = isTermsPage || isRefundPage || isPrivacyPage || isPricesPage || isFaqsPage || isContactPage || isRegisterPage || isCookiePolicyPage;
 
   return (
     <div className="app-root">
@@ -42,6 +44,7 @@ export default function App() {
           <Route path="/faqs" element={<FAQs />} />
           <Route path="/register" element={<Register />} />
           <Route path="/sponsorship" element={<Sponsorship />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
         </Routes>
       </main>
       {!hideGlobalLayout && <Footer />}
