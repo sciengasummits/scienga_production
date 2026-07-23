@@ -16,6 +16,7 @@ const homeSchema = {
       "@type": "Organization",
       "@id": "https://sciengasummits.com/#organization",
       "name": "Scienga Global Summits",
+      "description": "SCIENGA SUMMITS is a global scientific conference organizer dedicated to advancing research, innovation, and academic excellence through high-quality international conferences, symposiums, and workshops. We provide a distinguished platform for researchers, academicians, industry professionals, business entrepreneurs and policymakers to present pioneering research, exchange knowledge, and establish meaningful collaborations.",
       "url": "https://sciengasummits.com/",
       "logo": "https://sciengasummits.com/assets/images/logo.png",
       "contactPoint": {
@@ -164,7 +165,7 @@ export default function Home() {
     <div>
       <SEO 
         title="Upcoming Scientific & Academic Conferences"
-        description="Scienga Global Summits organizes premier international academic conferences, connecting researchers, scholars, and scientists worldwide across AI, nanotechnology, quantum computing, renewable energy, and medicine."
+        description="SCIENGA SUMMITS is a global scientific conference organizer dedicated to advancing research, innovation, and academic excellence through high-quality international conferences, symposiums, and workshops."
         keywords={homeKeywords}
         schema={homeSchema}
       />

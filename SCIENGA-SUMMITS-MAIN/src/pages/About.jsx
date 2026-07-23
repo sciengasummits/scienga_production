@@ -6,7 +6,7 @@ const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
   "name": "About Scienga Global Summits",
-  "description": "Learn about our vision and mission to advance global science and research through international collaborative summits.",
+  "description": "SCIENGA SUMMITS is a global scientific conference organizer dedicated to advancing research, innovation, and academic excellence through high-quality international conferences, symposiums, and workshops. We provide a distinguished platform for researchers, academicians, industry professionals, business entrepreneurs and policymakers to present pioneering research, exchange knowledge, and establish meaningful collaborations. Our conferences foster interdisciplinary dialogue, promote scientific discovery, and facilitate global partnerships that accelerate research and address emerging scientific and societal challenges.",
   "publisher": {
     "@type": "Organization",
     "name": "Scienga Global Summits",
@@ -28,7 +28,7 @@ export default function About(){
     <div>
       <SEO 
         title="About Us - Leading Research & Science Conferences"
-        description="Discover Scienga Global Summits' mission to unite scholars, foster interdisciplinary dialogue, and highlight groundbreaking scientific discoveries on a global stage."
+        description="SCIENGA SUMMITS is a global scientific conference organizer dedicated to advancing research, innovation, and academic excellence through high-quality international events."
         keywords={aboutKeywords}
         schema={aboutSchema}
       />
