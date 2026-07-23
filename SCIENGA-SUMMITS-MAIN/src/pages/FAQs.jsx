@@ -3,6 +3,55 @@ import PageHeader from '../components/common/PageHeader'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
 import { Link } from 'react-router-dom'
+import SEO from '../components/common/SEO'
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are Scienga Summits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Scienga Summits aim to bridge the gap between academia and industry. The conferences bring together international experts and research scholars across diverse scientific domains to educate, energize, and inspire the next generation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where are the conferences held?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The conferences are held annually at different international locations worldwide, such as Amsterdam, Munich, Singapore, London, and Seoul."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How to register for the conference?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Registrations for Scienga Summits are open, and participants may register for their chosen meeting via our Online Registration Form."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is lunch provided at the conference?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the general registration fee includes refreshments and lunch at the conference venue."
+      }
+    }
+  ]
+};
+
+const faqKeywords = [
+  "Scienga FAQs",
+  "academic conference registration help",
+  "abstract submission guidelines",
+  "scientific conference dress code",
+  "visa letter invitation process",
+  "academic summit cost"
+];
 
 export default function FAQs() {
 
@@ -239,6 +288,12 @@ export default function FAQs() {
 
     return (
         <>
+            <SEO 
+                title="Frequently Asked Questions"
+                description="Get answers to commonly asked questions about Scienga Global Summits: registration fees, conference locations, VISA letter invitations, and presentation sessions."
+                keywords={faqKeywords}
+                schema={faqSchema}
+            />
             <Navbar />
             <PageHeader
                 title="FAQ's"

@@ -2,6 +2,36 @@ import React, { useEffect, useState } from 'react'
 import PageHeader from '../components/common/PageHeader'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
+import SEO from '../components/common/SEO'
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Scienga Global Summits",
+  "description": "Get in touch with our team for questions about registration, abstract submission, or sponsorship.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Scienga Global Summits",
+    "url": "https://sciengasummits.com/",
+    "telephone": "+91 7842090097",
+    "email": "contact@sciengasummits.org",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Jain Sadguru Image's Capital Park",
+      "addressLocality": "Hyderabad",
+      "addressCountry": "IN"
+    }
+  }
+};
+
+const contactKeywords = [
+  "contact Scienga",
+  "Scienga contact number",
+  "Scienga office Hyderabad",
+  "Scienga email support",
+  "academic conference inquiry",
+  "register contact support"
+];
 
 export default function Contact() {
 
@@ -76,6 +106,12 @@ export default function Contact() {
 
   return (
     <>
+      <SEO 
+        title="Contact Us - Scienga Global Summits"
+        description="Have questions about registration, scientific sessions, or sponsorship opportunities? Connect with our dedicated support team."
+        keywords={contactKeywords}
+        schema={contactSchema}
+      />
       <Navbar />
       <PageHeader
         title="Contact Us"

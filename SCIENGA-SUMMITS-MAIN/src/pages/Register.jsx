@@ -3,6 +3,28 @@ import { Link } from 'react-router-dom'
 import PageHeader from '../components/common/PageHeader'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
+import SEO from '../components/common/SEO'
+
+const registerSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Register for Scienga Global Summits",
+  "description": "Secure your pass for the upcoming Scienga Global Summits. Registration options include Speaker, Listener, and Student passes.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Scienga Global Summits",
+    "url": "https://sciengasummits.com/"
+  }
+};
+
+const registerKeywords = [
+  "register Scienga conference",
+  "speaker registration fee",
+  "listener ticket price",
+  "poster presentation fee student",
+  "academic conference booking",
+  "early bird registration discount"
+];
 
 export default function Register() {
 
@@ -118,6 +140,12 @@ export default function Register() {
 
     return (
         <>
+            <SEO 
+                title="Register Now - Secure Your Conference Ticket"
+                description="Choose your registration plan (Speaker, Listener, or Student) to secure your attendance at Scienga Global Summits. Early bird discounts available."
+                keywords={registerKeywords}
+                schema={registerSchema}
+            />
             <Navbar />
 
             {/* Pricing Section */}

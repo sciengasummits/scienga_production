@@ -1,5 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/common/SEO';
+
+const sponsorSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Sponsorship Opportunities - Scienga Global Summits",
+  "description": "Partner with Scienga Global Summits as a sponsor or exhibitor. Explore our Platinum, Gold, Silver, and Exhibitor packages to showcase your brand to top scientists.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Scienga Global Summits",
+    "url": "https://sciengasummits.com/"
+  }
+};
+
+const sponsorKeywords = [
+  "conference sponsorship opportunities",
+  "corporate scientific sponsor",
+  "exhibitor table exhibit price",
+  "science summit sponsors",
+  "platinum gold silver sponsorship packages",
+  "academic conference exhibitor booth"
+];
 
 const Sponsorship = () => {
     React.useEffect(() => {
@@ -71,6 +93,12 @@ const Sponsorship = () => {
 
     return (
         <div style={{ paddingTop: '120px', paddingBottom: '60px', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+            <SEO 
+                title="Sponsorship & Exhibitor Packages"
+                description="Explore B2B sponsorship opportunities and table exhibition packages for Scienga Global Summits. Showcase your brand directly to leading international researchers and scholars."
+                keywords={sponsorKeywords}
+                schema={sponsorSchema}
+            />
             <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
                 <div style={{ textAlign: 'center', marginBottom: '4rem', position: 'relative' }}>
 
