@@ -26,7 +26,7 @@ const venues = [
     { title: "POWERENGSUMMIT2026", location: "Munich, Germany", img: locationPower },
     { title: "CLEANENGTECHSUMMIT2026", location: "Munich, Germany", img: locationClean },
     { title: "ASTROSPACESUMMIT2026", location: "Tokyo, Japan", img: locationAstro },
-    { title: "LIUTEX2026", location: "Outram, Singapore", img: locationLiutex },
+    { title: "LIUTEX2026", location: "Holiday Inn Express & Suites Singapore Novena by IHG, Singapore", img: locationLiutex },
     { title: "AIROBOTMLSUMMIT2026", location: "Seoul, South Korea", img: locationAirobot },
     { title: "FLUIDTURBOSUMMIT2026", location: "Tokyo, Japan", img: meeting14 }
 ];

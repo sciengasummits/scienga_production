@@ -142,7 +142,7 @@ const homeKeywords = [
   "obstetrics gynecology women health",
   "public health preventive medicine London",
   "cognitive social neuroscience Stockholm",
-  "fluid mechanics turbomachinery Outram"
+  "fluid mechanics turbomachinery Novena Singapore"
 ];
 
 export default function Home() {

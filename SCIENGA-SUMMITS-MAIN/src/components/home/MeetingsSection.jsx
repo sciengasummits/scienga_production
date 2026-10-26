@@ -148,7 +148,7 @@ const meetingsData = {
             id: 11,
             title: "LIUTEX2026",
             description: "International Conference on Liutex Theory and Turbulence Mechanism",
-            location: "OUTRAM, SINGAPORE",
+            location: "Holiday Inn Express & Suites Singapore Novena by IHG, Singapore",
             date: "December 14-17, 2026",
             year: "2026",
             image: "https://events.precision-globe.com/assets/uploads/categoryImages/Precision-Medical-Devices-event-overview-image.jpeg",
@@ -220,7 +220,7 @@ const meetingsData = {
             id: 12,
             title: "FLUIDTURBOSUMMIT2026",
             description: "International Conference on Fluid Mechanics and Turbomachinery",
-            location: "OUTRAM, SINGAPORE",
+            location: "Holiday Inn Express & Suites Singapore Novena by IHG, Singapore",
             date: "December 14-16, 2026",
             year: "2026",
             image: meetingFluid,
@@ -321,10 +321,10 @@ export default function MeetingsSection() {
                             <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                 {/* Location */}
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '0.75rem', color: primaryColor, fontSize: '0.85rem', fontWeight: '600' }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style={{ width: '16px', height: '16px' }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style={{ width: '16px', height: '16px', flexShrink: 0 }}>
                                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                                     </svg>
-                                    {meeting.location}
+                                    <span>{meeting.location}</span>
                                 </div>
 
                                 <h3 style={{
