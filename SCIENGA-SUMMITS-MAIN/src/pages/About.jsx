@@ -13,7 +13,6 @@ const aboutSchema = {
     "url": "https://sciengasummits.com/"
   }
 };
-
 const aboutKeywords = [
   "about Scienga",
   "academic networking",
